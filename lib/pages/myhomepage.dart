@@ -54,7 +54,8 @@ class _MyhomepageState extends State<Myhomepage> {
 
   @override
   Widget build(BuildContext context) {
-    orderlistController.fetchOrderlistdata();
+    // orderlistController.fetchOrderlistdata();
+    // dashboardController.fetchDashboardData();
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
       statusBarColor: Colors.blue, // Optional: makes status bar transparent
     ));
@@ -184,51 +185,78 @@ class _MyhomepageState extends State<Myhomepage> {
                     children: [
                       SizedBox(
                         height: 150,
-                        child: PageView.builder(
-                          itemCount: assets.length,
-                          physics: BouncingScrollPhysics(),
-                          controller: PageController(
-                            initialPage: 0,
-                            viewportFraction: 0.9,
-                          ),
-                          onPageChanged: (value) {
-                            currentindex = value;
-                            setState(() {});
-                          },
-                          itemBuilder: (context, index) {
-                            return Container(
-                              width: screenWidth,
-                              margin: EdgeInsets.all(8),
-                              clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Image.asset(
-                                assets[index],
-                                fit: BoxFit.cover,
-                              ),
-                            );
-                          },
+                        child: Obx(
+                          () => dashboardController.isLoading.value == false
+                              ? PageView.builder(
+                                  itemCount: dashboardController
+                                      .alldashboardData
+                                      .value
+                                      .data!
+                                      .advertisementSliders!
+                                      .length,
+                                  physics: BouncingScrollPhysics(),
+                                  controller: PageController(
+                                    initialPage: 0,
+                                    viewportFraction: 0.9,
+                                  ),
+                                  onPageChanged: (value) {
+                                    currentindex = value;
+                                    setState(() {});
+                                  },
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      width: screenWidth,
+                                      margin: EdgeInsets.all(8),
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: Image.network(
+                                        dashboardController
+                                            .alldashboardData
+                                            .value
+                                            .data!
+                                            .advertisementSliders![index]
+                                            .adSliderImageUrl
+                                            .toString(),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    );
+                                  },
+                                )
+                              : Center(
+                                  child: CircularProgressIndicator(),
+                                ),
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(3, (index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(7.0),
-                            child: AnimatedContainer(
-                              duration: Duration(milliseconds: 300),
-                              height: 10,
-                              width: currentindex == index ? 30 : 10,
-                              decoration: BoxDecoration(
-                                color: currentindex == index
-                                    ? Colors.white
-                                    : Colors.grey,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                            ),
-                          );
-                        }),
+                      Obx(
+                        () => dashboardController.isLoading.value == false
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: List.generate(
+                                    dashboardController
+                                        .alldashboardData
+                                        .value
+                                        .data!
+                                        .advertisementSliders!
+                                        .length, (index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(7.0),
+                                    child: AnimatedContainer(
+                                      duration: Duration(milliseconds: 300),
+                                      height: 10,
+                                      width: currentindex == index ? 30 : 10,
+                                      decoration: BoxDecoration(
+                                        color: currentindex == index
+                                            ? Colors.white
+                                            : Colors.grey,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                    ),
+                                  );
+                                }),
+                              )
+                            : SizedBox(),
                       ),
                       Row(
                         children: [

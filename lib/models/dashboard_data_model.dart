@@ -99,18 +99,12 @@ class AdvertisementSlider {
   final String? advertisementTitle;
   final String? adSliderImageUrl;
   final String? status;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
-  final dynamic? deletedAt;
 
   AdvertisementSlider({
     this.id,
     this.advertisementTitle,
     this.adSliderImageUrl,
     this.status,
-    this.createdAt,
-    this.updatedAt,
-    this.deletedAt,
   });
 
   factory AdvertisementSlider.fromJson(Map<String, dynamic> json) =>
@@ -123,9 +117,6 @@ class AdvertisementSlider {
             ? null
             : json["ad_slider_image_url"],
         status: json["status"] == null ? null : json["status"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-        deletedAt: json["deleted_at"] == null ? null : json["deleted_at"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -133,9 +124,6 @@ class AdvertisementSlider {
         "advertisement_title": advertisementTitle,
         "ad_slider_image_url": adSliderImageUrl,
         "status": status,
-        "created_at": createdAt!.toIso8601String(),
-        "updated_at": updatedAt!.toIso8601String(),
-        "deleted_at": deletedAt,
       };
 }
 

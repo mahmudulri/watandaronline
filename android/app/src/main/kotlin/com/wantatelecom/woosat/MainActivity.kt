@@ -1,4 +1,4 @@
-package com.example.yaktelecom
+package com.wantatelecom.woosat
 
 import io.flutter.embedding.android.FlutterActivity
 
