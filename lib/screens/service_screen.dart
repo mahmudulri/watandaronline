@@ -160,17 +160,36 @@ class _ServiceScreenState extends State<ServiceScreen> {
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 10, vertical: 5),
-                                    child: Center(
-                                      child: Text(
-                                        data.countryName.toString(),
-                                        style: TextStyle(
-                                          color: isSelected
-                                              ? Colors.white
-                                              : Colors.black,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          height: 30,
+                                          width: 30,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              fit: BoxFit.fill,
+                                              image: NetworkImage(
+                                                data.countryFlagImageUrl
+                                                    .toString(),
+                                              ),
+                                            ),
+                                            shape: BoxShape.circle,
+                                          ),
                                         ),
-                                      ),
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        Text(
+                                          data.countryName.toString(),
+                                          style: TextStyle(
+                                            color: isSelected
+                                                ? Colors.white
+                                                : Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),

@@ -1184,6 +1184,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                         .currency!
                                                                         .symbol
                                                                         .toString() +
+                                                                    " " +
                                                                     data.bundle!
                                                                         .sellingPrice
                                                                         .toString(),
@@ -1227,6 +1228,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                         .currency!
                                                                         .symbol
                                                                         .toString() +
+                                                                    " " +
                                                                     data.bundle!
                                                                         .buyingPrice
                                                                         .toString(),

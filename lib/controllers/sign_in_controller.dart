@@ -31,15 +31,15 @@ class SignInController extends GetxController {
         'Accept': 'application/json',
       };
       var url = Uri.parse("https://amutele.amutelecom.com/api/reseller/login");
-      Map body = {
-        'password': "test@2024",
-        'username': "0700930683",
-      };
-
       // Map body = {
-      //   'username': usernameController.text,
-      //   'password': passwordController.text,
+      //   'password': "test@2024",
+      //   'username': "0700930683",
       // };
+
+      Map body = {
+        'username': usernameController.text,
+        'password': passwordController.text,
+      };
       http.Response response = await http.post(
         url,
         body: jsonEncode(body),
@@ -51,6 +51,8 @@ class SignInController extends GetxController {
       final results = jsonDecode(response.body);
       if (response.statusCode == 200) {
         box.write("userToken", jsonDecode(response.body)["data"]["api_token"]);
+        box.write("currency_code",
+            jsonDecode(response.body)["data"]["user_info"]["currency"]["code"]);
         // print(box.read("userToken"));
         countryListController.fetchCountryData();
 

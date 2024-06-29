@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:watantelecom/controllers/dashboard_controller.dart';
+import 'package:watantelecom/controllers/sign_in_controller.dart';
 import 'package:watantelecom/screens/add_card_screen.dart';
 import 'package:watantelecom/screens/myprofile_screen.dart';
+import 'package:watantelecom/screens/sign_in_screen.dart';
 import 'package:watantelecom/screens/sub_reseller_screen.dart';
 import 'package:watantelecom/utils/colors.dart';
 import 'package:watantelecom/widgets/profile_menu_widget.dart';
@@ -11,8 +14,12 @@ import 'package:watantelecom/widgets/profile_menu_widget.dart';
 class DrawerWidget extends StatelessWidget {
   DrawerWidget({super.key});
 
+  final box = GetStorage();
+
   final DashboardController dashboardController =
       Get.put(DashboardController());
+
+  final SignInController signInController = Get.put(SignInController());
 
   @override
   Widget build(BuildContext context) {
@@ -179,36 +186,56 @@ class DrawerWidget extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  height: 40,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.borderColor,
-                                    borderRadius: BorderRadius.circular(7),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      "No",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w500,
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => SignInScreen(),
+                                      ),
+                                    );
+
+                                    signInController.usernameController.clear();
+                                    signInController.passwordController.clear();
+
+                                    box.remove("userToken");
+                                  },
+                                  child: Container(
+                                    height: 40,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.borderColor,
+                                      borderRadius: BorderRadius.circular(7),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "Yes",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  height: 40,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.borderColor,
-                                    borderRadius: BorderRadius.circular(7),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      "Yes",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w500,
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Container(
+                                    height: 40,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.borderColor,
+                                      borderRadius: BorderRadius.circular(7),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "No",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
                                     ),
                                   ),
