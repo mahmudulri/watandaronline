@@ -15,8 +15,8 @@ class OrderListApi {
   final box = GetStorage();
   Future<OrderListModel> fetchorderList() async {
     final url = Uri.parse(
-        "${ApiEndPoints.baseUrl}orders?${box.read("orderstatus").toString()}&selected_Date=&&");
-    print(url);
+        "${ApiEndPoints.baseUrl}orders?page=${box.read("pageNo").toString()}${box.read("orderstatus").toString()}&selected_Date=&&");
+    // print(url);
 
     var response = await http.get(
       url,

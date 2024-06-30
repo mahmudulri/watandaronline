@@ -17,12 +17,14 @@ class OrderListModel {
   final int? code;
   final String? message;
   final Data? data;
+  final Payload? payload;
 
   OrderListModel({
     this.success,
     this.code,
     this.message,
     this.data,
+    this.payload,
   });
 
   factory OrderListModel.fromJson(Map<String, dynamic> json) => OrderListModel(
@@ -30,6 +32,7 @@ class OrderListModel {
         code: json["code"],
         message: json["message"],
         data: Data.fromJson(json["data"]),
+        payload: Payload.fromJson(json["payload"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -37,6 +40,7 @@ class OrderListModel {
         "code": code,
         "message": message,
         "data": data!.toJson(),
+        "payload": payload!.toJson(),
       };
 }
 
@@ -312,5 +316,46 @@ class ServiceCategory {
         "id": id,
         "category_name": categoryName,
         "type": type,
+      };
+}
+
+class Payload {
+  final Pagination pagination;
+
+  Payload({
+    required this.pagination,
+  });
+
+  factory Payload.fromJson(Map<String, dynamic> json) => Payload(
+        pagination: Pagination.fromJson(json["pagination"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "pagination": pagination.toJson(),
+      };
+}
+
+class Pagination {
+  final int? currentPage;
+
+  final int? totalItems;
+  final int? totalPages;
+
+  Pagination({
+    this.currentPage,
+    this.totalItems,
+    this.totalPages,
+  });
+
+  factory Pagination.fromJson(Map<String, dynamic> json) => Pagination(
+        currentPage: json["current_page"],
+        totalItems: json["total_items"],
+        totalPages: json["total_pages"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "current_page": currentPage,
+        "total_items": totalItems,
+        "total_pages": totalPages,
       };
 }

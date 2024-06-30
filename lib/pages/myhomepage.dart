@@ -85,8 +85,8 @@ class _MyhomepageState extends State<Myhomepage> {
 
   @override
   Widget build(BuildContext context) {
-    // orderlistController.fetchOrderlistdata();
-    // dashboardController.fetchDashboardData();
+    orderlistController.fetchOrderlistdata();
+    dashboardController.fetchDashboardData();
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
       statusBarColor: Colors.blue, // Optional: makes status bar transparent
     ));

@@ -201,6 +201,7 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
                       minWidth: 40,
                       onPressed: () {
                         box.write("orderstatus", "");
+                        box.write("pageNo", "1");
                         setState(() {
                           currentPage = NotificationPage();
                           currentIndex = 2;

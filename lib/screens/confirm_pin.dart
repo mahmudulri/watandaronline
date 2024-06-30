@@ -28,11 +28,30 @@ class ConfirmPinScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Lottie.asset('assets/loties/pin.json'),
-              Text(
-                "Confirm Your Pin",
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 15,
+              Obx(
+                () => Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      confirmPinController.isLoading.value == false
+                          ? "Confirm Your Pin"
+                          : "Please wait...",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    confirmPinController.isLoading.value == true
+                        ? Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.black,
+                            ),
+                          )
+                        : SizedBox(),
+                  ],
                 ),
               ),
               OTPInput(),
