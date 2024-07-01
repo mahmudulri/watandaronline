@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -8,8 +9,10 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:intl/intl.dart';
+import 'package:watantelecom/controllers/checker.dart';
 import 'package:watantelecom/controllers/country_list_controller.dart';
 import 'package:watantelecom/controllers/dashboard_controller.dart';
+import 'package:watantelecom/controllers/language_controller.dart';
 import 'package:watantelecom/controllers/order_list_controller.dart';
 import 'package:watantelecom/controllers/sub_reseller_controller.dart';
 import 'package:watantelecom/pages/orders.dart';
@@ -83,6 +86,8 @@ class _MyhomepageState extends State<Myhomepage> {
     }
   }
 
+  final LanguageController languageController = Get.put(LanguageController());
+
   @override
   Widget build(BuildContext context) {
     // orderlistController.fetchOrderlistdata();
@@ -121,54 +126,57 @@ class _MyhomepageState extends State<Myhomepage> {
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
                         ),
-                      )
-
+                      ),
+                      // Spacer(),
                       // GestureDetector(
                       //   onTap: () {
+                      //     languageController.fetchlanData("en");
                       //     setState(() {
                       //       LocalizationChecker.changeLanguge(context);
                       //     });
-                      //     // showDialog(
-                      //     //   context: context,
-                      //     //   builder: (context) {
-                      //     //     return AlertDialog(
-                      //     //       content: Container(
-                      //     //         height: 200,
-                      //     //         width: screenWidth,
-                      //     //         child: Column(
-                      //     //           children: [
-                      //     //             ElevatedButton(
-                      //     //                 onPressed: () {
-                      //     //                   setState(() {
-                      //     //                     EasyLocalization.of(context)!
-                      //     //                         .setLocale(Locale('en', 'US'));
-                      //     //                   });
-                      //     //                   setState(() {});
-                      //     //                 },
-                      //     //                 child: Text("English")),
-                      //     //             ElevatedButton(
-                      //     //                 onPressed: () {
-                      //     //                   setState(() {
-                      //     //                     EasyLocalization.of(context)!
-                      //     //                         .setLocale(Locale('ar', 'AE'));
-                      //     //                   });
-                      //     //                   setState(() {});
-                      //     //                 },
-                      //     //                 child: Text("Arabic")),
-                      //     //           ],
-                      //     //         ),
-                      //     //       ),
-                      //     //     );
-                      //     //   },
-                      //     // );
+                      //     showDialog(
+                      //       context: context,
+                      //       builder: (context) {
+                      //         return AlertDialog(
+                      //           content: Container(
+                      //             height: 200,
+                      //             width: screenWidth,
+                      //             child: Column(
+                      //               children: [
+                      //                 ElevatedButton(
+                      //                     onPressed: () {
+                      //                       setState(() {
+                      //                         EasyLocalization.of(context)!
+                      //                             .setLocale(
+                      //                                 Locale('en', 'US'));
+                      //                       });
+                      //                       setState(() {});
+                      //                     },
+                      //                     child: Text("English")),
+                      //                 ElevatedButton(
+                      //                     onPressed: () {
+                      //                       setState(() {
+                      //                         EasyLocalization.of(context)!
+                      //                             .setLocale(
+                      //                                 Locale('ar', 'AE'));
+                      //                       });
+                      //                       setState(() {});
+                      //                     },
+                      //                     child: Text("Arabic")),
+                      //               ],
+                      //             ),
+                      //           ),
+                      //         );
+                      //       },
+                      //     );
 
-                      //     // setState(() {
-                      //     //   EasyLocalization.of(context)!
-                      //     //       .setLocale(Locale('ar', 'AE'));
-                      //     // });
-                      //     // setState(() {
-                      //     //   LocalizationChecker.changeLanguge(context);
-                      //     // });
+                      //     setState(() {
+                      //       EasyLocalization.of(context)!
+                      //           .setLocale(Locale('ar', 'AE'));
+                      //     });
+                      //     setState(() {
+                      //       LocalizationChecker.changeLanguge(context);
+                      //     });
                       //   },
                       //   child: Icon(Icons.language),
                       // ),
@@ -292,7 +300,9 @@ class _MyhomepageState extends State<Myhomepage> {
                       Row(
                         children: [
                           Text(
-                            "Finacial Inquiry",
+                            languageController.alllanguageData.value
+                                .languageData!["FINANCIAL_INQUIRY"]
+                                .toString(),
                             style: GoogleFonts.rubik(
                               color: Colors.white,
                               fontSize: 18,
@@ -314,7 +324,11 @@ class _MyhomepageState extends State<Myhomepage> {
                                   physics: BouncingScrollPhysics(),
                                   children: [
                                     financialbox(
-                                      boxname: "Balance",
+                                      boxname: languageController
+                                          .alllanguageData
+                                          .value
+                                          .languageData!["BALANCE"]
+                                          .toString(),
                                       balance: dashboardController
                                           .alldashboardData.value.data!.balance
                                           .toString(),
@@ -324,7 +338,11 @@ class _MyhomepageState extends State<Myhomepage> {
                                       width: 5,
                                     ),
                                     financialbox(
-                                      boxname: "Loan balance",
+                                      boxname: languageController
+                                          .alllanguageData
+                                          .value
+                                          .languageData!["LOAN_BALANCE"]
+                                          .toString(),
                                       balance: dashboardController
                                           .alldashboardData
                                           .value
@@ -418,7 +436,9 @@ class _MyhomepageState extends State<Myhomepage> {
                       Row(
                         children: [
                           Text(
-                            "History",
+                            languageController
+                                .alllanguageData.value.languageData!["HISTORY"]
+                                .toString(),
                             style: GoogleFonts.rubik(
                               color: Colors.black,
                               fontSize: 18,

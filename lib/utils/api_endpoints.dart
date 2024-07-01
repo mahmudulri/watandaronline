@@ -1,5 +1,6 @@
 class ApiEndPoints {
   static String baseUrl = "https://amutele.amutelecom.com/api/reseller/";
+  static String languageUrl = "https://amutele.amutelecom.com/api/locale/";
 
   static OtherendPoints otherendpoints = OtherendPoints();
 }
@@ -17,4 +18,5 @@ class OtherendPoints {
   final String currency = "currency";
   final String province = "provinces";
   final String district = "districts";
+  final String languages = "languages";
 }

@@ -27,10 +27,22 @@ class _SplashScreenState extends State<SplashScreen> {
   checkData() async {
     var usertoken = await box.read('userToken');
 
-    if (usertoken == null) {
-      Get.to(() => OnboardingScreen());
+    if (box.read("isoCode") == null) {
+      box.write("isoCode", "en");
     } else {
-      Get.to(() => BottomNavigationbar());
+      print("has data");
+    }
+
+    if (usertoken == null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => OnboardingScreen()),
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => BottomNavigationbar()),
+      );
     }
   }
 

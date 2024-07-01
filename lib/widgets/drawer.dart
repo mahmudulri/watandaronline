@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:watantelecom/controllers/dashboard_controller.dart';
+import 'package:watantelecom/controllers/iso_code_controller.dart';
+import 'package:watantelecom/controllers/language_controller.dart';
 import 'package:watantelecom/controllers/sign_in_controller.dart';
 import 'package:watantelecom/screens/add_card_screen.dart';
 import 'package:watantelecom/screens/myprofile_screen.dart';
@@ -21,6 +23,10 @@ class DrawerWidget extends StatelessWidget {
 
   final SignInController signInController = Get.put(SignInController());
 
+  final IscoCodeController iscoCodeController = Get.put(IscoCodeController());
+
+  final LanguageController languageController = Get.put(LanguageController());
+
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -37,7 +43,8 @@ class DrawerWidget extends StatelessWidget {
               height: 40,
             ),
             Text(
-              "My Profile",
+              languageController.alllanguageData.value.languageData!["PROFILE"]
+                  .toString(),
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -154,6 +161,66 @@ class DrawerWidget extends StatelessWidget {
               imageLink: "assets/icons/help.png",
               onPressed: () {},
             ),
+            ProfileMenuWidget(
+              itemName: "Change Language",
+              imageLink: "assets/icons/globe.png",
+              onPressed: () {
+                iscoCodeController.fetchisoCode();
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      backgroundColor: Colors.white,
+                      // contentPadding: EdgeInsets.all(0.0),
+                      content: Container(
+                        height: 300,
+                        width: screenWidth,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          children: [
+                            Expanded(
+                                child: Obx(
+                              () => iscoCodeController.isLoading.value == false
+                                  ? ListView.builder(
+                                      itemCount: iscoCodeController
+                                          .allisoCodeData
+                                          .value
+                                          .data!
+                                          .languages
+                                          .length,
+                                      itemBuilder: (context, index) {
+                                        final data = iscoCodeController
+                                            .allisoCodeData
+                                            .value
+                                            .data!
+                                            .languages[index];
+                                        return languageBox(
+                                          lanName: data.languageName,
+                                          onpressed: () {
+                                            print(data.language_code);
+                                            languageController.fetchlanData(
+                                                data.language_code.toString());
+                                            box.write("isoCode",
+                                                data.language_code.toString());
+                                            Navigator.pop(context);
+                                          },
+                                        );
+                                      },
+                                    )
+                                  : Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                            )),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
             SizedBox(
               height: 5,
             ),
@@ -251,6 +318,49 @@ class DrawerWidget extends StatelessWidget {
               },
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class languageBox extends StatelessWidget {
+  const languageBox({
+    super.key,
+    this.lanName,
+    this.onpressed,
+  });
+  final String? lanName;
+  final VoidCallback? onpressed;
+
+  @override
+  Widget build(BuildContext context) {
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 50),
+      child: GestureDetector(
+        onTap: onpressed,
+        child: Container(
+          margin: EdgeInsets.only(bottom: 6),
+          height: 40,
+          width: screenWidth,
+          decoration: BoxDecoration(
+            color: Colors.lightBlue,
+            border: Border.all(
+              width: 1,
+              color: Colors.grey,
+            ),
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Center(
+              child: Text(
+            lanName.toString(),
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
+            ),
+          )),
         ),
       ),
     );

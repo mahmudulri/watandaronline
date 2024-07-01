@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:watantelecom/controllers/language_controller.dart';
 import 'package:watantelecom/pages/more.dart';
 import 'package:watantelecom/pages/orders.dart';
 import 'package:watantelecom/pages/transactions.dart';
@@ -57,6 +58,8 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
     });
   }
 
+  final LanguageController languageController = Get.put(LanguageController());
+
   @override
   Widget build(BuildContext context) {
     Future<bool> showExitPopup() async {
@@ -87,204 +90,226 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
     }
 
     // ignore: deprecated_member_use
-    return WillPopScope(
-      onWillPop: showExitPopup,
-      child: Scaffold(
-        body: PageStorage(bucket: bucket, child: currentPage),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50),
-          ),
-          onPressed: () {
-            box.write("country_id", "2");
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ServiceScreen(),
+    return Obx(
+      () => languageController.isLoading.value == false
+          ? WillPopScope(
+              onWillPop: showExitPopup,
+              child: Scaffold(
+                body: PageStorage(bucket: bucket, child: currentPage),
+                floatingActionButton: FloatingActionButton(
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  onPressed: () {
+                    box.write("country_id", "2");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ServiceScreen(),
+                      ),
+                    );
+                    // Get.to(() => ServiceScreen());
+                  },
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.black,
+                    size: 35,
+                  ),
+                ),
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.centerDocked,
+                bottomNavigationBar: SizedBox(
+                  height: 67,
+                  child: BottomAppBar(
+                    elevation: 7.0,
+                    shape: CircularNotchedRectangle(),
+                    notchMargin: 10,
+                    color: Colors.white,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            MaterialButton(
+                              minWidth: 40,
+                              onPressed: () {
+                                setState(() {
+                                  currentPage = Myhomepage();
+                                  currentIndex = 0;
+                                  orderlistController.finalList.clear();
+                                  orderlistController.initialpage = 1;
+                                  print(orderlistController.initialpage);
+                                  print(orderlistController.finalList.length);
+                                });
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  // Icon(
+                                  //   Icons.home,
+                                  //   color: currentIndex == 0 ? Colors.blue : Colors.grey,
+                                  // ),
+                                  Image.asset(
+                                    "assets/icons/homeicon.png",
+                                    height: 25,
+                                    color: currentIndex == 0
+                                        ? AppColors.defaultColor
+                                        : Colors.black,
+                                  ),
+                                  Text(
+                                    languageController.alllanguageData.value
+                                        .languageData!["HOME"]
+                                        .toString(),
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: currentIndex == 0
+                                          ? FontWeight.w700
+                                          : FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            MaterialButton(
+                              minWidth: 40,
+                              onPressed: () {
+                                setState(() {
+                                  currentPage = TransactionsPage();
+                                  currentIndex = 1;
+                                  orderlistController.finalList.clear();
+                                  orderlistController.initialpage = 1;
+                                  print(orderlistController.initialpage);
+                                  print(orderlistController.finalList.length);
+                                });
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    "assets/icons/transactionsicon.png",
+                                    height: 25,
+                                    color: currentIndex == 1
+                                        ? AppColors.defaultColor
+                                        : Colors.black,
+                                  ),
+                                  Text(
+                                    languageController.alllanguageData.value
+                                        .languageData!["TRANSACTIONS"]
+                                        .toString(),
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: currentIndex == 1
+                                          ? AppColors.defaultColor
+                                          : Colors.black,
+                                      fontWeight: currentIndex == 1
+                                          ? FontWeight.w700
+                                          : FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            MaterialButton(
+                              minWidth: 40,
+                              onPressed: () {
+                                box.write("orderstatus", "");
+                                box.write("pageNo", "1");
+                                setState(() {
+                                  currentPage = NotificationPage();
+                                  currentIndex = 2;
+                                });
+                                orderlistController.fetchOrderlistdata();
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    "assets/icons/notificationicon.png",
+                                    height: 25,
+                                    color: currentIndex == 2
+                                        ? AppColors.defaultColor
+                                        : Colors.black,
+                                  ),
+                                  Text(
+                                    languageController.alllanguageData.value
+                                        .languageData!["ORDERS"]
+                                        .toString(),
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: currentIndex == 2
+                                          ? AppColors.defaultColor
+                                          : Colors.black,
+                                      fontWeight: currentIndex == 2
+                                          ? FontWeight.w700
+                                          : FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            MaterialButton(
+                              minWidth: 40,
+                              onPressed: () {
+                                setState(() {
+                                  currentPage = SubResellerScreen();
+                                  currentIndex = 3;
+                                  orderlistController.finalList.clear();
+                                  orderlistController.initialpage = 1;
+                                  print(orderlistController.initialpage);
+                                  print(orderlistController.finalList.length);
+                                });
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    "assets/icons/sub_reseller.png",
+                                    height: 25,
+                                    color: currentIndex == 3
+                                        ? AppColors.defaultColor
+                                        : Colors.black,
+                                  ),
+                                  Text(
+                                    languageController.alllanguageData.value
+                                        .languageData!["SUB_RESELLER"]
+                                        .toString(),
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: currentIndex == 3
+                                          ? AppColors.defaultColor
+                                          : Colors.black,
+                                      fontWeight: currentIndex == 3
+                                          ? FontWeight.w700
+                                          : FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-            );
-            // Get.to(() => ServiceScreen());
-          },
-          child: Icon(
-            Icons.add,
-            color: Colors.black,
-            size: 35,
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: SizedBox(
-          height: 65,
-          child: BottomAppBar(
-            elevation: 7.0,
-            shape: CircularNotchedRectangle(),
-            notchMargin: 10,
-            color: Colors.white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    MaterialButton(
-                      minWidth: 40,
-                      onPressed: () {
-                        setState(() {
-                          currentPage = Myhomepage();
-                          currentIndex = 0;
-                          orderlistController.finalList.clear();
-                          orderlistController.initialpage = 1;
-                          print(orderlistController.initialpage);
-                          print(orderlistController.finalList.length);
-                        });
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // Icon(
-                          //   Icons.home,
-                          //   color: currentIndex == 0 ? Colors.blue : Colors.grey,
-                          // ),
-                          Image.asset(
-                            "assets/icons/homeicon.png",
-                            height: 25,
-                            color: currentIndex == 0
-                                ? AppColors.defaultColor
-                                : Colors.black,
-                          ),
-                          Text(
-                            "Home",
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: currentIndex == 0
-                                  ? FontWeight.w700
-                                  : FontWeight.w400,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    MaterialButton(
-                      minWidth: 40,
-                      onPressed: () {
-                        setState(() {
-                          currentPage = TransactionsPage();
-                          currentIndex = 1;
-                          orderlistController.finalList.clear();
-                          orderlistController.initialpage = 1;
-                          print(orderlistController.initialpage);
-                          print(orderlistController.finalList.length);
-                        });
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            "assets/icons/transactionsicon.png",
-                            height: 25,
-                            color: currentIndex == 1
-                                ? AppColors.defaultColor
-                                : Colors.black,
-                          ),
-                          Text(
-                            "Transactions",
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: currentIndex == 1
-                                  ? AppColors.defaultColor
-                                  : Colors.black,
-                              fontWeight: currentIndex == 1
-                                  ? FontWeight.w700
-                                  : FontWeight.w400,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+            )
+          : Expanded(
+              child: Container(
+                color: Colors.white,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.grey,
+                  ),
                 ),
-                Row(
-                  children: [
-                    MaterialButton(
-                      minWidth: 40,
-                      onPressed: () {
-                        box.write("orderstatus", "");
-                        box.write("pageNo", "1");
-                        setState(() {
-                          currentPage = NotificationPage();
-                          currentIndex = 2;
-                        });
-                        orderlistController.fetchOrderlistdata();
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            "assets/icons/notificationicon.png",
-                            height: 25,
-                            color: currentIndex == 2
-                                ? AppColors.defaultColor
-                                : Colors.black,
-                          ),
-                          Text(
-                            "Orders",
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: currentIndex == 2
-                                  ? AppColors.defaultColor
-                                  : Colors.black,
-                              fontWeight: currentIndex == 2
-                                  ? FontWeight.w700
-                                  : FontWeight.w400,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    MaterialButton(
-                      minWidth: 40,
-                      onPressed: () {
-                        setState(() {
-                          currentPage = SubResellerScreen();
-                          currentIndex = 3;
-                          orderlistController.finalList.clear();
-                          orderlistController.initialpage = 1;
-                          print(orderlistController.initialpage);
-                          print(orderlistController.finalList.length);
-                        });
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            "assets/icons/sub_reseller.png",
-                            height: 25,
-                            color: currentIndex == 3
-                                ? AppColors.defaultColor
-                                : Colors.black,
-                          ),
-                          Text(
-                            "Sub reseller",
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: currentIndex == 3
-                                  ? AppColors.defaultColor
-                                  : Colors.black,
-                              fontWeight: currentIndex == 3
-                                  ? FontWeight.w700
-                                  : FontWeight.w400,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 }
