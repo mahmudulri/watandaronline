@@ -132,6 +132,10 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
                         setState(() {
                           currentPage = Myhomepage();
                           currentIndex = 0;
+                          orderlistController.finalList.clear();
+                          orderlistController.initialpage = 1;
+                          print(orderlistController.initialpage);
+                          print(orderlistController.finalList.length);
                         });
                       },
                       child: Column(
@@ -166,6 +170,10 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
                         setState(() {
                           currentPage = TransactionsPage();
                           currentIndex = 1;
+                          orderlistController.finalList.clear();
+                          orderlistController.initialpage = 1;
+                          print(orderlistController.initialpage);
+                          print(orderlistController.finalList.length);
                         });
                       },
                       child: Column(
@@ -239,6 +247,10 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
                         setState(() {
                           currentPage = SubResellerScreen();
                           currentIndex = 3;
+                          orderlistController.finalList.clear();
+                          orderlistController.initialpage = 1;
+                          print(orderlistController.initialpage);
+                          print(orderlistController.finalList.length);
                         });
                       },
                       child: Column(

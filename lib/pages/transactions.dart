@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:watantelecom/utils/colors.dart';
 
 import '../controllers/transaction_controller.dart';
@@ -12,6 +13,8 @@ class TransactionsPage extends StatelessWidget {
   TransactionsPage({super.key});
   final TransactionController transactionController =
       Get.put(TransactionController());
+
+  final box = GetStorage();
 
   final TextEditingController dateController = TextEditingController();
 
@@ -291,7 +294,7 @@ class TransactionsPage extends StatelessWidget {
                                                               ),
                                                             ),
                                                             Text(
-                                                              "${data.currency!.code} ${data.amount}",
+                                                              "${box.read("currency_code")} ${data.amount}",
                                                               style: TextStyle(
                                                                 fontSize: 10,
                                                                 color: data.status

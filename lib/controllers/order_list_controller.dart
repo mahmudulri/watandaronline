@@ -10,11 +10,9 @@ import '../models/sub_reseller_model.dart';
 class OrderlistController extends GetxController {
   String filterDate = "order_status=0";
   String orderstatus = "";
-  // @override
-  // void onInit() {
-  //   fetchSubReseller();
-  //   super.onInit();
-  // }
+  int initialpage = 1;
+
+  RxList finalList = <Order>[].obs;
 
   var isLoading = false.obs;
 
@@ -25,6 +23,14 @@ class OrderlistController extends GetxController {
       isLoading(true);
       await OrderListApi().fetchorderList().then((value) {
         allorderlist.value = value;
+
+        if (allorderlist.value.data != null) {
+          finalList.addAll(allorderlist.value.data!.orders);
+        }
+        // print(finalList.length.toString());
+        finalList.forEach((order) {
+          print(order.id.toString());
+        });
 
         isLoading(false);
       });

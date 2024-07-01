@@ -85,8 +85,8 @@ class _MyhomepageState extends State<Myhomepage> {
 
   @override
   Widget build(BuildContext context) {
-    orderlistController.fetchOrderlistdata();
-    dashboardController.fetchDashboardData();
+    // orderlistController.fetchOrderlistdata();
+    // dashboardController.fetchDashboardData();
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
       statusBarColor: Colors.blue, // Optional: makes status bar transparent
     ));
@@ -763,7 +763,7 @@ class _MyhomepageState extends State<Myhomepage> {
                                                                               ),
                                                                             ),
                                                                             Text(
-                                                                              data.bundle!.sellingPrice.toString() + data.bundle!.preferedCurrency!.code.toString(),
+                                                                              data.bundle!.sellingPrice.toString() + " " + box.read("currency_code"),
                                                                               style: TextStyle(
                                                                                 fontSize: 14,
                                                                                 color: AppColors.borderColor,
@@ -1009,11 +1009,9 @@ class _MyhomepageState extends State<Myhomepage> {
                                                       width: 2,
                                                     ),
                                                     Text(
-                                                      data
-                                                          .bundle!
-                                                          .preferedCurrency!
-                                                          .code
-                                                          .toString(),
+                                                      " " +
+                                                          box.read(
+                                                              "currency_code"),
                                                       style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w500,
