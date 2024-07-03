@@ -239,13 +239,22 @@ class _ServiceScreenState extends State<ServiceScreen> {
                                   // );
 
                                   if (data.type == "social") {
-                                    Get.to(() => SocialRechargeScreen());
-                                    // MaterialPageRoute(
-                                    //   builder: (context) =>
-                                    //       SocialRechargeScreen(),
-                                    // );
+                                    // Get.to(() => SocialRechargeScreen());
+
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            SocialRechargeScreen(),
+                                      ),
+                                    );
                                   } else {
-                                    Get.to(() => RechargeScreen());
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => RechargeScreen(),
+                                      ),
+                                    );
                                   }
                                 },
                               );

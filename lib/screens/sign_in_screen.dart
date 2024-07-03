@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:watantelecom/controllers/checker.dart';
 import 'package:watantelecom/controllers/sign_in_controller.dart';
@@ -16,8 +18,15 @@ import '../bottom_nav_screen.dart';
 import '../widgets/auth_textfield.dart';
 import 'sign_up_screen.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   SignInScreen({super.key});
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  final box = GetStorage();
 
   final SignInController signInController = Get.put(SignInController());
 
@@ -143,6 +152,34 @@ class SignInScreen extends StatelessWidget {
                                     signInController
                                         .passwordController.text.isEmpty) {
                                   Get.snackbar("Opps!", "Fill the textfield");
+
+                                  // await signInController.signIn();
+                                  // if (signInController.loginsuccess.value ==
+                                  //     false) {
+                                  //   Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //       builder: (context) =>
+                                  //           BottomNavigationbar(),
+                                  //     ),
+                                  //   );
+
+                                  //   if (box.read("direction") == "rtl") {
+                                  //     setState(() {
+                                  //       EasyLocalization.of(context)!
+                                  //           .setLocale(Locale('ar', 'AE'));
+                                  //     });
+                                  //     setState(() {});
+                                  //   } else {
+                                  //     setState(() {
+                                  //       EasyLocalization.of(context)!
+                                  //           .setLocale(Locale('en', 'US'));
+                                  //     });
+                                  //     setState(() {});
+                                  //   }
+                                  // } else {
+                                  //   print("object");
+                                  // }
                                 } else {
                                   print("has data");
                                   await signInController.signIn();
@@ -155,6 +192,20 @@ class SignInScreen extends StatelessWidget {
                                             BottomNavigationbar(),
                                       ),
                                     );
+
+                                    if (box.read("direction") == "rtl") {
+                                      setState(() {
+                                        EasyLocalization.of(context)!
+                                            .setLocale(Locale('ar', 'AE'));
+                                      });
+                                      setState(() {});
+                                    } else {
+                                      setState(() {
+                                        EasyLocalization.of(context)!
+                                            .setLocale(Locale('en', 'US'));
+                                      });
+                                      setState(() {});
+                                    }
                                   } else {
                                     print("object");
                                   }
@@ -195,6 +246,9 @@ class SignInScreen extends StatelessWidget {
                                 child: SocialButton(
                                   buttonName: "Google",
                                   imageLink: "assets/images/googleicon.png",
+                                  onPressed: () {
+                                    print(box.read("direction"));
+                                  },
                                 ),
                               ),
                               SizedBox(

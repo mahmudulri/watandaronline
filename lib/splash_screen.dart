@@ -29,20 +29,26 @@ class _SplashScreenState extends State<SplashScreen> {
   final LanguageController languageController = Get.put(LanguageController());
   final IscoCodeController iscoCodeController = Get.put(IscoCodeController());
   checkData() async {
-    if (box.read("isoCode") == null) {
-      languageController.fetchlanData("en");
-      box.write("isoCode", "en");
-    } else {
-      print("has data");
-      languageController.fetchlanData(box.read("isoCode"));
-    }
+    // if (box.read("isoCode") == null) {
+    //   languageController.fetchlanData("en");
+    //   box.write("isoCode", "en");
+    // } else {
+    //   print("has data");
+    //   languageController.fetchlanData(box.read("isoCode"));
+    // }
 
     if (box.read('userToken') == null) {
+      box.write("isoCode", "en");
+      box.write("direction", "ltr");
+      languageController.fetchlanData("en");
+      languageController.fetchlanData(box.read("isoCode"));
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => OnboardingScreen()),
       );
     } else {
+      languageController.fetchlanData(box.read("isoCode"));
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => BottomNavigationbar()),

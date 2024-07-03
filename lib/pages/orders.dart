@@ -483,6 +483,9 @@ class _NotificationPageState extends State<NotificationPage> {
                         )
                       : SizedBox(),
                 ),
+                SizedBox(
+                  height: 5,
+                ),
                 Expanded(
                   child: Obx(() => orderlistController.isLoading.value == false
                       ? RefreshIndicator(
@@ -524,7 +527,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                     RepaintBoundary(
                                                       key: _globalKey,
                                                       child: Container(
-                                                        height: 400,
+                                                        height: 420,
                                                         width: screenWidth,
                                                         decoration:
                                                             BoxDecoration(

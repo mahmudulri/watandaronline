@@ -26,7 +26,7 @@ class AuthTextField extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.only(left: 15),
+        padding: EdgeInsets.symmetric(horizontal: 15),
         child: Center(
           child: TextField(
             keyboardType: hintText == "Enter your amount"
@@ -34,11 +34,12 @@ class AuthTextField extends StatelessWidget {
                 : TextInputType.name,
             controller: controller,
             decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: hintText,
-                hintStyle: TextStyle(
-                  fontWeight: FontWeight.w300,
-                )),
+              border: InputBorder.none,
+              hintText: hintText,
+              hintStyle: TextStyle(
+                fontWeight: FontWeight.w300,
+              ),
+            ),
           ),
         ),
       ),

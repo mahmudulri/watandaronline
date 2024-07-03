@@ -1,23 +1,20 @@
 import 'package:get/get.dart';
-import 'package:watantelecom/models/orders_list_model.dart';
+import 'package:watantelecom/models/history_model.dart';
 
-import 'package:watantelecom/services/order_list_service.dart';
+import 'package:watantelecom/services/history_service.dart';
 
-class OrderlistController extends GetxController {
-  String filterDate = "order_status=0";
-  String orderstatus = "";
-  int initialpage = 1;
-
+class HistoryController extends GetxController {
   RxList finalList = <Order>[].obs;
+  int initialpage = 1;
 
   var isLoading = false.obs;
 
-  var allorderlist = OrderListModel().obs;
+  var allorderlist = HistoryModel().obs;
 
-  void fetchOrderlistdata() async {
+  void fetchHistory() async {
     try {
       isLoading(true);
-      await OrderListApi().fetchorderList().then((value) {
+      await HistoryServiceApi().fetchHistory().then((value) {
         allorderlist.value = value;
 
         if (allorderlist.value.data != null) {

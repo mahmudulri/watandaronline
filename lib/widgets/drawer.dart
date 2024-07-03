@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -13,9 +14,14 @@ import 'package:watantelecom/screens/sub_reseller_screen.dart';
 import 'package:watantelecom/utils/colors.dart';
 import 'package:watantelecom/widgets/profile_menu_widget.dart';
 
-class DrawerWidget extends StatelessWidget {
+class DrawerWidget extends StatefulWidget {
   DrawerWidget({super.key});
 
+  @override
+  State<DrawerWidget> createState() => _DrawerWidgetState();
+}
+
+class _DrawerWidgetState extends State<DrawerWidget> {
   final box = GetStorage();
 
   final DashboardController dashboardController =
@@ -109,7 +115,7 @@ class DrawerWidget extends StatelessWidget {
                   .toString(),
               imageLink: "assets/icons/homeicon.png",
               onPressed: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => MyprofileScreen(),
@@ -124,7 +130,7 @@ class DrawerWidget extends StatelessWidget {
               itemName: "Add card",
               imageLink: "assets/icons/add_card.png",
               onPressed: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => AddCardScreen(),
@@ -141,7 +147,7 @@ class DrawerWidget extends StatelessWidget {
                   .toString(),
               imageLink: "assets/icons/sub_reseller.png",
               onPressed: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => SubResellerScreen(),
@@ -209,11 +215,29 @@ class DrawerWidget extends StatelessWidget {
                                         return languageBox(
                                           lanName: data.languageName,
                                           onpressed: () {
-                                            print(data.language_code);
                                             languageController.fetchlanData(
                                                 data.language_code.toString());
                                             box.write("isoCode",
                                                 data.language_code.toString());
+                                            box.write("direction",
+                                                data.direction.toString());
+
+                                            if (data.direction == "rtl") {
+                                              setState(() {
+                                                EasyLocalization.of(context)!
+                                                    .setLocale(
+                                                        Locale('ar', 'AE'));
+                                              });
+                                              setState(() {});
+                                            } else {
+                                              setState(() {
+                                                EasyLocalization.of(context)!
+                                                    .setLocale(
+                                                        Locale('en', 'US'));
+                                              });
+                                              setState(() {});
+                                            }
+
                                             Navigator.pop(context);
                                           },
                                         );
@@ -240,99 +264,130 @@ class DrawerWidget extends StatelessWidget {
                   .toString(),
               imageLink: "assets/icons/logout.png",
               onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      content: Container(
-                        height: 140,
-                        width: screenWidth,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        child: Column(
-                          children: [
-                            Text(
-                              languageController.alllanguageData.value
-                                  .languageData!["DO_YOU_WANT_TO_LOGOUT"]
-                                  .toString(),
-                              style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 40,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => SignInScreen(),
-                                      ),
-                                    );
-
-                                    signInController.usernameController.clear();
-                                    signInController.passwordController.clear();
-
-                                    box.remove("userToken");
-                                  },
-                                  child: Container(
-                                    height: 40,
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.borderColor,
-                                      borderRadius: BorderRadius.circular(7),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        languageController.alllanguageData.value
-                                            .languageData!["YES"]
-                                            .toString(),
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Container(
-                                    height: 40,
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.borderColor,
-                                      borderRadius: BorderRadius.circular(7),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        languageController.alllanguageData.value
-                                            .languageData!["NO"]
-                                            .toString(),
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SignInScreen(),
+                  ),
                 );
+
+                signInController.usernameController.clear();
+                signInController.passwordController.clear();
+
+                box.remove("userToken");
+                // showDialog(
+                //   context: context,
+                //   builder: (context) {
+                //     return AlertDialog(
+                //       content: Container(
+                //         height: 140,
+                //         width: screenWidth,
+                //         decoration: BoxDecoration(
+                //           color: Colors.white,
+                //         ),
+                //         child: Column(
+                //           children: [
+                //             Text(
+                //               languageController.alllanguageData.value
+                //                   .languageData!["DO_YOU_WANT_TO_LOGOUT"]
+                //                   .toString(),
+                //               style: TextStyle(
+                //                 fontSize: 17,
+                //                 fontWeight: FontWeight.w600,
+                //               ),
+                //             ),
+                //             SizedBox(
+                //               height: 40,
+                //             ),
+                //             Row(
+                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //               children: [
+                //                 GestureDetector(
+                //                   onTap: () {
+                //                     WidgetsBinding.instance
+                //                         .addPostFrameCallback((_) {
+                //                       Navigator.push(
+                //                         context,
+                //                         MaterialPageRoute(
+                //                           builder: (context) {
+                //                             box.remove("token");
+                //                             return SignInScreen();
+                //                           },
+                //                         ),
+                //                       );
+                //                     });
+                //                     signInController.usernameController.clear();
+                //                     signInController.passwordController.clear();
+
+                //                     box.remove("userToken");
+
+                //                     //...........................
+
+                //                     // Navigator.of(context).pop();
+                //                     // Navigator.push(
+                //                     //   context,
+                //                     //   MaterialPageRoute(
+                //                     //     builder: (context) => SignInScreen(),
+                //                     //   ),
+                //                     // );
+
+                //                     // signInController.usernameController.clear();
+                //                     // signInController.passwordController.clear();
+
+                //                     // box.remove("userToken");
+                //                   },
+                //                   child: Container(
+                //                     height: 40,
+                //                     width: 100,
+                //                     decoration: BoxDecoration(
+                //                       color: AppColors.borderColor,
+                //                       borderRadius: BorderRadius.circular(7),
+                //                     ),
+                //                     child: Center(
+                //                       child: Text(
+                //                         languageController.alllanguageData.value
+                //                             .languageData!["YES"]
+                //                             .toString(),
+                //                         style: TextStyle(
+                //                           color: Colors.white,
+                //                           fontWeight: FontWeight.w500,
+                //                         ),
+                //                       ),
+                //                     ),
+                //                   ),
+                //                 ),
+                //                 GestureDetector(
+                //                   onTap: () {
+                //                     Navigator.of(context).pop();
+                //                   },
+                //                   child: Container(
+                //                     height: 40,
+                //                     width: 100,
+                //                     decoration: BoxDecoration(
+                //                       color: AppColors.borderColor,
+                //                       borderRadius: BorderRadius.circular(7),
+                //                     ),
+                //                     child: Center(
+                //                       child: Text(
+                //                         languageController.alllanguageData.value
+                //                             .languageData!["NO"]
+                //                             .toString(),
+                //                         style: TextStyle(
+                //                           color: Colors.white,
+                //                           fontWeight: FontWeight.w500,
+                //                         ),
+                //                       ),
+                //                     ),
+                //                   ),
+                //                 ),
+                //               ],
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     );
+                //   },
+                // );
               },
             ),
           ],
