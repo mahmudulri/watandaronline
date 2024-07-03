@@ -20,6 +20,8 @@ class LanguageController extends GetxController {
       await LanguageApi().fetchLanguage(isoCode).then((value) {
         alllanguageData.value = value;
 
+        // print(alllanguageData.toJson()["language_data"]);
+
         isLoading(false);
       });
 

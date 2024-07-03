@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:watantelecom/controllers/categories_list_controller.dart';
 import 'package:watantelecom/controllers/country_list_controller.dart';
+import 'package:watantelecom/controllers/language_controller.dart';
 import 'package:watantelecom/controllers/operator_controller.dart';
 import 'package:watantelecom/controllers/service_controller.dart';
 
@@ -61,6 +62,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
       Get.put(CategorisListController());
 
   final box = GetStorage();
+  final LanguageController languageController = Get.put(LanguageController());
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +89,8 @@ class _ServiceScreenState extends State<ServiceScreen> {
               print(box.read("country_id"));
             },
             child: Text(
-              "Service",
+              languageController.alllanguageData.value.languageData!["SERVICES"]
+                  .toString(),
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,

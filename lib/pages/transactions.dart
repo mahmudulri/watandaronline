@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:watantelecom/controllers/language_controller.dart';
 import 'package:watantelecom/utils/colors.dart';
 
 import '../controllers/transaction_controller.dart';
@@ -17,6 +18,7 @@ class TransactionsPage extends StatelessWidget {
   final box = GetStorage();
 
   final TextEditingController dateController = TextEditingController();
+  final LanguageController languageController = Get.put(LanguageController());
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,9 @@ class TransactionsPage extends StatelessWidget {
           automaticallyImplyLeading: false,
           centerTitle: true,
           title: Text(
-            "Transactions",
+            languageController
+                .alllanguageData.value.languageData!["TRANSACTIONS"]
+                .toString(),
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -105,7 +109,9 @@ class TransactionsPage extends StatelessWidget {
                           child: Row(
                             children: [
                               Text(
-                                "Search",
+                                languageController.alllanguageData.value
+                                    .languageData!["SEARCH"]
+                                    .toString(),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500,
@@ -124,7 +130,13 @@ class TransactionsPage extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "All Transactions",
+                      languageController
+                              .alllanguageData.value.languageData!["ALL"]
+                              .toString() +
+                          " " +
+                          languageController.alllanguageData.value
+                              .languageData!["TRANSACTIONS"]
+                              .toString(),
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

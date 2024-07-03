@@ -78,7 +78,13 @@ class _MyhomepageState extends State<Myhomepage> {
           final result = await ImageGallerySaver.saveImage(pngBytes,
               quality: 100, name: "screenshot");
           print(result);
-          Get.snackbar("Suceess", "Save image to gallery");
+          Get.snackbar(
+            languageController.alllanguageData.value.languageData!["SUCCESS"]
+                .toString(),
+            languageController
+                .alllanguageData.value.languageData!["SAVED_IMAGE_TO_GALLERY"]
+                .toString(),
+          );
         }
       }
     } catch (e) {
@@ -112,7 +118,8 @@ class _MyhomepageState extends State<Myhomepage> {
         ),
         elevation: 0.0,
         backgroundColor: AppColors.defaultColor,
-        title: Obx(() => dashboardController.isLoading.value == false
+        title: Obx(() => dashboardController.isLoading.value == false &&
+                countryListController.isLoading.value == false
             ? Column(
                 children: [
                   Row(
@@ -355,7 +362,11 @@ class _MyhomepageState extends State<Myhomepage> {
                                       width: 5,
                                     ),
                                     financialbox(
-                                      boxname: "Total Sold amount",
+                                      boxname: languageController
+                                          .alllanguageData
+                                          .value
+                                          .languageData!["TOTAL_SOLD_AMOUNT"]
+                                          .toString(),
                                       balance: dashboardController
                                           .alldashboardData
                                           .value
@@ -368,7 +379,11 @@ class _MyhomepageState extends State<Myhomepage> {
                                       width: 5,
                                     ),
                                     financialbox(
-                                      boxname: "Total revenue",
+                                      boxname: languageController
+                                          .alllanguageData
+                                          .value
+                                          .languageData!["TOTAL_REVENUE"]
+                                          .toString(),
                                       balance: dashboardController
                                           .alldashboardData
                                           .value
@@ -381,7 +396,11 @@ class _MyhomepageState extends State<Myhomepage> {
                                       width: 5,
                                     ),
                                     financialbox(
-                                      boxname: "Today sale",
+                                      boxname: languageController
+                                          .alllanguageData
+                                          .value
+                                          .languageData!["TODAY_SALE"]
+                                          .toString(),
                                       balance: dashboardController
                                           .alldashboardData
                                           .value
@@ -394,7 +413,11 @@ class _MyhomepageState extends State<Myhomepage> {
                                       width: 5,
                                     ),
                                     financialbox(
-                                      boxname: "Today profit",
+                                      boxname: languageController
+                                          .alllanguageData
+                                          .value
+                                          .languageData!["TODAY_PROFIT"]
+                                          .toString(),
                                       balance: dashboardController
                                           .alldashboardData
                                           .value
@@ -556,7 +579,7 @@ class _MyhomepageState extends State<Myhomepage> {
                                                                                 // _capturePng();
                                                                               },
                                                                               child: Container(
-                                                                                width: 70,
+                                                                                width: 90,
                                                                                 decoration: BoxDecoration(
                                                                                   color: Colors.blue,
                                                                                   borderRadius: BorderRadius.circular(5),
@@ -571,7 +594,7 @@ class _MyhomepageState extends State<Myhomepage> {
                                                                                       ),
                                                                                       child: Center(
                                                                                         child: Text(
-                                                                                          "Share",
+                                                                                          languageController.alllanguageData.value.languageData!["SHARE"].toString(),
                                                                                           style: TextStyle(
                                                                                             color: Colors.white,
                                                                                           ),
@@ -694,18 +717,18 @@ class _MyhomepageState extends State<Myhomepage> {
                                                                               MainAxisAlignment.spaceBetween,
                                                                           children: [
                                                                             Text(
-                                                                              "Status : ",
+                                                                              languageController.alllanguageData.value.languageData!["ORDER_STATUS"].toString(),
                                                                               style: TextStyle(
                                                                                 color: Colors.green,
                                                                                 fontSize: 17,
                                                                               ),
                                                                             ),
                                                                             Text(
-                                                                              data.status == "0"
-                                                                                  ? "Pending"
-                                                                                  : data.status == "1"
-                                                                                      ? "Confirmed"
-                                                                                      : "Rejected",
+                                                                              data.status.toString() == "0"
+                                                                                  ? languageController.alllanguageData.value.languageData!["PENDING"].toString()
+                                                                                  : data.status.toString() == "1"
+                                                                                      ? languageController.alllanguageData.value.languageData!["CONFIRMED"].toString()
+                                                                                      : languageController.alllanguageData.value.languageData!["REJECTED"].toString(),
                                                                               style: TextStyle(
                                                                                 fontSize: 17,
                                                                                 fontWeight: FontWeight.w400,
@@ -728,7 +751,7 @@ class _MyhomepageState extends State<Myhomepage> {
                                                                               MainAxisAlignment.spaceBetween,
                                                                           children: [
                                                                             Text(
-                                                                              "Network type : ",
+                                                                              languageController.alllanguageData.value.languageData!["NETWORK_TYPE"].toString(),
                                                                               style: TextStyle(
                                                                                 fontSize: 14,
                                                                                 color: AppColors.borderColor,
@@ -752,7 +775,7 @@ class _MyhomepageState extends State<Myhomepage> {
                                                                               MainAxisAlignment.spaceBetween,
                                                                           children: [
                                                                             Text(
-                                                                              "Bundle type : ",
+                                                                              languageController.alllanguageData.value.languageData!["BUNDLE_TYPE"].toString(),
                                                                               style: TextStyle(
                                                                                 fontSize: 14,
                                                                                 color: AppColors.borderColor,
@@ -776,7 +799,7 @@ class _MyhomepageState extends State<Myhomepage> {
                                                                               MainAxisAlignment.spaceBetween,
                                                                           children: [
                                                                             Text(
-                                                                              "Price : ",
+                                                                              languageController.alllanguageData.value.languageData!["PRICE"].toString(),
                                                                               style: TextStyle(
                                                                                 fontSize: 14,
                                                                                 color: AppColors.borderColor,
@@ -800,7 +823,7 @@ class _MyhomepageState extends State<Myhomepage> {
                                                                               MainAxisAlignment.spaceBetween,
                                                                           children: [
                                                                             Text(
-                                                                              "Phone no : ",
+                                                                              languageController.alllanguageData.value.languageData!["PHONE_NUMBER"].toString(),
                                                                               style: TextStyle(
                                                                                 fontSize: 14,
                                                                                 color: AppColors.borderColor,
@@ -824,7 +847,7 @@ class _MyhomepageState extends State<Myhomepage> {
                                                                               MainAxisAlignment.spaceBetween,
                                                                           children: [
                                                                             Text(
-                                                                              "Valitidy type : ",
+                                                                              languageController.alllanguageData.value.languageData!["VALIDITY_TYPE"].toString(),
                                                                               style: TextStyle(
                                                                                 fontSize: 14,
                                                                                 color: AppColors.borderColor,
@@ -848,7 +871,7 @@ class _MyhomepageState extends State<Myhomepage> {
                                                                               MainAxisAlignment.spaceBetween,
                                                                           children: [
                                                                             Text(
-                                                                              "Order ID : ",
+                                                                              languageController.alllanguageData.value.languageData!["ORDER_ID"].toString(),
                                                                               style: TextStyle(
                                                                                 fontSize: 14,
                                                                                 color: AppColors.borderColor,
@@ -1058,12 +1081,27 @@ class _MyhomepageState extends State<Myhomepage> {
                                                       Text(
                                                         data.status.toString() ==
                                                                 "0"
-                                                            ? "pending"
+                                                            ? languageController
+                                                                .alllanguageData
+                                                                .value
+                                                                .languageData![
+                                                                    "PENDING"]
+                                                                .toString()
                                                             : data.status
                                                                         .toString() ==
                                                                     "1"
-                                                                ? "confirmed"
-                                                                : "rejected",
+                                                                ? languageController
+                                                                    .alllanguageData
+                                                                    .value
+                                                                    .languageData![
+                                                                        "CONFIRMED"]
+                                                                    .toString()
+                                                                : languageController
+                                                                    .alllanguageData
+                                                                    .value
+                                                                    .languageData![
+                                                                        "REJECTED"]
+                                                                    .toString(),
                                                         style: TextStyle(
                                                           fontSize: 12,
                                                           color: Colors.black,

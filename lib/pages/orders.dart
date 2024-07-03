@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:intl/intl.dart';
+import 'package:watantelecom/controllers/language_controller.dart';
 import 'package:watantelecom/controllers/order_list_controller.dart';
 import 'package:watantelecom/screens/order_details.dart';
 import 'package:watantelecom/utils/colors.dart';
@@ -44,9 +45,18 @@ class _NotificationPageState extends State<NotificationPage> {
   bool isvisible = false;
 
   List orderStatus = [
-    {"title": "Pending", "value": "order_status=0"},
-    {"title": "Confirmed", "value": "order_status=1"},
-    {"title": "Rejected", "value": "order_status=2"},
+    {
+      "title": "Pending",
+      "value": "order_status=0",
+    },
+    {
+      "title": "Confirmed",
+      "value": "order_status=1",
+    },
+    {
+      "title": "Rejected",
+      "value": "order_status=2",
+    },
   ];
   String defaultValue = "";
   String secondDropDown = "";
@@ -74,7 +84,13 @@ class _NotificationPageState extends State<NotificationPage> {
           final result = await ImageGallerySaver.saveImage(pngBytes,
               quality: 100, name: "screenshot");
           print(result);
-          Get.snackbar("Suceess", "Save image to gallery");
+          Get.snackbar(
+            languageController.alllanguageData.value.languageData!["SUCCESS"]
+                .toString(),
+            languageController
+                .alllanguageData.value.languageData!["SAVED_IMAGE_TO_GALLERY"]
+                .toString(),
+          );
         }
       }
     } catch (e) {
@@ -101,6 +117,8 @@ class _NotificationPageState extends State<NotificationPage> {
     }
   }
 
+  final LanguageController languageController = Get.put(LanguageController());
+
   @override
   Widget build(BuildContext context) {
     // orderlistController.fetchOrderlistdata();
@@ -120,7 +138,8 @@ class _NotificationPageState extends State<NotificationPage> {
               print(orderlistController.finalList.length);
             },
             child: Text(
-              "Orders",
+              languageController.alllanguageData.value.languageData!["ORDERS"]
+                  .toString(),
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -165,7 +184,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                   keyboardType: TextInputType.phone,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: "Enter Number ...",
+                                    hintText: languageController
+                                        .alllanguageData
+                                        .value
+                                        .languageData!["ENTER_YOUR_NUMBER"]
+                                        .toString(),
                                     hintStyle: TextStyle(
                                       fontSize: 14,
                                     ),
@@ -204,7 +227,9 @@ class _NotificationPageState extends State<NotificationPage> {
                           child: Row(
                             children: [
                               Text(
-                                "Filter",
+                                languageController.alllanguageData.value
+                                    .languageData!["FILTER"]
+                                    .toString(),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500,
@@ -249,7 +274,9 @@ class _NotificationPageState extends State<NotificationPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Order status",
+                                    languageController.alllanguageData.value
+                                        .languageData!["ORDER_STATUS"]
+                                        .toString(),
                                   ),
                                   Container(
                                     height: 40,
@@ -273,7 +300,12 @@ class _NotificationPageState extends State<NotificationPage> {
                                               DropdownMenuItem(
                                                 value: "",
                                                 child: Text(
-                                                  "Select status",
+                                                  languageController
+                                                      .alllanguageData
+                                                      .value
+                                                      .languageData![
+                                                          "SELECTED_DATE"]
+                                                      .toString(),
                                                   style: TextStyle(
                                                     fontSize: 15,
                                                   ),
@@ -306,7 +338,11 @@ class _NotificationPageState extends State<NotificationPage> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Select Date"),
+                                  Text(
+                                    languageController.alllanguageData.value
+                                        .languageData!["SELECTED_DATE"]
+                                        .toString(),
+                                  ),
                                   Container(
                                     height: 30,
                                     width: 160,
@@ -323,7 +359,14 @@ class _NotificationPageState extends State<NotificationPage> {
                                       child: Row(
                                         children: [
                                           Expanded(
-                                            child: Text("Select Status"),
+                                            child: Text(
+                                              languageController
+                                                  .alllanguageData
+                                                  .value
+                                                  .languageData![
+                                                      "SELECT_STATUS"]
+                                                  .toString(),
+                                            ),
                                           ),
                                           Icon(Icons.arrow_downward),
                                         ],
@@ -360,7 +403,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          "Apply filter",
+                                          languageController
+                                              .alllanguageData
+                                              .value
+                                              .languageData!["APPLY_FILTER"]
+                                              .toString(),
                                           style: TextStyle(
                                             color: Color(0xffFFFFFF),
                                             fontSize: 13,
@@ -397,7 +444,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          "Clear filter",
+                                          languageController
+                                              .alllanguageData
+                                              .value
+                                              .languageData!["CLEAR_FILTER"]
+                                              .toString(),
                                           style: TextStyle(
                                             color: Color(0xffFFFFFF),
                                             fontSize: 13,
@@ -534,7 +585,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                           child:
                                                                               Container(
                                                                             width:
-                                                                                70,
+                                                                                90,
                                                                             decoration:
                                                                                 BoxDecoration(
                                                                               color: Colors.blue,
@@ -551,7 +602,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                                   ),
                                                                                   child: Center(
                                                                                     child: Text(
-                                                                                      "Share",
+                                                                                      languageController.alllanguageData.value.languageData!["SHARE"].toString(),
                                                                                       style: TextStyle(
                                                                                         color: Colors.white,
                                                                                       ),
@@ -682,7 +733,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               .spaceBetween,
                                                                       children: [
                                                                         Text(
-                                                                          "Status : ",
+                                                                          languageController
+                                                                              .alllanguageData
+                                                                              .value
+                                                                              .languageData!["ORDER_STATUS"]
+                                                                              .toString(),
                                                                           style:
                                                                               TextStyle(
                                                                             color:
@@ -692,11 +747,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                           ),
                                                                         ),
                                                                         Text(
-                                                                          data.status == "0"
-                                                                              ? "Pending"
-                                                                              : data.status == "1"
-                                                                                  ? "Confirmed"
-                                                                                  : "Rejected",
+                                                                          data.status.toString() == "0"
+                                                                              ? languageController.alllanguageData.value.languageData!["PENDING"].toString()
+                                                                              : data.status.toString() == "1"
+                                                                                  ? languageController.alllanguageData.value.languageData!["CONFIRMED"].toString()
+                                                                                  : languageController.alllanguageData.value.languageData!["REJECTED"].toString(),
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
@@ -722,7 +777,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               .spaceBetween,
                                                                       children: [
                                                                         Text(
-                                                                          "Network type : ",
+                                                                          languageController
+                                                                              .alllanguageData
+                                                                              .value
+                                                                              .languageData!["NETWORK_TYPE"]
+                                                                              .toString(),
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
@@ -757,7 +816,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               .spaceBetween,
                                                                       children: [
                                                                         Text(
-                                                                          "Bundle type : ",
+                                                                          languageController
+                                                                              .alllanguageData
+                                                                              .value
+                                                                              .languageData!["BUNDLE_TYPE"]
+                                                                              .toString(),
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
@@ -789,7 +852,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               .spaceBetween,
                                                                       children: [
                                                                         Text(
-                                                                          "Price : ",
+                                                                          languageController
+                                                                              .alllanguageData
+                                                                              .value
+                                                                              .languageData!["PRICE"]
+                                                                              .toString(),
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
@@ -821,7 +888,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               .spaceBetween,
                                                                       children: [
                                                                         Text(
-                                                                          "Phone no : ",
+                                                                          languageController
+                                                                              .alllanguageData
+                                                                              .value
+                                                                              .languageData!["PHONE_NUMBER"]
+                                                                              .toString(),
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
@@ -852,7 +923,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               .spaceBetween,
                                                                       children: [
                                                                         Text(
-                                                                          "Valitidy type : ",
+                                                                          languageController
+                                                                              .alllanguageData
+                                                                              .value
+                                                                              .languageData!["VALIDITY_TYPE"]
+                                                                              .toString(),
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
@@ -884,7 +959,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               .spaceBetween,
                                                                       children: [
                                                                         Text(
-                                                                          "Order ID : ",
+                                                                          languageController
+                                                                              .alllanguageData
+                                                                              .value
+                                                                              .languageData!["ORDER_ID"]
+                                                                              .toString(),
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
@@ -977,23 +1056,6 @@ class _NotificationPageState extends State<NotificationPage> {
                                             ),
                                           );
                                         });
-
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) => OrderDetailsScreen(
-                                    //       status: data.status,
-                                    //       orderID: data.id.toString(),
-                                    //       date: DateFormat('dd MMM yyyy').format(
-                                    //           DateTime.parse(
-                                    //               data.createdAt.toString())),
-                                    //       number: data.rechargebleAccount,
-                                    //       company: data.bundle!.service!.company!
-                                    //           .companyName,
-                                    //       validity: data.bundle!.validityType,
-                                    //     ),
-                                    //   ),
-                                    // );
                                   },
                                   child: Card(
                                     child: Container(
@@ -1050,7 +1112,13 @@ class _NotificationPageState extends State<NotificationPage> {
                                                     ),
                                                     Spacer(),
                                                     Text(
-                                                      "Order ID: ",
+                                                      languageController
+                                                              .alllanguageData
+                                                              .value
+                                                              .languageData![
+                                                                  "ORDER_ID"]
+                                                              .toString() +
+                                                          " ",
                                                       style: TextStyle(
                                                         fontSize: 15,
                                                         color: Colors.black,
@@ -1095,7 +1163,12 @@ class _NotificationPageState extends State<NotificationPage> {
                                                     Row(
                                                       children: [
                                                         Text(
-                                                          "Rechargeable Account",
+                                                          languageController
+                                                              .alllanguageData
+                                                              .value
+                                                              .languageData![
+                                                                  "RECHARGEABLE_ACCOUNT"]
+                                                              .toString(),
                                                           style: TextStyle(
                                                             fontSize: 12,
                                                             color: Colors.black,
@@ -1111,12 +1184,27 @@ class _NotificationPageState extends State<NotificationPage> {
                                                         Text(
                                                           data.status.toString() ==
                                                                   "0"
-                                                              ? "pending"
+                                                              ? languageController
+                                                                  .alllanguageData
+                                                                  .value
+                                                                  .languageData![
+                                                                      "PENDING"]
+                                                                  .toString()
                                                               : data.status
                                                                           .toString() ==
                                                                       "1"
-                                                                  ? "confirmed"
-                                                                  : "rejected",
+                                                                  ? languageController
+                                                                      .alllanguageData
+                                                                      .value
+                                                                      .languageData![
+                                                                          "CONFIRMED"]
+                                                                      .toString()
+                                                                  : languageController
+                                                                      .alllanguageData
+                                                                      .value
+                                                                      .languageData![
+                                                                          "REJECTED"]
+                                                                      .toString(),
                                                           style: TextStyle(
                                                             fontSize: 12,
                                                             color: Colors.black,
@@ -1160,7 +1248,12 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                         .start,
                                                                 children: [
                                                                   Text(
-                                                                    "Title",
+                                                                    languageController
+                                                                        .alllanguageData
+                                                                        .value
+                                                                        .languageData![
+                                                                            "TITLE"]
+                                                                        .toString(),
                                                                     style:
                                                                         TextStyle(
                                                                       fontSize:
@@ -1200,7 +1293,12 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                         .center,
                                                                 children: [
                                                                   Text(
-                                                                    "Sale",
+                                                                    languageController
+                                                                        .alllanguageData
+                                                                        .value
+                                                                        .languageData![
+                                                                            "SALE"]
+                                                                        .toString(),
                                                                     style:
                                                                         TextStyle(
                                                                       fontSize:
@@ -1243,7 +1341,12 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                         .center,
                                                                 children: [
                                                                   Text(
-                                                                    "Buy",
+                                                                    languageController
+                                                                        .alllanguageData
+                                                                        .value
+                                                                        .languageData![
+                                                                            "BUY"]
+                                                                        .toString(),
                                                                     style:
                                                                         TextStyle(
                                                                       fontSize:

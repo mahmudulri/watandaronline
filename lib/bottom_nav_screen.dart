@@ -27,12 +27,12 @@ class BottomNavigationbar extends StatefulWidget {
 }
 
 class _BottomNavigationbarState extends State<BottomNavigationbar> {
-  List pages = [
-    Myhomepage(),
-    TransactionsPage(),
-    NotificationPage(),
-    MorePage(),
-  ];
+  // List pages = [
+  //   Myhomepage(),
+  //   TransactionsPage(),
+  //   NotificationPage(),
+  //   MorePage(),
+  // ];
   final box = GetStorage();
   int currentIndex = 0;
   MyPageController myPageController = Get.put(MyPageController());
@@ -92,6 +92,7 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
     // ignore: deprecated_member_use
     return Obx(
       () => languageController.isLoading.value == false
+          // ignore: deprecated_member_use
           ? WillPopScope(
               onWillPop: showExitPopup,
               child: Scaffold(

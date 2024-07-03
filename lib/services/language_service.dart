@@ -21,7 +21,7 @@ class LanguageApi {
       // print(response.body.toString());
 
       final languageModel = LanguageModel.fromJson(json.decode(response.body));
-      print(languageModel.toJson()['language_data'].toString());
+      // print(languageModel.toJson()['language_data'].toString());
 
       return languageModel;
     } else {

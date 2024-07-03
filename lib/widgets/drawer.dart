@@ -104,7 +104,9 @@ class DrawerWidget extends StatelessWidget {
               height: 15,
             ),
             ProfileMenuWidget(
-              itemName: "Personal info",
+              itemName: languageController
+                  .alllanguageData.value.languageData!["PERSONAL_INFO"]
+                  .toString(),
               imageLink: "assets/icons/homeicon.png",
               onPressed: () {
                 Navigator.push(
@@ -134,7 +136,9 @@ class DrawerWidget extends StatelessWidget {
               height: 5,
             ),
             ProfileMenuWidget(
-              itemName: "Sub reseller",
+              itemName: languageController
+                  .alllanguageData.value.languageData!["SUB_RESELLER"]
+                  .toString(),
               imageLink: "assets/icons/sub_reseller.png",
               onPressed: () {
                 Navigator.push(
@@ -149,7 +153,9 @@ class DrawerWidget extends StatelessWidget {
               height: 5,
             ),
             ProfileMenuWidget(
-              itemName: "Terms & conditions",
+              itemName: languageController
+                  .alllanguageData.value.languageData!["TERMS_AND_CONDITIONS"]
+                  .toString(),
               imageLink: "assets/icons/terms.png",
               onPressed: () {},
             ),
@@ -157,12 +163,16 @@ class DrawerWidget extends StatelessWidget {
               height: 5,
             ),
             ProfileMenuWidget(
-              itemName: "Help",
+              itemName: languageController
+                  .alllanguageData.value.languageData!["HELP"]
+                  .toString(),
               imageLink: "assets/icons/help.png",
               onPressed: () {},
             ),
             ProfileMenuWidget(
-              itemName: "Change Language",
+              itemName: languageController
+                  .alllanguageData.value.languageData!["CHANGE_LANGUAGE"]
+                  .toString(),
               imageLink: "assets/icons/globe.png",
               onPressed: () {
                 iscoCodeController.fetchisoCode();
@@ -225,7 +235,9 @@ class DrawerWidget extends StatelessWidget {
               height: 5,
             ),
             ProfileMenuWidget(
-              itemName: "Logout",
+              itemName: languageController
+                  .alllanguageData.value.languageData!["LOG_OUT"]
+                  .toString(),
               imageLink: "assets/icons/logout.png",
               onPressed: () {
                 showDialog(
@@ -241,7 +253,9 @@ class DrawerWidget extends StatelessWidget {
                         child: Column(
                           children: [
                             Text(
-                              "Do you want to Logout",
+                              languageController.alllanguageData.value
+                                  .languageData!["DO_YOU_WANT_TO_LOGOUT"]
+                                  .toString(),
                               style: TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.w600,
@@ -276,7 +290,9 @@ class DrawerWidget extends StatelessWidget {
                                     ),
                                     child: Center(
                                       child: Text(
-                                        "Yes",
+                                        languageController.alllanguageData.value
+                                            .languageData!["YES"]
+                                            .toString(),
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w500,
@@ -298,7 +314,9 @@ class DrawerWidget extends StatelessWidget {
                                     ),
                                     child: Center(
                                       child: Text(
-                                        "No",
+                                        languageController.alllanguageData.value
+                                            .languageData!["NO"]
+                                            .toString(),
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w500,

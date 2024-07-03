@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:watantelecom/controllers/bundles_controller.dart';
+import 'package:watantelecom/controllers/language_controller.dart';
 import 'package:watantelecom/controllers/place_order_controller.dart';
 import 'package:watantelecom/controllers/service_controller.dart';
 import 'package:watantelecom/helpers/price.dart';
@@ -71,6 +72,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
       Get.put(ConfirmPinController());
 
   TextEditingController searchController = TextEditingController();
+  final LanguageController languageController = Get.put(LanguageController());
 
   String search = "";
 
@@ -113,7 +115,8 @@ class _RechargeScreenState extends State<RechargeScreen> {
         title: GestureDetector(
           onTap: () {},
           child: Text(
-            "Recharge Now",
+            languageController.alllanguageData.value.languageData!["RECHARGE"]
+                .toString(),
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -155,7 +158,9 @@ class _RechargeScreenState extends State<RechargeScreen> {
                               keyboardType: TextInputType.phone,
                               decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: "Enter Number",
+                                  hintText: languageController.alllanguageData
+                                      .value.languageData!["ENTER_YOUR_NUMBER"]
+                                      .toString(),
                                   hintStyle: TextStyle(
                                     fontWeight: FontWeight.w300,
                                     color: Colors.white,
@@ -321,7 +326,11 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                         size: 30,
                                       ),
                                       border: InputBorder.none,
-                                      hintText: "Search by Title ...",
+                                      hintText: languageController
+                                          .alllanguageData
+                                          .value
+                                          .languageData!["SEARCH"]
+                                          .toString(),
                                       hintStyle: TextStyle(
                                         fontSize: 14,
                                       ),
@@ -490,7 +499,12 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                                 child: Column(
                                                                   children: [
                                                                     Text(
-                                                                      "Bundle Details",
+                                                                      languageController
+                                                                          .alllanguageData
+                                                                          .value
+                                                                          .languageData![
+                                                                              "BUNDLE_DETAILS"]
+                                                                          .toString(),
                                                                       style:
                                                                           TextStyle(
                                                                         fontSize:
@@ -515,7 +529,11 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                                               .spaceBetween,
                                                                       children: [
                                                                         Text(
-                                                                          "Bundle Title : ",
+                                                                          languageController
+                                                                              .alllanguageData
+                                                                              .value
+                                                                              .languageData!["BUNDLE_TITLE"]
+                                                                              .toString(),
                                                                         ),
                                                                         Text(
                                                                             "${data.bundleTitle}"),
@@ -527,7 +545,11 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                                               .spaceBetween,
                                                                       children: [
                                                                         Text(
-                                                                          "Validity : ",
+                                                                          languageController
+                                                                              .alllanguageData
+                                                                              .value
+                                                                              .languageData!["VALIDITY"]
+                                                                              .toString(),
                                                                         ),
                                                                         Text(
                                                                             "${data.validityType}"),
@@ -539,7 +561,11 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                                               .spaceBetween,
                                                                       children: [
                                                                         Text(
-                                                                          "Buying Price : ",
+                                                                          languageController
+                                                                              .alllanguageData
+                                                                              .value
+                                                                              .languageData!["BUYING_PRICE"]
+                                                                              .toString(),
                                                                         ),
                                                                         Text(
                                                                             "${data.buyingPrice}   ${data.currency!.code.toString()}"),
@@ -553,10 +579,15 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                         );
                                                       },
                                                       child: Text(
-                                                        "Details",
+                                                        languageController
+                                                            .alllanguageData
+                                                            .value
+                                                            .languageData![
+                                                                "VIEW_DETAILS"]
+                                                            .toString(),
                                                         style: TextStyle(
                                                           color: Colors.green,
-                                                          fontSize: 12,
+                                                          fontSize: 10,
                                                           fontWeight:
                                                               FontWeight.w600,
                                                         ),

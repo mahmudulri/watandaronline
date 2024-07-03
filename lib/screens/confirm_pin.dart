@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:watantelecom/controllers/language_controller.dart';
 import 'package:watantelecom/controllers/place_order_controller.dart';
 
 import '../controllers/confirm_pin_controller.dart';
@@ -14,7 +15,7 @@ class ConfirmPinScreen extends StatelessWidget {
 
   final ConfirmPinController confirmPinController =
       Get.put(ConfirmPinController());
-
+  final LanguageController languageController = Get.put(LanguageController());
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -34,8 +35,12 @@ class ConfirmPinScreen extends StatelessWidget {
                   children: [
                     Text(
                       confirmPinController.isLoading.value == false
-                          ? "Confirm Your Pin"
-                          : "Please wait...",
+                          ? languageController.alllanguageData.value
+                              .languageData!["CONFIRM_YOUR_PIN"]
+                              .toString()
+                          : languageController.alllanguageData.value
+                              .languageData!["PLEASE_WAIT"]
+                              .toString(),
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 15,
@@ -64,8 +69,8 @@ class ConfirmPinScreen extends StatelessWidget {
                       print(confirmPinController.numberController.text);
                     },
                     child: Container(
-                      height: 35,
-                      width: 80,
+                      height: 60,
+                      width: 120,
                       decoration: BoxDecoration(
                         border: Border.all(
                           width: 1,
@@ -78,7 +83,9 @@ class ConfirmPinScreen extends StatelessWidget {
                             horizontal: 10, vertical: 5),
                         child: Center(
                           child: Text(
-                            "Cancel",
+                            languageController
+                                .alllanguageData.value.languageData!["CANCEL"]
+                                .toString(),
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w500,
@@ -117,8 +124,8 @@ class ConfirmPinScreen extends StatelessWidget {
                       }
                     },
                     child: Container(
-                      height: 35,
-                      width: 80,
+                      height: 60,
+                      width: 120,
                       decoration: BoxDecoration(
                         color: Colors.green,
                         border: Border.all(
@@ -132,7 +139,9 @@ class ConfirmPinScreen extends StatelessWidget {
                             horizontal: 10, vertical: 5),
                         child: Center(
                           child: Text(
-                            "Verify",
+                            languageController
+                                .alllanguageData.value.languageData!["VERIFY"]
+                                .toString(),
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w500,

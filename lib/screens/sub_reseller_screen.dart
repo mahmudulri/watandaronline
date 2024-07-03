@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:watantelecom/controllers/change_status_controller.dart';
 import 'package:watantelecom/controllers/delete_sub_reseller.dart';
+import 'package:watantelecom/controllers/language_controller.dart';
 import 'package:watantelecom/controllers/sub_reseller_controller.dart';
 import 'package:watantelecom/controllers/subreseller_details_controller.dart';
 import 'package:watantelecom/screens/add_sub_reseller_screen.dart';
@@ -37,6 +38,8 @@ class _SubResellerScreenState extends State<SubResellerScreen> {
 
   String search = "";
 
+  final LanguageController languageController = Get.put(LanguageController());
+
   @override
   Widget build(BuildContext context) {
     // subresellerController.fetchSubReseller();
@@ -45,15 +48,19 @@ class _SubResellerScreenState extends State<SubResellerScreen> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
+        scrolledUnderElevation: 0.0,
         backgroundColor: AppColors.backgroundColor,
-        elevation: 1.0,
+        elevation: 0.0,
+        automaticallyImplyLeading: false,
         centerTitle: true,
         title: GestureDetector(
           onTap: () {
             // print(box.read("subresellerID"));
           },
           child: Text(
-            "Sub Reseller",
+            languageController
+                .alllanguageData.value.languageData!["SUB_RESELLER"]
+                .toString(),
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -98,7 +105,9 @@ class _SubResellerScreenState extends State<SubResellerScreen> {
                             controller: searchController,
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: "Search here...",
+                              hintText: languageController
+                                  .alllanguageData.value.languageData!["SEARCH"]
+                                  .toString(),
                             ),
                           ),
                         ),

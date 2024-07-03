@@ -5,6 +5,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:watantelecom/bottom_nav_screen.dart';
+import 'package:watantelecom/controllers/iso_code_controller.dart';
+import 'package:watantelecom/controllers/language_controller.dart';
 import 'package:watantelecom/screens/onboarding_screen.dart';
 import 'package:watantelecom/utils/colors.dart';
 
@@ -24,16 +26,18 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
 
+  final LanguageController languageController = Get.put(LanguageController());
+  final IscoCodeController iscoCodeController = Get.put(IscoCodeController());
   checkData() async {
-    var usertoken = await box.read('userToken');
-
     if (box.read("isoCode") == null) {
+      languageController.fetchlanData("en");
       box.write("isoCode", "en");
     } else {
       print("has data");
+      languageController.fetchlanData(box.read("isoCode"));
     }
 
-    if (usertoken == null) {
+    if (box.read('userToken') == null) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => OnboardingScreen()),
