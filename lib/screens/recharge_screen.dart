@@ -74,6 +74,8 @@ class _RechargeScreenState extends State<RechargeScreen> {
   TextEditingController searchController = TextEditingController();
   final LanguageController languageController = Get.put(LanguageController());
 
+  final ScrollController scrollController = ScrollController();
+
   String search = "";
 
   // @override
@@ -85,11 +87,32 @@ class _RechargeScreenState extends State<RechargeScreen> {
   @override
   void initState() {
     super.initState();
+    scrollController.addListener(refresh);
     // Use addPostFrameCallback to ensure this runs after the initial build
     WidgetsBinding.instance.addPostFrameCallback((_) {
       serviceController.fetchservices();
-      bundleController.fetchbundles();
+      bundleController.fetchallbundles();
     });
+  }
+
+  Future<void> refresh() async {
+    if (bundleController.finalList.length >=
+        (bundleController.allbundleslist.value.payload?.pagination.totalItems ??
+            0)) {
+      print(
+          "End..........................................End.....................");
+    } else {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        bundleController.initialpage++;
+        print(bundleController.initialpage);
+        print("Load More...................");
+        bundleController.fetchallbundles();
+        print(bundleController.initialpage);
+      } else {
+        // print("nothing");
+      }
+    }
   }
 
   @override
@@ -113,7 +136,9 @@ class _RechargeScreenState extends State<RechargeScreen> {
         elevation: 0.0,
         centerTitle: true,
         title: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            // print(bundleController.initialpage);
+          },
           child: Text(
             languageController.alllanguageData.value.languageData!["RECHARGE"]
                 .toString(),
@@ -196,10 +221,12 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                       return GestureDetector(
                                         onTap: () {
                                           setState(() {
+                                            bundleController.initialpage = 1;
+                                            bundleController.finalList.clear();
                                             selectedIndex = index;
                                             box.write(
                                                 "company_id", data.companyId);
-                                            bundleController.fetchbundles();
+                                            bundleController.fetchallbundles();
                                           });
                                         },
                                         child: Container(
@@ -248,7 +275,9 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                   duration_selectedIndex = index;
                                   box.write("validity_type",
                                       duration[index]["Value"]);
-                                  bundleController.fetchbundles();
+                                  bundleController.initialpage = 1;
+                                  bundleController.finalList.clear();
+                                  bundleController.fetchallbundles();
                                 });
                               },
                               child: Container(
@@ -283,567 +312,1091 @@ class _RechargeScreenState extends State<RechargeScreen> {
             Expanded(
               flex: 8,
               child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25),
-                    topRight: Radius.circular(25),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25),
+                      topRight: Radius.circular(25),
+                    ),
+                    color: Colors.white,
                   ),
-                  color: Colors.white,
-                ),
-                child: Obx(
-                  () => bundleController.isLoading.value == false
-                      ? Padding(
-                          padding: EdgeInsets.all(13.0),
-                          child: Column(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    width: 1,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                height: 45,
-                                width: screenWidth,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 5,
-                                  ),
-                                  child: TextField(
-                                    onChanged: (String? value) {
-                                      setState(() {
-                                        search = value.toString();
-                                      });
-                                    },
-                                    controller: searchController,
-                                    keyboardType: TextInputType.phone,
-                                    decoration: InputDecoration(
-                                      suffixIcon: Icon(
-                                        Icons.search,
-                                        color: Colors.grey,
-                                        size: 30,
-                                      ),
-                                      border: InputBorder.none,
-                                      hintText: languageController
-                                          .alllanguageData
-                                          .value
-                                          .languageData!["SEARCH"]
-                                          .toString(),
-                                      hintStyle: TextStyle(
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Expanded(
-                                child: ListView.separated(
-                                  physics: BouncingScrollPhysics(),
-                                  separatorBuilder: (context, index) {
-                                    return SizedBox(
-                                      height: 5,
-                                    );
-                                  },
-                                  itemCount: bundleController.allbundleslist
-                                      .value.data!.bundles!.length,
-                                  itemBuilder: (context, index) {
-                                    final data = bundleController.allbundleslist
-                                        .value.data!.bundles![index];
-                                    if (searchController.text.isEmpty) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          if (confirmPinController
-                                              .numberController.text.isEmpty) {
-                                            Fluttertoast.showToast(
-                                                msg: "Enter Number ",
-                                                toastLength: Toast.LENGTH_SHORT,
-                                                gravity: ToastGravity.BOTTOM,
-                                                timeInSecForIosWeb: 1,
-                                                backgroundColor: Colors.black,
-                                                textColor: Colors.white,
-                                                fontSize: 16.0);
-                                          } else {
-                                            box.write(
-                                                "bundleID", data.id.toString());
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ConfirmPinScreen(),
-                                              ),
-                                            );
-                                          }
-                                        },
-                                        child: Container(
-                                          height: 60,
-                                          width: screenWidth,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color:
-                                                AppColors.listbuilderboxColor,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(5.0),
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                  height: 50,
-                                                  width: 50,
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    image: DecorationImage(
-                                                      fit: BoxFit.fill,
-                                                      image: NetworkImage(
-                                                        (data.service!.company!
-                                                            .companyLogo
-                                                            .toString()),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 3,
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left: 20),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          data.bundleTitle
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 12,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          data.validityType
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontSize: 12,
-                                                            color: Colors.grey,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 2,
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Row(
-                                                    children: [
-                                                      PriceTextView(
-                                                        price: data.sellingPrice
-                                                            .toString(),
-                                                      ),
-                                                      // Text(
-                                                      //   data.sellingPrice.toString(),
-                                                      //   style: TextStyle(
-                                                      //     fontWeight: FontWeight.w600,
-                                                      //     fontSize: 12,
-                                                      //   ),
-                                                      // ),
-                                                      SizedBox(
-                                                        width: 2,
-                                                      ),
-                                                      Text(
-                                                        data.currency!.code
-                                                            .toString(),
-                                                        style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 12,
-                                                          color: Colors.grey,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 1,
-                                                  child: Center(
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (context) {
-                                                            return AlertDialog(
-                                                              content:
-                                                                  Container(
-                                                                height: 160,
-                                                                width:
-                                                                    screenWidth,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                                child: Column(
-                                                                  children: [
-                                                                    Text(
-                                                                      languageController
-                                                                          .alllanguageData
-                                                                          .value
-                                                                          .languageData![
-                                                                              "BUNDLE_DETAILS"]
-                                                                          .toString(),
-                                                                      style:
-                                                                          TextStyle(
-                                                                        fontSize:
-                                                                            17,
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                      ),
-                                                                    ),
-                                                                    Divider(
-                                                                      thickness:
-                                                                          1,
-                                                                      color: Colors
-                                                                          .grey,
-                                                                    ),
-                                                                    SizedBox(
-                                                                      height:
-                                                                          20,
-                                                                    ),
-                                                                    Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        Text(
-                                                                          languageController
-                                                                              .alllanguageData
-                                                                              .value
-                                                                              .languageData!["BUNDLE_TITLE"]
-                                                                              .toString(),
-                                                                        ),
-                                                                        Text(
-                                                                            "${data.bundleTitle}"),
-                                                                      ],
-                                                                    ),
-                                                                    Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        Text(
-                                                                          languageController
-                                                                              .alllanguageData
-                                                                              .value
-                                                                              .languageData!["VALIDITY"]
-                                                                              .toString(),
-                                                                        ),
-                                                                        Text(
-                                                                            "${data.validityType}"),
-                                                                      ],
-                                                                    ),
-                                                                    Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        Text(
-                                                                          languageController
-                                                                              .alllanguageData
-                                                                              .value
-                                                                              .languageData!["BUYING_PRICE"]
-                                                                              .toString(),
-                                                                        ),
-                                                                        Text(
-                                                                            "${data.buyingPrice}   ${data.currency!.code.toString()}"),
-                                                                      ],
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            );
-                                                          },
-                                                        );
-                                                      },
-                                                      child: Text(
-                                                        languageController
-                                                            .alllanguageData
-                                                            .value
-                                                            .languageData![
-                                                                "VIEW_DETAILS"]
-                                                            .toString(),
-                                                        style: TextStyle(
-                                                          color: Colors.green,
-                                                          fontSize: 10,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    } else if (bundleController.allbundleslist
-                                        .value.data!.bundles![index].bundleTitle
-                                        .toString()
-                                        .toLowerCase()
-                                        .contains(searchController.text
-                                            .toString()
-                                            .toLowerCase())) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          if (confirmPinController
-                                              .numberController.text.isEmpty) {
-                                            Fluttertoast.showToast(
-                                                msg: "Enter Number ",
-                                                toastLength: Toast.LENGTH_SHORT,
-                                                gravity: ToastGravity.BOTTOM,
-                                                timeInSecForIosWeb: 1,
-                                                backgroundColor: Colors.black,
-                                                textColor: Colors.white,
-                                                fontSize: 16.0);
-                                          } else {
-                                            box.write(
-                                                "bundleID", data.id.toString());
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ConfirmPinScreen(),
-                                              ),
-                                            );
-                                          }
-                                        },
-                                        child: Container(
-                                          height: 60,
-                                          width: screenWidth,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color:
-                                                AppColors.listbuilderboxColor,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(5.0),
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                  height: 50,
-                                                  width: 50,
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    image: DecorationImage(
-                                                      fit: BoxFit.fill,
-                                                      image: NetworkImage(
-                                                        (data.service!.company!
-                                                            .companyLogo
-                                                            .toString()),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 3,
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left: 20),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          data.bundleTitle
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 12,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          data.validityType
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontSize: 12,
-                                                            color: Colors.grey,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 2,
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Row(
-                                                    children: [
-                                                      PriceTextView(
-                                                        price: data.sellingPrice
-                                                            .toString(),
-                                                      ),
-                                                      // Text(
-                                                      //   data.sellingPrice.toString(),
-                                                      //   style: TextStyle(
-                                                      //     fontWeight: FontWeight.w600,
-                                                      //     fontSize: 12,
-                                                      //   ),
-                                                      // ),
-                                                      SizedBox(
-                                                        width: 2,
-                                                      ),
-                                                      Text(
-                                                        data.currency!.code
-                                                            .toString(),
-                                                        style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 12,
-                                                          color: Colors.grey,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 1,
-                                                  child: Center(
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (context) {
-                                                            return AlertDialog(
-                                                              content:
-                                                                  Container(
-                                                                height: 160,
-                                                                width:
-                                                                    screenWidth,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                                child: Column(
-                                                                  children: [
-                                                                    Text(
-                                                                      "Bundle Details",
-                                                                      style:
-                                                                          TextStyle(
-                                                                        fontSize:
-                                                                            17,
-                                                                        fontWeight:
-                                                                            FontWeight.w600,
-                                                                      ),
-                                                                    ),
-                                                                    Divider(
-                                                                      thickness:
-                                                                          1,
-                                                                      color: Colors
-                                                                          .grey,
-                                                                    ),
-                                                                    SizedBox(
-                                                                      height:
-                                                                          20,
-                                                                    ),
-                                                                    Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        Text(
-                                                                          "Bundle Title : ",
-                                                                        ),
-                                                                        Text(
-                                                                            "${data.bundleTitle}"),
-                                                                      ],
-                                                                    ),
-                                                                    Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        Text(
-                                                                          "Validity : ",
-                                                                        ),
-                                                                        Text(
-                                                                            "${data.validityType}"),
-                                                                      ],
-                                                                    ),
-                                                                    Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        Text(
-                                                                          "Buying Price : ",
-                                                                        ),
-                                                                        Text(
-                                                                            "${data.buyingPrice}   ${data.currency!.code.toString()}"),
-                                                                      ],
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            );
-                                                          },
-                                                        );
-                                                      },
-                                                      child: Text(
-                                                        "Details",
-                                                        style: TextStyle(
-                                                          color: Colors.green,
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    } else {
-                                      print("object");
-                                    }
-                                  },
-                                ),
-                              ),
-                            ],
+                  child: Padding(
+                    padding: EdgeInsets.all(13.0),
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.grey,
+                            ),
                           ),
-                        )
-                      : Center(
-                          child: CircularProgressIndicator(),
+                          height: 45,
+                          width: screenWidth,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 5,
+                            ),
+                            child: TextField(
+                              onChanged: (String? value) {
+                                setState(() {
+                                  search = value.toString();
+                                });
+                              },
+                              controller: searchController,
+                              keyboardType: TextInputType.phone,
+                              decoration: InputDecoration(
+                                suffixIcon: Icon(
+                                  Icons.search,
+                                  color: Colors.grey,
+                                  size: 30,
+                                ),
+                                border: InputBorder.none,
+                                hintText: languageController.alllanguageData
+                                    .value.languageData!["SEARCH"]
+                                    .toString(),
+                                hintStyle: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                ),
-              ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Expanded(
+                            child: Obx(
+                          () => bundleController.isLoading.value == false
+                              ? RefreshIndicator(
+                                  onRefresh: refresh,
+                                  child: ListView.separated(
+                                    shrinkWrap: false,
+                                    physics: AlwaysScrollableScrollPhysics(),
+                                    controller: scrollController,
+                                    separatorBuilder: (context, index) {
+                                      return SizedBox(
+                                        height: 5,
+                                      );
+                                    },
+                                    itemCount:
+                                        bundleController.finalList.length,
+                                    itemBuilder: (context, index) {
+                                      final data =
+                                          bundleController.finalList[index];
+                                      if (searchController.text.isEmpty) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            if (confirmPinController
+                                                .numberController
+                                                .text
+                                                .isEmpty) {
+                                              Fluttertoast.showToast(
+                                                  msg: "Enter Number ",
+                                                  toastLength:
+                                                      Toast.LENGTH_SHORT,
+                                                  gravity: ToastGravity.BOTTOM,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor: Colors.black,
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0);
+                                            } else {
+                                              box.write("bundleID",
+                                                  data.id.toString());
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ConfirmPinScreen(),
+                                                ),
+                                              );
+                                            }
+                                          },
+                                          child: Container(
+                                            height: 60,
+                                            width: screenWidth,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color:
+                                                  AppColors.listbuilderboxColor,
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
+                                              child: Row(
+                                                children: [
+                                                  Container(
+                                                    height: 50,
+                                                    width: 50,
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      image: DecorationImage(
+                                                        fit: BoxFit.fill,
+                                                        image: NetworkImage(
+                                                          (data
+                                                              .service!
+                                                              .company!
+                                                              .companyLogo
+                                                              .toString()),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    flex: 3,
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 20),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            data.bundleTitle
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontSize: 12,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            data.validityType
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 12,
+                                                              color:
+                                                                  Colors.grey,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 2,
+                                                  ),
+                                                  Expanded(
+                                                    flex: 2,
+                                                    child: Row(
+                                                      children: [
+                                                        PriceTextView(
+                                                          price: data
+                                                              .sellingPrice
+                                                              .toString(),
+                                                        ),
+                                                        // Text(
+                                                        //   data.sellingPrice.toString(),
+                                                        //   style: TextStyle(
+                                                        //     fontWeight: FontWeight.w600,
+                                                        //     fontSize: 12,
+                                                        //   ),
+                                                        // ),
+                                                        SizedBox(
+                                                          width: 2,
+                                                        ),
+                                                        Text(
+                                                          data.currency!.code
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontSize: 12,
+                                                            color: Colors.grey,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    flex: 1,
+                                                    child: Center(
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          showDialog(
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return AlertDialog(
+                                                                content:
+                                                                    Container(
+                                                                  height: 160,
+                                                                  width:
+                                                                      screenWidth,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                                  child: Column(
+                                                                    children: [
+                                                                      Text(
+                                                                        languageController
+                                                                            .alllanguageData
+                                                                            .value
+                                                                            .languageData!["BUNDLE_DETAILS"]
+                                                                            .toString(),
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              17,
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                        ),
+                                                                      ),
+                                                                      Divider(
+                                                                        thickness:
+                                                                            1,
+                                                                        color: Colors
+                                                                            .grey,
+                                                                      ),
+                                                                      SizedBox(
+                                                                        height:
+                                                                            20,
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                            languageController.alllanguageData.value.languageData!["BUNDLE_TITLE"].toString(),
+                                                                          ),
+                                                                          Text(
+                                                                              "${data.bundleTitle}"),
+                                                                        ],
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                            languageController.alllanguageData.value.languageData!["VALIDITY"].toString(),
+                                                                          ),
+                                                                          Text(
+                                                                              "${data.validityType}"),
+                                                                        ],
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                            languageController.alllanguageData.value.languageData!["BUYING_PRICE"].toString(),
+                                                                          ),
+                                                                          Text(
+                                                                              "${data.buyingPrice}   ${data.currency!.code.toString()}"),
+                                                                        ],
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          );
+                                                        },
+                                                        child: Text(
+                                                          languageController
+                                                              .alllanguageData
+                                                              .value
+                                                              .languageData![
+                                                                  "VIEW_DETAILS"]
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                            color: Colors.green,
+                                                            fontSize: 10,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      } else if (bundleController
+                                          .allbundleslist
+                                          .value
+                                          .data!
+                                          .bundles![index]
+                                          .bundleTitle
+                                          .toString()
+                                          .toLowerCase()
+                                          .contains(searchController.text
+                                              .toString()
+                                              .toLowerCase())) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            if (confirmPinController
+                                                .numberController
+                                                .text
+                                                .isEmpty) {
+                                              Fluttertoast.showToast(
+                                                  msg: "Enter Number ",
+                                                  toastLength:
+                                                      Toast.LENGTH_SHORT,
+                                                  gravity: ToastGravity.BOTTOM,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor: Colors.black,
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0);
+                                            } else {
+                                              box.write("bundleID",
+                                                  data.id.toString());
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ConfirmPinScreen(),
+                                                ),
+                                              );
+                                            }
+                                          },
+                                          child: Container(
+                                            height: 60,
+                                            width: screenWidth,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color:
+                                                  AppColors.listbuilderboxColor,
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
+                                              child: Row(
+                                                children: [
+                                                  Container(
+                                                    height: 50,
+                                                    width: 50,
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      image: DecorationImage(
+                                                        fit: BoxFit.fill,
+                                                        image: NetworkImage(
+                                                          (data
+                                                              .service!
+                                                              .company!
+                                                              .companyLogo
+                                                              .toString()),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    flex: 3,
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 20),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            data.bundleTitle
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontSize: 12,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            data.validityType
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 12,
+                                                              color:
+                                                                  Colors.grey,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 2,
+                                                  ),
+                                                  Expanded(
+                                                    flex: 2,
+                                                    child: Row(
+                                                      children: [
+                                                        PriceTextView(
+                                                          price: data
+                                                              .sellingPrice
+                                                              .toString(),
+                                                        ),
+                                                        // Text(
+                                                        //   data.sellingPrice.toString(),
+                                                        //   style: TextStyle(
+                                                        //     fontWeight: FontWeight.w600,
+                                                        //     fontSize: 12,
+                                                        //   ),
+                                                        // ),
+                                                        SizedBox(
+                                                          width: 2,
+                                                        ),
+                                                        Text(
+                                                          data.currency!.code
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontSize: 12,
+                                                            color: Colors.grey,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    flex: 1,
+                                                    child: Center(
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          showDialog(
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return AlertDialog(
+                                                                content:
+                                                                    Container(
+                                                                  height: 160,
+                                                                  width:
+                                                                      screenWidth,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                                  child: Column(
+                                                                    children: [
+                                                                      Text(
+                                                                        "Bundle Details",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              17,
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                        ),
+                                                                      ),
+                                                                      Divider(
+                                                                        thickness:
+                                                                            1,
+                                                                        color: Colors
+                                                                            .grey,
+                                                                      ),
+                                                                      SizedBox(
+                                                                        height:
+                                                                            20,
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                            "Bundle Title : ",
+                                                                          ),
+                                                                          Text(
+                                                                              "${data.bundleTitle}"),
+                                                                        ],
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                            "Validity : ",
+                                                                          ),
+                                                                          Text(
+                                                                              "${data.validityType}"),
+                                                                        ],
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                            "Buying Price : ",
+                                                                          ),
+                                                                          Text(
+                                                                              "${data.buyingPrice}   ${data.currency!.code.toString()}"),
+                                                                        ],
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          );
+                                                        },
+                                                        child: Text(
+                                                          "Details",
+                                                          style: TextStyle(
+                                                            color: Colors.green,
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        print("object");
+                                      }
+                                    },
+                                  ),
+                                )
+                              : RefreshIndicator(
+                                  onRefresh: refresh,
+                                  child: ListView.separated(
+                                    shrinkWrap: false,
+                                    physics: AlwaysScrollableScrollPhysics(),
+                                    controller: scrollController,
+                                    separatorBuilder: (context, index) {
+                                      return SizedBox(
+                                        height: 5,
+                                      );
+                                    },
+                                    itemCount:
+                                        bundleController.finalList.length,
+                                    itemBuilder: (context, index) {
+                                      final data =
+                                          bundleController.finalList[index];
+                                      if (searchController.text.isEmpty) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            if (confirmPinController
+                                                .numberController
+                                                .text
+                                                .isEmpty) {
+                                              Fluttertoast.showToast(
+                                                  msg: "Enter Number ",
+                                                  toastLength:
+                                                      Toast.LENGTH_SHORT,
+                                                  gravity: ToastGravity.BOTTOM,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor: Colors.black,
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0);
+                                            } else {
+                                              box.write("bundleID",
+                                                  data.id.toString());
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ConfirmPinScreen(),
+                                                ),
+                                              );
+                                            }
+                                          },
+                                          child: Container(
+                                            height: 60,
+                                            width: screenWidth,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color:
+                                                  AppColors.listbuilderboxColor,
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
+                                              child: Row(
+                                                children: [
+                                                  Container(
+                                                    height: 50,
+                                                    width: 50,
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      image: DecorationImage(
+                                                        fit: BoxFit.fill,
+                                                        image: NetworkImage(
+                                                          (data
+                                                              .service!
+                                                              .company!
+                                                              .companyLogo
+                                                              .toString()),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    flex: 3,
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 20),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            data.bundleTitle
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontSize: 12,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            data.validityType
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 12,
+                                                              color:
+                                                                  Colors.grey,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 2,
+                                                  ),
+                                                  Expanded(
+                                                    flex: 2,
+                                                    child: Row(
+                                                      children: [
+                                                        PriceTextView(
+                                                          price: data
+                                                              .sellingPrice
+                                                              .toString(),
+                                                        ),
+                                                        // Text(
+                                                        //   data.sellingPrice.toString(),
+                                                        //   style: TextStyle(
+                                                        //     fontWeight: FontWeight.w600,
+                                                        //     fontSize: 12,
+                                                        //   ),
+                                                        // ),
+                                                        SizedBox(
+                                                          width: 2,
+                                                        ),
+                                                        Text(
+                                                          data.currency!.code
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontSize: 12,
+                                                            color: Colors.grey,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    flex: 1,
+                                                    child: Center(
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          showDialog(
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return AlertDialog(
+                                                                content:
+                                                                    Container(
+                                                                  height: 160,
+                                                                  width:
+                                                                      screenWidth,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                                  child: Column(
+                                                                    children: [
+                                                                      Text(
+                                                                        languageController
+                                                                            .alllanguageData
+                                                                            .value
+                                                                            .languageData!["BUNDLE_DETAILS"]
+                                                                            .toString(),
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              17,
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                        ),
+                                                                      ),
+                                                                      Divider(
+                                                                        thickness:
+                                                                            1,
+                                                                        color: Colors
+                                                                            .grey,
+                                                                      ),
+                                                                      SizedBox(
+                                                                        height:
+                                                                            20,
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                            languageController.alllanguageData.value.languageData!["BUNDLE_TITLE"].toString(),
+                                                                          ),
+                                                                          Text(
+                                                                              "${data.bundleTitle}"),
+                                                                        ],
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                            languageController.alllanguageData.value.languageData!["VALIDITY"].toString(),
+                                                                          ),
+                                                                          Text(
+                                                                              "${data.validityType}"),
+                                                                        ],
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                            languageController.alllanguageData.value.languageData!["BUYING_PRICE"].toString(),
+                                                                          ),
+                                                                          Text(
+                                                                              "${data.buyingPrice}   ${data.currency!.code.toString()}"),
+                                                                        ],
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          );
+                                                        },
+                                                        child: Text(
+                                                          languageController
+                                                              .alllanguageData
+                                                              .value
+                                                              .languageData![
+                                                                  "VIEW_DETAILS"]
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                            color: Colors.green,
+                                                            fontSize: 10,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      } else if (bundleController
+                                          .allbundleslist
+                                          .value
+                                          .data!
+                                          .bundles![index]
+                                          .bundleTitle
+                                          .toString()
+                                          .toLowerCase()
+                                          .contains(searchController.text
+                                              .toString()
+                                              .toLowerCase())) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            if (confirmPinController
+                                                .numberController
+                                                .text
+                                                .isEmpty) {
+                                              Fluttertoast.showToast(
+                                                  msg: "Enter Number ",
+                                                  toastLength:
+                                                      Toast.LENGTH_SHORT,
+                                                  gravity: ToastGravity.BOTTOM,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor: Colors.black,
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0);
+                                            } else {
+                                              box.write("bundleID",
+                                                  data.id.toString());
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ConfirmPinScreen(),
+                                                ),
+                                              );
+                                            }
+                                          },
+                                          child: Container(
+                                            height: 60,
+                                            width: screenWidth,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color:
+                                                  AppColors.listbuilderboxColor,
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
+                                              child: Row(
+                                                children: [
+                                                  Container(
+                                                    height: 50,
+                                                    width: 50,
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      image: DecorationImage(
+                                                        fit: BoxFit.fill,
+                                                        image: NetworkImage(
+                                                          (data
+                                                              .service!
+                                                              .company!
+                                                              .companyLogo
+                                                              .toString()),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    flex: 3,
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 20),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            data.bundleTitle
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontSize: 12,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            data.validityType
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 12,
+                                                              color:
+                                                                  Colors.grey,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 2,
+                                                  ),
+                                                  Expanded(
+                                                    flex: 2,
+                                                    child: Row(
+                                                      children: [
+                                                        PriceTextView(
+                                                          price: data
+                                                              .sellingPrice
+                                                              .toString(),
+                                                        ),
+                                                        // Text(
+                                                        //   data.sellingPrice.toString(),
+                                                        //   style: TextStyle(
+                                                        //     fontWeight: FontWeight.w600,
+                                                        //     fontSize: 12,
+                                                        //   ),
+                                                        // ),
+                                                        SizedBox(
+                                                          width: 2,
+                                                        ),
+                                                        Text(
+                                                          data.currency!.code
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontSize: 12,
+                                                            color: Colors.grey,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    flex: 1,
+                                                    child: Center(
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          showDialog(
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return AlertDialog(
+                                                                content:
+                                                                    Container(
+                                                                  height: 160,
+                                                                  width:
+                                                                      screenWidth,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                                  child: Column(
+                                                                    children: [
+                                                                      Text(
+                                                                        "Bundle Details",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              17,
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                        ),
+                                                                      ),
+                                                                      Divider(
+                                                                        thickness:
+                                                                            1,
+                                                                        color: Colors
+                                                                            .grey,
+                                                                      ),
+                                                                      SizedBox(
+                                                                        height:
+                                                                            20,
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                            "Bundle Title : ",
+                                                                          ),
+                                                                          Text(
+                                                                              "${data.bundleTitle}"),
+                                                                        ],
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                            "Validity : ",
+                                                                          ),
+                                                                          Text(
+                                                                              "${data.validityType}"),
+                                                                        ],
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                            "Buying Price : ",
+                                                                          ),
+                                                                          Text(
+                                                                              "${data.buyingPrice}   ${data.currency!.code.toString()}"),
+                                                                        ],
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          );
+                                                        },
+                                                        child: Text(
+                                                          "Details",
+                                                          style: TextStyle(
+                                                            color: Colors.green,
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        print("object");
+                                      }
+                                    },
+                                  ),
+                                ),
+                        )),
+                        Obx(
+                          () => bundleController.isLoading.value == true
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Loading.....",
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    CircularProgressIndicator(
+                                      color: AppColors.defaultColor,
+                                    ),
+                                  ],
+                                )
+                              : SizedBox(),
+                        ),
+                      ],
+                    ),
+                  )),
             ),
           ],
         ),

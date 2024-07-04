@@ -66,12 +66,13 @@ class UpdateSubResellerController extends GetxController {
         'country_id': countryId.toString(),
         'province_id': provinceId.toString(),
         'districts_id': districtID.toString(),
-        'currency_preference_id': "1",
+        'currency_preference_id': box.read("currencypreferenceID"),
       };
 
       var url = Uri.parse(
-        "${ApiEndPoints.baseUrl}sub-resellers",
+        "${ApiEndPoints.baseUrl}sub-resellers/${box.read("subresellerID")}",
       );
+      print(url);
 
       var request = http.MultipartRequest('POST', url);
 
@@ -98,7 +99,7 @@ class UpdateSubResellerController extends GetxController {
         Get.back();
         print("success");
         Fluttertoast.showToast(
-            msg: "Successfully Created",
+            msg: "Update Successfull",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 1,

@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:watantelecom/controllers/add_sub_reseller_controller.dart';
 import 'package:watantelecom/controllers/country_list_controller.dart';
 import 'package:watantelecom/controllers/currency_controller.dart';
@@ -33,6 +34,8 @@ class _UpdateSubResellerScreenState extends State<UpdateSubResellerScreen> {
   final ProvinceController provinceController = Get.put(ProvinceController());
 
   final DistrictController districtController = Get.put(DistrictController());
+
+  final box = GetStorage();
 
   // final AddSubResellerController addSubResellerController =
   //     Get.put(AddSubResellerController());
@@ -239,7 +242,8 @@ class _UpdateSubResellerScreenState extends State<UpdateSubResellerScreen> {
                     children: [
                       Expanded(
                         child: Text(
-                          selected_currency,
+                          box.read("currencyName") +
+                              " (${box.read("currency_code")})",
                           style: TextStyle(
                             fontWeight: FontWeight.w300,
                           ),
@@ -674,7 +678,6 @@ class _UpdateSubResellerScreenState extends State<UpdateSubResellerScreen> {
                         controller.contactNameController.text.isEmpty ||
                         controller.emailController.text.isEmpty ||
                         controller.phoneController.text.isEmpty ||
-                        controller.currencyID.value == '' ||
                         controller.countryId.value == '' ||
                         controller.provinceId.value == '' ||
                         controller.districtID.value == '') {

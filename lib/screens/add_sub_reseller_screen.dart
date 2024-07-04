@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:watantelecom/controllers/add_sub_reseller_controller.dart';
 import 'package:watantelecom/controllers/country_list_controller.dart';
 import 'package:watantelecom/controllers/currency_controller.dart';
@@ -35,7 +36,7 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
   final AddSubResellerController addSubResellerController =
       Get.put(AddSubResellerController());
 
-  String selected_currency = "Afghani (AFN)";
+  final box = GetStorage();
 
   String selected_country = "Select Country";
 
@@ -60,7 +61,7 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
           ),
         ),
         backgroundColor: Colors.white,
-        elevation: 1.0,
+        elevation: 0.0,
         centerTitle: true,
         title: Text(
           "Add New Sub Reseller",
@@ -236,7 +237,8 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                     children: [
                       Expanded(
                         child: Text(
-                          selected_currency,
+                          box.read("currencyName") +
+                              " (${box.read("currency_code")})",
                           style: TextStyle(
                             fontWeight: FontWeight.w300,
                           ),
@@ -676,7 +678,6 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                             .contactNameController.text.isEmpty ||
                         addSubResellerController.emailController.text.isEmpty ||
                         addSubResellerController.phoneController.text.isEmpty ||
-                        addSubResellerController.currencyID.value == '' ||
                         addSubResellerController.countryId.value == '' ||
                         addSubResellerController.provinceId.value == '' ||
                         addSubResellerController.districtID.value == '') {
@@ -690,6 +691,7 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                           fontSize: 16.0);
                     } else {
                       addSubResellerController.addNow();
+                      print("ok");
                     }
                   },
                   buttonName: addSubResellerController.isLoading.value == false

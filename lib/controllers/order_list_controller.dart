@@ -17,7 +17,7 @@ class OrderlistController extends GetxController {
   void fetchOrderlistdata() async {
     try {
       isLoading(true);
-      await OrderListApi().fetchorderList().then((value) {
+      await OrderListApi().fetchorderList(initialpage).then((value) {
         allorderlist.value = value;
 
         if (allorderlist.value.data != null) {

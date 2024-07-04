@@ -109,6 +109,7 @@ class _NotificationPageState extends State<NotificationPage> {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
         orderlistController.initialpage++;
+        // print(orderlistController.initialpage);
         print("Load More...................");
         orderlistController.fetchOrderlistdata();
       } else {
@@ -304,7 +305,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                       .alllanguageData
                                                       .value
                                                       .languageData![
-                                                          "SELECTED_DATE"]
+                                                          "SELECT_STATUS"]
                                                       .toString(),
                                                   style: TextStyle(
                                                     fontSize: 15,
@@ -364,7 +365,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                   .alllanguageData
                                                   .value
                                                   .languageData![
-                                                      "SELECT_STATUS"]
+                                                      "SELECTED_DATE"]
                                                   .toString(),
                                             ),
                                           ),
@@ -388,7 +389,10 @@ class _NotificationPageState extends State<NotificationPage> {
                               children: [
                                 GestureDetector(
                                   onTap: () {
+                                    orderlistController.initialpage = 1;
+                                    orderlistController.finalList.clear();
                                     orderlistController.fetchOrderlistdata();
+                                    print(box.read("orderstatus"));
                                   },
                                   child: Container(
                                     height: 35,
@@ -467,22 +471,7 @@ class _NotificationPageState extends State<NotificationPage> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 0,
-                ),
-                Obx(
-                  () => orderlistController.isLoading.value == true
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Loading.....",
-                            ),
-                            CircularProgressIndicator(),
-                          ],
-                        )
-                      : SizedBox(),
-                ),
+
                 SizedBox(
                   height: 5,
                 ),
@@ -494,12 +483,8 @@ class _NotificationPageState extends State<NotificationPage> {
                             shrinkWrap: false,
                             physics: AlwaysScrollableScrollPhysics(),
                             controller: scrollController,
-                            // itemCount: orderlistController
-                            //     .allorderlist.value.data!.orders.length,
                             itemCount: orderlistController.finalList.length,
                             itemBuilder: (context, index) {
-                              // final data = orderlistController
-                              //     .allorderlist.value.data!.orders[index];
                               final data = orderlistController.finalList[index];
 
                               if (searchController.text.isEmpty) {
@@ -2969,8 +2954,27 @@ class _NotificationPageState extends State<NotificationPage> {
                           ),
                         )),
                 ),
+
+                Obx(
+                  () => orderlistController.isLoading.value == true
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Loading.....",
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            CircularProgressIndicator(
+                              color: AppColors.defaultColor,
+                            ),
+                          ],
+                        )
+                      : SizedBox(),
+                ),
                 SizedBox(
-                  height: 5,
+                  height: 20,
                 ),
                 // MyContainerList(
                 //   itemCount: int.parse(

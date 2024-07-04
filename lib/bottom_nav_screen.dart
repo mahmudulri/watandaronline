@@ -107,6 +107,7 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
                   ),
                   onPressed: () {
                     box.write("country_id", "2");
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -226,7 +227,8 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
                               minWidth: 40,
                               onPressed: () {
                                 box.write("orderstatus", "");
-                                box.write("pageNo", "1");
+                                orderlistController.finalList.clear();
+                                orderlistController.initialpage = 1;
                                 setState(() {
                                   historyController.finalList.clear();
                                   historyController.finalList.clear();

@@ -8,10 +8,10 @@ import '../utils/api_endpoints.dart';
 
 class BundlesApi {
   final box = GetStorage();
-  Future<BundleModel> fetchBundles() async {
+  Future<BundleModel> fetchBundles(int pageNo) async {
     final url = Uri.parse(
-        "${ApiEndPoints.baseUrl}bundles?country_id=${box.read("country_id")}&validity_type=${box.read("validity_type")}&company_id=${box.read("company_id")}&service_category_id=${box.read("service_category_id")}");
-    print(url);
+        "${ApiEndPoints.baseUrl}bundles?page=${pageNo}&country_id=${box.read("country_id")}&validity_type=${box.read("validity_type")}&company_id=${box.read("company_id")}&service_category_id=${box.read("service_category_id")}");
+    print("bundles " + url.toString());
 
     var response = await http.get(
       url,

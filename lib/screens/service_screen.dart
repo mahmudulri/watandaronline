@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:watantelecom/controllers/bundles_controller.dart';
 import 'package:watantelecom/controllers/categories_list_controller.dart';
 import 'package:watantelecom/controllers/country_list_controller.dart';
 import 'package:watantelecom/controllers/language_controller.dart';
@@ -54,9 +55,12 @@ class _ServiceScreenState extends State<ServiceScreen> {
       "icon": FontAwesomeIcons.globe,
     },
   ];
+
   final OperatorController operatorController = Get.put(OperatorController());
   final CountryListController countryListController =
       Get.put(CountryListController());
+
+  final BundleController bundleController = Get.put(BundleController());
 
   final CategorisListController categorisListController =
       Get.put(CategorisListController());
@@ -225,12 +229,14 @@ class _ServiceScreenState extends State<ServiceScreen> {
                                 boxName: data.categoryName,
                                 mycolor: mycolorlist[index],
                                 onPressed: () {
+                                  bundleController.finalList.clear();
                                   box.write("service_category_id", data.id);
                                   // box.write("service_id", "");
                                   box.write("validity_type", "");
                                   box.write("company_id", "");
                                   print(data.id);
                                   print(data.type);
+                                  bundleController.initialpage = 1;
                                   // Navigator.push(
                                   //   context,
                                   //   MaterialPageRoute(

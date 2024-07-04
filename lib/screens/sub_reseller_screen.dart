@@ -303,7 +303,7 @@ class _dataBoxnameState extends State<dataBoxname> {
                     return AlertDialog(
                       contentPadding: EdgeInsets.all(0.0),
                       content: Container(
-                        height: 220,
+                        height: 180,
                         width: screenWidth - 100,
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -312,24 +312,24 @@ class _dataBoxnameState extends State<dataBoxname> {
                           padding: const EdgeInsets.all(12.0),
                           child: Column(
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Get.to(() => UpdateSubResellerScreen());
-                                },
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.edit),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text("Edit"),
-                                  ],
-                                ),
-                              ),
-                              Divider(
-                                thickness: 1,
-                                color: Colors.grey,
-                              ),
+                              // GestureDetector(
+                              //   onTap: () {
+                              //     Get.to(() => UpdateSubResellerScreen());
+                              //   },
+                              //   child: Row(
+                              //     children: [
+                              //       Icon(Icons.edit),
+                              //       SizedBox(
+                              //         width: 10,
+                              //       ),
+                              //       Text("Edit"),
+                              //     ],
+                              //   ),
+                              // ),
+                              // Divider(
+                              //   thickness: 1,
+                              //   color: Colors.grey,
+                              // ),
                               GestureDetector(
                                 onTap: () {
                                   changeStatusController

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:watantelecom/controllers/change_balance_controller.dart';
 import 'package:watantelecom/utils/colors.dart';
 import 'package:watantelecom/widgets/auth_textfield.dart';
@@ -21,6 +22,7 @@ class _ChangeBalanceScreenState extends State<ChangeBalanceScreen> {
   final BalanceController balanceController = Get.put(BalanceController());
   bool isCreditSelected = false;
   bool isDebitSelected = false;
+  final box = GetStorage();
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -127,7 +129,7 @@ class _ChangeBalanceScreenState extends State<ChangeBalanceScreen> {
                                 controller: balanceController.amountController,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: "AFN",
+                                  hintText: box.read("currency_code"),
                                   hintStyle: TextStyle(
                                     fontWeight: FontWeight.w300,
                                   ),

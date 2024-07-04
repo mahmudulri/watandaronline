@@ -13,10 +13,10 @@ import '../utils/api_endpoints.dart';
 class OrderListApi {
   // OrderlistController orderlistController = Get.put(OrderlistController());
   final box = GetStorage();
-  Future<OrderListModel> fetchorderList() async {
+  Future<OrderListModel> fetchorderList(int pageNo) async {
     final url = Uri.parse(
-        "${ApiEndPoints.baseUrl}orders?page=${box.read("pageNo").toString()}${box.read("orderstatus").toString()}&selected_Date=&&");
-    // print(url);
+        "${ApiEndPoints.baseUrl}orders?page=${pageNo}&${box.read("orderstatus").toString()}&selected_Date=&&");
+    print(url);
 
     var response = await http.get(
       url,

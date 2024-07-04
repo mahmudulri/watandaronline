@@ -53,6 +53,12 @@ class SignInController extends GetxController {
         box.write("userToken", jsonDecode(response.body)["data"]["api_token"]);
         box.write("currency_code",
             jsonDecode(response.body)["data"]["user_info"]["currency"]["code"]);
+        box.write(
+            "currencypreferenceID",
+            jsonDecode(response.body)["data"]["user_info"]
+                ["currency_preference_id"]);
+        box.write("currencyName",
+            jsonDecode(response.body)["data"]["user_info"]["currency"]["name"]);
         // print(box.read("userToken"));
         countryListController.fetchCountryData();
 
