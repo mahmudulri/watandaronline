@@ -146,7 +146,7 @@ class pageOne extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Welcome to Yaktelecom".toUpperCase(),
+                      "Welcome to Watantelecom".toUpperCase(),
                       style: GoogleFonts.bebasNeue(
                         fontWeight: FontWeight.w500,
                         fontSize: screenWidth * 0.055,
@@ -213,7 +213,7 @@ class pageTwo extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Welcome to Yaktelecom".toUpperCase(),
+                      "Welcome to Watantelecom".toUpperCase(),
                       style: GoogleFonts.bebasNeue(
                         fontWeight: FontWeight.w500,
                         fontSize: screenWidth * 0.055,
@@ -280,7 +280,7 @@ class pageThree extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Welcome to Yaktelecom".toUpperCase(),
+                      "Welcome to Watantelecom".toUpperCase(),
                       style: GoogleFonts.bebasNeue(
                         fontWeight: FontWeight.w500,
                         fontSize: screenWidth * 0.055,
