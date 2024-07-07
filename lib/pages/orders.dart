@@ -746,14 +746,36 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                                 17,
                                                                             fontWeight:
                                                                                 FontWeight.w400,
-                                                                            color:
-                                                                                Colors.green,
+                                                                            color: data.status.toString() == "0"
+                                                                                ? Colors.grey
+                                                                                : data.status.toString() == "1"
+                                                                                    ? Colors.green
+                                                                                    : Colors.red,
                                                                           ),
                                                                         ),
                                                                       ],
                                                                     ),
                                                                     SizedBox(
-                                                                      height: 5,
+                                                                      height: 3,
+                                                                    ),
+                                                                    Visibility(
+                                                                      visible: data
+                                                                              .status
+                                                                              .toString() ==
+                                                                          "2",
+                                                                      child:
+                                                                          Text(
+                                                                        data.rejectReason
+                                                                            .toString(),
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              Colors.red,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    SizedBox(
+                                                                      height: 3,
                                                                     ),
                                                                     dotline(),
                                                                     SizedBox(
@@ -1195,7 +1217,17 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                       .toString(),
                                                           style: TextStyle(
                                                             fontSize: 12,
-                                                            color: Colors.black,
+                                                            color: data.status
+                                                                        .toString() ==
+                                                                    "0"
+                                                                ? Colors.grey
+                                                                : data.status
+                                                                            .toString() ==
+                                                                        "1"
+                                                                    ? Colors
+                                                                        .green
+                                                                    : Colors
+                                                                        .red,
                                                             fontWeight:
                                                                 FontWeight.w600,
                                                           ),

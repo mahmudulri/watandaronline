@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -36,25 +34,69 @@ class _ServiceScreenState extends State<ServiceScreen> {
     Color(0xff2bcbba),
     Color(0xff009432),
     Color(0xff2d98da),
+    Color(0xff2c3e50),
+    Color(0xff16a085),
+    Color(0xff3498db),
+    Color(0xfff39c12),
+    Color(0xff74b9ff),
+    Color(0xff2bcbba),
+    Color(0xff009432),
+    Color(0xff2d98da),
+    Color(0xff2c3e50),
+    Color(0xff16a085),
+    Color(0xff3498db),
+    Color(0xfff39c12),
+    Color(0xff74b9ff),
+    Color(0xff2bcbba),
+    Color(0xff009432),
+    Color(0xff2d98da),
+    Color(0xff2c3e50),
+    Color(0xff16a085),
+    Color(0xff3498db),
+    Color(0xfff39c12),
+    Color(0xff74b9ff),
+    Color(0xff2bcbba),
+    Color(0xff009432),
+    Color(0xff2d98da),
+    Color(0xff2c3e50),
+    Color(0xff16a085),
+    Color(0xff3498db),
+    Color(0xfff39c12),
+    Color(0xff74b9ff),
+    Color(0xff2bcbba),
+    Color(0xff009432),
+    Color(0xff2d98da),
+    Color(0xff2c3e50),
+    Color(0xff16a085),
+    Color(0xff3498db),
+    Color(0xfff39c12),
+    Color(0xff74b9ff),
+    Color(0xff2bcbba),
+    Color(0xff009432),
+    Color(0xff2d98da),
+    Color(0xff2c3e50),
+    Color(0xff16a085),
+    Color(0xff3498db),
+    Color(0xfff39c12),
   ];
-  List<Map<String, dynamic>> buttonInfo = [
-    {
-      "name": "Internet",
-      "icon": FontAwesomeIcons.wifi,
-    },
-    {
-      "name": "Calls",
-      "icon": FontAwesomeIcons.phoneVolume,
-    },
-    {
-      "name": "Social Apps",
-      "icon": FontAwesomeIcons.database,
-    },
-    {
-      "name": "Mobile Charge",
-      "icon": FontAwesomeIcons.globe,
-    },
-  ];
+  // List<Map<String, dynamic>> buttonInfo = [
+  //   {
+  //     "name": "Internet",
+  //     "icon": FontAwesomeIcons.wifi,
+  //   },
+  //   {
+  //     "name": "Calls",
+  //     "icon": FontAwesomeIcons.phoneVolume,
+  //   },
+  //   {
+  //     "name": "Social Apps",
+  //     "icon": FontAwesomeIcons.database,
+  //   },
+  //   {
+  //     "name": "Mobile Charge",
+  //     "icon": FontAwesomeIcons.globe,
+  //   },
+  // ];
 
   final OperatorController operatorController = Get.put(OperatorController());
   final CountryListController countryListController =
