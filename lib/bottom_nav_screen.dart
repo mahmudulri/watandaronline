@@ -146,9 +146,9 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
                                   orderlistController.finalList.clear();
                                   orderlistController.initialpage = 1;
 
-                                  historyController.finalList.clear();
+                                  // historyController.finalList.clear();
                                   historyController.initialpage = 1;
-                                  historyController.fetchHistory();
+                                  // historyController.fetchHistory();
                                 });
                               },
                               child: Column(
@@ -189,6 +189,9 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
                                   orderlistController.initialpage = 1;
                                   historyController.finalList.clear();
                                   historyController.initialpage = 1;
+                                  print("final history length:  " +
+                                      historyController.finalList.length
+                                          .toString());
                                   ;
                                 });
                               },
