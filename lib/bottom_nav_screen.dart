@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:watantelecom/controllers/history_controller.dart';
 import 'package:watantelecom/controllers/language_controller.dart';
+import 'package:watantelecom/controllers/transaction_controller.dart';
 import 'package:watantelecom/pages/more.dart';
 import 'package:watantelecom/pages/orders.dart';
 import 'package:watantelecom/pages/transactions.dart';
@@ -42,6 +43,8 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
       Get.put(OrderlistController());
 
   final HistoryController historyController = Get.put(HistoryController());
+  final TransactionController transactionController =
+      Get.put(TransactionController());
 
   final PageStorageBucket bucket = PageStorageBucket();
   late Widget currentPage;
@@ -189,11 +192,8 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
                                   orderlistController.initialpage = 1;
                                   historyController.finalList.clear();
                                   historyController.initialpage = 1;
-                                  print("final history length:  " +
-                                      historyController.finalList.length
-                                          .toString());
-                                  ;
                                 });
+                                transactionController.fetchTransactionData();
                               },
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
