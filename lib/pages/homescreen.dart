@@ -6,12 +6,12 @@
 // import 'package:get/get.dart';
 // import 'package:get_storage/get_storage.dart';
 // import 'package:google_fonts/google_fonts.dart';
-// import 'package:watantelecom/controllers/checker.dart';
-// import 'package:watantelecom/controllers/dashboard_controller.dart';
-// import 'package:watantelecom/controllers/order_list_controller.dart';
-// import 'package:watantelecom/screens/bus_ticket_screen.dart';
-// import 'package:watantelecom/screens/sub_reseller_screen.dart';
-// import 'package:watantelecom/widgets/drawer.dart';
+// import 'package:watandaronline/controllers/checker.dart';
+// import 'package:watandaronline/controllers/dashboard_controller.dart';
+// import 'package:watandaronline/controllers/order_list_controller.dart';
+// import 'package:watandaronline/screens/bus_ticket_screen.dart';
+// import 'package:watandaronline/screens/sub_reseller_screen.dart';
+// import 'package:watandaronline/widgets/drawer.dart';
 
 // import '../controllers/country_list_controller.dart';
 // import '../controllers/sub_reseller_controller.dart';

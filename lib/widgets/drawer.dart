@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:watantelecom/controllers/dashboard_controller.dart';
-import 'package:watantelecom/controllers/iso_code_controller.dart';
-import 'package:watantelecom/controllers/language_controller.dart';
-import 'package:watantelecom/controllers/sign_in_controller.dart';
-import 'package:watantelecom/screens/add_card_screen.dart';
-import 'package:watantelecom/screens/myprofile_screen.dart';
-import 'package:watantelecom/screens/sign_in_screen.dart';
-import 'package:watantelecom/screens/sub_reseller_screen.dart';
-import 'package:watantelecom/utils/colors.dart';
-import 'package:watantelecom/widgets/profile_menu_widget.dart';
+import 'package:watandaronline/controllers/dashboard_controller.dart';
+import 'package:watandaronline/controllers/iso_code_controller.dart';
+import 'package:watandaronline/controllers/language_controller.dart';
+import 'package:watandaronline/controllers/sign_in_controller.dart';
+import 'package:watandaronline/screens/add_card_screen.dart';
+import 'package:watandaronline/screens/myprofile_screen.dart';
+import 'package:watandaronline/screens/sign_in_screen.dart';
+import 'package:watandaronline/screens/sub_reseller_screen.dart';
+import 'package:watandaronline/utils/colors.dart';
+import 'package:watandaronline/widgets/profile_menu_widget.dart';
 
 class DrawerWidget extends StatefulWidget {
   DrawerWidget({super.key});

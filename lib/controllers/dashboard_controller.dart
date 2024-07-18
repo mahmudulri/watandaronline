@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:watantelecom/services/dashboard_service.dart';
+import 'package:watandaronline/services/dashboard_service.dart';
 
 import '../models/dashboard_data_model.dart';
 

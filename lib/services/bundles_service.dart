@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:watantelecom/models/bundle_model.dart';
+import 'package:watandaronline/models/bundle_model.dart';
 
 import '../utils/api_endpoints.dart';
 

@@ -5,8 +5,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:watantelecom/controllers/language_controller.dart';
-import 'package:watantelecom/controllers/place_order_controller.dart';
+import 'package:watandaronline/controllers/language_controller.dart';
+import 'package:watandaronline/controllers/place_order_controller.dart';
 
 import '../controllers/confirm_pin_controller.dart';
 

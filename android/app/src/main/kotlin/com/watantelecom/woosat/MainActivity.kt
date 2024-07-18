@@ -1,4 +1,4 @@
-package com.watantelecom.woosat
+package com.watandaronline.woosat
 
 import io.flutter.embedding.android.FlutterActivity
 

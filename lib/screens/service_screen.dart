@@ -3,14 +3,14 @@ import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:watantelecom/controllers/bundles_controller.dart';
-import 'package:watantelecom/controllers/categories_list_controller.dart';
-import 'package:watantelecom/controllers/country_list_controller.dart';
-import 'package:watantelecom/controllers/language_controller.dart';
-import 'package:watantelecom/controllers/operator_controller.dart';
-import 'package:watantelecom/controllers/service_controller.dart';
+import 'package:watandaronline/controllers/bundles_controller.dart';
+import 'package:watandaronline/controllers/categories_list_controller.dart';
+import 'package:watandaronline/controllers/country_list_controller.dart';
+import 'package:watandaronline/controllers/language_controller.dart';
+import 'package:watandaronline/controllers/operator_controller.dart';
+import 'package:watandaronline/controllers/service_controller.dart';
 
-import 'package:watantelecom/screens/social_recharge.dart';
+import 'package:watandaronline/screens/social_recharge.dart';
 
 import 'recharge_screen.dart';
 

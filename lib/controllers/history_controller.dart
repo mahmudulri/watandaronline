@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:watantelecom/models/history_model.dart';
+import 'package:watandaronline/models/history_model.dart';
 
-import 'package:watantelecom/services/history_service.dart';
+import 'package:watandaronline/services/history_service.dart';
 
 class HistoryController extends GetxController {
   RxList finalList = <Order>[].obs;

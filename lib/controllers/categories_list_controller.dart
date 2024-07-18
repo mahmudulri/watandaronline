@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:watantelecom/models/categories_service_model.dart';
-import 'package:watantelecom/services/categoris_service_list.dart';
-import 'package:watantelecom/services/country_list_service.dart';
+import 'package:watandaronline/models/categories_service_model.dart';
+import 'package:watandaronline/services/categoris_service_list.dart';
+import 'package:watandaronline/services/country_list_service.dart';
 
 import '../models/country_list_model.dart';
 

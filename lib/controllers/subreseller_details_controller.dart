@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:watantelecom/services/dashboard_service.dart';
-import 'package:watantelecom/services/sub_reseller_service.dart';
+import 'package:watandaronline/services/dashboard_service.dart';
+import 'package:watandaronline/services/sub_reseller_service.dart';
 
 import '../models/dashboard_data_model.dart';
 import '../models/sub_reseller_model.dart';

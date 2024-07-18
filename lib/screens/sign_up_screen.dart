@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:watantelecom/utils/colors.dart';
-import 'package:watantelecom/widgets/default_button.dart';
-import 'package:watantelecom/widgets/social_button.dart';
+import 'package:watandaronline/utils/colors.dart';
+import 'package:watandaronline/widgets/default_button.dart';
+import 'package:watandaronline/widgets/social_button.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import '../widgets/auth_textfield.dart';
 

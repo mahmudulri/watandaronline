@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:watantelecom/utils/colors.dart';
-import 'package:watantelecom/widgets/auth_textfield.dart';
-import 'package:watantelecom/widgets/default_button.dart';
+import 'package:watandaronline/utils/colors.dart';
+import 'package:watandaronline/widgets/auth_textfield.dart';
+import 'package:watandaronline/widgets/default_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../widgets/myprofile_box_widget.dart';

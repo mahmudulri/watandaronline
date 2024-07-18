@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:watantelecom/models/orders_list_model.dart';
+import 'package:watandaronline/models/orders_list_model.dart';
 
-import 'package:watantelecom/services/order_list_service.dart';
+import 'package:watandaronline/services/order_list_service.dart';
 
 class OrderlistController extends GetxController {
   String filterDate = "order_status=0";

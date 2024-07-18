@@ -4,16 +4,16 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:watantelecom/controllers/add_sub_reseller_controller.dart';
-import 'package:watantelecom/controllers/country_list_controller.dart';
-import 'package:watantelecom/controllers/currency_controller.dart';
-import 'package:watantelecom/controllers/district_controller.dart';
-import 'package:watantelecom/controllers/province_controller.dart';
-import 'package:watantelecom/controllers/sub_reseller_controller.dart';
-import 'package:watantelecom/utils/colors.dart';
-import 'package:watantelecom/widgets/auth_textfield.dart';
-import 'package:watantelecom/widgets/default_button.dart';
-import 'package:watantelecom/widgets/register_textfield.dart';
+import 'package:watandaronline/controllers/add_sub_reseller_controller.dart';
+import 'package:watandaronline/controllers/country_list_controller.dart';
+import 'package:watandaronline/controllers/currency_controller.dart';
+import 'package:watandaronline/controllers/district_controller.dart';
+import 'package:watandaronline/controllers/province_controller.dart';
+import 'package:watandaronline/controllers/sub_reseller_controller.dart';
+import 'package:watandaronline/utils/colors.dart';
+import 'package:watandaronline/widgets/auth_textfield.dart';
+import 'package:watandaronline/widgets/default_button.dart';
+import 'package:watandaronline/widgets/register_textfield.dart';
 
 class AddSubResellerScreen extends StatefulWidget {
   AddSubResellerScreen({super.key});

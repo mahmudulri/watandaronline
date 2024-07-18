@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:watantelecom/splash_screen.dart';
+import 'package:watandaronline/splash_screen.dart';
 
 const String splash = '/splash-screen';
 

@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:watantelecom/bottom_nav_screen.dart';
-import 'package:watantelecom/controllers/bundles_controller.dart';
-import 'package:watantelecom/controllers/confirm_pin_controller.dart';
-import 'package:watantelecom/controllers/country_list_controller.dart';
-import 'package:watantelecom/controllers/dashboard_controller.dart';
-import 'package:watantelecom/controllers/place_order_controller.dart';
-import 'package:watantelecom/controllers/service_controller.dart';
-import 'package:watantelecom/controllers/sub_reseller_controller.dart';
+import 'package:watandaronline/bottom_nav_screen.dart';
+import 'package:watandaronline/controllers/bundles_controller.dart';
+import 'package:watandaronline/controllers/confirm_pin_controller.dart';
+import 'package:watandaronline/controllers/country_list_controller.dart';
+import 'package:watandaronline/controllers/dashboard_controller.dart';
+import 'package:watandaronline/controllers/place_order_controller.dart';
+import 'package:watandaronline/controllers/service_controller.dart';
+import 'package:watandaronline/controllers/sub_reseller_controller.dart';
 
 class ResultScreen extends StatelessWidget {
   ResultScreen({super.key});

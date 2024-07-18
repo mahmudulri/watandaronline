@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:watantelecom/models/bundle_model.dart';
-import 'package:watantelecom/models/language_model.dart';
-import 'package:watantelecom/services/language_service.dart';
+import 'package:watandaronline/models/bundle_model.dart';
+import 'package:watandaronline/models/language_model.dart';
+import 'package:watandaronline/services/language_service.dart';
 
 class LanguageController extends GetxController {
   @override

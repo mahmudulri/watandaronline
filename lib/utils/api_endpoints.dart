@@ -1,6 +1,8 @@
 class ApiEndPoints {
-  static String baseUrl = "https://amutele.amutelecom.com/api/reseller/";
-  static String languageUrl = "https://amutele.amutelecom.com/api/locale/";
+  static String baseUrl =
+      "https://app.api.wadaron.v1.24.watandaronline.com/api/reseller/";
+  static String languageUrl =
+      "https://app.api.wadaron.v1.24.watandaronline.com/api/locale/";
 
   static OtherendPoints otherendpoints = OtherendPoints();
 }

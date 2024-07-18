@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:watantelecom/controllers/change_balance_controller.dart';
-import 'package:watantelecom/utils/colors.dart';
-import 'package:watantelecom/widgets/auth_textfield.dart';
-import 'package:watantelecom/widgets/default_button.dart';
+import 'package:watandaronline/controllers/change_balance_controller.dart';
+import 'package:watandaronline/utils/colors.dart';
+import 'package:watandaronline/widgets/auth_textfield.dart';
+import 'package:watandaronline/widgets/default_button.dart';
 
 class ChangeBalanceScreen extends StatefulWidget {
   String? subID;

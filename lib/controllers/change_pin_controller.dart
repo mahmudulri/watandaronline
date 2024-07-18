@@ -6,8 +6,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:watantelecom/controllers/country_list_controller.dart';
-import 'package:watantelecom/utils/api_endpoints.dart';
+import 'package:watandaronline/controllers/country_list_controller.dart';
+import 'package:watandaronline/utils/api_endpoints.dart';
 
 class ChangePinController extends GetxController {
   final box = GetStorage();

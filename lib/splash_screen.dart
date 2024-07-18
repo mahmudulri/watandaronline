@@ -4,11 +4,11 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:watantelecom/bottom_nav_screen.dart';
-import 'package:watantelecom/controllers/iso_code_controller.dart';
-import 'package:watantelecom/controllers/language_controller.dart';
-import 'package:watantelecom/screens/onboarding_screen.dart';
-import 'package:watantelecom/utils/colors.dart';
+import 'package:watandaronline/bottom_nav_screen.dart';
+import 'package:watandaronline/controllers/iso_code_controller.dart';
+import 'package:watandaronline/controllers/language_controller.dart';
+import 'package:watandaronline/screens/onboarding_screen.dart';
+import 'package:watandaronline/utils/colors.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -81,7 +81,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ),
               Text(
-                "Watantelecom",
+                "Watandaronline",
                 style: GoogleFonts.bebasNeue(
                   // color: Color(0xff46558A),
                   color: Colors.white,

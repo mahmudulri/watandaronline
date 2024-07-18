@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:watantelecom/models/categories_service_model.dart';
-import 'package:watantelecom/models/service_model.dart';
-import 'package:watantelecom/services/categoris_service_list.dart';
-import 'package:watantelecom/services/service_service.dart';
+import 'package:watandaronline/models/categories_service_model.dart';
+import 'package:watandaronline/models/service_model.dart';
+import 'package:watandaronline/services/categoris_service_list.dart';
+import 'package:watandaronline/services/service_service.dart';
 
 class ServiceController extends GetxController {
   @override

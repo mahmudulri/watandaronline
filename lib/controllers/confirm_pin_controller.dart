@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:watantelecom/screens/result_screen.dart';
-import 'package:watantelecom/utils/api_endpoints.dart';
+import 'package:watandaronline/screens/result_screen.dart';
+import 'package:watandaronline/utils/api_endpoints.dart';
 
 class ConfirmPinController extends GetxController {
   TextEditingController numberController = TextEditingController();

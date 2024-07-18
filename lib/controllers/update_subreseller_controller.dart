@@ -8,8 +8,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:watantelecom/controllers/sub_reseller_controller.dart';
-import 'package:watantelecom/models/transaction_model.dart';
+import 'package:watandaronline/controllers/sub_reseller_controller.dart';
+import 'package:watandaronline/models/transaction_model.dart';
 
 import '../utils/api_endpoints.dart';
 

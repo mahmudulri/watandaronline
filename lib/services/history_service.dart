@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:watantelecom/models/history_model.dart';
-import 'package:watantelecom/models/orders_list_model.dart';
+import 'package:watandaronline/models/history_model.dart';
+import 'package:watandaronline/models/orders_list_model.dart';
 
 import '../controllers/order_list_controller.dart';
 

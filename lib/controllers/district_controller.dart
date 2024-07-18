@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
-import 'package:watantelecom/models/currency_model.dart';
-import 'package:watantelecom/models/district_model.dart';
-import 'package:watantelecom/models/province_model.dart';
-import 'package:watantelecom/services/country_list_service.dart';
-import 'package:watantelecom/services/currency_list_service.dart';
-import 'package:watantelecom/services/district_service.dart';
-import 'package:watantelecom/services/province_service.dart';
+import 'package:watandaronline/models/currency_model.dart';
+import 'package:watandaronline/models/district_model.dart';
+import 'package:watandaronline/models/province_model.dart';
+import 'package:watandaronline/services/country_list_service.dart';
+import 'package:watandaronline/services/currency_list_service.dart';
+import 'package:watandaronline/services/district_service.dart';
+import 'package:watandaronline/services/province_service.dart';
 
 import '../models/country_list_model.dart';
 

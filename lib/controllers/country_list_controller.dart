@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:watantelecom/services/country_list_service.dart';
+import 'package:watandaronline/services/country_list_service.dart';
 
 import '../models/country_list_model.dart';
 

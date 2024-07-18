@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:watantelecom/models/currency_model.dart';
-import 'package:watantelecom/services/country_list_service.dart';
-import 'package:watantelecom/services/currency_list_service.dart';
+import 'package:watandaronline/models/currency_model.dart';
+import 'package:watandaronline/services/country_list_service.dart';
+import 'package:watandaronline/services/currency_list_service.dart';
 
 import '../models/country_list_model.dart';
 

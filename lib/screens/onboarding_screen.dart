@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:watantelecom/widgets/default_button.dart';
+import 'package:watandaronline/widgets/default_button.dart';
 
 import '../utils/colors.dart';
 import 'sign_in_screen.dart';
@@ -146,7 +146,7 @@ class pageOne extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Welcome to Watantelecom".toUpperCase(),
+                      "Welcome to Watandaronline".toUpperCase(),
                       style: GoogleFonts.bebasNeue(
                         fontWeight: FontWeight.w500,
                         fontSize: screenWidth * 0.055,
@@ -213,7 +213,7 @@ class pageTwo extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Welcome to Watantelecom".toUpperCase(),
+                      "Welcome to Watandaronline".toUpperCase(),
                       style: GoogleFonts.bebasNeue(
                         fontWeight: FontWeight.w500,
                         fontSize: screenWidth * 0.055,
@@ -280,7 +280,7 @@ class pageThree extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Welcome to Watantelecom".toUpperCase(),
+                      "Welcome to Watandaronline".toUpperCase(),
                       style: GoogleFonts.bebasNeue(
                         fontWeight: FontWeight.w500,
                         fontSize: screenWidth * 0.055,

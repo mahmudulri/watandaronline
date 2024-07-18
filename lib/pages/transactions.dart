@@ -5,8 +5,8 @@ import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:watantelecom/controllers/language_controller.dart';
-import 'package:watantelecom/utils/colors.dart';
+import 'package:watandaronline/controllers/language_controller.dart';
+import 'package:watandaronline/utils/colors.dart';
 
 import '../controllers/transaction_controller.dart';
 

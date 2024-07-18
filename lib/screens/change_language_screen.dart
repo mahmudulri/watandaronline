@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:watantelecom/controllers/iso_code_controller.dart';
-import 'package:watantelecom/controllers/language_controller.dart';
+import 'package:watandaronline/controllers/iso_code_controller.dart';
+import 'package:watandaronline/controllers/language_controller.dart';
 
 class ChangeLanguageScreen extends StatefulWidget {
   ChangeLanguageScreen({super.key});

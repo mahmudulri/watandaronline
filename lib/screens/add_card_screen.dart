@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:watantelecom/widgets/add_card_widget.dart';
-import 'package:watantelecom/widgets/auth_textfield.dart';
-import 'package:watantelecom/widgets/default_button.dart';
+import 'package:watandaronline/widgets/add_card_widget.dart';
+import 'package:watandaronline/widgets/auth_textfield.dart';
+import 'package:watandaronline/widgets/default_button.dart';
 
 import '../utils/colors.dart';
 

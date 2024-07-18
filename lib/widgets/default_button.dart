@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:watantelecom/utils/colors.dart';
+import 'package:watandaronline/utils/colors.dart';
 
 class DefaultButton extends StatelessWidget {
   String? buttonName;

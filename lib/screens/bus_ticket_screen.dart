@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 import 'package:date_format/date_format.dart';
-import 'package:watantelecom/widgets/default_button.dart';
+import 'package:watandaronline/widgets/default_button.dart';
 
 import 'bus_result.dart';
 

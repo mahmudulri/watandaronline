@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:watantelecom/controllers/dashboard_controller.dart';
-import 'package:watantelecom/utils/colors.dart';
+import 'package:watandaronline/controllers/dashboard_controller.dart';
+import 'package:watandaronline/utils/colors.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import '../bottom_nav_screen.dart';
 import '../controllers/page_controller.dart';

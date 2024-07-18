@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:watantelecom/draftcode.dart';
-import 'package:watantelecom/routes/routes.dart';
-import 'package:watantelecom/splash_screen.dart';
+import 'package:watandaronline/draftcode.dart';
+import 'package:watandaronline/routes/routes.dart';
+import 'package:watandaronline/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
