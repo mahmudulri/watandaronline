@@ -40,7 +40,7 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
 
   String selected_country = "Select Country";
 
-  String selected_province = "Selectt Province";
+  String selected_province = "Select Province";
 
   String selected_district = "Select District";
 

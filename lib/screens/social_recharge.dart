@@ -5,11 +5,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:watandaronline/controllers/bundles_controller.dart';
 import 'package:watandaronline/controllers/confirm_pin_controller.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/controllers/place_order_controller.dart';
 import 'package:watandaronline/controllers/service_controller.dart';
+import 'package:watandaronline/helpers/price.dart';
 import 'package:watandaronline/screens/confirm_pin.dart';
 import 'package:watandaronline/widgets/auth_textfield.dart';
 import 'package:watandaronline/widgets/default_button.dart';
@@ -120,6 +122,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
+            confirmPinController.numberController.clear();
             Navigator.pop(context);
           },
           child: Icon(
@@ -571,27 +574,16 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                                     MainAxisAlignment
                                                                         .center,
                                                                 children: [
-                                                                  Text(
-                                                                    data.sellingPrice
+                                                                  PriceTextView(
+                                                                    price: data
+                                                                        .sellingPrice
                                                                         .toString(),
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          12,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                    ),
                                                                   ),
                                                                   SizedBox(
                                                                     width: 2,
                                                                   ),
                                                                   Text(
-                                                                    data.currency!
-                                                                        .code
-                                                                        .toString(),
+                                                                    " ${box.read("currency_code")}",
                                                                     style:
                                                                         TextStyle(
                                                                       fontSize:
@@ -692,7 +684,26 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                                                   Text(
                                                                                     languageController.alllanguageData.value.languageData!["BUYING_PRICE"].toString(),
                                                                                   ),
-                                                                                  Text("${data.buyingPrice}   ${data.currency!.code.toString()}"),
+                                                                                  Spacer(),
+                                                                                  Text(
+                                                                                    NumberFormat.currency(
+                                                                                      locale: 'en_US',
+                                                                                      symbol: '',
+                                                                                      decimalDigits: 2,
+                                                                                    ).format(
+                                                                                      double.parse(
+                                                                                        data.buyingPrice.toString(),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  Text(
+                                                                                    " ${box.read("currency_code")}",
+                                                                                    style: TextStyle(
+                                                                                      fontSize: 13,
+                                                                                      fontWeight: FontWeight.w500,
+                                                                                      color: Colors.black,
+                                                                                    ),
+                                                                                  ),
                                                                                 ],
                                                                               ),
                                                                             ],
@@ -924,27 +935,16 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                                     MainAxisAlignment
                                                                         .center,
                                                                 children: [
-                                                                  Text(
-                                                                    data.sellingPrice
+                                                                  PriceTextView(
+                                                                    price: data
+                                                                        .sellingPrice
                                                                         .toString(),
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          12,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                    ),
                                                                   ),
                                                                   SizedBox(
                                                                     width: 2,
                                                                   ),
                                                                   Text(
-                                                                    data.currency!
-                                                                        .code
-                                                                        .toString(),
+                                                                    " ${box.read("currency_code")}",
                                                                     style:
                                                                         TextStyle(
                                                                       fontSize:
@@ -1008,7 +1008,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                                               Column(
                                                                             children: [
                                                                               Text(
-                                                                                "Bundle Details",
+                                                                                languageController.alllanguageData.value.languageData!["BUNDLE_DETAILS"].toString(),
                                                                                 style: TextStyle(
                                                                                   fontSize: 17,
                                                                                   fontWeight: FontWeight.w600,
@@ -1025,7 +1025,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                 children: [
                                                                                   Text(
-                                                                                    "Bundle Title : ",
+                                                                                    languageController.alllanguageData.value.languageData!["BUNDLE_TITLE"].toString(),
                                                                                   ),
                                                                                   Text("${data.bundleTitle}"),
                                                                                 ],
@@ -1034,7 +1034,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                 children: [
                                                                                   Text(
-                                                                                    "Validity : ",
+                                                                                    languageController.alllanguageData.value.languageData!["VALIDITY"].toString(),
                                                                                   ),
                                                                                   Text("${data.validityType}"),
                                                                                 ],
@@ -1043,9 +1043,28 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                 children: [
                                                                                   Text(
-                                                                                    "Buying Price : ",
+                                                                                    languageController.alllanguageData.value.languageData!["BUYING_PRICE"].toString(),
                                                                                   ),
-                                                                                  Text("${data.buyingPrice}   ${data.currency!.code.toString()}"),
+                                                                                  Spacer(),
+                                                                                  Text(
+                                                                                    NumberFormat.currency(
+                                                                                      locale: 'en_US',
+                                                                                      symbol: '',
+                                                                                      decimalDigits: 2,
+                                                                                    ).format(
+                                                                                      double.parse(
+                                                                                        data.buyingPrice.toString(),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  Text(
+                                                                                    " ${box.read("currency_code")}",
+                                                                                    style: TextStyle(
+                                                                                      fontSize: 13,
+                                                                                      fontWeight: FontWeight.w500,
+                                                                                      color: Colors.black,
+                                                                                    ),
+                                                                                  ),
                                                                                 ],
                                                                               ),
                                                                             ],
@@ -1308,9 +1327,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                                     width: 2,
                                                                   ),
                                                                   Text(
-                                                                    data.currency!
-                                                                        .code
-                                                                        .toString(),
+                                                                    " ${box.read("currency_code")}",
                                                                     style:
                                                                         TextStyle(
                                                                       fontSize:
@@ -1661,9 +1678,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                                     width: 2,
                                                                   ),
                                                                   Text(
-                                                                    data.currency!
-                                                                        .code
-                                                                        .toString(),
+                                                                    " ${box.read("currency_code")}",
                                                                     style:
                                                                         TextStyle(
                                                                       fontSize:

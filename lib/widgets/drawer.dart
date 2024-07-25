@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:watandaronline/controllers/dashboard_controller.dart';
+import 'package:watandaronline/controllers/history_controller.dart';
 import 'package:watandaronline/controllers/iso_code_controller.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/controllers/sign_in_controller.dart';
@@ -32,6 +33,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   final IscoCodeController iscoCodeController = Get.put(IscoCodeController());
 
   final LanguageController languageController = Get.put(LanguageController());
+
+  final HistoryController historyController = Get.put(HistoryController());
 
   @override
   Widget build(BuildContext context) {
@@ -138,23 +141,23 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 );
               },
             ),
-            SizedBox(
-              height: 5,
-            ),
-            ProfileMenuWidget(
-              itemName: languageController
-                  .alllanguageData.value.languageData!["SUB_RESELLER"]
-                  .toString(),
-              imageLink: "assets/icons/sub_reseller.png",
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SubResellerScreen(),
-                  ),
-                );
-              },
-            ),
+            // SizedBox(
+            //   height: 5,
+            // ),
+            // ProfileMenuWidget(
+            //   itemName: languageController
+            //       .alllanguageData.value.languageData!["SUB_RESELLER"]
+            //       .toString(),
+            //   imageLink: "assets/icons/sub_reseller.png",
+            //   onPressed: () {
+            //     Navigator.pushReplacement(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (context) => SubResellerScreen(),
+            //       ),
+            //     );
+            //   },
+            // ),
             SizedBox(
               height: 5,
             ),
@@ -181,6 +184,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   .toString(),
               imageLink: "assets/icons/globe.png",
               onPressed: () {
+                // historyController.finalList.clear();
                 iscoCodeController.fetchisoCode();
                 showDialog(
                   context: context,
@@ -215,6 +219,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                         return languageBox(
                                           lanName: data.languageName,
                                           onpressed: () {
+                                            historyController.finalList.clear();
                                             languageController.fetchlanData(
                                                 data.language_code.toString());
                                             box.write("isoCode",
@@ -228,6 +233,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                                     .setLocale(
                                                         Locale('ar', 'AE'));
                                               });
+
                                               setState(() {});
                                             } else {
                                               setState(() {
@@ -239,6 +245,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                             }
 
                                             Navigator.pop(context);
+
+                                            // historyController.finalList.clear();
+                                            // historyController.initialpage = 1;
                                           },
                                         );
                                       },
@@ -255,6 +264,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 );
               },
             ),
+
             SizedBox(
               height: 5,
             ),
@@ -264,12 +274,14 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   .toString(),
               imageLink: "assets/icons/logout.png",
               onPressed: () {
+                historyController.finalList.clear();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => SignInScreen(),
                   ),
                 );
+                historyController.finalList.clear();
 
                 signInController.usernameController.clear();
                 signInController.passwordController.clear();

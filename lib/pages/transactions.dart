@@ -162,6 +162,7 @@ class TransactionsPage extends StatelessWidget {
                                 .data!
                                 .resellerBalanceTransactions[index];
                             return Card(
+                              color: Colors.white,
                               child: Container(
                                 width: screenWidth,
                                 decoration: BoxDecoration(
@@ -191,40 +192,41 @@ class TransactionsPage extends StatelessWidget {
                                                 width: screenWidth,
                                                 child: Row(
                                                   children: [
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Container(
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            data.order != null
-                                                                ? Text(
-                                                                    data
-                                                                        .order!
-                                                                        .bundle!
-                                                                        .bundleTitle
-                                                                        .toString(),
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          13,
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                    ),
-                                                                  )
-                                                                : SizedBox(),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
+                                                    // Expanded(
+                                                    //   flex: 1,
+                                                    //   child: Container(
+                                                    //     child: Column(
+                                                    //       mainAxisAlignment:
+                                                    //           MainAxisAlignment
+                                                    //               .center,
+                                                    //       crossAxisAlignment:
+                                                    //           CrossAxisAlignment
+                                                    //               .start,
+                                                    //       children: [
+                                                    //         data.order != null
+                                                    //             ? Text(
+                                                    //                 data
+                                                    //                     .order!
+                                                    //                     .bundle!
+                                                    //                     .bundleTitle
+                                                    //                     .toString(),
+                                                    //                 style:
+                                                    //                     TextStyle(
+                                                    //                   fontSize:
+                                                    //                       13,
+                                                    //                   color: Colors
+                                                    //                       .grey,
+                                                    //                   fontWeight:
+                                                    //                       FontWeight
+                                                    //                           .w600,
+                                                    //                 ),
+                                                    //               )
+                                                    //             : SizedBox(),
+                                                    //       ],
+                                                    //     ),
+                                                    //   ),
+                                                    // ),
+
                                                     Expanded(
                                                       flex: 1,
                                                       child: Container(
@@ -305,20 +307,59 @@ class TransactionsPage extends StatelessWidget {
                                                                         .w600,
                                                               ),
                                                             ),
-                                                            Text(
-                                                              "${box.read("currency_code")} ${data.amount}",
-                                                              style: TextStyle(
-                                                                fontSize: 10,
-                                                                color: data.status
-                                                                            .toString() ==
-                                                                        "debit"
-                                                                    ? Colors.red
-                                                                    : Colors
-                                                                        .green,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Text(
+                                                                  "${box.read("currency_code")} ",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        10,
+                                                                    color: data.status.toString() ==
+                                                                            "debit"
+                                                                        ? Colors
+                                                                            .red
+                                                                        : Colors
+                                                                            .green,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                  NumberFormat
+                                                                      .currency(
+                                                                    locale:
+                                                                        'en_US',
+                                                                    symbol: '',
+                                                                    decimalDigits:
+                                                                        2,
+                                                                  ).format(
+                                                                    double
+                                                                        .parse(
+                                                                      data.amount
+                                                                          .toString(),
+                                                                    ),
+                                                                  ),
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        10,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: data.status.toString() ==
+                                                                            "debit"
+                                                                        ? Colors
+                                                                            .red
+                                                                        : Colors
+                                                                            .green,
+                                                                  ),
+                                                                ),
+                                                              ],
                                                             ),
                                                           ],
                                                         ),

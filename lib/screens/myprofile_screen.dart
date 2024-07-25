@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:watandaronline/bottom_nav_screen.dart';
 import 'package:watandaronline/controllers/dashboard_controller.dart';
+import 'package:watandaronline/controllers/history_controller.dart';
 import 'package:watandaronline/utils/colors.dart';
 import 'package:watandaronline/widgets/auth_textfield.dart';
 import 'package:watandaronline/widgets/default_button.dart';
@@ -15,6 +17,8 @@ class MyprofileScreen extends StatelessWidget {
   final DashboardController dashboardController =
       Get.put(DashboardController());
 
+  final HistoryController historyController = Get.put(HistoryController());
+
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -24,7 +28,14 @@ class MyprofileScreen extends StatelessWidget {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            Navigator.pop(context);
+            historyController.finalList.clear();
+            historyController.initialpage = 1;
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => BottomNavigationbar(),
+              ),
+            );
           },
           child: Icon(
             Icons.arrow_back,

@@ -66,7 +66,7 @@ class AddSubResellerController extends GetxController {
         'country_id': countryId.toString(),
         'province_id': provinceId.toString(),
         'districts_id': districtID.toString(),
-        'currency_preference_id': box.read("currencypreferenceID"),
+        'currency_preference_id': box.read("currencypreferenceID").toString(),
       };
 
       var url = Uri.parse(

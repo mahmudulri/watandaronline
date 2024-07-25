@@ -9,25 +9,32 @@ import 'package:http/http.dart' as http;
 import 'package:watandaronline/screens/result_screen.dart';
 import 'package:watandaronline/utils/api_endpoints.dart';
 
+import 'history_controller.dart';
+
 class ConfirmPinController extends GetxController {
   TextEditingController numberController = TextEditingController();
   final box = GetStorage();
 
   TextEditingController pinController = TextEditingController();
+  final HistoryController historyController = Get.put(HistoryController());
 
   RxBool isLoading = false.obs;
   RxBool placeingLoading = false.obs;
 
+  RxBool loadsuccess = false.obs;
+
   Future<void> verify() async {
     try {
       isLoading.value = true;
+      loadsuccess.value = true;
 
       var headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       };
       var url = Uri.parse(
-          "${ApiEndPoints.baseUrl}confirm_pin?pin=${pinController.text}");
+          "${ApiEndPoints.baseUrl}confirm_pin?pin=${pinController.text.toString()}");
+      print(url.toString());
 
       http.Response response = await http.get(
         url,
@@ -70,6 +77,7 @@ class ConfirmPinController extends GetxController {
             if (response.statusCode == 201) {
               if (results["success"] == true) {
                 Get.to(() => ResultScreen());
+
                 numberController.clear();
                 pinController.clear();
 
@@ -87,6 +95,7 @@ class ConfirmPinController extends GetxController {
                   colorText: Colors.black,
                 );
                 placeingLoading.value = false;
+                loadsuccess.value = false;
               }
             } else {
               Get.snackbar(

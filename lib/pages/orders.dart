@@ -429,7 +429,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                   onTap: () {
                                     box.write("orderstatus", "");
 
+                                    orderlistController.initialpage = 1;
+                                    orderlistController.finalList.clear();
+
                                     orderlistController.fetchOrderlistdata();
+
                                     defaultValue = "";
                                     setState(() {
                                       isvisible = !isvisible;
@@ -576,7 +580,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                                 90,
                                                                             decoration:
                                                                                 BoxDecoration(
-                                                                              color: Colors.blue,
+                                                                              color: AppColors.defaultColor,
                                                                               borderRadius: BorderRadius.circular(5),
                                                                             ),
                                                                             child:
@@ -756,7 +760,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                       ],
                                                                     ),
                                                                     SizedBox(
-                                                                      height: 3,
+                                                                      height: 5,
                                                                     ),
                                                                     Visibility(
                                                                       visible: data
@@ -875,17 +879,34 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                                 AppColors.borderColor,
                                                                           ),
                                                                         ),
-                                                                        Text(
-                                                                          data.bundle!.sellingPrice.toString() +
-                                                                              " " +
-                                                                              box.read("currency_code"),
-                                                                          style:
-                                                                              TextStyle(
-                                                                            fontSize:
-                                                                                14,
-                                                                            color:
-                                                                                AppColors.borderColor,
-                                                                          ),
+                                                                        Row(
+                                                                          children: [
+                                                                            Text(
+                                                                              NumberFormat.currency(
+                                                                                locale: 'en_US',
+                                                                                symbol: '',
+                                                                                decimalDigits: 2,
+                                                                              ).format(
+                                                                                double.parse(data.bundle!.sellingPrice.toString()),
+                                                                              ),
+                                                                              style: TextStyle(
+                                                                                fontSize: 11,
+                                                                                fontWeight: FontWeight.w600,
+                                                                                color: Colors.grey,
+                                                                              ),
+                                                                            ),
+                                                                            SizedBox(
+                                                                              width: 2,
+                                                                            ),
+                                                                            Text(
+                                                                              " " + box.read("currency_code"),
+                                                                              style: TextStyle(
+                                                                                fontWeight: FontWeight.w500,
+                                                                                fontSize: 11,
+                                                                                color: Colors.grey,
+                                                                              ),
+                                                                            ),
+                                                                          ],
                                                                         ),
                                                                       ],
                                                                     ),
@@ -1217,17 +1238,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                       .toString(),
                                                           style: TextStyle(
                                                             fontSize: 12,
-                                                            color: data.status
-                                                                        .toString() ==
-                                                                    "0"
-                                                                ? Colors.grey
-                                                                : data.status
-                                                                            .toString() ==
-                                                                        "1"
-                                                                    ? Colors
-                                                                        .green
-                                                                    : Colors
-                                                                        .red,
+                                                            color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight.w600,
                                                           ),
@@ -1330,23 +1341,47 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               .w600,
                                                                     ),
                                                                   ),
-                                                                  Text(
-                                                                    box.read(
-                                                                            "currency_code") +
-                                                                        " " +
-                                                                        data.bundle!
-                                                                            .sellingPrice
-                                                                            .toString(),
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          10,
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                    ),
+                                                                  Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        box.read(
+                                                                            "currency_code"),
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              10,
+                                                                          color:
+                                                                              Colors.grey,
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                        ),
+                                                                      ),
+                                                                      Text(
+                                                                        NumberFormat
+                                                                            .currency(
+                                                                          locale:
+                                                                              'en_US',
+                                                                          symbol:
+                                                                              '',
+                                                                          decimalDigits:
+                                                                              2,
+                                                                        ).format(
+                                                                          double
+                                                                              .parse(
+                                                                            data.bundle!.sellingPrice.toString(),
+                                                                          ),
+                                                                        ),
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              10,
+                                                                          fontWeight:
+                                                                              FontWeight.w500,
+                                                                          color:
+                                                                              Colors.grey,
+                                                                        ),
+                                                                      ),
+                                                                    ],
                                                                   ),
                                                                 ],
                                                               ),
@@ -1378,23 +1413,47 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               .w600,
                                                                     ),
                                                                   ),
-                                                                  Text(
-                                                                    box.read(
-                                                                            "currency_code") +
-                                                                        " " +
-                                                                        data.bundle!
-                                                                            .buyingPrice
-                                                                            .toString(),
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          10,
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                    ),
+                                                                  Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        box.read(
+                                                                            "currency_code"),
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              10,
+                                                                          color:
+                                                                              Colors.grey,
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                        ),
+                                                                      ),
+                                                                      Text(
+                                                                        NumberFormat
+                                                                            .currency(
+                                                                          locale:
+                                                                              'en_US',
+                                                                          symbol:
+                                                                              '',
+                                                                          decimalDigits:
+                                                                              2,
+                                                                        ).format(
+                                                                          double
+                                                                              .parse(
+                                                                            data.bundle!.buyingPrice.toString(),
+                                                                          ),
+                                                                        ),
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              10,
+                                                                          fontWeight:
+                                                                              FontWeight.w500,
+                                                                          color:
+                                                                              Colors.grey,
+                                                                        ),
+                                                                      ),
+                                                                    ],
                                                                   ),
                                                                 ],
                                                               ),
@@ -1777,12 +1836,8 @@ class _NotificationPageState extends State<NotificationPage> {
                             shrinkWrap: false,
                             physics: AlwaysScrollableScrollPhysics(),
                             controller: scrollController,
-                            // itemCount: orderlistController
-                            //     .allorderlist.value.data!.orders.length,
                             itemCount: orderlistController.finalList.length,
                             itemBuilder: (context, index) {
-                              // final data = orderlistController
-                              //     .allorderlist.value.data!.orders[index];
                               final data = orderlistController.finalList[index];
 
                               if (searchController.text.isEmpty) {
@@ -1810,7 +1865,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                     RepaintBoundary(
                                                       key: _globalKey,
                                                       child: Container(
-                                                        height: 400,
+                                                        height: 420,
                                                         width: screenWidth,
                                                         decoration:
                                                             BoxDecoration(
@@ -1871,10 +1926,10 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                           child:
                                                                               Container(
                                                                             width:
-                                                                                70,
+                                                                                90,
                                                                             decoration:
                                                                                 BoxDecoration(
-                                                                              color: Colors.blue,
+                                                                              color: AppColors.defaultColor,
                                                                               borderRadius: BorderRadius.circular(5),
                                                                             ),
                                                                             child:
@@ -1888,7 +1943,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                                   ),
                                                                                   child: Center(
                                                                                     child: Text(
-                                                                                      "Share",
+                                                                                      languageController.alllanguageData.value.languageData!["SHARE"].toString(),
                                                                                       style: TextStyle(
                                                                                         color: Colors.white,
                                                                                       ),
@@ -2019,7 +2074,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               .spaceBetween,
                                                                       children: [
                                                                         Text(
-                                                                          "Status : ",
+                                                                          languageController
+                                                                              .alllanguageData
+                                                                              .value
+                                                                              .languageData!["ORDER_STATUS"]
+                                                                              .toString(),
                                                                           style:
                                                                               TextStyle(
                                                                             color:
@@ -2029,25 +2088,47 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                           ),
                                                                         ),
                                                                         Text(
-                                                                          data.status == "0"
-                                                                              ? "Pending"
-                                                                              : data.status == "1"
-                                                                                  ? "Confirmed"
-                                                                                  : "Rejected",
+                                                                          data.status.toString() == "0"
+                                                                              ? languageController.alllanguageData.value.languageData!["PENDING"].toString()
+                                                                              : data.status.toString() == "1"
+                                                                                  ? languageController.alllanguageData.value.languageData!["CONFIRMED"].toString()
+                                                                                  : languageController.alllanguageData.value.languageData!["REJECTED"].toString(),
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
                                                                                 17,
                                                                             fontWeight:
                                                                                 FontWeight.w400,
-                                                                            color:
-                                                                                Colors.green,
+                                                                            color: data.status.toString() == "0"
+                                                                                ? Colors.grey
+                                                                                : data.status.toString() == "1"
+                                                                                    ? Colors.green
+                                                                                    : Colors.red,
                                                                           ),
                                                                         ),
                                                                       ],
                                                                     ),
                                                                     SizedBox(
                                                                       height: 5,
+                                                                    ),
+                                                                    Visibility(
+                                                                      visible: data
+                                                                              .status
+                                                                              .toString() ==
+                                                                          "2",
+                                                                      child:
+                                                                          Text(
+                                                                        data.rejectReason
+                                                                            .toString(),
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              Colors.red,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    SizedBox(
+                                                                      height: 3,
                                                                     ),
                                                                     dotline(),
                                                                     SizedBox(
@@ -2059,7 +2140,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               .spaceBetween,
                                                                       children: [
                                                                         Text(
-                                                                          "Network type : ",
+                                                                          languageController
+                                                                              .alllanguageData
+                                                                              .value
+                                                                              .languageData!["NETWORK_TYPE"]
+                                                                              .toString(),
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
@@ -2094,7 +2179,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               .spaceBetween,
                                                                       children: [
                                                                         Text(
-                                                                          "Bundle type : ",
+                                                                          languageController
+                                                                              .alllanguageData
+                                                                              .value
+                                                                              .languageData!["BUNDLE_TYPE"]
+                                                                              .toString(),
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
@@ -2126,7 +2215,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               .spaceBetween,
                                                                       children: [
                                                                         Text(
-                                                                          "Price : ",
+                                                                          languageController
+                                                                              .alllanguageData
+                                                                              .value
+                                                                              .languageData!["PRICE"]
+                                                                              .toString(),
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
@@ -2135,17 +2228,34 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                                 AppColors.borderColor,
                                                                           ),
                                                                         ),
-                                                                        Text(
-                                                                          data.bundle!.sellingPrice.toString() +
-                                                                              " " +
-                                                                              box.read("currency_code"),
-                                                                          style:
-                                                                              TextStyle(
-                                                                            fontSize:
-                                                                                14,
-                                                                            color:
-                                                                                AppColors.borderColor,
-                                                                          ),
+                                                                        Row(
+                                                                          children: [
+                                                                            Text(
+                                                                              NumberFormat.currency(
+                                                                                locale: 'en_US',
+                                                                                symbol: '',
+                                                                                decimalDigits: 2,
+                                                                              ).format(
+                                                                                double.parse(data.bundle!.sellingPrice.toString()),
+                                                                              ),
+                                                                              style: TextStyle(
+                                                                                fontSize: 11,
+                                                                                fontWeight: FontWeight.w600,
+                                                                                color: Colors.grey,
+                                                                              ),
+                                                                            ),
+                                                                            SizedBox(
+                                                                              width: 2,
+                                                                            ),
+                                                                            Text(
+                                                                              " " + box.read("currency_code"),
+                                                                              style: TextStyle(
+                                                                                fontWeight: FontWeight.w500,
+                                                                                fontSize: 11,
+                                                                                color: Colors.grey,
+                                                                              ),
+                                                                            ),
+                                                                          ],
                                                                         ),
                                                                       ],
                                                                     ),
@@ -2158,7 +2268,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               .spaceBetween,
                                                                       children: [
                                                                         Text(
-                                                                          "Phone no : ",
+                                                                          languageController
+                                                                              .alllanguageData
+                                                                              .value
+                                                                              .languageData!["PHONE_NUMBER"]
+                                                                              .toString(),
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
@@ -2189,7 +2303,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               .spaceBetween,
                                                                       children: [
                                                                         Text(
-                                                                          "Valitidy type : ",
+                                                                          languageController
+                                                                              .alllanguageData
+                                                                              .value
+                                                                              .languageData!["VALIDITY_TYPE"]
+                                                                              .toString(),
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
@@ -2221,7 +2339,11 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               .spaceBetween,
                                                                       children: [
                                                                         Text(
-                                                                          "Order ID : ",
+                                                                          languageController
+                                                                              .alllanguageData
+                                                                              .value
+                                                                              .languageData!["ORDER_ID"]
+                                                                              .toString(),
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
@@ -2314,23 +2436,6 @@ class _NotificationPageState extends State<NotificationPage> {
                                             ),
                                           );
                                         });
-
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) => OrderDetailsScreen(
-                                    //       status: data.status,
-                                    //       orderID: data.id.toString(),
-                                    //       date: DateFormat('dd MMM yyyy').format(
-                                    //           DateTime.parse(
-                                    //               data.createdAt.toString())),
-                                    //       number: data.rechargebleAccount,
-                                    //       company: data.bundle!.service!.company!
-                                    //           .companyName,
-                                    //       validity: data.bundle!.validityType,
-                                    //     ),
-                                    //   ),
-                                    // );
                                   },
                                   child: Card(
                                     child: Container(
@@ -2387,7 +2492,13 @@ class _NotificationPageState extends State<NotificationPage> {
                                                     ),
                                                     Spacer(),
                                                     Text(
-                                                      "Order ID: ",
+                                                      languageController
+                                                              .alllanguageData
+                                                              .value
+                                                              .languageData![
+                                                                  "ORDER_ID"]
+                                                              .toString() +
+                                                          " ",
                                                       style: TextStyle(
                                                         fontSize: 15,
                                                         color: Colors.black,
@@ -2432,7 +2543,12 @@ class _NotificationPageState extends State<NotificationPage> {
                                                     Row(
                                                       children: [
                                                         Text(
-                                                          "Rechargeable Account",
+                                                          languageController
+                                                              .alllanguageData
+                                                              .value
+                                                              .languageData![
+                                                                  "RECHARGEABLE_ACCOUNT"]
+                                                              .toString(),
                                                           style: TextStyle(
                                                             fontSize: 12,
                                                             color: Colors.black,
@@ -2448,12 +2564,27 @@ class _NotificationPageState extends State<NotificationPage> {
                                                         Text(
                                                           data.status.toString() ==
                                                                   "0"
-                                                              ? "pending"
+                                                              ? languageController
+                                                                  .alllanguageData
+                                                                  .value
+                                                                  .languageData![
+                                                                      "PENDING"]
+                                                                  .toString()
                                                               : data.status
                                                                           .toString() ==
                                                                       "1"
-                                                                  ? "confirmed"
-                                                                  : "rejected",
+                                                                  ? languageController
+                                                                      .alllanguageData
+                                                                      .value
+                                                                      .languageData![
+                                                                          "CONFIRMED"]
+                                                                      .toString()
+                                                                  : languageController
+                                                                      .alllanguageData
+                                                                      .value
+                                                                      .languageData![
+                                                                          "REJECTED"]
+                                                                      .toString(),
                                                           style: TextStyle(
                                                             fontSize: 12,
                                                             color: Colors.black,
@@ -2497,7 +2628,12 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                         .start,
                                                                 children: [
                                                                   Text(
-                                                                    "Title",
+                                                                    languageController
+                                                                        .alllanguageData
+                                                                        .value
+                                                                        .languageData![
+                                                                            "TITLE"]
+                                                                        .toString(),
                                                                     style:
                                                                         TextStyle(
                                                                       fontSize:
@@ -2537,7 +2673,12 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                         .center,
                                                                 children: [
                                                                   Text(
-                                                                    "Sale",
+                                                                    languageController
+                                                                        .alllanguageData
+                                                                        .value
+                                                                        .languageData![
+                                                                            "SALE"]
+                                                                        .toString(),
                                                                     style:
                                                                         TextStyle(
                                                                       fontSize:
@@ -2549,23 +2690,47 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               .w600,
                                                                     ),
                                                                   ),
-                                                                  Text(
-                                                                    box.read(
-                                                                            "currency_code") +
-                                                                        " " +
-                                                                        data.bundle!
-                                                                            .sellingPrice
-                                                                            .toString(),
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          10,
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                    ),
+                                                                  Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        box.read(
+                                                                            "currency_code"),
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              10,
+                                                                          color:
+                                                                              Colors.grey,
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                        ),
+                                                                      ),
+                                                                      Text(
+                                                                        NumberFormat
+                                                                            .currency(
+                                                                          locale:
+                                                                              'en_US',
+                                                                          symbol:
+                                                                              '',
+                                                                          decimalDigits:
+                                                                              2,
+                                                                        ).format(
+                                                                          double
+                                                                              .parse(
+                                                                            data.bundle!.sellingPrice.toString(),
+                                                                          ),
+                                                                        ),
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              10,
+                                                                          fontWeight:
+                                                                              FontWeight.w500,
+                                                                          color:
+                                                                              Colors.grey,
+                                                                        ),
+                                                                      ),
+                                                                    ],
                                                                   ),
                                                                 ],
                                                               ),
@@ -2580,7 +2745,12 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                         .center,
                                                                 children: [
                                                                   Text(
-                                                                    "Buy",
+                                                                    languageController
+                                                                        .alllanguageData
+                                                                        .value
+                                                                        .languageData![
+                                                                            "BUY"]
+                                                                        .toString(),
                                                                     style:
                                                                         TextStyle(
                                                                       fontSize:
@@ -2592,23 +2762,47 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               .w600,
                                                                     ),
                                                                   ),
-                                                                  Text(
-                                                                    box.read(
-                                                                            "currency_code") +
-                                                                        " " +
-                                                                        data.bundle!
-                                                                            .buyingPrice
-                                                                            .toString(),
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          10,
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                    ),
+                                                                  Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        box.read(
+                                                                            "currency_code"),
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              10,
+                                                                          color:
+                                                                              Colors.grey,
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                        ),
+                                                                      ),
+                                                                      Text(
+                                                                        NumberFormat
+                                                                            .currency(
+                                                                          locale:
+                                                                              'en_US',
+                                                                          symbol:
+                                                                              '',
+                                                                          decimalDigits:
+                                                                              2,
+                                                                        ).format(
+                                                                          double
+                                                                              .parse(
+                                                                            data.bundle!.buyingPrice.toString(),
+                                                                          ),
+                                                                        ),
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              10,
+                                                                          fontWeight:
+                                                                              FontWeight.w500,
+                                                                          color:
+                                                                              Colors.grey,
+                                                                        ),
+                                                                      ),
+                                                                    ],
                                                                   ),
                                                                 ],
                                                               ),
@@ -3005,7 +3199,6 @@ class _NotificationPageState extends State<NotificationPage> {
                         )
                       : SizedBox(),
                 ),
-
                 SizedBox(
                   height: 20,
                 ),

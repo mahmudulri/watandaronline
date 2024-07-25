@@ -9,6 +9,7 @@ import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/controllers/place_order_controller.dart';
 
 import '../controllers/confirm_pin_controller.dart';
+import 'result_screen.dart';
 
 class ConfirmPinScreen extends StatelessWidget {
   ConfirmPinScreen({super.key});
@@ -65,7 +66,7 @@ class ConfirmPinScreen extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      // Navigator.pop(context);
+                      Navigator.pop(context);
                       print(confirmPinController.numberController.text);
                     },
                     child: Container(
@@ -100,7 +101,9 @@ class ConfirmPinScreen extends StatelessWidget {
                     width: 10,
                   ),
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      print("pin is...." +
+                          confirmPinController.pinController.text.toString());
                       if (confirmPinController.pinController.text.isEmpty ||
                           confirmPinController.pinController.text.length != 4) {
                         Fluttertoast.showToast(
@@ -112,7 +115,17 @@ class ConfirmPinScreen extends StatelessWidget {
                             textColor: Colors.white,
                             fontSize: 16.0);
                       } else {
-                        confirmPinController.verify();
+                        await confirmPinController.verify();
+                        if (confirmPinController.loadsuccess.value == false) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ResultScreen(),
+                            ),
+                          );
+                        } else {
+                          print("errorBD");
+                        }
                         // orderController.placeOrder();
                         // print(controller.pinController.text);
                         // ignore: unrelated_type_equality_checks

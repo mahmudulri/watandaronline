@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:watandaronline/controllers/bundles_controller.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/controllers/place_order_controller.dart';
@@ -125,6 +126,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
+            confirmPinController.numberController.clear();
             Navigator.pop(context);
           },
           child: Icon(
@@ -202,56 +204,65 @@ class _RechargeScreenState extends State<RechargeScreen> {
                           width: screenWidth,
                           child: Obx(
                             () => serviceController.isLoading.value == false
-                                ? ListView.separated(
-                                    separatorBuilder: (context, index) {
-                                      return SizedBox(
-                                        width: 5,
-                                      );
-                                    },
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: serviceController.allserviceslist
-                                        .value.data!.services.length,
-                                    itemBuilder: (context, index) {
-                                      final data = serviceController
+                                ? Center(
+                                    child: ListView.separated(
+                                      shrinkWrap: true,
+                                      separatorBuilder: (context, index) {
+                                        return SizedBox(
+                                          width: 5,
+                                        );
+                                      },
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: serviceController
                                           .allserviceslist
                                           .value
                                           .data!
-                                          .services[index];
+                                          .services
+                                          .length,
+                                      itemBuilder: (context, index) {
+                                        final data = serviceController
+                                            .allserviceslist
+                                            .value
+                                            .data!
+                                            .services[index];
 
-                                      return GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            bundleController.initialpage = 1;
-                                            bundleController.finalList.clear();
-                                            selectedIndex = index;
-                                            box.write(
-                                                "company_id", data.companyId);
-                                            bundleController.fetchallbundles();
-                                          });
-                                        },
-                                        child: Container(
-                                          height: 50,
-                                          width: 65,
-                                          decoration: BoxDecoration(
-                                            color: selectedIndex == index
-                                                ? Color(0xff34495e)
-                                                : Colors.grey.shade100,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: 5,
-                                              vertical: 5,
+                                        return GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              bundleController.initialpage = 1;
+                                              bundleController.finalList
+                                                  .clear();
+                                              selectedIndex = index;
+                                              box.write(
+                                                  "company_id", data.companyId);
+                                              bundleController
+                                                  .fetchallbundles();
+                                            });
+                                          },
+                                          child: Container(
+                                            height: 50,
+                                            width: 65,
+                                            decoration: BoxDecoration(
+                                              color: selectedIndex == index
+                                                  ? Color(0xff34495e)
+                                                  : Colors.grey.shade100,
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
                                             ),
-                                            child: Image.network(
-                                              data.company!.companyLogo
-                                                  .toString(),
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: 5,
+                                                vertical: 5,
+                                              ),
+                                              child: Image.network(
+                                                data.company!.companyLogo
+                                                    .toString(),
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      );
-                                    },
+                                        );
+                                      },
+                                    ),
                                   )
                                 : Center(
                                     child: CircularProgressIndicator(
@@ -445,7 +456,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                     ),
                                                   ),
                                                   Expanded(
-                                                    flex: 3,
+                                                    flex: 2,
                                                     child: Padding(
                                                       padding: EdgeInsets.only(
                                                           left: 20),
@@ -506,13 +517,12 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                           width: 2,
                                                         ),
                                                         Text(
-                                                          data.currency!.code
-                                                              .toString(),
+                                                          " ${box.read("currency_code")}",
                                                           style: TextStyle(
+                                                            fontSize: 13,
                                                             fontWeight:
                                                                 FontWeight.w500,
-                                                            fontSize: 12,
-                                                            color: Colors.grey,
+                                                            color: Colors.black,
                                                           ),
                                                         ),
                                                       ],
@@ -592,8 +602,27 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                                           Text(
                                                                             languageController.alllanguageData.value.languageData!["BUYING_PRICE"].toString(),
                                                                           ),
+                                                                          Spacer(),
                                                                           Text(
-                                                                              "${data.buyingPrice}   ${data.currency!.code.toString()}"),
+                                                                            NumberFormat.currency(
+                                                                              locale: 'en_US',
+                                                                              symbol: '',
+                                                                              decimalDigits: 2,
+                                                                            ).format(
+                                                                              double.parse(
+                                                                                data.buyingPrice.toString(),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          Text(
+                                                                            " ${box.read("currency_code")}",
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontSize: 13,
+                                                                              fontWeight: FontWeight.w500,
+                                                                              color: Colors.black,
+                                                                            ),
+                                                                          ),
                                                                         ],
                                                                       ),
                                                                     ],
@@ -756,13 +785,12 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                           width: 2,
                                                         ),
                                                         Text(
-                                                          data.currency!.code
-                                                              .toString(),
+                                                          " ${box.read("currency_code")}",
                                                           style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w500,
                                                             fontSize: 12,
                                                             color: Colors.grey,
+                                                            fontWeight:
+                                                                FontWeight.w600,
                                                           ),
                                                         ),
                                                       ],
@@ -790,7 +818,11 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                                   child: Column(
                                                                     children: [
                                                                       Text(
-                                                                        "Bundle Details",
+                                                                        languageController
+                                                                            .alllanguageData
+                                                                            .value
+                                                                            .languageData!["BUNDLE_DETAILS"]
+                                                                            .toString(),
                                                                         style:
                                                                             TextStyle(
                                                                           fontSize:
@@ -814,7 +846,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                                             MainAxisAlignment.spaceBetween,
                                                                         children: [
                                                                           Text(
-                                                                            "Bundle Title : ",
+                                                                            languageController.alllanguageData.value.languageData!["BUNDLE_TITLE"].toString(),
                                                                           ),
                                                                           Text(
                                                                               "${data.bundleTitle}"),
@@ -825,7 +857,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                                             MainAxisAlignment.spaceBetween,
                                                                         children: [
                                                                           Text(
-                                                                            "Validity : ",
+                                                                            languageController.alllanguageData.value.languageData!["VALIDITY"].toString(),
                                                                           ),
                                                                           Text(
                                                                               "${data.validityType}"),
@@ -836,10 +868,29 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                                             MainAxisAlignment.spaceBetween,
                                                                         children: [
                                                                           Text(
-                                                                            "Buying Price : ",
+                                                                            languageController.alllanguageData.value.languageData!["BUYING_PRICE"].toString(),
+                                                                          ),
+                                                                          Spacer(),
+                                                                          Text(
+                                                                            NumberFormat.currency(
+                                                                              locale: 'en_US',
+                                                                              symbol: '',
+                                                                              decimalDigits: 2,
+                                                                            ).format(
+                                                                              double.parse(
+                                                                                data.buyingPrice.toString(),
+                                                                              ),
+                                                                            ),
                                                                           ),
                                                                           Text(
-                                                                              "${data.buyingPrice}   ${data.currency!.code.toString()}"),
+                                                                            " ${box.read("currency_code")}",
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontSize: 13,
+                                                                              fontWeight: FontWeight.w500,
+                                                                              color: Colors.black,
+                                                                            ),
+                                                                          ),
                                                                         ],
                                                                       ),
                                                                     ],

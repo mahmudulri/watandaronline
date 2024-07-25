@@ -9,7 +9,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:watandaronline/controllers/checker.dart';
 import 'package:watandaronline/controllers/sign_in_controller.dart';
-import 'package:watandaronline/pages/homescreen.dart';
+
 import 'package:watandaronline/utils/colors.dart';
 import 'package:watandaronline/widgets/default_button.dart';
 import 'package:watandaronline/widgets/social_button.dart';

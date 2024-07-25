@@ -30,7 +30,8 @@ class SignInController extends GetxController {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       };
-      var url = Uri.parse("https://amutele.amutelecom.com/api/reseller/login");
+      var url = Uri.parse(
+          ApiEndPoints.baseUrl + ApiEndPoints.otherendpoints.loginIink);
       // Map body = {
       //   'password': "test@2024",
       //   'username': "0700930683",

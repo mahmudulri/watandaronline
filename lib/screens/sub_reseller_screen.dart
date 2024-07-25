@@ -175,6 +175,7 @@ class _SubResellerScreenState extends State<SubResellerScreen> {
                               code: data.code,
                               id: data.id.toString(),
                               status: data.status.toString(),
+                              imagelink: data.profileImageUrl,
                             );
                           } else if (subresellerController.allsubresellerData
                               .value.data!.resellers[index].resellerName
@@ -192,6 +193,7 @@ class _SubResellerScreenState extends State<SubResellerScreen> {
                               code: data.code,
                               id: data.id.toString(),
                               status: data.status.toString(),
+                              imagelink: data.profileImageUrl,
                             );
                           } else {
                             return Container();
@@ -223,6 +225,7 @@ class dataBoxname extends StatefulWidget {
   String? districts;
   String id;
   String? status;
+  String? imagelink;
 
   dataBoxname({
     super.key,
@@ -238,6 +241,7 @@ class dataBoxname extends StatefulWidget {
     this.districts,
     required this.id,
     this.status,
+    this.imagelink,
   });
 
   @override
@@ -290,6 +294,7 @@ class _dataBoxnameState extends State<dataBoxname> {
           // collapsedBackgroundColor: Color(0xff2c3e50),
           collapsedBackgroundColor: Color(0xffecf0f1),
           iconColor: Colors.white,
+
           trailing: SizedBox(
             height: 40,
             width: 60,
@@ -448,19 +453,32 @@ class _dataBoxnameState extends State<dataBoxname> {
           tilePadding: EdgeInsets.all(5),
           title: Row(
             children: [
-              Container(
-                height: 35,
-                width: 35,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                      "assets/images/profilepic.jpg",
+              widget.imagelink != null
+                  ? Container(
+                      height: 35,
+                      width: 35,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            widget.imagelink.toString(),
+                          ),
+                          fit: BoxFit.fill,
+                        ),
+                        shape: BoxShape.circle,
+                      ),
+                    )
+                  : Container(
+                      height: 35,
+                      width: 35,
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                          child: Icon(
+                        Icons.person,
+                      )),
                     ),
-                    fit: BoxFit.cover,
-                  ),
-                  shape: BoxShape.circle,
-                ),
-              ),
               SizedBox(
                 width: 5,
               ),

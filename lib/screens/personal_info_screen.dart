@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:watandaronline/bottom_nav_screen.dart';
 
 class PersonalInofScreen extends StatelessWidget {
   PersonalInofScreen({super.key});
@@ -13,7 +14,12 @@ class PersonalInofScreen extends StatelessWidget {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => BottomNavigationbar(),
+              ),
+            );
           },
           child: Icon(
             Icons.arrow_back,

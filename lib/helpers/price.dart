@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class PriceTextView extends StatelessWidget {
   final String price;
@@ -13,7 +14,15 @@ class PriceTextView extends StatelessWidget {
     String formattedPrice = priceDouble.toStringAsFixed(2);
 
     return Text(
-      formattedPrice,
+      NumberFormat.currency(
+        locale: 'en_US',
+        symbol: '',
+        decimalDigits: 2,
+      ).format(
+        double.parse(
+          formattedPrice.toString(),
+        ),
+      ),
       style: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w600,
