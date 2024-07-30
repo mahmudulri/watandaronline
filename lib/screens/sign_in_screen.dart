@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:watandaronline/controllers/checker.dart';
 import 'package:watandaronline/controllers/sign_in_controller.dart';
 
@@ -29,6 +30,21 @@ class _SignInScreenState extends State<SignInScreen> {
   final box = GetStorage();
 
   final SignInController signInController = Get.put(SignInController());
+  whatsapp() async {
+    var contact = "+93704200415";
+    var androidUrl = "whatsapp://send?phone=$contact&text=Hi, I need some help";
+    var iosUrl = "https://wa.me/$contact?text=${Uri.parse('')}";
+
+    try {
+      if (Platform.isIOS) {
+        await launchUrl(Uri.parse(iosUrl));
+      } else {
+        await launchUrl(Uri.parse(androidUrl));
+      }
+    } on Exception {
+      print("not found");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,12 +101,17 @@ class _SignInScreenState extends State<SignInScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                "Log in",
-                                style: GoogleFonts.rubik(
-                                  color: AppColors.defaultColor,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w500,
+                              GestureDetector(
+                                onTap: () {
+                                  print(box.read("timezone"));
+                                },
+                                child: Text(
+                                  "Log in",
+                                  style: GoogleFonts.rubik(
+                                    color: AppColors.defaultColor,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                             ],
@@ -266,6 +287,21 @@ class _SignInScreenState extends State<SignInScreen> {
                         ],
                       ),
                     ),
+                  ),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          whatsapp();
+                        },
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          child: Image.asset("assets/icons/whatsapp.png"),
+                        ),
+                      ),
+                      Text("  Need Help ?"),
+                    ],
                   ),
                   Expanded(
                     flex: 1,

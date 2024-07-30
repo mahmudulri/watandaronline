@@ -275,6 +275,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                                   box.write("service_category_id", data.id);
                                   // box.write("service_id", "");
                                   box.write("validity_type", "");
+                                  box.write("search_tag", "");
                                   box.write("company_id", "");
                                   print(data.id);
                                   print(data.type);
@@ -339,8 +340,15 @@ class ServiceBox extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         decoration: BoxDecoration(
-          color: mycolor,
-          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2), // Color of the shadow
+              spreadRadius: 4, // How much the shadow spreads
+              blurRadius: 5, // The blur radius of the shadow
+              offset: Offset(0, 2), // The offset of the shadow
+            ),
+          ],
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -348,7 +356,7 @@ class ServiceBox extends StatelessWidget {
             children: [
               FaIcon(
                 myicon,
-                color: Colors.white,
+                color: Colors.black,
               ),
               SizedBox(
                 width: 12,
@@ -358,7 +366,7 @@ class ServiceBox extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
             ],

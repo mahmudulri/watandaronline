@@ -10,7 +10,7 @@ class BundlesApi {
   final box = GetStorage();
   Future<BundleModel> fetchBundles(int pageNo) async {
     final url = Uri.parse(
-        "${ApiEndPoints.baseUrl}bundles?page=${pageNo}&country_id=${box.read("country_id")}&validity_type=${box.read("validity_type")}&company_id=${box.read("company_id")}&service_category_id=${box.read("service_category_id")}");
+        "${ApiEndPoints.baseUrl}bundles?page=${pageNo}&country_id=${box.read("country_id")}&validity_type=${box.read("validity_type")}&company_id=${box.read("company_id")}&service_category_id=${box.read("service_category_id")}&search_tag=${box.read("search_tag")}");
     print("bundles " + url.toString());
 
     var response = await http.get(
@@ -21,7 +21,8 @@ class BundlesApi {
     );
 
     if (response.statusCode == 200) {
-      // print(response.body.toString());
+      // print(response.statusCode.toString());
+      print("body   ... " + response.body.toString());
       final bundleModel = BundleModel.fromJson(json.decode(response.body));
 
       return bundleModel;

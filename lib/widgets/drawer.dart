@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:watandaronline/controllers/dashboard_controller.dart';
 import 'package:watandaronline/controllers/history_controller.dart';
 import 'package:watandaronline/controllers/iso_code_controller.dart';
@@ -36,6 +39,22 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
   final HistoryController historyController = Get.put(HistoryController());
 
+  whatsapp() async {
+    var contact = "+93704200415";
+    var androidUrl = "whatsapp://send?phone=$contact&text=Hi, I need some help";
+    var iosUrl = "https://wa.me/$contact?text=${Uri.parse('')}";
+
+    try {
+      if (Platform.isIOS) {
+        await launchUrl(Uri.parse(iosUrl));
+      } else {
+        await launchUrl(Uri.parse(androidUrl));
+      }
+    } on Exception {
+      print("not found");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -63,21 +82,43 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             SizedBox(
               height: 20,
             ),
-            Container(
-              height: 110,
-              width: 110,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(
-                    dashboardController
-                        .alldashboardData.value.data!.userInfo!.profileImageUrl
-                        .toString(),
+            dashboardController.alldashboardData.value.data!.userInfo!
+                        .profileImageUrl !=
+                    null
+                ? Container(
+                    height: 110,
+                    width: 110,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 4,
+                        color: AppColors.defaultColor,
+                      ),
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          dashboardController.alldashboardData.value.data!
+                              .userInfo!.profileImageUrl
+                              .toString(),
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                      shape: BoxShape.circle,
+                    ),
+                  )
+                : Container(
+                    height: 130,
+                    width: 130,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.grey,
+                    ),
+                    child: Center(
+                      child: Icon(
+                        Icons.person,
+                        color: Colors.white,
+                        size: 100,
+                      ),
+                    ),
                   ),
-                  fit: BoxFit.cover,
-                ),
-                shape: BoxShape.circle,
-              ),
-            ),
             SizedBox(
               height: 5,
             ),
@@ -130,7 +171,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               height: 5,
             ),
             ProfileMenuWidget(
-              itemName: "Add card",
+              itemName: languageController
+                  .alllanguageData.value.languageData!["ADD_CARD"]
+                  .toString(),
               imageLink: "assets/icons/add_card.png",
               onPressed: () {
                 Navigator.pushReplacement(
@@ -141,23 +184,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 );
               },
             ),
-            // SizedBox(
-            //   height: 5,
-            // ),
-            // ProfileMenuWidget(
-            //   itemName: languageController
-            //       .alllanguageData.value.languageData!["SUB_RESELLER"]
-            //       .toString(),
-            //   imageLink: "assets/icons/sub_reseller.png",
-            //   onPressed: () {
-            //     Navigator.pushReplacement(
-            //       context,
-            //       MaterialPageRoute(
-            //         builder: (context) => SubResellerScreen(),
-            //       ),
-            //     );
-            //   },
-            // ),
             SizedBox(
               height: 5,
             ),
@@ -177,6 +203,21 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   .toString(),
               imageLink: "assets/icons/help.png",
               onPressed: () {},
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            ProfileMenuWidget(
+              itemName: languageController
+                  .alllanguageData.value.languageData!["CONTACTUS"]
+                  .toString(),
+              imageLink: "assets/icons/support.png",
+              onPressed: () {
+                whatsapp();
+              },
+            ),
+            SizedBox(
+              height: 5,
             ),
             ProfileMenuWidget(
               itemName: languageController
@@ -264,7 +305,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 );
               },
             ),
-
             SizedBox(
               height: 5,
             ),

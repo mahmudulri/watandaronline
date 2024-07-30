@@ -18,7 +18,7 @@ class ProfileMenuWidget extends StatelessWidget {
         height: 42,
         width: screenWidth,
         decoration: BoxDecoration(
-          // color: AppColors.socialButtonColor,
+          color: AppColors.socialButtonColor,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(

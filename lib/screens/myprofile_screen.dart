@@ -78,21 +78,39 @@ class MyprofileScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              Container(
-                height: 130,
-                width: 130,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      dashboardController.alldashboardData.value.data!.userInfo!
-                          .profileImageUrl
-                          .toString(),
+              dashboardController.alldashboardData.value.data!.userInfo!
+                          .profileImageUrl !=
+                      null
+                  ? Container(
+                      height: 130,
+                      width: 130,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            dashboardController.alldashboardData.value.data!
+                                .userInfo!.profileImageUrl
+                                .toString(),
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                        shape: BoxShape.circle,
+                      ),
+                    )
+                  : Container(
+                      height: 130,
+                      width: 130,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.grey,
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.person,
+                          color: Colors.white,
+                          size: 100,
+                        ),
+                      ),
                     ),
-                    fit: BoxFit.cover,
-                  ),
-                  shape: BoxShape.circle,
-                ),
-              ),
               SizedBox(
                 height: 5,
               ),

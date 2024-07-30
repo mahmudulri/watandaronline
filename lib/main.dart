@@ -1,9 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:watandaronline/draftcode.dart';
 import 'package:watandaronline/routes/routes.dart';
 import 'package:watandaronline/splash_screen.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,8 +47,15 @@ class MyApp extends StatelessWidget {
 class Startpage extends StatelessWidget {
   Startpage({super.key});
 
+  final box = GetStorage();
+
+  myfunction() async {
+    box.write("timezone", await FlutterTimezone.getLocalTimezone());
+  }
+
   @override
   Widget build(BuildContext context) {
+    myfunction();
     return MaterialApp(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,

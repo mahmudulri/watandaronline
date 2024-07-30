@@ -91,25 +91,6 @@ class ResultScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 1,
-                              color: Colors.green,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          height: 40,
-                          width: 100,
-                          child: Center(
-                            child: Text(
-                              "Print",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ),
                         GestureDetector(
                           onTap: () {
                             // dashboardController.fetchDashboardData();

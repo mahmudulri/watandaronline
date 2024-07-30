@@ -17,6 +17,7 @@ import 'package:watandaronline/utils/colors.dart';
 
 import 'controllers/order_list_controller.dart';
 import 'controllers/page_controller.dart';
+import 'pages/homepage.dart';
 import 'pages/myhomepage.dart';
 import 'screens/change_pin.dart';
 import 'screens/service_screen.dart';
@@ -144,7 +145,7 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
                               minWidth: 40,
                               onPressed: () {
                                 setState(() {
-                                  currentPage = Myhomepage();
+                                  currentPage = Homepage();
                                   currentIndex = 0;
                                   orderlistController.finalList.clear();
                                   orderlistController.initialpage = 1;

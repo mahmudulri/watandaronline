@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -8,8 +9,10 @@ import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:intl/intl.dart';
+import 'package:watandaronline/controllers/dashboard_controller.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/controllers/order_list_controller.dart';
 import 'package:watandaronline/screens/order_details.dart';
@@ -18,6 +21,8 @@ import 'package:watandaronline/widgets/default_button.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:ui' as ui;
+import 'package:share_plus/share_plus.dart';
+import 'package:http/http.dart' as http;
 
 class NotificationPage extends StatefulWidget {
   NotificationPage({super.key});
@@ -37,6 +42,7 @@ class _NotificationPageState extends State<NotificationPage> {
     // orderlistController.fetchOrderlistdata();
 
     super.initState();
+    fetchTimeData();
     scrollController.addListener(refresh);
   }
 
@@ -118,7 +124,79 @@ class _NotificationPageState extends State<NotificationPage> {
     }
   }
 
+  final GlobalKey _hglobalKey = GlobalKey();
+  Future<void> captureImageFromWidgetAsFile(GlobalKey _hglobalKey) async {
+    RenderRepaintBoundary boundary =
+        _hglobalKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
+    ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    Uint8List unit8list = byteData!.buffer.asUint8List();
+
+    Directory tempDir = await getTemporaryDirectory();
+    final path = '${tempDir.path}/image.png';
+    File(path).writeAsBytesSync(unit8list);
+    await Share.shareFiles([path]);
+  }
+
+  String sign = '';
+  String hour = '';
+  String minute = '';
+  Future<void> fetchTimeData() async {
+    final response = await http.get(Uri.parse(
+        'https://worldtimeapi.org/api/timezone/${box.read("timezone")}'));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final utcOffset = data['utc_offset'];
+
+      setState(() {
+        sign = utcOffset[0];
+        hour = utcOffset.substring(1, 3);
+        minute = utcOffset.substring(4, 6);
+      });
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+  Text convertToLocalTime(
+    String utcTimeString,
+  ) {
+    String localTimeString;
+    try {
+      // Parse the UTC time
+      DateTime utcTime = DateTime.parse(utcTimeString);
+
+      // Calculate the offset duration
+      Duration offset = Duration(
+          hours: int.parse(hour.toString()),
+          minutes: int.parse(minute.toString()));
+
+      // Apply the offset (subtracting for negative)
+
+      if (sign == "+") {
+        DateTime localTime = utcTime.add(offset);
+        String formattedTime =
+            DateFormat('yyyy-MM-dd    hh:mm:ss a').format(localTime);
+        localTimeString = '$formattedTime';
+      } else {
+        DateTime localTime = utcTime.subtract(offset);
+        String formattedTime =
+            DateFormat('yyyy-MM-dd    hh:mm:ss a').format(localTime);
+        localTimeString = '$formattedTime';
+      }
+    } catch (e) {
+      localTimeString = '';
+    }
+    return Text(
+      localTimeString,
+      style: TextStyle(fontSize: 12),
+    );
+  }
+
   final LanguageController languageController = Get.put(LanguageController());
+  final DashboardController dashboardController =
+      Get.put(DashboardController());
 
   @override
   Widget build(BuildContext context) {
@@ -135,8 +213,9 @@ class _NotificationPageState extends State<NotificationPage> {
           centerTitle: true,
           title: GestureDetector(
             onTap: () {
-              print(orderlistController.initialpage);
-              print(orderlistController.finalList.length);
+              // print(orderlistController.initialpage);
+              // print(orderlistController.finalList.length);
+              print(box.read("timezone"));
             },
             child: Text(
               languageController.alllanguageData.value.languageData!["ORDERS"]
@@ -161,7 +240,7 @@ class _NotificationPageState extends State<NotificationPage> {
                   children: [
                     Expanded(
                       child: Container(
-                        height: 45,
+                        height: 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(
@@ -173,8 +252,7 @@ class _NotificationPageState extends State<NotificationPage> {
                           children: [
                             Expanded(
                               child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 5),
+                                padding: const EdgeInsets.only(left: 15),
                                 child: TextField(
                                   onChanged: (String? value) {
                                     setState(() {
@@ -514,7 +592,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     RepaintBoundary(
-                                                      key: _globalKey,
+                                                      key: _hglobalKey,
                                                       child: Container(
                                                         height: 420,
                                                         width: screenWidth,
@@ -571,8 +649,10 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                       children: [
                                                                         GestureDetector(
                                                                           onTap:
-                                                                              () {
-                                                                            // _capturePng();
+                                                                              () async {
+                                                                            captureImageFromWidgetAsFile(_hglobalKey);
+
+                                                                            print("done");
                                                                           },
                                                                           child:
                                                                               Container(
@@ -622,13 +702,13 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               50,
                                                                           decoration:
                                                                               BoxDecoration(
-                                                                            // shape:
-                                                                            //     BoxShape.circle,
+                                                                            shape:
+                                                                                BoxShape.circle,
                                                                             image:
                                                                                 DecorationImage(
                                                                               fit: BoxFit.fill,
-                                                                              image: NetworkImage(
-                                                                                data.bundle!.service!.company!.companyLogo.toString(),
+                                                                              image: AssetImage(
+                                                                                "assets/icons/logo.png",
                                                                               ),
                                                                             ),
                                                                             // color: Colors.red,
@@ -667,45 +747,46 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                     MainAxisAlignment
                                                                         .center,
                                                                 children: [
-                                                                  Text(
-                                                                    DateFormat(
-                                                                            'dd MMM yyyy')
-                                                                        .format(
-                                                                      DateTime
-                                                                          .parse(
-                                                                        data.createdAt
-                                                                            .toString(),
-                                                                      ),
-                                                                    ),
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      fontSize:
-                                                                          12,
-                                                                    ),
+                                                                  convertToLocalTime(
+                                                                    data.createdAt
+                                                                        .toString(),
                                                                   ),
-                                                                  SizedBox(
-                                                                    width: 15,
-                                                                  ),
-                                                                  Text(
-                                                                    DateFormat(
-                                                                            'hh:mm a')
-                                                                        .format(
-                                                                      DateTime
-                                                                          .parse(
-                                                                        data.createdAt
-                                                                            .toString(),
-                                                                      ),
-                                                                    ),
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      fontSize:
-                                                                          12,
-                                                                    ),
-                                                                  ),
+                                                                  // Text(
+                                                                  //   DateFormat('dd MMM yyyy')
+                                                                  //       .format(
+                                                                  //     DateTime
+                                                                  //         .parse(
+                                                                  //       data.createdAt.toString(),
+                                                                  //     ),
+                                                                  //   ),
+                                                                  //   style:
+                                                                  //       TextStyle(
+                                                                  //     color:
+                                                                  //         Colors.grey,
+                                                                  //     fontSize:
+                                                                  //         12,
+                                                                  //   ),
+                                                                  // ),
+                                                                  // SizedBox(
+                                                                  //   width:
+                                                                  //       15,
+                                                                  // ),
+                                                                  // Text(
+                                                                  //   DateFormat('hh:mm a')
+                                                                  //       .format(
+                                                                  //     DateTime
+                                                                  //         .parse(
+                                                                  //       data.createdAt.toString(),
+                                                                  //     ),
+                                                                  //   ),
+                                                                  //   style:
+                                                                  //       TextStyle(
+                                                                  //     color:
+                                                                  //         Colors.grey,
+                                                                  //     fontSize:
+                                                                  //         12,
+                                                                  //   ),
+                                                                  // ),
                                                                 ],
                                                               ),
                                                               SizedBox(
@@ -869,59 +950,6 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                           languageController
                                                                               .alllanguageData
                                                                               .value
-                                                                              .languageData!["PRICE"]
-                                                                              .toString(),
-                                                                          style:
-                                                                              TextStyle(
-                                                                            fontSize:
-                                                                                14,
-                                                                            color:
-                                                                                AppColors.borderColor,
-                                                                          ),
-                                                                        ),
-                                                                        Row(
-                                                                          children: [
-                                                                            Text(
-                                                                              NumberFormat.currency(
-                                                                                locale: 'en_US',
-                                                                                symbol: '',
-                                                                                decimalDigits: 2,
-                                                                              ).format(
-                                                                                double.parse(data.bundle!.sellingPrice.toString()),
-                                                                              ),
-                                                                              style: TextStyle(
-                                                                                fontSize: 11,
-                                                                                fontWeight: FontWeight.w600,
-                                                                                color: Colors.grey,
-                                                                              ),
-                                                                            ),
-                                                                            SizedBox(
-                                                                              width: 2,
-                                                                            ),
-                                                                            Text(
-                                                                              " " + box.read("currency_code"),
-                                                                              style: TextStyle(
-                                                                                fontWeight: FontWeight.w500,
-                                                                                fontSize: 11,
-                                                                                color: Colors.grey,
-                                                                              ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                    SizedBox(
-                                                                      height: 5,
-                                                                    ),
-                                                                    Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        Text(
-                                                                          languageController
-                                                                              .alllanguageData
-                                                                              .value
                                                                               .languageData!["PHONE_NUMBER"]
                                                                               .toString(),
                                                                           style:
@@ -1058,20 +1086,63 @@ class _NotificationPageState extends State<NotificationPage> {
                                                               //   ),
                                                               // ),
 
+                                                              // Row(
+                                                              //   mainAxisAlignment:
+                                                              //       MainAxisAlignment
+                                                              //           .end,
+                                                              //   children: [
+                                                              //     GestureDetector(
+                                                              //       onTap: () {
+                                                              //         _capturePng();
+                                                              //       },
+                                                              //       child: Icon(
+                                                              //         FontAwesomeIcons
+                                                              //             .fileArrowDown,
+                                                              //         color: Colors
+                                                              //             .grey,
+                                                              //       ),
+                                                              //     ),
+                                                              //   ],
+                                                              // ),
+                                                              SizedBox(
+                                                                height: 10,
+                                                              ),
                                                               Row(
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
-                                                                        .end,
+                                                                        .start,
                                                                 children: [
-                                                                  GestureDetector(
-                                                                    onTap: () {
-                                                                      _capturePng();
-                                                                    },
-                                                                    child: Icon(
-                                                                      FontAwesomeIcons
-                                                                          .fileArrowDown,
-                                                                      color: Colors
-                                                                          .grey,
+                                                                  Container(
+                                                                    height: 55,
+                                                                    width: 140,
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        Divider(
+                                                                          thickness:
+                                                                              1,
+                                                                          color:
+                                                                              Colors.black,
+                                                                        ),
+                                                                        Container(
+                                                                          child:
+                                                                              Text(
+                                                                            dashboardController.alldashboardData.value.data!.userInfo!.contactName.toString(),
+                                                                            style:
+                                                                                GoogleFonts.josefinSans(
+                                                                              color: Colors.black,
+                                                                              fontSize: 13,
+                                                                              fontWeight: FontWeight.w500,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        Divider(
+                                                                          thickness:
+                                                                              1,
+                                                                          color:
+                                                                              Colors.black,
+                                                                        ),
+                                                                      ],
                                                                     ),
                                                                   ),
                                                                 ],
@@ -1090,23 +1161,26 @@ class _NotificationPageState extends State<NotificationPage> {
                                   },
                                   child: Card(
                                     child: Container(
-                                      height: 200,
+                                      height: 180,
                                       width: screenWidth,
                                       decoration: BoxDecoration(
-                                          // color: Colors.grey,
-                                          ),
+                                        border: Border.all(
+                                          width: 1,
+                                          color: AppColors.defaultColor,
+                                        ),
+                                        // color: Colors.grey,
+                                      ),
                                       child: Column(
                                         children: [
                                           Expanded(
                                             flex: 1,
                                             child: Container(
                                               decoration: BoxDecoration(
-                                                color: AppColors
-                                                    .listbuilderboxColor,
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(8),
-                                                  topRight: Radius.circular(8),
-                                                ),
+                                                color: AppColors.defaultColor,
+                                                // borderRadius: BorderRadius.only(
+                                                //   topLeft: Radius.circular(8),
+                                                //   topRight: Radius.circular(8),
+                                                // ),
                                               ),
                                               child: Padding(
                                                 padding:
@@ -1134,7 +1208,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                       .toString())),
                                                           style: TextStyle(
                                                             fontSize: 13,
-                                                            color: Colors.grey,
+                                                            color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight.w600,
                                                           ),
@@ -1152,7 +1226,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                           " ",
                                                       style: TextStyle(
                                                         fontSize: 15,
-                                                        color: Colors.black,
+                                                        color: Colors.white,
                                                         fontWeight:
                                                             FontWeight.w600,
                                                       ),
@@ -1161,7 +1235,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                       "#${data.id} ",
                                                       style: TextStyle(
                                                         fontSize: 15,
-                                                        color: Colors.grey,
+                                                        color: Colors.white,
                                                         fontWeight:
                                                             FontWeight.w600,
                                                       ),
@@ -1172,16 +1246,10 @@ class _NotificationPageState extends State<NotificationPage> {
                                             ),
                                           ),
                                           Expanded(
-                                            flex: 2,
+                                            flex: 3,
                                             child: Container(
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
-                                                borderRadius: BorderRadius.only(
-                                                  bottomLeft:
-                                                      Radius.circular(8),
-                                                  bottomRight:
-                                                      Radius.circular(8),
-                                                ),
                                               ),
                                               child: Padding(
                                                 padding:
@@ -1863,7 +1931,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     RepaintBoundary(
-                                                      key: _globalKey,
+                                                      key: _hglobalKey,
                                                       child: Container(
                                                         height: 420,
                                                         width: screenWidth,
@@ -1920,8 +1988,10 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                       children: [
                                                                         GestureDetector(
                                                                           onTap:
-                                                                              () {
-                                                                            // _capturePng();
+                                                                              () async {
+                                                                            captureImageFromWidgetAsFile(_hglobalKey);
+
+                                                                            print("done");
                                                                           },
                                                                           child:
                                                                               Container(
@@ -1971,13 +2041,13 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               50,
                                                                           decoration:
                                                                               BoxDecoration(
-                                                                            // shape:
-                                                                            //     BoxShape.circle,
+                                                                            shape:
+                                                                                BoxShape.circle,
                                                                             image:
                                                                                 DecorationImage(
                                                                               fit: BoxFit.fill,
-                                                                              image: NetworkImage(
-                                                                                data.bundle!.service!.company!.companyLogo.toString(),
+                                                                              image: AssetImage(
+                                                                                "assets/icons/logo.png",
                                                                               ),
                                                                             ),
                                                                             // color: Colors.red,
@@ -2016,45 +2086,46 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                     MainAxisAlignment
                                                                         .center,
                                                                 children: [
-                                                                  Text(
-                                                                    DateFormat(
-                                                                            'dd MMM yyyy')
-                                                                        .format(
-                                                                      DateTime
-                                                                          .parse(
-                                                                        data.createdAt
-                                                                            .toString(),
-                                                                      ),
-                                                                    ),
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      fontSize:
-                                                                          12,
-                                                                    ),
+                                                                  convertToLocalTime(
+                                                                    data.createdAt
+                                                                        .toString(),
                                                                   ),
-                                                                  SizedBox(
-                                                                    width: 15,
-                                                                  ),
-                                                                  Text(
-                                                                    DateFormat(
-                                                                            'hh:mm a')
-                                                                        .format(
-                                                                      DateTime
-                                                                          .parse(
-                                                                        data.createdAt
-                                                                            .toString(),
-                                                                      ),
-                                                                    ),
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      fontSize:
-                                                                          12,
-                                                                    ),
-                                                                  ),
+                                                                  // Text(
+                                                                  //   DateFormat('dd MMM yyyy')
+                                                                  //       .format(
+                                                                  //     DateTime
+                                                                  //         .parse(
+                                                                  //       data.createdAt.toString(),
+                                                                  //     ),
+                                                                  //   ),
+                                                                  //   style:
+                                                                  //       TextStyle(
+                                                                  //     color:
+                                                                  //         Colors.grey,
+                                                                  //     fontSize:
+                                                                  //         12,
+                                                                  //   ),
+                                                                  // ),
+                                                                  // SizedBox(
+                                                                  //   width:
+                                                                  //       15,
+                                                                  // ),
+                                                                  // Text(
+                                                                  //   DateFormat('hh:mm a')
+                                                                  //       .format(
+                                                                  //     DateTime
+                                                                  //         .parse(
+                                                                  //       data.createdAt.toString(),
+                                                                  //     ),
+                                                                  //   ),
+                                                                  //   style:
+                                                                  //       TextStyle(
+                                                                  //     color:
+                                                                  //         Colors.grey,
+                                                                  //     fontSize:
+                                                                  //         12,
+                                                                  //   ),
+                                                                  // ),
                                                                 ],
                                                               ),
                                                               SizedBox(
@@ -2218,59 +2289,6 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                           languageController
                                                                               .alllanguageData
                                                                               .value
-                                                                              .languageData!["PRICE"]
-                                                                              .toString(),
-                                                                          style:
-                                                                              TextStyle(
-                                                                            fontSize:
-                                                                                14,
-                                                                            color:
-                                                                                AppColors.borderColor,
-                                                                          ),
-                                                                        ),
-                                                                        Row(
-                                                                          children: [
-                                                                            Text(
-                                                                              NumberFormat.currency(
-                                                                                locale: 'en_US',
-                                                                                symbol: '',
-                                                                                decimalDigits: 2,
-                                                                              ).format(
-                                                                                double.parse(data.bundle!.sellingPrice.toString()),
-                                                                              ),
-                                                                              style: TextStyle(
-                                                                                fontSize: 11,
-                                                                                fontWeight: FontWeight.w600,
-                                                                                color: Colors.grey,
-                                                                              ),
-                                                                            ),
-                                                                            SizedBox(
-                                                                              width: 2,
-                                                                            ),
-                                                                            Text(
-                                                                              " " + box.read("currency_code"),
-                                                                              style: TextStyle(
-                                                                                fontWeight: FontWeight.w500,
-                                                                                fontSize: 11,
-                                                                                color: Colors.grey,
-                                                                              ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                    SizedBox(
-                                                                      height: 5,
-                                                                    ),
-                                                                    Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        Text(
-                                                                          languageController
-                                                                              .alllanguageData
-                                                                              .value
                                                                               .languageData!["PHONE_NUMBER"]
                                                                               .toString(),
                                                                           style:
@@ -2407,20 +2425,63 @@ class _NotificationPageState extends State<NotificationPage> {
                                                               //   ),
                                                               // ),
 
+                                                              // Row(
+                                                              //   mainAxisAlignment:
+                                                              //       MainAxisAlignment
+                                                              //           .end,
+                                                              //   children: [
+                                                              //     GestureDetector(
+                                                              //       onTap: () {
+                                                              //         _capturePng();
+                                                              //       },
+                                                              //       child: Icon(
+                                                              //         FontAwesomeIcons
+                                                              //             .fileArrowDown,
+                                                              //         color: Colors
+                                                              //             .grey,
+                                                              //       ),
+                                                              //     ),
+                                                              //   ],
+                                                              // ),
+                                                              SizedBox(
+                                                                height: 10,
+                                                              ),
                                                               Row(
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
-                                                                        .end,
+                                                                        .start,
                                                                 children: [
-                                                                  GestureDetector(
-                                                                    onTap: () {
-                                                                      _capturePng();
-                                                                    },
-                                                                    child: Icon(
-                                                                      FontAwesomeIcons
-                                                                          .fileArrowDown,
-                                                                      color: Colors
-                                                                          .grey,
+                                                                  Container(
+                                                                    height: 55,
+                                                                    width: 140,
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        Divider(
+                                                                          thickness:
+                                                                              1,
+                                                                          color:
+                                                                              Colors.black,
+                                                                        ),
+                                                                        Container(
+                                                                          child:
+                                                                              Text(
+                                                                            dashboardController.alldashboardData.value.data!.userInfo!.contactName.toString(),
+                                                                            style:
+                                                                                GoogleFonts.josefinSans(
+                                                                              color: Colors.black,
+                                                                              fontSize: 13,
+                                                                              fontWeight: FontWeight.w500,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        Divider(
+                                                                          thickness:
+                                                                              1,
+                                                                          color:
+                                                                              Colors.black,
+                                                                        ),
+                                                                      ],
                                                                     ),
                                                                   ),
                                                                 ],
@@ -2439,23 +2500,26 @@ class _NotificationPageState extends State<NotificationPage> {
                                   },
                                   child: Card(
                                     child: Container(
-                                      height: 200,
+                                      height: 180,
                                       width: screenWidth,
                                       decoration: BoxDecoration(
-                                          // color: Colors.grey,
-                                          ),
+                                        border: Border.all(
+                                          width: 1,
+                                          color: AppColors.defaultColor,
+                                        ),
+                                        // color: Colors.grey,
+                                      ),
                                       child: Column(
                                         children: [
                                           Expanded(
                                             flex: 1,
                                             child: Container(
                                               decoration: BoxDecoration(
-                                                color: AppColors
-                                                    .listbuilderboxColor,
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(8),
-                                                  topRight: Radius.circular(8),
-                                                ),
+                                                color: AppColors.defaultColor,
+                                                // borderRadius: BorderRadius.only(
+                                                //   topLeft: Radius.circular(8),
+                                                //   topRight: Radius.circular(8),
+                                                // ),
                                               ),
                                               child: Padding(
                                                 padding:
@@ -2483,7 +2547,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                       .toString())),
                                                           style: TextStyle(
                                                             fontSize: 13,
-                                                            color: Colors.grey,
+                                                            color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight.w600,
                                                           ),
@@ -2501,7 +2565,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                           " ",
                                                       style: TextStyle(
                                                         fontSize: 15,
-                                                        color: Colors.black,
+                                                        color: Colors.white,
                                                         fontWeight:
                                                             FontWeight.w600,
                                                       ),
@@ -2510,7 +2574,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                       "#${data.id} ",
                                                       style: TextStyle(
                                                         fontSize: 15,
-                                                        color: Colors.grey,
+                                                        color: Colors.white,
                                                         fontWeight:
                                                             FontWeight.w600,
                                                       ),
@@ -2521,16 +2585,10 @@ class _NotificationPageState extends State<NotificationPage> {
                                             ),
                                           ),
                                           Expanded(
-                                            flex: 2,
+                                            flex: 3,
                                             child: Container(
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
-                                                borderRadius: BorderRadius.only(
-                                                  bottomLeft:
-                                                      Radius.circular(8),
-                                                  bottomRight:
-                                                      Radius.circular(8),
-                                                ),
                                               ),
                                               child: Padding(
                                                 padding:
