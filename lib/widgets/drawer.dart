@@ -14,7 +14,7 @@ import 'package:watandaronline/controllers/sign_in_controller.dart';
 import 'package:watandaronline/screens/add_card_screen.dart';
 import 'package:watandaronline/screens/myprofile_screen.dart';
 import 'package:watandaronline/screens/sign_in_screen.dart';
-import 'package:watandaronline/screens/sub_reseller_screen.dart';
+import 'package:watandaronline/pages/sub_reseller_screen.dart';
 import 'package:watandaronline/utils/colors.dart';
 import 'package:watandaronline/widgets/profile_menu_widget.dart';
 
@@ -40,7 +40,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   final HistoryController historyController = Get.put(HistoryController());
 
   whatsapp() async {
-    var contact = "+93704200415";
+    var contact = "+93773735557";
     var androidUrl = "whatsapp://send?phone=$contact&text=Hi, I need some help";
     var iosUrl = "https://wa.me/$contact?text=${Uri.parse('')}";
 

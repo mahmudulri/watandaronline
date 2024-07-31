@@ -7,12 +7,13 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:watandaronline/controllers/history_controller.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
+import 'package:watandaronline/controllers/sub_reseller_controller.dart';
 import 'package:watandaronline/controllers/transaction_controller.dart';
 import 'package:watandaronline/pages/more.dart';
 import 'package:watandaronline/pages/orders.dart';
 import 'package:watandaronline/pages/transactions.dart';
 
-import 'package:watandaronline/screens/sub_reseller_screen.dart';
+import 'package:watandaronline/pages/sub_reseller_screen.dart';
 import 'package:watandaronline/utils/colors.dart';
 
 import 'controllers/order_list_controller.dart';
@@ -46,6 +47,8 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
   final HistoryController historyController = Get.put(HistoryController());
   final TransactionController transactionController =
       Get.put(TransactionController());
+  final SubresellerController subresellerController =
+      Get.put(SubresellerController());
 
   final PageStorageBucket bucket = PageStorageBucket();
   late Widget currentPage;
@@ -278,9 +281,11 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
                                   orderlistController.initialpage = 1;
                                   historyController.finalList.clear();
                                   historyController.initialpage = 1;
-                                  print(orderlistController.initialpage);
-                                  print(orderlistController.finalList.length);
+
+                                  // print(orderlistController.initialpage);
+                                  // print(orderlistController.finalList.length);
                                 });
+                                subresellerController.fetchSubReseller();
                               },
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,

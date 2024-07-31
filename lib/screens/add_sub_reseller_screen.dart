@@ -51,6 +51,7 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0.0,
         leading: GestureDetector(
           onTap: () {
             Navigator.pop(context);

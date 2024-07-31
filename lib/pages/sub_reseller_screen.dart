@@ -16,10 +16,10 @@ import 'package:watandaronline/widgets/default_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../widgets/myprofile_box_widget.dart';
-import 'change_balance_screen.dart';
-import 'change_sub_pass_screen.dart';
-import 'edit_profile_screen.dart';
-import 'update_sub_reseller_screen.dart';
+import '../screens/change_balance_screen.dart';
+import '../screens/change_sub_pass_screen.dart';
+import '../screens/edit_profile_screen.dart';
+import '../screens/update_sub_reseller_screen.dart';
 
 class SubResellerScreen extends StatefulWidget {
   SubResellerScreen({super.key});
@@ -152,9 +152,31 @@ class _SubResellerScreenState extends State<SubResellerScreen> {
                 height: 20,
               ),
               Expanded(
-                  child: Obx(
-                () => subresellerController.isLoading.value == false
-                    ? ListView.separated(
+                child: Obx(
+                  () {
+                    if (subresellerController.isLoading.value) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (subresellerController
+                                .allsubresellerData.value.data ==
+                            null ||
+                        subresellerController
+                            .allsubresellerData.value.data!.resellers.isEmpty) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/icons/user.png",
+                              height: 80,
+                            ),
+                            Text("No Subreseller found"),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return ListView.separated(
                         separatorBuilder: (context, index) {
                           return SizedBox(
                             height: 10,
@@ -165,45 +187,23 @@ class _SubResellerScreenState extends State<SubResellerScreen> {
                         itemBuilder: (context, index) {
                           final data = subresellerController
                               .allsubresellerData.value.data!.resellers[index];
-                          if (searchController.text.isEmpty) {
-                            return dataBoxname(
-                              wingetName: "wingetName",
-                              catID: "catID",
-                              resellerName: data.contactName,
-                              phoneNumber: data.phone,
-                              balance: data.balance,
-                              code: data.code,
-                              id: data.id.toString(),
-                              status: data.status.toString(),
-                              imagelink: data.profileImageUrl,
-                            );
-                          } else if (subresellerController.allsubresellerData
-                              .value.data!.resellers[index].resellerName
-                              .toString()
-                              .toLowerCase()
-                              .contains(searchController.text
-                                  .toString()
-                                  .toLowerCase())) {
-                            return dataBoxname(
-                              wingetName: "wingetName",
-                              catID: "catID",
-                              resellerName: data.contactName,
-                              phoneNumber: data.phone,
-                              balance: data.balance,
-                              code: data.code,
-                              id: data.id.toString(),
-                              status: data.status.toString(),
-                              imagelink: data.profileImageUrl,
-                            );
-                          } else {
-                            return Container();
-                          }
+                          return dataBoxname(
+                            wingetName: "wingetName",
+                            catID: "catID",
+                            resellerName: data.contactName,
+                            phoneNumber: data.phone,
+                            balance: data.balance,
+                            code: data.code,
+                            id: data.id.toString(),
+                            status: data.status.toString(),
+                            imagelink: data.profileImageUrl,
+                          );
                         },
-                      )
-                    : Center(
-                        child: CircularProgressIndicator(),
-                      ),
-              )),
+                      );
+                    }
+                  },
+                ),
+              ),
             ],
           ),
         ),

@@ -9,7 +9,7 @@ import '../controllers/page_controller.dart';
 import '../screens/add_card_screen.dart';
 import '../screens/change_pin.dart';
 import '../screens/myprofile_screen.dart';
-import '../screens/sub_reseller_screen.dart';
+import 'sub_reseller_screen.dart';
 import '../widgets/profile_menu_widget.dart';
 
 class MorePage extends StatelessWidget {

@@ -31,7 +31,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   final SignInController signInController = Get.put(SignInController());
   whatsapp() async {
-    var contact = "+93704200415";
+    var contact = "+93773735557";
     var androidUrl = "whatsapp://send?phone=$contact&text=Hi, I need some help";
     var iosUrl = "https://wa.me/$contact?text=${Uri.parse('')}";
 

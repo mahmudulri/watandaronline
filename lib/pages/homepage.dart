@@ -208,19 +208,23 @@ class _HomepageState extends State<Homepage> {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return AdvancedDrawer(
+        backdropColor: Colors.black,
         controller: advancedDrawerController,
         child: Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            surfaceTintColor: Colors.white,
             scrolledUnderElevation: 0.0,
+            surfaceTintColor: Colors.white,
             elevation: 0.0,
-            // backgroundColor: AppColors.defaultColor,
+            backgroundColor: Colors.white,
             leading: GestureDetector(
                 onTap: () {
                   drawerController();
                 },
-                child: Icon(Icons.sort)),
+                child: Icon(
+                  Icons.sort,
+                  color: Colors.black,
+                )),
             title: Obx(() => dashboardController.isLoading.value == false &&
                     countryListController.isLoading.value == false
                 ? Column(
@@ -347,123 +351,75 @@ class _HomepageState extends State<Homepage> {
                             height: 5,
                           ),
                           Container(
-                            margin: EdgeInsets.symmetric(horizontal: 10),
-                            height: 55,
+                            margin: EdgeInsets.only(left: 10),
+                            height: 60,
+                            color: Colors.white,
                             width: screenWidth,
-                            child: Row(
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
                               children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: financialBox(
-                                    boxname: languageController.alllanguageData
-                                        .value.languageData!["BALANCE"]
-                                        .toString(),
-                                    balance: dashboardController
-                                        .alldashboardData.value.data!.balance
-                                        .toString(),
-                                  ),
+                                financialBox(
+                                  boxname: languageController.alllanguageData
+                                      .value.languageData!["BALANCE"]
+                                      .toString(),
+                                  balance: dashboardController
+                                      .alldashboardData.value.data!.balance
+                                      .toString(),
                                 ),
                                 SizedBox(
                                   width: 5,
                                 ),
-                                Expanded(
-                                  flex: 1,
-                                  child: financialBox(
-                                    boxname: languageController.alllanguageData
-                                        .value.languageData!["LOAN_BALANCE"]
-                                        .toString(),
-                                    balance: dashboardController
-                                        .alldashboardData
-                                        .value
-                                        .data!
-                                        .loanBalance
-                                        .toString(),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 10),
-                            height: 55,
-                            width: screenWidth,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: financialBox(
-                                    boxname: languageController
-                                        .alllanguageData
-                                        .value
-                                        .languageData!["TOTAL_SOLD_AMOUNT"]
-                                        .toString(),
-                                    balance: dashboardController
-                                        .alldashboardData
-                                        .value
-                                        .data!
-                                        .totalSoldAmount
-                                        .toString(),
-                                  ),
+                                financialBox(
+                                  boxname: languageController.alllanguageData
+                                      .value.languageData!["LOAN_BALANCE"]
+                                      .toString(),
+                                  balance: dashboardController
+                                      .alldashboardData.value.data!.loanBalance
+                                      .toString(),
                                 ),
                                 SizedBox(
                                   width: 5,
                                 ),
-                                Expanded(
-                                  flex: 1,
-                                  child: financialBox(
-                                    boxname: languageController.alllanguageData
-                                        .value.languageData!["TOTAL_REVENUE"]
-                                        .toString(),
-                                    balance: dashboardController
-                                        .alldashboardData
-                                        .value
-                                        .data!
-                                        .totalRevenue
-                                        .toString(),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 10),
-                            height: 55,
-                            width: screenWidth,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: financialBox(
-                                    boxname: languageController.alllanguageData
-                                        .value.languageData!["TODAY_SALE"]
-                                        .toString(),
-                                    balance: dashboardController
-                                        .alldashboardData.value.data!.todaySale
-                                        .toString(),
-                                  ),
+                                financialBox(
+                                  boxname: languageController.alllanguageData
+                                      .value.languageData!["TOTAL_SOLD_AMOUNT"]
+                                      .toString(),
+                                  balance: dashboardController.alldashboardData
+                                      .value.data!.totalSoldAmount
+                                      .toString(),
                                 ),
                                 SizedBox(
                                   width: 5,
                                 ),
-                                Expanded(
-                                  flex: 1,
-                                  child: financialBox(
-                                    boxname: languageController.alllanguageData
-                                        .value.languageData!["TODAY_PROFIT"]
-                                        .toString(),
-                                    balance: dashboardController
-                                        .alldashboardData
-                                        .value
-                                        .data!
-                                        .todayProfit
-                                        .toString(),
-                                  ),
+                                financialBox(
+                                  boxname: languageController.alllanguageData
+                                      .value.languageData!["TOTAL_REVENUE"]
+                                      .toString(),
+                                  balance: dashboardController
+                                      .alldashboardData.value.data!.totalRevenue
+                                      .toString(),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                financialBox(
+                                  boxname: languageController.alllanguageData
+                                      .value.languageData!["TODAY_SALE"]
+                                      .toString(),
+                                  balance: dashboardController
+                                      .alldashboardData.value.data!.todaySale
+                                      .toString(),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                financialBox(
+                                  boxname: languageController.alllanguageData
+                                      .value.languageData!["TODAY_PROFIT"]
+                                      .toString(),
+                                  balance: dashboardController
+                                      .alldashboardData.value.data!.todayProfit
+                                      .toString(),
                                 ),
                               ],
                             ),
@@ -1878,13 +1834,20 @@ class financialBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 150,
+      height: 60,
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          width: 1,
+          color: Colors.grey,
+        ),
         color: Colors.white,
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.2), // Color of the shadow
-            spreadRadius: 4, // How much the shadow spreads
-            blurRadius: 5, // The blur radius of the shadow
+            spreadRadius: 2, // How much the shadow spreads
+            blurRadius: 2, // The blur radius of the shadow
             offset: Offset(0, 2), // The offset of the shadow
           ),
         ],
