@@ -168,7 +168,7 @@ class _SubResellerScreenState extends State<SubResellerScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset(
-                              "assets/icons/user.png",
+                              "assets/icons/empty.png",
                               height: 80,
                             ),
                             Text("No Subreseller found"),

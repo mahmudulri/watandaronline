@@ -393,574 +393,617 @@ class _RechargeScreenState extends State<RechargeScreen> {
                           height: 10,
                         ),
                         Expanded(
-                            child: Obx(() => bundleController.isLoading.value ==
-                                    false
-                                ? RefreshIndicator(
-                                    onRefresh: refresh,
-                                    child: ListView.separated(
-                                      shrinkWrap: false,
-                                      physics: AlwaysScrollableScrollPhysics(),
-                                      controller: scrollController,
-                                      separatorBuilder: (context, index) {
-                                        return SizedBox(
-                                          height: 5,
-                                        );
-                                      },
-                                      itemCount:
-                                          bundleController.finalList.length,
-                                      itemBuilder: (context, index) {
-                                        final data =
-                                            bundleController.finalList[index];
-                                        return GestureDetector(
-                                          onTap: () {
-                                            if (confirmPinController
-                                                .numberController
-                                                .text
-                                                .isEmpty) {
-                                              Fluttertoast.showToast(
-                                                  msg: "Enter Number ",
-                                                  toastLength:
-                                                      Toast.LENGTH_SHORT,
-                                                  gravity: ToastGravity.BOTTOM,
-                                                  timeInSecForIosWeb: 1,
-                                                  backgroundColor: Colors.black,
-                                                  textColor: Colors.white,
-                                                  fontSize: 16.0);
-                                            } else {
-                                              box.write("bundleID",
-                                                  data.id.toString());
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ConfirmPinScreen(),
-                                                ),
-                                              );
-                                            }
-                                          },
-                                          child: Container(
-                                            width: screenWidth,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color:
-                                                  AppColors.listbuilderboxColor,
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsets.all(5.0),
-                                              child: Row(
-                                                children: [
-                                                  Container(
-                                                    height: 45,
-                                                    width: 45,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      image: DecorationImage(
-                                                        fit: BoxFit.fill,
-                                                        image: NetworkImage(
-                                                          (data
-                                                              .service!
-                                                              .company!
-                                                              .companyLogo
-                                                              .toString()),
+                          child: Obx(() {
+                            if (bundleController.isLoading.value) {
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.transparent,
+                                ),
+                              );
+                            } else if (bundleController
+                                        .allbundleslist.value.data ==
+                                    null ||
+                                bundleController.allbundleslist.value.data!
+                                    .bundles!.isEmpty) {
+                              return Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      "assets/icons/empty.png",
+                                      height: 80,
+                                    ),
+                                    Text("No Data found"),
+                                  ],
+                                ),
+                              );
+                            } else {
+                              return bundleController.isLoading.value == false
+                                  ? RefreshIndicator(
+                                      onRefresh: refresh,
+                                      child: ListView.separated(
+                                        shrinkWrap: false,
+                                        physics:
+                                            AlwaysScrollableScrollPhysics(),
+                                        controller: scrollController,
+                                        separatorBuilder: (context, index) {
+                                          return SizedBox(
+                                            height: 5,
+                                          );
+                                        },
+                                        itemCount:
+                                            bundleController.finalList.length,
+                                        itemBuilder: (context, index) {
+                                          final data =
+                                              bundleController.finalList[index];
+                                          return GestureDetector(
+                                            onTap: () {
+                                              if (confirmPinController
+                                                  .numberController
+                                                  .text
+                                                  .isEmpty) {
+                                                Fluttertoast.showToast(
+                                                    msg: "Enter Number ",
+                                                    toastLength:
+                                                        Toast.LENGTH_SHORT,
+                                                    gravity:
+                                                        ToastGravity.BOTTOM,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor:
+                                                        Colors.black,
+                                                    textColor: Colors.white,
+                                                    fontSize: 16.0);
+                                              } else {
+                                                box.write("bundleID",
+                                                    data.id.toString());
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ConfirmPinScreen(),
+                                                  ),
+                                                );
+                                              }
+                                            },
+                                            child: Container(
+                                              width: screenWidth,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: AppColors
+                                                    .listbuilderboxColor,
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsets.all(5.0),
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                      height: 45,
+                                                      width: 45,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        image: DecorationImage(
+                                                          fit: BoxFit.fill,
+                                                          image: NetworkImage(
+                                                            (data
+                                                                .service!
+                                                                .company!
+                                                                .companyLogo
+                                                                .toString()),
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
-                                                  Expanded(
-                                                    flex: 2,
-                                                    child: Padding(
-                                                      padding: EdgeInsets.only(
-                                                          left: 20),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                left: 20),
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              data.bundleTitle
+                                                                  .toString(),
+                                                              style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontSize: 11,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              data.validityType
+                                                                          .toString() ==
+                                                                      "unlimited"
+                                                                  ? languageController
+                                                                      .alllanguageData
+                                                                      .value
+                                                                      .languageData![
+                                                                          "UNLIMITED"]
+                                                                      .toString()
+                                                                  : data.validityType
+                                                                              .toString() ==
+                                                                          "monthly"
+                                                                      ? languageController
+                                                                          .alllanguageData
+                                                                          .value
+                                                                          .languageData![
+                                                                              "MONTHLY"]
+                                                                          .toString()
+                                                                      : data.validityType.toString() ==
+                                                                              "weekly"
+                                                                          ? languageController
+                                                                              .alllanguageData
+                                                                              .value
+                                                                              .languageData!["WEEKLY"]
+                                                                              .toString()
+                                                                          : data.validityType.toString() == "daily"
+                                                                              ? languageController.alllanguageData.value.languageData!["DAILY"].toString()
+                                                                              : data.validityType.toString() == "hourly"
+                                                                                  ? languageController.alllanguageData.value.languageData!["HOURLY"].toString()
+                                                                                  : data.validityType.toString() == "nightly"
+                                                                                      ? languageController.alllanguageData.value.languageData!["NIGHTLY"].toString()
+                                                                                      : "",
+                                                              style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                fontSize: 10,
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 2,
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
                                                       child: Column(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
                                                                 .center,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
                                                         children: [
-                                                          Text(
-                                                            data.bundleTitle
-                                                                .toString(),
-                                                            style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              fontSize: 11,
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            data.validityType
-                                                                        .toString() ==
-                                                                    "unlimited"
-                                                                ? languageController
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                languageController
                                                                     .alllanguageData
                                                                     .value
                                                                     .languageData![
-                                                                        "UNLIMITED"]
-                                                                    .toString()
-                                                                : data.validityType
-                                                                            .toString() ==
-                                                                        "monthly"
-                                                                    ? languageController
-                                                                        .alllanguageData
-                                                                        .value
-                                                                        .languageData![
-                                                                            "MONTHLY"]
-                                                                        .toString()
-                                                                    : data.validityType.toString() ==
-                                                                            "weekly"
-                                                                        ? languageController
-                                                                            .alllanguageData
-                                                                            .value
-                                                                            .languageData![
-                                                                                "WEEKLY"]
-                                                                            .toString()
-                                                                        : data.validityType.toString() ==
-                                                                                "daily"
-                                                                            ? languageController.alllanguageData.value.languageData!["DAILY"].toString()
-                                                                            : data.validityType.toString() == "hourly"
-                                                                                ? languageController.alllanguageData.value.languageData!["HOURLY"].toString()
-                                                                                : data.validityType.toString() == "nightly"
-                                                                                    ? languageController.alllanguageData.value.languageData!["NIGHTLY"].toString()
-                                                                                    : "",
-                                                            style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontSize: 10,
-                                                              color:
-                                                                  Colors.grey,
-                                                            ),
-                                                          )
+                                                                        "SELL"]
+                                                                    .toString(),
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 8,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              PriceTextView(
+                                                                price: data
+                                                                    .sellingPrice
+                                                                    .toString(),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 2,
+                                                              ),
+                                                              Text(
+                                                                " ${box.read("currency_code")}",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 9,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ],
                                                       ),
                                                     ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 2,
-                                                  ),
-                                                  Expanded(
-                                                    flex: 2,
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                              languageController
-                                                                  .alllanguageData
-                                                                  .value
-                                                                  .languageData![
-                                                                      "SELL"]
-                                                                  .toString(),
-                                                              style: TextStyle(
-                                                                fontSize: 8,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          children: [
-                                                            PriceTextView(
-                                                              price: data
-                                                                  .sellingPrice
-                                                                  .toString(),
-                                                            ),
-                                                            SizedBox(
-                                                              width: 2,
-                                                            ),
-                                                            Text(
-                                                              " ${box.read("currency_code")}",
-                                                              style: TextStyle(
-                                                                fontSize: 11,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                color: Colors
-                                                                    .black,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    flex: 2,
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .end,
-                                                          children: [
-                                                            Text(
-                                                              languageController
-                                                                  .alllanguageData
-                                                                  .value
-                                                                  .languageData![
-                                                                      "BUY"]
-                                                                  .toString(),
-                                                              style: TextStyle(
-                                                                fontSize: 8,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .end,
-                                                          children: [
-                                                            Text(
-                                                              NumberFormat
-                                                                  .currency(
-                                                                locale: 'en_US',
-                                                                symbol: '',
-                                                                decimalDigits:
-                                                                    2,
-                                                              ).format(
-                                                                double.parse(
-                                                                  data.buyingPrice
-                                                                      .toString(),
-                                                                ),
-                                                              ),
-                                                              style: TextStyle(
-                                                                  fontSize: 10,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
-                                                            ),
-                                                            Text(
-                                                              " ${box.read("currency_code")}",
-                                                              style: TextStyle(
-                                                                fontSize: 10,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                color: Colors
-                                                                    .black,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 5,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  )
-                                : RefreshIndicator(
-                                    onRefresh: refresh,
-                                    child: ListView.separated(
-                                      shrinkWrap: false,
-                                      physics: AlwaysScrollableScrollPhysics(),
-                                      controller: scrollController,
-                                      separatorBuilder: (context, index) {
-                                        return SizedBox(
-                                          height: 5,
-                                        );
-                                      },
-                                      itemCount:
-                                          bundleController.finalList.length,
-                                      itemBuilder: (context, index) {
-                                        final data =
-                                            bundleController.finalList[index];
-                                        return GestureDetector(
-                                          onTap: () {
-                                            if (confirmPinController
-                                                .numberController
-                                                .text
-                                                .isEmpty) {
-                                              Fluttertoast.showToast(
-                                                  msg: "Enter Number ",
-                                                  toastLength:
-                                                      Toast.LENGTH_SHORT,
-                                                  gravity: ToastGravity.BOTTOM,
-                                                  timeInSecForIosWeb: 1,
-                                                  backgroundColor: Colors.black,
-                                                  textColor: Colors.white,
-                                                  fontSize: 16.0);
-                                            } else {
-                                              box.write("bundleID",
-                                                  data.id.toString());
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ConfirmPinScreen(),
-                                                ),
-                                              );
-                                            }
-                                          },
-                                          child: Container(
-                                            width: screenWidth,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color:
-                                                  AppColors.listbuilderboxColor,
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsets.all(5.0),
-                                              child: Row(
-                                                children: [
-                                                  Container(
-                                                    height: 45,
-                                                    width: 45,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      image: DecorationImage(
-                                                        fit: BoxFit.fill,
-                                                        image: NetworkImage(
-                                                          (data
-                                                              .service!
-                                                              .company!
-                                                              .companyLogo
-                                                              .toString()),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    flex: 2,
-                                                    child: Padding(
-                                                      padding: EdgeInsets.only(
-                                                          left: 20),
+                                                    Expanded(
+                                                      flex: 2,
                                                       child: Column(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
                                                                 .center,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
                                                         children: [
-                                                          Text(
-                                                            data.bundleTitle
-                                                                .toString(),
-                                                            style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              fontSize: 11,
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            data.validityType
-                                                                        .toString() ==
-                                                                    "unlimited"
-                                                                ? languageController
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              Text(
+                                                                languageController
                                                                     .alllanguageData
                                                                     .value
                                                                     .languageData![
-                                                                        "UNLIMITED"]
-                                                                    .toString()
-                                                                : data.validityType
-                                                                            .toString() ==
-                                                                        "monthly"
-                                                                    ? languageController
-                                                                        .alllanguageData
-                                                                        .value
-                                                                        .languageData![
-                                                                            "MONTHLY"]
-                                                                        .toString()
-                                                                    : data.validityType.toString() ==
-                                                                            "weekly"
-                                                                        ? languageController
-                                                                            .alllanguageData
-                                                                            .value
-                                                                            .languageData![
-                                                                                "WEEKLY"]
-                                                                            .toString()
-                                                                        : data.validityType.toString() ==
-                                                                                "daily"
-                                                                            ? languageController.alllanguageData.value.languageData!["DAILY"].toString()
-                                                                            : data.validityType.toString() == "hourly"
-                                                                                ? languageController.alllanguageData.value.languageData!["HOURLY"].toString()
-                                                                                : data.validityType.toString() == "nightly"
-                                                                                    ? languageController.alllanguageData.value.languageData!["NIGHTLY"].toString()
-                                                                                    : "",
-                                                            style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontSize: 10,
-                                                              color:
-                                                                  Colors.grey,
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 2,
-                                                  ),
-                                                  Expanded(
-                                                    flex: 2,
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                              languageController
-                                                                  .alllanguageData
-                                                                  .value
-                                                                  .languageData![
-                                                                      "SELL"]
-                                                                  .toString(),
-                                                              style: TextStyle(
-                                                                fontSize: 8,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          children: [
-                                                            PriceTextView(
-                                                              price: data
-                                                                  .sellingPrice
-                                                                  .toString(),
-                                                            ),
-                                                            SizedBox(
-                                                              width: 2,
-                                                            ),
-                                                            Text(
-                                                              " ${box.read("currency_code")}",
-                                                              style: TextStyle(
-                                                                fontSize: 11,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                color: Colors
-                                                                    .black,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    flex: 2,
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .end,
-                                                          children: [
-                                                            Text(
-                                                              languageController
-                                                                  .alllanguageData
-                                                                  .value
-                                                                  .languageData![
-                                                                      "BUY"]
-                                                                  .toString(),
-                                                              style: TextStyle(
-                                                                fontSize: 8,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .end,
-                                                          children: [
-                                                            Text(
-                                                              NumberFormat
-                                                                  .currency(
-                                                                locale: 'en_US',
-                                                                symbol: '',
-                                                                decimalDigits:
-                                                                    2,
-                                                              ).format(
-                                                                double.parse(
-                                                                  data.buyingPrice
-                                                                      .toString(),
+                                                                        "BUY"]
+                                                                    .toString(),
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 8,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
                                                                 ),
                                                               ),
-                                                              style: TextStyle(
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              Text(
+                                                                NumberFormat
+                                                                    .currency(
+                                                                  locale:
+                                                                      'en_US',
+                                                                  symbol: '',
+                                                                  decimalDigits:
+                                                                      2,
+                                                                ).format(
+                                                                  double.parse(
+                                                                    data.buyingPrice
+                                                                        .toString(),
+                                                                  ),
+                                                                ),
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        10,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                              Text(
+                                                                " ${box.read("currency_code")}",
+                                                                style:
+                                                                    TextStyle(
                                                                   fontSize: 10,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w500),
+                                                                          .w500,
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    )
+                                  : RefreshIndicator(
+                                      onRefresh: refresh,
+                                      child: ListView.separated(
+                                        shrinkWrap: false,
+                                        physics:
+                                            AlwaysScrollableScrollPhysics(),
+                                        controller: scrollController,
+                                        separatorBuilder: (context, index) {
+                                          return SizedBox(
+                                            height: 5,
+                                          );
+                                        },
+                                        itemCount:
+                                            bundleController.finalList.length,
+                                        itemBuilder: (context, index) {
+                                          final data =
+                                              bundleController.finalList[index];
+                                          return GestureDetector(
+                                            onTap: () {
+                                              if (confirmPinController
+                                                  .numberController
+                                                  .text
+                                                  .isEmpty) {
+                                                Fluttertoast.showToast(
+                                                    msg: "Enter Number ",
+                                                    toastLength:
+                                                        Toast.LENGTH_SHORT,
+                                                    gravity:
+                                                        ToastGravity.BOTTOM,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor:
+                                                        Colors.black,
+                                                    textColor: Colors.white,
+                                                    fontSize: 16.0);
+                                              } else {
+                                                box.write("bundleID",
+                                                    data.id.toString());
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ConfirmPinScreen(),
+                                                  ),
+                                                );
+                                              }
+                                            },
+                                            child: Container(
+                                              width: screenWidth,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: AppColors
+                                                    .listbuilderboxColor,
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsets.all(5.0),
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                      height: 45,
+                                                      width: 45,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        image: DecorationImage(
+                                                          fit: BoxFit.fill,
+                                                          image: NetworkImage(
+                                                            (data
+                                                                .service!
+                                                                .company!
+                                                                .companyLogo
+                                                                .toString()),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                left: 20),
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              data.bundleTitle
+                                                                  .toString(),
+                                                              style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontSize: 11,
+                                                              ),
                                                             ),
                                                             Text(
-                                                              " ${box.read("currency_code")}",
+                                                              data.validityType
+                                                                          .toString() ==
+                                                                      "unlimited"
+                                                                  ? languageController
+                                                                      .alllanguageData
+                                                                      .value
+                                                                      .languageData![
+                                                                          "UNLIMITED"]
+                                                                      .toString()
+                                                                  : data.validityType
+                                                                              .toString() ==
+                                                                          "monthly"
+                                                                      ? languageController
+                                                                          .alllanguageData
+                                                                          .value
+                                                                          .languageData![
+                                                                              "MONTHLY"]
+                                                                          .toString()
+                                                                      : data.validityType.toString() ==
+                                                                              "weekly"
+                                                                          ? languageController
+                                                                              .alllanguageData
+                                                                              .value
+                                                                              .languageData!["WEEKLY"]
+                                                                              .toString()
+                                                                          : data.validityType.toString() == "daily"
+                                                                              ? languageController.alllanguageData.value.languageData!["DAILY"].toString()
+                                                                              : data.validityType.toString() == "hourly"
+                                                                                  ? languageController.alllanguageData.value.languageData!["HOURLY"].toString()
+                                                                                  : data.validityType.toString() == "nightly"
+                                                                                      ? languageController.alllanguageData.value.languageData!["NIGHTLY"].toString()
+                                                                                      : "",
                                                               style: TextStyle(
-                                                                fontSize: 10,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w500,
-                                                                color: Colors
-                                                                    .black,
+                                                                fontSize: 10,
+                                                                color:
+                                                                    Colors.grey,
                                                               ),
-                                                            ),
+                                                            )
                                                           ],
                                                         ),
-                                                      ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 5,
-                                                  ),
-                                                ],
+                                                    SizedBox(
+                                                      width: 2,
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                languageController
+                                                                    .alllanguageData
+                                                                    .value
+                                                                    .languageData![
+                                                                        "SELL"]
+                                                                    .toString(),
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 8,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              PriceTextView(
+                                                                price: data
+                                                                    .sellingPrice
+                                                                    .toString(),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 2,
+                                                              ),
+                                                              Text(
+                                                                " ${box.read("currency_code")}",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 9,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              Text(
+                                                                languageController
+                                                                    .alllanguageData
+                                                                    .value
+                                                                    .languageData![
+                                                                        "BUY"]
+                                                                    .toString(),
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 8,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              Text(
+                                                                NumberFormat
+                                                                    .currency(
+                                                                  locale:
+                                                                      'en_US',
+                                                                  symbol: '',
+                                                                  decimalDigits:
+                                                                      2,
+                                                                ).format(
+                                                                  double.parse(
+                                                                    data.buyingPrice
+                                                                        .toString(),
+                                                                  ),
+                                                                ),
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        10,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                              Text(
+                                                                " ${box.read("currency_code")}",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 10,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 5,
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ))),
+                                          );
+                                        },
+                                      ),
+                                    );
+                            }
+                          }),
+                        ),
                         Obx(
                           () => bundleController.isLoading.value == true
                               ? Row(

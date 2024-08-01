@@ -148,154 +148,185 @@ class TransactionsPage extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                Expanded(
-                    child: Obx(
-                  () => transactionController.isLoading.value == false
-                      ? ListView.builder(
-                          physics: BouncingScrollPhysics(),
-                          itemCount: transactionController.alltransactionlist
-                              .value.data!.resellerBalanceTransactions.length,
-                          itemBuilder: (context, index) {
-                            final data = transactionController
-                                .alltransactionlist
-                                .value
-                                .data!
-                                .resellerBalanceTransactions[index];
-                            return Card(
-                              color: Colors.white,
-                              child: Container(
-                                width: screenWidth,
-                                decoration: BoxDecoration(
-                                    // color: Colors.grey,
+                Expanded(child: Obx(() {
+                  if (transactionController.isLoading.value) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (transactionController
+                              .alltransactionlist.value.data ==
+                          null ||
+                      transactionController.alltransactionlist.value.data!
+                          .resellerBalanceTransactions.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            "assets/icons/empty.png",
+                            height: 80,
+                          ),
+                          Text("No Transactions found"),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      itemCount: transactionController.alltransactionlist.value
+                          .data!.resellerBalanceTransactions.length,
+                      itemBuilder: (context, index) {
+                        final data = transactionController.alltransactionlist
+                            .value.data!.resellerBalanceTransactions[index];
+                        return Card(
+                          color: Colors.white,
+                          child: Container(
+                            width: screenWidth,
+                            decoration: BoxDecoration(
+                                // color: Colors.grey,
+                                ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(8),
+                                        bottomRight: Radius.circular(8),
+                                      ),
                                     ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(8),
-                                            bottomRight: Radius.circular(8),
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 15),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                height: 50,
-                                                width: screenWidth,
-                                                child: Row(
-                                                  children: [
-                                                    // Expanded(
-                                                    //   flex: 1,
-                                                    //   child: Container(
-                                                    //     child: Column(
-                                                    //       mainAxisAlignment:
-                                                    //           MainAxisAlignment
-                                                    //               .center,
-                                                    //       crossAxisAlignment:
-                                                    //           CrossAxisAlignment
-                                                    //               .start,
-                                                    //       children: [
-                                                    //         data.order != null
-                                                    //             ? Text(
-                                                    //                 data
-                                                    //                     .order!
-                                                    //                     .bundle!
-                                                    //                     .bundleTitle
-                                                    //                     .toString(),
-                                                    //                 style:
-                                                    //                     TextStyle(
-                                                    //                   fontSize:
-                                                    //                       13,
-                                                    //                   color: Colors
-                                                    //                       .grey,
-                                                    //                   fontWeight:
-                                                    //                       FontWeight
-                                                    //                           .w600,
-                                                    //                 ),
-                                                    //               )
-                                                    //             : SizedBox(),
-                                                    //       ],
-                                                    //     ),
-                                                    //   ),
-                                                    // ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            height: 50,
+                                            width: screenWidth,
+                                            child: Row(
+                                              children: [
+                                                // Expanded(
+                                                //   flex: 1,
+                                                //   child: Container(
+                                                //     child: Column(
+                                                //       mainAxisAlignment:
+                                                //           MainAxisAlignment
+                                                //               .center,
+                                                //       crossAxisAlignment:
+                                                //           CrossAxisAlignment
+                                                //               .start,
+                                                //       children: [
+                                                //         data.order != null
+                                                //             ? Text(
+                                                //                 data
+                                                //                     .order!
+                                                //                     .bundle!
+                                                //                     .bundleTitle
+                                                //                     .toString(),
+                                                //                 style:
+                                                //                     TextStyle(
+                                                //                   fontSize:
+                                                //                       13,
+                                                //                   color: Colors
+                                                //                       .grey,
+                                                //                   fontWeight:
+                                                //                       FontWeight
+                                                //                           .w600,
+                                                //                 ),
+                                                //               )
+                                                //             : SizedBox(),
+                                                //       ],
+                                                //     ),
+                                                //   ),
+                                                // ),
 
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Container(
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                              data.reseller!
-                                                                  .contactName
-                                                                  .toString(),
-                                                              style: TextStyle(
-                                                                fontSize: 13,
-                                                                color:
-                                                                    Colors.grey,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
-                                                            ),
-                                                          ],
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Container(
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          data.reseller!
+                                                              .contactName
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                            fontSize: 13,
+                                                            color: Colors.grey,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
                                                         ),
-                                                      ),
+                                                      ],
                                                     ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Container(
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Text(
-                                                              DateFormat(
-                                                                      "dd-MM-yyyy")
-                                                                  .format(DateTime
-                                                                      .parse(data
-                                                                          .createdAt
-                                                                          .toString())),
-                                                              style: TextStyle(
-                                                                fontSize: 12,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
-                                                            ),
-                                                          ],
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Container(
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          DateFormat(
+                                                                  "dd-MM-yyyy")
+                                                              .format(DateTime
+                                                                  .parse(data
+                                                                      .createdAt
+                                                                      .toString())),
+                                                          style: TextStyle(
+                                                            fontSize: 12,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
                                                         ),
-                                                      ),
+                                                      ],
                                                     ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Container(
-                                                        child: Column(
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Container(
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          data.status
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                            fontSize: 12,
+                                                            color: data.status
+                                                                        .toString() ==
+                                                                    "debit"
+                                                                ? Colors.red
+                                                                : Colors.green,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                        ),
+                                                        Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .center,
                                                           children: [
                                                             Text(
-                                                              data.status
-                                                                  .toString(),
+                                                              "${box.read("currency_code")} ",
                                                               style: TextStyle(
-                                                                fontSize: 12,
+                                                                fontSize: 10,
                                                                 color: data.status
                                                                             .toString() ==
                                                                         "debit"
@@ -307,82 +338,54 @@ class TransactionsPage extends StatelessWidget {
                                                                         .w600,
                                                               ),
                                                             ),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text(
-                                                                  "${box.read("currency_code")} ",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        10,
-                                                                    color: data.status.toString() ==
-                                                                            "debit"
-                                                                        ? Colors
-                                                                            .red
-                                                                        : Colors
-                                                                            .green,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                  ),
+                                                            Text(
+                                                              NumberFormat
+                                                                  .currency(
+                                                                locale: 'en_US',
+                                                                symbol: '',
+                                                                decimalDigits:
+                                                                    2,
+                                                              ).format(
+                                                                double.parse(
+                                                                  data.amount
+                                                                      .toString(),
                                                                 ),
-                                                                Text(
-                                                                  NumberFormat
-                                                                      .currency(
-                                                                    locale:
-                                                                        'en_US',
-                                                                    symbol: '',
-                                                                    decimalDigits:
-                                                                        2,
-                                                                  ).format(
-                                                                    double
-                                                                        .parse(
-                                                                      data.amount
-                                                                          .toString(),
-                                                                    ),
-                                                                  ),
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        10,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    color: data.status.toString() ==
-                                                                            "debit"
-                                                                        ? Colors
-                                                                            .red
-                                                                        : Colors
-                                                                            .green,
-                                                                  ),
-                                                                ),
-                                                              ],
+                                                              ),
+                                                              style: TextStyle(
+                                                                fontSize: 10,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                color: data.status
+                                                                            .toString() ==
+                                                                        "debit"
+                                                                    ? Colors.red
+                                                                    : Colors
+                                                                        .green,
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
-                                                      ),
+                                                      ],
                                                     ),
-                                                  ],
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       ),
-                                    ],
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
-                            );
-                          },
-                        )
-                      : Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                )),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }
+                })),
               ],
             ),
           ),

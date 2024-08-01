@@ -24,7 +24,7 @@ class PriceTextView extends StatelessWidget {
         ),
       ),
       style: TextStyle(
-        fontSize: 11,
+        fontSize: 10,
         fontWeight: FontWeight.w600,
       ),
     );
