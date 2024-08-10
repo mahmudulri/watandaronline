@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   final box = GetStorage();
   @override
   void initState() {
-    Future.delayed(Duration(seconds: 3), () => checkData());
+    Future.delayed(Duration(seconds: 1), () => checkData());
 
     super.initState();
   }

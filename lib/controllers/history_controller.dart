@@ -14,7 +14,7 @@ class HistoryController extends GetxController {
   void fetchHistory() async {
     try {
       isLoading(true);
-      await HistoryServiceApi().fetchHistory().then((value) {
+      await HistoryServiceApi().fetchorderList(initialpage).then((value) {
         allorderlist.value = value;
 
         if (allorderlist.value.data != null) {

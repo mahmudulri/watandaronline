@@ -5,11 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-
-import 'package:watandaronline/screens/result_screen.dart';
+import 'package:watandaronline/controllers/history_controller.dart';
 import 'package:watandaronline/utils/api_endpoints.dart';
-
-import 'history_controller.dart';
 
 class ConfirmPinController extends GetxController {
   TextEditingController numberController = TextEditingController();
@@ -76,7 +73,7 @@ class ConfirmPinController extends GetxController {
             final orderresults = jsonDecode(response.body);
             if (response.statusCode == 201) {
               if (results["success"] == true) {
-                Get.to(() => ResultScreen());
+                loadsuccess.value = false;
 
                 numberController.clear();
                 pinController.clear();
@@ -86,6 +83,13 @@ class ConfirmPinController extends GetxController {
                 placeingLoading.value = false;
               } else {
                 pinController.clear();
+                Get.snackbar(
+                  "Done",
+                  orderresults["message"],
+                  backgroundColor: Colors.grey,
+                  colorText: Colors.black,
+                );
+                placeingLoading.value = false;
 
                 box.remove("bundleID");
                 Get.snackbar(
@@ -95,7 +99,6 @@ class ConfirmPinController extends GetxController {
                   colorText: Colors.black,
                 );
                 placeingLoading.value = false;
-                loadsuccess.value = false;
               }
             } else {
               Get.snackbar(

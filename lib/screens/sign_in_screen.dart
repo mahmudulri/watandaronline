@@ -9,6 +9,10 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:watandaronline/controllers/checker.dart';
+import 'package:watandaronline/controllers/country_list_controller.dart';
+import 'package:watandaronline/controllers/dashboard_controller.dart';
+import 'package:watandaronline/controllers/history_controller.dart';
+import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/controllers/sign_in_controller.dart';
 
 import 'package:watandaronline/utils/colors.dart';
@@ -45,6 +49,14 @@ class _SignInScreenState extends State<SignInScreen> {
       print("not found");
     }
   }
+
+  final HistoryController historyController = Get.put(HistoryController());
+  final LanguageController languageController = Get.put(LanguageController());
+
+  final CountryListController countryListController =
+      Get.put(CountryListController());
+  final DashboardController dashboardController =
+      Get.put(DashboardController());
 
   @override
   Widget build(BuildContext context) {
@@ -161,86 +173,56 @@ class _SignInScreenState extends State<SignInScreen> {
                           SizedBox(
                             height: 20,
                           ),
-                          Obx(
-                            () => DefaultButton(
-                              buttonName:
-                                  signInController.isLoading.value == false
-                                      ? "Log In"
-                                      : "Please wait...",
-                              onPressed: () async {
-                                if (signInController
-                                        .usernameController.text.isEmpty ||
-                                    signInController
-                                        .passwordController.text.isEmpty) {
-                                  Get.snackbar("Opps!", "Fill the textfield");
+                          Obx(() => DefaultButton(
+                                buttonName:
+                                    signInController.isLoading.value == false
+                                        ? "Log In"
+                                        : "Please wait...",
+                                onPressed: () async {
+                                  historyController.initialpage = 1;
 
-                                  // await signInController.signIn();
-                                  // if (signInController.loginsuccess.value ==
-                                  //     false) {
-                                  //   Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //       builder: (context) =>
-                                  //           BottomNavigationbar(),
-                                  //     ),
-                                  //   );
+                                  languageController
+                                      .fetchlanData(box.read("isoCode"));
 
-                                  //   if (box.read("direction") == "rtl") {
-                                  //     setState(() {
-                                  //       EasyLocalization.of(context)!
-                                  //           .setLocale(Locale('ar', 'AE'));
-                                  //     });
-                                  //     setState(() {});
-                                  //   } else {
-                                  //     setState(() {
-                                  //       EasyLocalization.of(context)!
-                                  //           .setLocale(Locale('en', 'US'));
-                                  //     });
-                                  //     setState(() {});
-                                  //   }
-                                  // } else {
-                                  //   print("object");
-                                  // }
-                                } else {
-                                  print("has data");
-                                  await signInController.signIn();
-                                  if (signInController.loginsuccess.value ==
-                                      false) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            BottomNavigationbar(),
-                                      ),
-                                    );
-
-                                    if (box.read("direction") == "rtl") {
-                                      setState(() {
-                                        EasyLocalization.of(context)!
-                                            .setLocale(Locale('ar', 'AE'));
-                                      });
-                                      setState(() {});
-                                    } else {
-                                      setState(() {
-                                        EasyLocalization.of(context)!
-                                            .setLocale(Locale('en', 'US'));
-                                      });
-                                      setState(() {});
-                                    }
+                                  if (signInController
+                                          .usernameController.text.isEmpty ||
+                                      signInController
+                                          .passwordController.text.isEmpty) {
+                                    Get.snackbar(
+                                        "Oops!", "Fill the text fields");
                                   } else {
-                                    print("object");
-                                  }
-                                }
+                                    print("Attempting login...");
+                                    await signInController.signIn();
 
-                                // Navigator.pushReplacement(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //       builder: (context) => BottomNavigationbar()),
-                                // );
-                                // Get.to(() => BottomNavigationbar());
-                              },
-                            ),
-                          ),
+                                    if (signInController.loginsuccess.value ==
+                                        false) {
+                                      // Navigating to the BottomNavigationbar page
+                                      countryListController.fetchCountryData();
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              BottomNavigationbar(),
+                                        ),
+                                      );
+
+                                      if (box.read("direction") == "rtl") {
+                                        setState(() {
+                                          EasyLocalization.of(context)!
+                                              .setLocale(Locale('ar', 'AE'));
+                                        });
+                                      } else {
+                                        setState(() {
+                                          EasyLocalization.of(context)!
+                                              .setLocale(Locale('en', 'US'));
+                                        });
+                                      }
+                                    } else {
+                                      print("Navigation conditions not met.");
+                                    }
+                                  }
+                                },
+                              )),
                           SizedBox(
                             height: 10,
                           ),

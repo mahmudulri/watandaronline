@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:watandaronline/controllers/time_zone_controller.dart';
 import 'package:watandaronline/draftcode.dart';
 import 'package:watandaronline/routes/routes.dart';
 import 'package:watandaronline/splash_screen.dart';
@@ -49,8 +50,11 @@ class Startpage extends StatelessWidget {
 
   final box = GetStorage();
 
+  final TimeZoneController timeZoneController = Get.put(TimeZoneController());
+
   myfunction() async {
     box.write("timezone", await FlutterTimezone.getLocalTimezone());
+    timeZoneController.fetchTimeData();
   }
 
   @override

@@ -11,163 +11,230 @@ import 'package:watandaronline/controllers/place_order_controller.dart';
 import '../controllers/confirm_pin_controller.dart';
 import 'result_screen.dart';
 
-class ConfirmPinScreen extends StatelessWidget {
+class ConfirmPinScreen extends StatefulWidget {
   ConfirmPinScreen({super.key});
 
+  @override
+  State<ConfirmPinScreen> createState() => _ConfirmPinScreenState();
+}
+
+class _ConfirmPinScreenState extends State<ConfirmPinScreen> {
   final ConfirmPinController confirmPinController =
       Get.put(ConfirmPinController());
+
   final LanguageController languageController = Get.put(LanguageController());
+
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Step 2: Request focus when the page loads
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FocusScope.of(context).requestFocus(_focusNode);
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose(); // Don't forget to dispose the FocusNode
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          height: screenHeight,
-          width: screenWidth,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Lottie.asset('assets/loties/pin.json'),
-              Obx(
-                () => Row(
+    // ignore: deprecated_member_use
+    return WillPopScope(
+      onWillPop: () async {
+        confirmPinController.pinController.clear();
+        return true;
+      },
+      child: SafeArea(
+        child: Scaffold(
+          body: Container(
+            height: screenHeight,
+            width: screenWidth,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Lottie.asset('assets/loties/pin.json'),
+                Obx(
+                  () => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        confirmPinController.isLoading.value == false
+                            ? languageController.alllanguageData.value
+                                .languageData!["CONFIRM_YOUR_PIN"]
+                                .toString()
+                            : languageController.alllanguageData.value
+                                .languageData!["PLEASE_WAIT"]
+                                .toString(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      confirmPinController.isLoading.value == true
+                          ? Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.black,
+                              ),
+                            )
+                          : SizedBox(),
+                    ],
+                  ),
+                ),
+                // OTPInput(),
+                Container(
+                  height: 40,
+                  width: 100,
+                  // color: Colors.red,
+                  child: TextField(
+                    focusNode: _focusNode,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ),
+                    controller: confirmPinController.pinController,
+                    maxLength: 4,
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(
+                      counterText: '',
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 2.0),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 2.0),
+                      ),
+                      errorBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 2.0),
+                      ),
+                      focusedErrorBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 2.0),
+                      ),
+                    ),
+                  ),
+                ),
+                // SizedBox(
+                //   height: 15,
+                // ),
+                // GestureDetector(
+                //   onTap: () {},
+                //   child: Icon(FontAwesomeIcons.rotateRight),
+                // ),
+
+                SizedBox(
+                  height: 15,
+                ),
+
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      confirmPinController.isLoading.value == false
-                          ? languageController.alllanguageData.value
-                              .languageData!["CONFIRM_YOUR_PIN"]
-                              .toString()
-                          : languageController.alllanguageData.value
-                              .languageData!["PLEASE_WAIT"]
-                              .toString(),
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                        confirmPinController.pinController.clear();
+                      },
+                      child: Container(
+                        height: 60,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 1,
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          child: Center(
+                            child: Text(
+                              languageController
+                                  .alllanguageData.value.languageData!["CANCEL"]
+                                  .toString(),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(
                       width: 10,
                     ),
-                    confirmPinController.isLoading.value == true
-                        ? Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.black,
+                    GestureDetector(
+                      onTap: () async {
+                        print("pin is...." +
+                            confirmPinController.pinController.text.toString());
+                        if (confirmPinController.pinController.text.isEmpty ||
+                            confirmPinController.pinController.text.length !=
+                                4) {
+                          Fluttertoast.showToast(
+                              msg: "Enter your pin",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.black,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                        } else {
+                          await confirmPinController.verify();
+                          if (confirmPinController.loadsuccess.value == false) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ResultScreen(),
+                              ),
+                            );
+                          } else {
+                            print("errorBD");
+                          }
+                        }
+                      },
+                      child: Container(
+                        height: 60,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          border: Border.all(
+                            width: 1,
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          child: Center(
+                            child: Text(
+                              languageController
+                                  .alllanguageData.value.languageData!["VERIFY"]
+                                  .toString(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 15,
+                              ),
                             ),
-                          )
-                        : SizedBox(),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
-              ),
-              OTPInput(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                      print(confirmPinController.numberController.text);
-                    },
-                    child: Container(
-                      height: 60,
-                      width: 120,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 1,
-                          color: Colors.grey,
-                        ),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 5),
-                        child: Center(
-                          child: Text(
-                            languageController
-                                .alllanguageData.value.languageData!["CANCEL"]
-                                .toString(),
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  GestureDetector(
-                    onTap: () async {
-                      print("pin is...." +
-                          confirmPinController.pinController.text.toString());
-                      if (confirmPinController.pinController.text.isEmpty ||
-                          confirmPinController.pinController.text.length != 4) {
-                        Fluttertoast.showToast(
-                            msg: "Enter your pin",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.black,
-                            textColor: Colors.white,
-                            fontSize: 16.0);
-                      } else {
-                        await confirmPinController.verify();
-                        if (confirmPinController.loadsuccess.value == false) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ResultScreen(),
-                            ),
-                          );
-                        } else {
-                          print("errorBD");
-                        }
-                        // orderController.placeOrder();
-                        // print(controller.pinController.text);
-                        // ignore: unrelated_type_equality_checks
-                        // if (controller.getresult == false) {
-                        //   orderController.placeOrder();
-                        // } else {
-                        //   print("success");
-                        // }
-                      }
-                    },
-                    child: Container(
-                      height: 60,
-                      width: 120,
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        border: Border.all(
-                          width: 1,
-                          color: Colors.grey,
-                        ),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 5),
-                        child: Center(
-                          child: Text(
-                            languageController
-                                .alllanguageData.value.languageData!["VERIFY"]
-                                .toString(),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -262,7 +329,9 @@ class _OTPInputState extends State<OTPInput> {
           ),
           SizedBox(height: 10),
           GestureDetector(
-              onTap: _resetFields, child: Icon(FontAwesomeIcons.rotateRight)),
+            onTap: _resetFields,
+            child: Icon(FontAwesomeIcons.rotateRight),
+          ),
         ],
       ),
     );

@@ -64,387 +64,412 @@ class _DrawerWidgetState extends State<DrawerWidget> {
       height: screenHeight,
       width: screenWidth - 80,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 40,
-            ),
-            Text(
-              languageController.alllanguageData.value.languageData!["PROFILE"]
-                  .toString(),
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            dashboardController.alldashboardData.value.data!.userInfo!
-                        .profileImageUrl !=
-                    null
-                ? Container(
-                    height: 110,
-                    width: 110,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 4,
-                        color: AppColors.defaultColor,
+          padding: const EdgeInsets.all(8.0),
+          child: Obx(
+            () => dashboardController.isLoading.value == false
+                ? Column(
+                    children: [
+                      SizedBox(
+                        height: 40,
                       ),
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          dashboardController.alldashboardData.value.data!
-                              .userInfo!.profileImageUrl
-                              .toString(),
+                      Text(
+                        languageController
+                            .alllanguageData.value.languageData!["PROFILE"]
+                            .toString(),
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
-                        fit: BoxFit.cover,
                       ),
-                      shape: BoxShape.circle,
-                    ),
-                  )
-                : Container(
-                    height: 130,
-                    width: 130,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.grey,
-                    ),
-                    child: Center(
-                      child: Icon(
-                        Icons.person,
-                        color: Colors.white,
-                        size: 100,
+                      SizedBox(
+                        height: 20,
                       ),
-                    ),
-                  ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              dashboardController
-                  .alldashboardData.value.data!.userInfo!.resellerName
-                  .toString(),
-              style: GoogleFonts.rubik(
-                color: Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              dashboardController.alldashboardData.value.data!.userInfo!.email
-                  .toString(),
-              style: GoogleFonts.rubik(
-                color: AppColors.borderColor,
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Divider(
-              thickness: 1,
-              indent: 10,
-              endIndent: 10,
-              color: Colors.grey,
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            ProfileMenuWidget(
-              itemName: languageController
-                  .alllanguageData.value.languageData!["PERSONAL_INFO"]
-                  .toString(),
-              imageLink: "assets/icons/homeicon.png",
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MyprofileScreen(),
-                  ),
-                );
-              },
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            ProfileMenuWidget(
-              itemName: languageController
-                  .alllanguageData.value.languageData!["ADD_CARD"]
-                  .toString(),
-              imageLink: "assets/icons/add_card.png",
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AddCardScreen(),
-                  ),
-                );
-              },
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            ProfileMenuWidget(
-              itemName: languageController
-                  .alllanguageData.value.languageData!["TERMS_AND_CONDITIONS"]
-                  .toString(),
-              imageLink: "assets/icons/terms.png",
-              onPressed: () {},
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            ProfileMenuWidget(
-              itemName: languageController
-                  .alllanguageData.value.languageData!["HELP"]
-                  .toString(),
-              imageLink: "assets/icons/help.png",
-              onPressed: () {},
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            ProfileMenuWidget(
-              itemName: languageController
-                  .alllanguageData.value.languageData!["CONTACTUS"]
-                  .toString(),
-              imageLink: "assets/icons/support.png",
-              onPressed: () {
-                whatsapp();
-              },
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            ProfileMenuWidget(
-              itemName: languageController
-                  .alllanguageData.value.languageData!["CHANGE_LANGUAGE"]
-                  .toString(),
-              imageLink: "assets/icons/globe.png",
-              onPressed: () {
-                // historyController.finalList.clear();
-                iscoCodeController.fetchisoCode();
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      backgroundColor: Colors.white,
-                      // contentPadding: EdgeInsets.all(0.0),
-                      content: Container(
-                        height: 300,
-                        width: screenWidth,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
+                      dashboardController.alldashboardData.value.data!.userInfo!
+                                  .profileImageUrl !=
+                              null
+                          ? Container(
+                              height: 110,
+                              width: 110,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 4,
+                                  color: AppColors.defaultColor,
+                                ),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    dashboardController.alldashboardData.value
+                                        .data!.userInfo!.profileImageUrl
+                                        .toString(),
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                                shape: BoxShape.circle,
+                              ),
+                            )
+                          : Container(
+                              height: 130,
+                              width: 130,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.grey,
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.person,
+                                  color: Colors.white,
+                                  size: 100,
+                                ),
+                              ),
+                            ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        dashboardController
+                            .alldashboardData.value.data!.userInfo!.resellerName
+                            .toString(),
+                        style: GoogleFonts.rubik(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
                         ),
-                        child: Column(
-                          children: [
-                            Expanded(
-                                child: Obx(
-                              () => iscoCodeController.isLoading.value == false
-                                  ? ListView.builder(
-                                      itemCount: iscoCodeController
-                                          .allisoCodeData
-                                          .value
-                                          .data!
-                                          .languages
-                                          .length,
-                                      itemBuilder: (context, index) {
-                                        final data = iscoCodeController
-                                            .allisoCodeData
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        dashboardController
+                            .alldashboardData.value.data!.userInfo!.email
+                            .toString(),
+                        style: GoogleFonts.rubik(
+                          color: AppColors.borderColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      Divider(
+                        thickness: 1,
+                        indent: 10,
+                        endIndent: 10,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      ProfileMenuWidget(
+                        itemName: languageController.alllanguageData.value
+                            .languageData!["PERSONAL_INFO"]
+                            .toString(),
+                        imageLink: "assets/icons/homeicon.png",
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MyprofileScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      ProfileMenuWidget(
+                        itemName: languageController
+                            .alllanguageData.value.languageData!["ADD_CARD"]
+                            .toString(),
+                        imageLink: "assets/icons/add_card.png",
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddCardScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      ProfileMenuWidget(
+                        itemName: languageController.alllanguageData.value
+                            .languageData!["TERMS_AND_CONDITIONS"]
+                            .toString(),
+                        imageLink: "assets/icons/terms.png",
+                        onPressed: () {},
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      ProfileMenuWidget(
+                        itemName: languageController
+                            .alllanguageData.value.languageData!["HELP"]
+                            .toString(),
+                        imageLink: "assets/icons/help.png",
+                        onPressed: () {},
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      ProfileMenuWidget(
+                        itemName: languageController
+                            .alllanguageData.value.languageData!["CONTACTUS"]
+                            .toString(),
+                        imageLink: "assets/icons/support.png",
+                        onPressed: () {
+                          whatsapp();
+                        },
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      ProfileMenuWidget(
+                        itemName: languageController.alllanguageData.value
+                            .languageData!["CHANGE_LANGUAGE"]
+                            .toString(),
+                        imageLink: "assets/icons/globe.png",
+                        onPressed: () {
+                          // historyController.finalList.clear();
+                          iscoCodeController.fetchisoCode();
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                backgroundColor: Colors.white,
+                                // contentPadding: EdgeInsets.all(0.0),
+                                content: Container(
+                                  height: 300,
+                                  width: screenWidth,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Expanded(
+                                          child: Obx(
+                                        () => iscoCodeController
+                                                    .isLoading.value ==
+                                                false
+                                            ? ListView.builder(
+                                                itemCount: iscoCodeController
+                                                    .allisoCodeData
+                                                    .value
+                                                    .data!
+                                                    .languages
+                                                    .length,
+                                                itemBuilder: (context, index) {
+                                                  final data =
+                                                      iscoCodeController
+                                                          .allisoCodeData
+                                                          .value
+                                                          .data!
+                                                          .languages[index];
+                                                  return languageBox(
+                                                    lanName: data.languageName,
+                                                    onpressed: () {
+                                                      historyController
+                                                          .finalList
+                                                          .clear();
+                                                      languageController
+                                                          .fetchlanData(data
+                                                              .language_code
+                                                              .toString());
+                                                      box.write(
+                                                          "isoCode",
+                                                          data.language_code
+                                                              .toString());
+                                                      box.write(
+                                                          "direction",
+                                                          data.direction
+                                                              .toString());
+
+                                                      if (data.direction ==
+                                                          "rtl") {
+                                                        setState(() {
+                                                          EasyLocalization.of(
+                                                                  context)!
+                                                              .setLocale(Locale(
+                                                                  'ar', 'AE'));
+                                                        });
+
+                                                        // setState(() {});
+                                                      } else {
+                                                        setState(() {
+                                                          EasyLocalization.of(
+                                                                  context)!
+                                                              .setLocale(Locale(
+                                                                  'en', 'US'));
+                                                        });
+                                                        // setState(() {});
+                                                      }
+
+                                                      historyController
+                                                          .finalList
+                                                          .clear();
+                                                      historyController
+                                                          .initialpage = 1;
+                                                      historyController
+                                                          .fetchHistory();
+
+                                                      Navigator.pop(context);
+
+                                                      // historyController.finalList.clear();
+                                                      // historyController.initialpage = 1;
+                                                    },
+                                                  );
+                                                },
+                                              )
+                                            : Center(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              ),
+                                      )),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      ProfileMenuWidget(
+                        itemName: languageController
+                            .alllanguageData.value.languageData!["LOG_OUT"]
+                            .toString(),
+                        imageLink: "assets/icons/logout.png",
+                        onPressed: () {
+                          historyController.finalList.clear();
+
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: Container(
+                                  height: 140,
+                                  width: screenWidth,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        languageController
+                                            .alllanguageData
                                             .value
-                                            .data!
-                                            .languages[index];
-                                        return languageBox(
-                                          lanName: data.languageName,
-                                          onpressed: () {
-                                            historyController.finalList.clear();
-                                            languageController.fetchlanData(
-                                                data.language_code.toString());
-                                            box.write("isoCode",
-                                                data.language_code.toString());
-                                            box.write("direction",
-                                                data.direction.toString());
+                                            .languageData![
+                                                "DO_YOU_WANT_TO_LOGOUT"]
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 40,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              historyController.finalList
+                                                  .clear();
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return SignInScreen();
+                                                  },
+                                                ),
+                                              );
 
-                                            if (data.direction == "rtl") {
-                                              setState(() {
-                                                EasyLocalization.of(context)!
-                                                    .setLocale(
-                                                        Locale('ar', 'AE'));
-                                              });
+                                              signInController
+                                                  .usernameController
+                                                  .clear();
+                                              signInController
+                                                  .passwordController
+                                                  .clear();
 
-                                              setState(() {});
-                                            } else {
-                                              setState(() {
-                                                EasyLocalization.of(context)!
-                                                    .setLocale(
-                                                        Locale('en', 'US'));
-                                              });
-                                              setState(() {});
-                                            }
+                                              box.remove("userToken");
+                                              signInController
+                                                  .loginsuccess.value = true;
 
-                                            Navigator.pop(context);
+                                              //...........................
+                                            },
+                                            child: Container(
+                                              height: 40,
+                                              width: 100,
+                                              decoration: BoxDecoration(
+                                                color: AppColors.borderColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(7),
+                                              ),
+                                              child: Center(
+                                                child: Text(
+                                                  languageController
+                                                      .alllanguageData
+                                                      .value
+                                                      .languageData!["YES"]
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Container(
+                                              height: 40,
+                                              width: 100,
+                                              decoration: BoxDecoration(
+                                                color: AppColors.borderColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(7),
+                                              ),
+                                              child: Center(
+                                                child: Text(
+                                                  languageController
+                                                      .alllanguageData
+                                                      .value
+                                                      .languageData!["NO"]
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
 
-                                            // historyController.finalList.clear();
-                                            // historyController.initialpage = 1;
-                                          },
-                                        );
-                                      },
-                                    )
-                                  : Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                            )),
-                          ],
-                        ),
+                          box.remove("userToken");
+                        },
                       ),
-                    );
-                  },
-                );
-              },
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            ProfileMenuWidget(
-              itemName: languageController
-                  .alllanguageData.value.languageData!["LOG_OUT"]
-                  .toString(),
-              imageLink: "assets/icons/logout.png",
-              onPressed: () {
-                historyController.finalList.clear();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SignInScreen(),
+                    ],
+                  )
+                : Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.defaultColor,
+                    ),
                   ),
-                );
-                historyController.finalList.clear();
-
-                signInController.usernameController.clear();
-                signInController.passwordController.clear();
-
-                box.remove("userToken");
-                // showDialog(
-                //   context: context,
-                //   builder: (context) {
-                //     return AlertDialog(
-                //       content: Container(
-                //         height: 140,
-                //         width: screenWidth,
-                //         decoration: BoxDecoration(
-                //           color: Colors.white,
-                //         ),
-                //         child: Column(
-                //           children: [
-                //             Text(
-                //               languageController.alllanguageData.value
-                //                   .languageData!["DO_YOU_WANT_TO_LOGOUT"]
-                //                   .toString(),
-                //               style: TextStyle(
-                //                 fontSize: 17,
-                //                 fontWeight: FontWeight.w600,
-                //               ),
-                //             ),
-                //             SizedBox(
-                //               height: 40,
-                //             ),
-                //             Row(
-                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //               children: [
-                //                 GestureDetector(
-                //                   onTap: () {
-                //                     WidgetsBinding.instance
-                //                         .addPostFrameCallback((_) {
-                //                       Navigator.push(
-                //                         context,
-                //                         MaterialPageRoute(
-                //                           builder: (context) {
-                //                             box.remove("token");
-                //                             return SignInScreen();
-                //                           },
-                //                         ),
-                //                       );
-                //                     });
-                //                     signInController.usernameController.clear();
-                //                     signInController.passwordController.clear();
-
-                //                     box.remove("userToken");
-
-                //                     //...........................
-
-                //                     // Navigator.of(context).pop();
-                //                     // Navigator.push(
-                //                     //   context,
-                //                     //   MaterialPageRoute(
-                //                     //     builder: (context) => SignInScreen(),
-                //                     //   ),
-                //                     // );
-
-                //                     // signInController.usernameController.clear();
-                //                     // signInController.passwordController.clear();
-
-                //                     // box.remove("userToken");
-                //                   },
-                //                   child: Container(
-                //                     height: 40,
-                //                     width: 100,
-                //                     decoration: BoxDecoration(
-                //                       color: AppColors.borderColor,
-                //                       borderRadius: BorderRadius.circular(7),
-                //                     ),
-                //                     child: Center(
-                //                       child: Text(
-                //                         languageController.alllanguageData.value
-                //                             .languageData!["YES"]
-                //                             .toString(),
-                //                         style: TextStyle(
-                //                           color: Colors.white,
-                //                           fontWeight: FontWeight.w500,
-                //                         ),
-                //                       ),
-                //                     ),
-                //                   ),
-                //                 ),
-                //                 GestureDetector(
-                //                   onTap: () {
-                //                     Navigator.of(context).pop();
-                //                   },
-                //                   child: Container(
-                //                     height: 40,
-                //                     width: 100,
-                //                     decoration: BoxDecoration(
-                //                       color: AppColors.borderColor,
-                //                       borderRadius: BorderRadius.circular(7),
-                //                     ),
-                //                     child: Center(
-                //                       child: Text(
-                //                         languageController.alllanguageData.value
-                //                             .languageData!["NO"]
-                //                             .toString(),
-                //                         style: TextStyle(
-                //                           color: Colors.white,
-                //                           fontWeight: FontWeight.w500,
-                //                         ),
-                //                       ),
-                //                     ),
-                //                   ),
-                //                 ),
-                //               ],
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     );
-                //   },
-                // );
-              },
-            ),
-          ],
-        ),
-      ),
+          )),
     );
   }
 }

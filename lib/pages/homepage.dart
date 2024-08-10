@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -51,10 +52,17 @@ class _HomepageState extends State<Homepage> {
   final box = GetStorage();
   int currentindex = 0;
 
+  bool _showEmptyState = false;
+
   @override
   void initState() {
     super.initState();
-    fetchTimeData();
+    Timer(Duration(seconds: 2), () {
+      setState(() {
+        _showEmptyState = true;
+      });
+    });
+
     scrollController.addListener(refresh);
     // Use addPostFrameCallback to ensure this runs after the initial build
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -130,27 +138,6 @@ class _HomepageState extends State<Homepage> {
   final SignInController signInController = Get.put(SignInController());
   final ScrollController scrollController = ScrollController();
 
-  String sign = '';
-  String hour = '';
-  String minute = '';
-  Future<void> fetchTimeData() async {
-    final response = await http.get(Uri.parse(
-        'https://worldtimeapi.org/api/timezone/${box.read("timezone")}'));
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      final utcOffset = data['utc_offset'];
-
-      setState(() {
-        sign = utcOffset[0];
-        hour = utcOffset.substring(1, 3);
-        minute = utcOffset.substring(4, 6);
-      });
-    } else {
-      throw Exception('Failed to load data');
-    }
-  }
-
   Text convertToLocalTime(
     String utcTimeString,
   ) {
@@ -161,12 +148,13 @@ class _HomepageState extends State<Homepage> {
 
       // Calculate the offset duration
       Duration offset = Duration(
-          hours: int.parse(hour.toString()),
-          minutes: int.parse(minute.toString()));
+        hours: int.parse(box.read("hour")),
+        minutes: int.parse(box.read("minute")),
+      );
 
       // Apply the offset (subtracting for negative)
 
-      if (sign == "+") {
+      if (box.read("sign") == "+") {
         DateTime localTime = utcTime.add(offset);
         String formattedTime =
             DateFormat('yyyy-MM-dd    hh:mm:ss a').format(localTime);
@@ -454,9 +442,27 @@ class _HomepageState extends State<Homepage> {
                               width: screenWidth,
                               child: Column(
                                 children: [
+                                  Visibility(
+                                    visible: _showEmptyState &&
+                                        historyController.finalList.length == 0,
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            "assets/icons/empty.png",
+                                            height: 80,
+                                          ),
+                                          Text("No Orders found"),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                   Expanded(
                                     child: Obx(() {
-                                      if (historyController.isLoading.value) {
+                                      if (historyController.isLoading.value ==
+                                          false) {
                                         return RefreshIndicator(
                                           onRefresh: refresh,
                                           child: ListView.separated(

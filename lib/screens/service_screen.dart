@@ -257,7 +257,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                                   2, // Number of columns in the grid
                               crossAxisSpacing: 5.0, // Spacing between columns
                               mainAxisSpacing: 5.0, // Spacing between rows
-                              childAspectRatio: 3.0,
+                              childAspectRatio: 2.0,
                             ),
                             itemCount: categorisListController.allcategorieslist
                                 .value.data!.servicecategories.length,
@@ -275,10 +275,10 @@ class _ServiceScreenState extends State<ServiceScreen> {
                                   box.write("service_category_id", data.id);
                                   // box.write("service_id", "");
                                   box.write("validity_type", "");
-                                  box.write("search_tag", "");
                                   box.write("company_id", "");
-                                  print(data.id);
-                                  print(data.type);
+                                  box.write("search_tag", "");
+                                  // print(data.id);
+                                  // print(data.type);
                                   bundleController.initialpage = 1;
                                   // Navigator.push(
                                   //   context,
@@ -310,6 +310,68 @@ class _ServiceScreenState extends State<ServiceScreen> {
                             },
                           ),
                         ),
+
+                        // Expanded(
+                        //   child: GridView.builder(
+                        //     gridDelegate:
+                        //         SliverGridDelegateWithFixedCrossAxisCount(
+                        //       crossAxisCount:
+                        //           2, // Number of columns in the grid
+                        //       crossAxisSpacing: 5.0, // Spacing between columns
+                        //       mainAxisSpacing: 5.0, // Spacing between rows
+                        //       childAspectRatio: 3.0,
+                        //     ),
+                        //     itemCount: categorisListController.allcategorieslist
+                        //         .value.data!.servicecategories.length,
+                        //     itemBuilder: (context, index) {
+                        //       final data = categorisListController
+                        //           .allcategorieslist
+                        //           .value
+                        //           .data!
+                        //           .servicecategories[index];
+                        //       return ServiceBox(
+                        //         boxName: data.categoryName,
+                        //         mycolor: mycolorlist[index],
+                        //         onPressed: () {
+                        //           bundleController.finalList.clear();
+                        //           box.write("service_category_id", data.id);
+                        //           // box.write("service_id", "");
+                        //           box.write("validity_type", "");
+                        //           box.write("search_tag", "");
+                        //           box.write("company_id", "");
+                        //           print(data.id);
+                        //           print(data.type);
+                        //           bundleController.initialpage = 1;
+                        //           // Navigator.push(
+                        //           //   context,
+                        //           //   MaterialPageRoute(
+                        //           //     builder: (context) => RechargeScreen(),
+                        //           //   ),
+                        //           // );
+
+                        //           if (data.type == "social") {
+                        //             // Get.to(() => SocialRechargeScreen());
+
+                        //             Navigator.push(
+                        //               context,
+                        //               MaterialPageRoute(
+                        //                 builder: (context) =>
+                        //                     SocialRechargeScreen(),
+                        //               ),
+                        //             );
+                        //           } else {
+                        //             Navigator.push(
+                        //               context,
+                        //               MaterialPageRoute(
+                        //                 builder: (context) => RechargeScreen(),
+                        //               ),
+                        //             );
+                        //           }
+                        //         },
+                        //       );
+                        //     },
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -340,39 +402,85 @@ class ServiceBox extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2), // Color of the shadow
-              spreadRadius: 4, // How much the shadow spreads
-              blurRadius: 5, // The blur radius of the shadow
-              offset: Offset(0, 2), // The offset of the shadow
-            ),
-          ],
+          color: mycolor,
+          borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Row(
-            children: [
-              FaIcon(
-                myicon,
-                color: Colors.black,
+          child: Center(
+            child: Text(
+              boxName.toString(),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.visible,
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
               ),
-              SizedBox(
-                width: 12,
-              ),
-              Text(
-                boxName.toString(),
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
     );
   }
 }
+
+
+//............................................//...................
+
+
+// class ServiceBox extends StatelessWidget {
+//   String? boxName;
+//   final VoidCallback? onPressed;
+//   final IconData? myicon;
+//   final Color? mycolor;
+//   ServiceBox({
+//     super.key,
+//     this.boxName,
+//     this.onPressed,
+//     this.myicon,
+//     this.mycolor,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: onPressed,
+//       child: Container(
+//         decoration: BoxDecoration(
+//           color: Colors.white,
+//           boxShadow: [
+//             BoxShadow(
+//               color: Colors.grey.withOpacity(0.2), // Color of the shadow
+//               spreadRadius: 4, // How much the shadow spreads
+//               blurRadius: 5, // The blur radius of the shadow
+//               offset: Offset(0, 2), // The offset of the shadow
+//             ),
+//           ],
+//         ),
+//         child: Padding(
+//           padding: const EdgeInsets.symmetric(horizontal: 10),
+//           child: Row(
+//             children: [
+//               FaIcon(
+//                 myicon,
+//                 color: Colors.black,
+//               ),
+//               SizedBox(
+//                 width: 12,
+//               ),
+//               Text(
+//                 boxName.toString(),
+//                 style: TextStyle(
+//                   fontSize: 13,
+//                   fontWeight: FontWeight.w600,
+//                   color: Colors.black,
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

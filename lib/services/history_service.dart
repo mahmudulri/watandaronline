@@ -14,10 +14,10 @@ import '../utils/api_endpoints.dart';
 class HistoryServiceApi {
   // OrderlistController orderlistController = Get.put(OrderlistController());
   final box = GetStorage();
-  Future<HistoryModel> fetchHistory() async {
+  Future<HistoryModel> fetchorderList(int pageNo) async {
     final url = Uri.parse(
-        "${ApiEndPoints.baseUrl}orders?page=${box.read("pageNo").toString()}${box.read("orderstatus").toString()}&selected_Date=&&");
-    // print(url);
+        "${ApiEndPoints.baseUrl}orders?page=${pageNo}&${box.read("orderstatus").toString()}&selected_Date=&&");
+    print("order Url : " + url.toString());
 
     var response = await http.get(
       url,
@@ -27,7 +27,7 @@ class HistoryServiceApi {
     );
 
     if (response.statusCode == 200) {
-      // print(response.body.toString());
+      print(response.body.toString());
       final orderlistModel = HistoryModel.fromJson(json.decode(response.body));
 
       return orderlistModel;

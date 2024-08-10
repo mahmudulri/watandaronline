@@ -11,7 +11,6 @@ import 'package:watandaronline/utils/api_endpoints.dart';
 
 class SignInController extends GetxController {
   final box = GetStorage();
-  // TextEditingController nameController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final CountryListController countryListController =
@@ -23,48 +22,51 @@ class SignInController extends GetxController {
   Future<void> signIn() async {
     try {
       isLoading.value = true;
-      loginsuccess.value = true;
-
-      // var headers = {'Content-Type': 'application/json'};
+      loginsuccess.value = true; // Reset to false before starting login
+      print(loginsuccess.value);
       var headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       };
+
       var url = Uri.parse(
           ApiEndPoints.baseUrl + ApiEndPoints.otherendpoints.loginIink);
-      // Map body = {
-      //   'password': "test@2024",
-      //   'username': "0700930683",
-      // };
+      print("API URL: $url");
 
       Map body = {
         'username': usernameController.text,
         'password': passwordController.text,
       };
+
+      // Map body = {
+      //   'username': "0700930683",
+      //   'password': "test@2024",
+      // };
+
+      print("Request Body: $body");
+
       http.Response response = await http.post(
         url,
         body: jsonEncode(body),
         headers: headers,
       );
-      print(jsonEncode(body));
-      print(response.body.toString());
-      print(response.statusCode.toString());
+
       final results = jsonDecode(response.body);
+      // print("Response Status Code: ${response.statusCode}");
+      // print("Response Body: ${response.body}");
+
       if (response.statusCode == 200) {
-        box.write("userToken", jsonDecode(response.body)["data"]["api_token"]);
-        box.write("currency_code",
-            jsonDecode(response.body)["data"]["user_info"]["currency"]["code"]);
+        box.write("userToken", results["data"]["api_token"]);
         box.write(
-            "currencypreferenceID",
-            jsonDecode(response.body)["data"]["user_info"]
-                ["currency_preference_id"]);
-        box.write("currencyName",
-            jsonDecode(response.body)["data"]["user_info"]["currency"]["name"]);
-        // print(box.read("userToken"));
-        countryListController.fetchCountryData();
+            "currency_code", results["data"]["user_info"]["currency"]["code"]);
+        box.write("currencypreferenceID",
+            results["data"]["user_info"]["currency_preference_id"]);
+        box.write(
+            "currencyName", results["data"]["user_info"]["currency"]["name"]);
 
         if (results["success"] == true) {
-          // box.write("userToken", results["access_token"]);
+          loginsuccess.value = false;
+          print(loginsuccess.value);
 
           Fluttertoast.showToast(
               msg: results["message"],
@@ -75,34 +77,27 @@ class SignInController extends GetxController {
               textColor: Colors.white,
               fontSize: 16.0);
 
-          isLoading.value = false;
-          loginsuccess.value = false;
-
-          // Get.to(() => BaseScreen());
-          // emailController.clear();
-          // passwordController.clear();
+          // Fetch country data only if login is successful
         } else {
           Get.snackbar(
-            "Opps !",
+            "Oops!",
             results["message"],
             backgroundColor: Colors.red,
             colorText: Colors.white,
           );
-          isLoading.value = false;
-          loginsuccess.value = true;
         }
       } else {
         Get.snackbar(
-          "Opps !",
+          "Oops!",
           results["message"],
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
-        isLoading.value = false;
-        loginsuccess.value = true;
       }
     } catch (e) {
-      print(e.toString());
+      print("Error during sign in: $e");
+    } finally {
+      isLoading.value = false;
     }
   }
 }
