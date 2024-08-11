@@ -49,10 +49,10 @@ class Data {
   final List<AdvertisementSlider>? advertisementSliders;
   final String? balance;
   final String? loanBalance;
-  final int? totalSoldAmount;
-  final int? totalRevenue;
-  final int? todaySale;
-  final int? todayProfit;
+  final String? totalSoldAmount;
+  final String? totalRevenue;
+  final String? todaySale;
+  final String? todayProfit;
 
   Data({
     this.userInfo,
