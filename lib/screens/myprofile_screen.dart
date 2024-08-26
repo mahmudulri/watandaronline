@@ -9,6 +9,7 @@ import 'package:watandaronline/widgets/default_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../widgets/myprofile_box_widget.dart';
+import 'change_pin.dart';
 import 'edit_profile_screen.dart';
 
 class MyprofileScreen extends StatelessWidget {
@@ -48,7 +49,7 @@ class MyprofileScreen extends StatelessWidget {
         title: Text(
           "Personal Info",
           style: TextStyle(
-            fontSize: 25,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -113,6 +114,40 @@ class MyprofileScreen extends StatelessWidget {
                     ),
               SizedBox(
                 height: 5,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChangePin(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.defaultColor,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                          child: Text(
+                            "Change Pin",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               MyProfileboxwidget(
                 boxname: "Name",

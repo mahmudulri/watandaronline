@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,7 @@ import 'package:lottie/lottie.dart';
 import 'package:watandaronline/bottom_nav_screen.dart';
 import 'package:watandaronline/controllers/iso_code_controller.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
+import 'package:watandaronline/controllers/slider_controller.dart';
 import 'package:watandaronline/screens/onboarding_screen.dart';
 import 'package:watandaronline/utils/colors.dart';
 
@@ -28,6 +30,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   final LanguageController languageController = Get.put(LanguageController());
   final IscoCodeController iscoCodeController = Get.put(IscoCodeController());
+
+  final SliderController sliderController = Get.put(SliderController());
   checkData() async {
     // if (box.read("isoCode") == null) {
     //   languageController.fetchlanData("en");
@@ -38,20 +42,28 @@ class _SplashScreenState extends State<SplashScreen> {
     // }
 
     if (box.read('userToken') == null) {
-      box.write("isoCode", "en");
-      box.write("direction", "ltr");
-      languageController.fetchlanData("en");
+      box.write("isoCode", "fa");
+      box.write("direction", "rtl");
+      languageController.fetchlanData("fa");
       languageController.fetchlanData(box.read("isoCode"));
+      setState(() {
+        EasyLocalization.of(context)!.setLocale(Locale('ar', 'AE'));
+      });
 
-      Navigator.pushReplacement(
+      Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => OnboardingScreen()),
+        MaterialPageRoute(
+          builder: (context) => OnboardingScreen(),
+        ),
       );
     } else {
       languageController.fetchlanData(box.read("isoCode"));
-      Navigator.pushReplacement(
+      sliderController.fetchSliderData();
+      Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => BottomNavigationbar()),
+        MaterialPageRoute(
+          builder: (context) => BottomNavigationbar(),
+        ),
       );
     }
   }

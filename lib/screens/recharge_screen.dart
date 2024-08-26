@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -31,12 +32,6 @@ class _RechargeScreenState extends State<RechargeScreen> {
   int selectedIndex = -1;
   int duration_selectedIndex = -1;
 
-  List mycolor = [
-    Color(0xff74b9ff),
-    Color(0xff2bcbba),
-    Color(0xff009432),
-    Color(0xff2d98da),
-  ];
   List<Map<String, String>> duration = [];
   void initializeDuration() {
     duration = [
@@ -95,9 +90,12 @@ class _RechargeScreenState extends State<RechargeScreen> {
 
   String search = "";
 
+  String inputNumber = "";
+
   @override
   void initState() {
     super.initState();
+    confirmPinController.numberController.addListener(_onTextChanged);
     initializeDuration();
     scrollController.addListener(refresh);
     // Use addPostFrameCallback to ensure this runs after the initial build
@@ -105,6 +103,69 @@ class _RechargeScreenState extends State<RechargeScreen> {
       serviceController.fetchservices();
       bundleController.fetchallbundles();
     });
+  }
+
+  void _onTextChanged() {
+    if (!mounted) return;
+
+    setState(() {
+      inputNumber = confirmPinController.numberController.text;
+
+      // Print debug information
+      print("Input Number: $inputNumber");
+
+      if (inputNumber.isEmpty) {
+        box.write("company_id", "");
+        bundleController.initialpage = 1;
+        bundleController.finalList.clear();
+        bundleController.fetchallbundles();
+        // Handle case where text field is cleared
+        print("Text field is empty. Showing all services.");
+
+        // Clear the company_id from the box
+
+        // Reset bundleController and fetch all bundles
+      } else if (inputNumber.length == 3 || inputNumber.length == 4) {
+        final services = serviceController.allserviceslist.value.data!.services;
+
+        // Print number of services for debugging
+        print("Number of services: ${services.length}");
+
+        bool matchFound = false;
+
+        for (var service in services) {
+          for (var code in service.company!.companycodes!) {
+            // Print reservedDigit for debugging
+            print("Checking reservedDigit: ${code.reservedDigit}");
+
+            if (code.reservedDigit == inputNumber) {
+              box.write("company_id", service.companyId);
+              bundleController.initialpage = 1;
+              bundleController.finalList.clear();
+              setState(() {
+                bundleController.fetchallbundles();
+              });
+
+              print("Matched company_id: ${service.companyId}");
+              matchFound = true;
+              break; // Exit the inner loop
+            }
+          }
+          if (matchFound) break; // Exit the outer loop
+        }
+
+        if (!matchFound) {
+          print("No match found for input number: $inputNumber");
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    confirmPinController.numberController.removeListener(_onTextChanged);
+
+    super.dispose();
   }
 
   Future<void> refresh() async {
@@ -220,10 +281,27 @@ class _RechargeScreenState extends State<RechargeScreen> {
                           height: 20,
                         ),
                         SizedBox(
-                            height: 50,
-                            width: screenWidth,
-                            child: Obx(
-                              () => serviceController.isLoading.value == false
+                          height: 50,
+                          width: screenWidth,
+                          child: Obx(
+                            () {
+                              final services = serviceController
+                                  .allserviceslist.value.data!.services;
+
+                              // Show all services if input is empty, otherwise filter
+                              final filteredServices = inputNumber.isEmpty
+                                  ? services
+                                  : services.where((service) {
+                                      return service.company!.companycodes!
+                                          .any((code) {
+                                        final reservedDigit =
+                                            code.reservedDigit ?? '';
+                                        return inputNumber
+                                            .startsWith(reservedDigit);
+                                      });
+                                    }).toList();
+
+                              return serviceController.isLoading.value == false
                                   ? Center(
                                       child: ListView.separated(
                                         shrinkWrap: true,
@@ -233,18 +311,9 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                           );
                                         },
                                         scrollDirection: Axis.horizontal,
-                                        itemCount: serviceController
-                                            .allserviceslist
-                                            .value
-                                            .data!
-                                            .services
-                                            .length,
+                                        itemCount: filteredServices.length,
                                         itemBuilder: (context, index) {
-                                          final data = serviceController
-                                              .allserviceslist
-                                              .value
-                                              .data!
-                                              .services[index];
+                                          final data = filteredServices[index];
 
                                           return GestureDetector(
                                             onTap: () {
@@ -275,9 +344,25 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                   horizontal: 5,
                                                   vertical: 5,
                                                 ),
-                                                child: Image.network(
-                                                  data.company!.companyLogo
+                                                child: CachedNetworkImage(
+                                                  imageUrl: data
+                                                      .company!.companyLogo
                                                       .toString(),
+                                                  placeholder: (context, url) {
+                                                    print(
+                                                        'Loading image: $url');
+                                                    return Center(
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                      color: Colors.white,
+                                                    ));
+                                                  },
+                                                  errorWidget:
+                                                      (context, url, error) {
+                                                    print(
+                                                        'Error loading image: $url, error: $error');
+                                                    return Icon(Icons.error);
+                                                  },
                                                 ),
                                               ),
                                             ),
@@ -290,8 +375,10 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                         color: Colors.grey,
                                         strokeWidth: 1.0,
                                       ),
-                                    ),
-                            )),
+                                    );
+                            },
+                          ),
+                        ),
                         SizedBox(
                           height: 8,
                         ),
@@ -366,7 +453,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                             height: 50,
                             width: screenWidth,
                             child: Padding(
-                              padding: EdgeInsets.only(left: 15),
+                              padding: EdgeInsets.only(left: 15, right: 15),
                               child: TextField(
                                 onChanged: (value) {
                                   bundleController.finalList.clear();
@@ -471,6 +558,9 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                       ),
                                                     ),
                                                   ),
+                                                ),
+                                                SizedBox(
+                                                  width: 5,
                                                 ),
                                                 Expanded(
                                                   flex: 2,
@@ -776,6 +866,9 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                           ),
                                                         ),
                                                       ),
+                                                      SizedBox(
+                                                        width: 5,
+                                                      ),
                                                       Expanded(
                                                         flex: 2,
                                                         child: Padding(
@@ -1068,6 +1161,9 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                             ),
                                                           ),
                                                         ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 5,
                                                       ),
                                                       Expanded(
                                                         flex: 2,

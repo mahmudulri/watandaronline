@@ -83,22 +83,47 @@ class Company {
   final int? id;
   final String? companyName;
   final String? companyLogo;
+  final List<Companycode>? companycodes;
 
   Company({
     this.id,
     this.companyName,
     this.companyLogo,
+    this.companycodes,
   });
 
   factory Company.fromJson(Map<String, dynamic> json) => Company(
         id: json["id"] == null ? null : json["id"],
         companyName: json["company_name"] == null ? null : json["company_name"],
         companyLogo: json["company_logo"] == null ? null : json["company_logo"],
+        companycodes: json["companycodes"] == null
+            ? null
+            : List<Companycode>.from(
+                json["companycodes"].map((x) => Companycode.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "company_name": companyName,
         "company_logo": companyLogo,
+        "companycodes":
+            List<dynamic>.from(companycodes!.map((x) => x.toJson())),
+      };
+}
+
+class Companycode {
+  final String? reservedDigit;
+
+  Companycode({
+    this.reservedDigit,
+  });
+
+  factory Companycode.fromJson(Map<String, dynamic> json) => Companycode(
+        reservedDigit:
+            json["reserved_digit"] == null ? null : json["reserved_digit"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "reserved_digit": reservedDigit,
       };
 }

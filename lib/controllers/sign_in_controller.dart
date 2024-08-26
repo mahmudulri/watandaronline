@@ -7,9 +7,14 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:watandaronline/controllers/country_list_controller.dart';
+import 'package:watandaronline/controllers/dashboard_controller.dart';
+import 'package:watandaronline/controllers/slider_controller.dart';
 import 'package:watandaronline/utils/api_endpoints.dart';
 
 class SignInController extends GetxController {
+  // final DashboardController dashboardController =
+  //     Get.put(DashboardController());
+  final SliderController sliderController = Get.put(SliderController());
   final box = GetStorage();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -65,6 +70,8 @@ class SignInController extends GetxController {
             "currencyName", results["data"]["user_info"]["currency"]["name"]);
 
         if (results["success"] == true) {
+          // dashboardController.fetchDashboardData();
+          sliderController.fetchSliderData();
           loginsuccess.value = false;
           print(loginsuccess.value);
 

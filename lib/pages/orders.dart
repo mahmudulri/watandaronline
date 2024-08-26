@@ -25,14 +25,14 @@ import 'dart:ui' as ui;
 import 'package:share_plus/share_plus.dart';
 import 'package:http/http.dart' as http;
 
-class NotificationPage extends StatefulWidget {
-  NotificationPage({super.key});
+class OrderPage extends StatefulWidget {
+  OrderPage({super.key});
 
   @override
-  State<NotificationPage> createState() => _NotificationPageState();
+  State<OrderPage> createState() => _OrderPageState();
 }
 
-class _NotificationPageState extends State<NotificationPage> {
+class _OrderPageState extends State<OrderPage> {
   final OrderlistController orderlistController =
       Get.put(OrderlistController());
 
@@ -47,7 +47,7 @@ class _NotificationPageState extends State<NotificationPage> {
     orderlistController.fetchOrderlistdata();
 
     super.initState();
-    Timer(Duration(seconds: 2), () {
+    Timer(Duration(seconds: 7), () {
       setState(() {
         _showEmptyState = true;
       });
@@ -543,7 +543,6 @@ class _NotificationPageState extends State<NotificationPage> {
                     ),
                   ),
                 ),
-
                 SizedBox(
                   height: 5,
                 ),
@@ -605,7 +604,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                     RepaintBoundary(
                                                       key: _hglobalKey,
                                                       child: Container(
-                                                        height: 420,
+                                                        height: 500,
                                                         width: screenWidth,
                                                         decoration:
                                                             BoxDecoration(
@@ -662,13 +661,9 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                           onTap:
                                                                               () async {
                                                                             captureImageFromWidgetAsFile(_hglobalKey);
-
-                                                                            print("done");
                                                                           },
                                                                           child:
                                                                               Container(
-                                                                            width:
-                                                                                90,
                                                                             decoration:
                                                                                 BoxDecoration(
                                                                               color: AppColors.defaultColor,
@@ -680,7 +675,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               children: [
                                                                                 Padding(
                                                                                   padding: EdgeInsets.symmetric(
-                                                                                    horizontal: 5,
+                                                                                    horizontal: 10,
                                                                                     vertical: 3,
                                                                                   ),
                                                                                   child: Center(
@@ -700,30 +695,40 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                     ),
                                                                   ),
                                                                   Expanded(
-                                                                    flex: 1,
+                                                                    flex: 2,
                                                                     child: Row(
                                                                       mainAxisAlignment:
                                                                           MainAxisAlignment
                                                                               .center,
                                                                       children: [
-                                                                        Container(
-                                                                          height:
-                                                                              40,
-                                                                          width:
-                                                                              50,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            shape:
-                                                                                BoxShape.circle,
-                                                                            image:
-                                                                                DecorationImage(
-                                                                              fit: BoxFit.fill,
-                                                                              image: AssetImage(
-                                                                                "assets/icons/logo.png",
+                                                                        Column(
+                                                                          children: [
+                                                                            Container(
+                                                                              height: 55,
+                                                                              width: 55,
+                                                                              decoration: BoxDecoration(
+                                                                                // border: Border.all(
+                                                                                //   width: 2,
+                                                                                //   color: Colors.black.withOpacity(0.2),
+                                                                                // ),
+                                                                                shape: BoxShape.circle,
+                                                                                image: DecorationImage(
+                                                                                  fit: BoxFit.fill,
+                                                                                  image: AssetImage(
+                                                                                    "assets/icons/logo.png",
+                                                                                  ),
+                                                                                ),
+                                                                                // color: Colors.red,
                                                                               ),
                                                                             ),
-                                                                            // color: Colors.red,
-                                                                          ),
+                                                                            Text(
+                                                                              "WatandarOnline",
+                                                                              style: GoogleFonts.aBeeZee(
+                                                                                fontWeight: FontWeight.w600,
+                                                                                color: Colors.black,
+                                                                              ),
+                                                                            ),
+                                                                          ],
                                                                         ),
                                                                       ],
                                                                     ),
@@ -751,7 +756,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                 ],
                                                               ),
                                                               SizedBox(
-                                                                height: 15,
+                                                                height: 10,
                                                               ),
                                                               Row(
                                                                 mainAxisAlignment:
@@ -1043,8 +1048,8 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                           ),
                                                                         ),
                                                                         Text(
-                                                                          data.id!
-                                                                              .toString(),
+                                                                          "#WO-" +
+                                                                              data.id!.toString(),
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
@@ -1052,6 +1057,63 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                             color:
                                                                                 AppColors.borderColor,
                                                                           ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    SizedBox(
+                                                                      height: 5,
+                                                                    ),
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceBetween,
+                                                                      children: [
+                                                                        Text(
+                                                                          languageController
+                                                                              .alllanguageData
+                                                                              .value
+                                                                              .languageData!["SELLING_PRICE"]
+                                                                              .toString(),
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                14,
+                                                                            color:
+                                                                                Colors.grey.shade700,
+                                                                            fontWeight:
+                                                                                FontWeight.w600,
+                                                                          ),
+                                                                        ),
+                                                                        Row(
+                                                                          children: [
+                                                                            Text(
+                                                                              box.read("currency_code"),
+                                                                              style: TextStyle(
+                                                                                fontSize: 14,
+                                                                                color: Colors.grey.shade700,
+                                                                                fontWeight: FontWeight.w600,
+                                                                              ),
+                                                                            ),
+                                                                            SizedBox(
+                                                                              width: 8,
+                                                                            ),
+                                                                            Text(
+                                                                              NumberFormat.currency(
+                                                                                locale: 'en_US',
+                                                                                symbol: '',
+                                                                                decimalDigits: 2,
+                                                                              ).format(
+                                                                                double.parse(
+                                                                                  data.bundle!.sellingPrice.toString(),
+                                                                                ),
+                                                                              ),
+                                                                              style: TextStyle(
+                                                                                fontSize: 14,
+                                                                                color: Colors.grey.shade700,
+                                                                                fontWeight: FontWeight.w600,
+                                                                              ),
+                                                                            ),
+                                                                          ],
                                                                         ),
                                                                       ],
                                                                     ),
@@ -1121,7 +1183,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                               Row(
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
-                                                                        .start,
+                                                                        .spaceBetween,
                                                                 children: [
                                                                   Container(
                                                                     height: 55,
@@ -1154,6 +1216,29 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               Colors.black,
                                                                         ),
                                                                       ],
+                                                                    ),
+                                                                  ),
+                                                                  Container(
+                                                                    height: 40,
+                                                                    width: 40,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      image:
+                                                                          DecorationImage(
+                                                                        fit: BoxFit
+                                                                            .fill,
+                                                                        image:
+                                                                            NetworkImage(
+                                                                          data
+                                                                              .bundle!
+                                                                              .service!
+                                                                              .company!
+                                                                              .companyLogo
+                                                                              .toString(),
+                                                                        ),
+                                                                      ),
+                                                                      shape: BoxShape
+                                                                          .circle,
                                                                     ),
                                                                   ),
                                                                 ],
@@ -1604,7 +1689,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                     RepaintBoundary(
                                                       key: _hglobalKey,
                                                       child: Container(
-                                                        height: 420,
+                                                        height: 500,
                                                         width: screenWidth,
                                                         decoration:
                                                             BoxDecoration(
@@ -1661,13 +1746,9 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                           onTap:
                                                                               () async {
                                                                             captureImageFromWidgetAsFile(_hglobalKey);
-
-                                                                            print("done");
                                                                           },
                                                                           child:
                                                                               Container(
-                                                                            width:
-                                                                                90,
                                                                             decoration:
                                                                                 BoxDecoration(
                                                                               color: AppColors.defaultColor,
@@ -1679,7 +1760,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               children: [
                                                                                 Padding(
                                                                                   padding: EdgeInsets.symmetric(
-                                                                                    horizontal: 5,
+                                                                                    horizontal: 10,
                                                                                     vertical: 3,
                                                                                   ),
                                                                                   child: Center(
@@ -1699,30 +1780,40 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                     ),
                                                                   ),
                                                                   Expanded(
-                                                                    flex: 1,
+                                                                    flex: 2,
                                                                     child: Row(
                                                                       mainAxisAlignment:
                                                                           MainAxisAlignment
                                                                               .center,
                                                                       children: [
-                                                                        Container(
-                                                                          height:
-                                                                              40,
-                                                                          width:
-                                                                              50,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            shape:
-                                                                                BoxShape.circle,
-                                                                            image:
-                                                                                DecorationImage(
-                                                                              fit: BoxFit.fill,
-                                                                              image: AssetImage(
-                                                                                "assets/icons/logo.png",
+                                                                        Column(
+                                                                          children: [
+                                                                            Container(
+                                                                              height: 55,
+                                                                              width: 55,
+                                                                              decoration: BoxDecoration(
+                                                                                // border: Border.all(
+                                                                                //   width: 2,
+                                                                                //   color: Colors.black.withOpacity(0.2),
+                                                                                // ),
+                                                                                shape: BoxShape.circle,
+                                                                                image: DecorationImage(
+                                                                                  fit: BoxFit.fill,
+                                                                                  image: AssetImage(
+                                                                                    "assets/icons/logo.png",
+                                                                                  ),
+                                                                                ),
+                                                                                // color: Colors.red,
                                                                               ),
                                                                             ),
-                                                                            // color: Colors.red,
-                                                                          ),
+                                                                            Text(
+                                                                              "WatandarOnline",
+                                                                              style: GoogleFonts.aBeeZee(
+                                                                                fontWeight: FontWeight.w600,
+                                                                                color: Colors.black,
+                                                                              ),
+                                                                            ),
+                                                                          ],
                                                                         ),
                                                                       ],
                                                                     ),
@@ -1750,7 +1841,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                 ],
                                                               ),
                                                               SizedBox(
-                                                                height: 15,
+                                                                height: 10,
                                                               ),
                                                               Row(
                                                                 mainAxisAlignment:
@@ -2042,8 +2133,8 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                           ),
                                                                         ),
                                                                         Text(
-                                                                          data.id!
-                                                                              .toString(),
+                                                                          "#WO-" +
+                                                                              data.id!.toString(),
                                                                           style:
                                                                               TextStyle(
                                                                             fontSize:
@@ -2051,6 +2142,63 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                             color:
                                                                                 AppColors.borderColor,
                                                                           ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    SizedBox(
+                                                                      height: 5,
+                                                                    ),
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceBetween,
+                                                                      children: [
+                                                                        Text(
+                                                                          languageController
+                                                                              .alllanguageData
+                                                                              .value
+                                                                              .languageData!["SELLING_PRICE"]
+                                                                              .toString(),
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                14,
+                                                                            color:
+                                                                                Colors.grey.shade700,
+                                                                            fontWeight:
+                                                                                FontWeight.w600,
+                                                                          ),
+                                                                        ),
+                                                                        Row(
+                                                                          children: [
+                                                                            Text(
+                                                                              box.read("currency_code"),
+                                                                              style: TextStyle(
+                                                                                fontSize: 14,
+                                                                                color: Colors.grey.shade700,
+                                                                                fontWeight: FontWeight.w600,
+                                                                              ),
+                                                                            ),
+                                                                            SizedBox(
+                                                                              width: 8,
+                                                                            ),
+                                                                            Text(
+                                                                              NumberFormat.currency(
+                                                                                locale: 'en_US',
+                                                                                symbol: '',
+                                                                                decimalDigits: 2,
+                                                                              ).format(
+                                                                                double.parse(
+                                                                                  data.bundle!.sellingPrice.toString(),
+                                                                                ),
+                                                                              ),
+                                                                              style: TextStyle(
+                                                                                fontSize: 14,
+                                                                                color: Colors.grey.shade700,
+                                                                                fontWeight: FontWeight.w600,
+                                                                              ),
+                                                                            ),
+                                                                          ],
                                                                         ),
                                                                       ],
                                                                     ),
@@ -2120,7 +2268,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                                               Row(
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
-                                                                        .start,
+                                                                        .spaceBetween,
                                                                 children: [
                                                                   Container(
                                                                     height: 55,
@@ -2153,6 +2301,29 @@ class _NotificationPageState extends State<NotificationPage> {
                                                                               Colors.black,
                                                                         ),
                                                                       ],
+                                                                    ),
+                                                                  ),
+                                                                  Container(
+                                                                    height: 40,
+                                                                    width: 40,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      image:
+                                                                          DecorationImage(
+                                                                        fit: BoxFit
+                                                                            .fill,
+                                                                        image:
+                                                                            NetworkImage(
+                                                                          data
+                                                                              .bundle!
+                                                                              .service!
+                                                                              .company!
+                                                                              .companyLogo
+                                                                              .toString(),
+                                                                        ),
+                                                                      ),
+                                                                      shape: BoxShape
+                                                                          .circle,
                                                                     ),
                                                                   ),
                                                                 ],
@@ -2570,7 +2741,6 @@ class _NotificationPageState extends State<NotificationPage> {
                           ),
                   ),
                 ),
-
                 Obx(
                   () => orderlistController.isLoading.value == true
                       ? Row(
@@ -2586,16 +2756,6 @@ class _NotificationPageState extends State<NotificationPage> {
                 SizedBox(
                   height: 20,
                 ),
-                // MyContainerList(
-                //   itemCount: int.parse(
-                //     orderlistController
-                //         .allorderlist.value.payload!.pagination.totalPages
-                //         .toString(),
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 25,
-                // ),
               ],
             ),
           ),

@@ -299,7 +299,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                             height: 50,
                             width: screenWidth,
                             child: Padding(
-                              padding: EdgeInsets.only(left: 15),
+                              padding: EdgeInsets.only(left: 15, right: 15),
                               child: TextField(
                                 onChanged: (value) {
                                   bundleController.finalList.clear();

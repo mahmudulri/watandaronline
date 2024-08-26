@@ -233,7 +233,7 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                   ),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.only(left: 15),
+                  padding: EdgeInsets.only(left: 15, right: 10),
                   child: Row(
                     children: [
                       Expanded(
@@ -352,7 +352,7 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                   ),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.only(left: 15),
+                  padding: EdgeInsets.only(left: 15, right: 10),
                   child: Row(
                     children: [
                       Expanded(
@@ -470,7 +470,7 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                   ),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.only(left: 15),
+                  padding: EdgeInsets.only(left: 15, right: 10),
                   child: Row(
                     children: [
                       Expanded(
@@ -581,7 +581,7 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                   ),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.only(left: 15),
+                  padding: EdgeInsets.only(left: 15, right: 10),
                   child: Row(
                     children: [
                       Expanded(

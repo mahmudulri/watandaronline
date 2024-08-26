@@ -277,19 +277,10 @@ class _ServiceScreenState extends State<ServiceScreen> {
                                   box.write("validity_type", "");
                                   box.write("company_id", "");
                                   box.write("search_tag", "");
-                                  // print(data.id);
-                                  // print(data.type);
+
                                   bundleController.initialpage = 1;
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) => RechargeScreen(),
-                                  //   ),
-                                  // );
 
                                   if (data.type == "social") {
-                                    // Get.to(() => SocialRechargeScreen());
-
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(

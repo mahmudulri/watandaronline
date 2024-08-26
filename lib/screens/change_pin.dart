@@ -33,7 +33,7 @@ class ChangePin extends StatelessWidget {
         title: Text(
           "Change Pin",
           style: TextStyle(
-            fontSize: 25,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),

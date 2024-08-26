@@ -21,4 +21,5 @@ class OtherendPoints {
   final String province = "provinces";
   final String district = "districts";
   final String languages = "languages";
+  final String sliders = "advertisements";
 }

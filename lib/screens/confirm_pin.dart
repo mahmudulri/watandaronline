@@ -61,34 +61,37 @@ class _ConfirmPinScreenState extends State<ConfirmPinScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Lottie.asset('assets/loties/pin.json'),
-                Obx(
-                  () => Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        confirmPinController.isLoading.value == false
-                            ? languageController.alllanguageData.value
-                                .languageData!["CONFIRM_YOUR_PIN"]
-                                .toString()
-                            : languageController.alllanguageData.value
-                                .languageData!["PLEASE_WAIT"]
-                                .toString(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 15,
+                Container(
+                  height: 50,
+                  child: Obx(
+                    () => Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          confirmPinController.isLoading.value == false
+                              ? languageController.alllanguageData.value
+                                  .languageData!["CONFIRM_YOUR_PIN"]
+                                  .toString()
+                              : languageController.alllanguageData.value
+                                  .languageData!["PLEASE_WAIT"]
+                                  .toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      confirmPinController.isLoading.value == true
-                          ? Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.black,
-                              ),
-                            )
-                          : SizedBox(),
-                    ],
+                        SizedBox(
+                          width: 10,
+                        ),
+                        confirmPinController.isLoading.value == true
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.black,
+                                ),
+                              )
+                            : SizedBox(),
+                      ],
+                    ),
                   ),
                 ),
                 // OTPInput(),
@@ -174,63 +177,75 @@ class _ConfirmPinScreenState extends State<ConfirmPinScreen> {
                       width: 10,
                     ),
                     GestureDetector(
-                      onTap: () async {
-                        print("pin is...." +
-                            confirmPinController.pinController.text.toString());
-                        if (confirmPinController.pinController.text.isEmpty ||
-                            confirmPinController.pinController.text.length !=
-                                4) {
-                          Fluttertoast.showToast(
-                              msg: "Enter your pin",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.black,
-                              textColor: Colors.white,
-                              fontSize: 16.0);
-                        } else {
-                          await confirmPinController.verify();
-                          if (confirmPinController.loadsuccess.value == false) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ResultScreen(),
-                              ),
-                            );
+                        onTap: () async {
+                          if (confirmPinController.isLoading.value == false) {
+                            print("pin is...." +
+                                confirmPinController.pinController.text
+                                    .toString());
+                            if (confirmPinController
+                                    .pinController.text.isEmpty ||
+                                confirmPinController
+                                        .pinController.text.length !=
+                                    4) {
+                              Fluttertoast.showToast(
+                                  msg: "Enter your pin",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.black,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                            } else {
+                              await confirmPinController.verify();
+                              if (confirmPinController.loadsuccess.value ==
+                                  false) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ResultScreen(),
+                                  ),
+                                );
+                              } else {
+                                print("errorBD");
+                              }
+                            }
                           } else {
-                            print("errorBD");
+                            print("Working");
                           }
-                        }
-                      },
-                      child: Container(
-                        height: 60,
-                        width: 120,
-                        decoration: BoxDecoration(
-                          color: Colors.green,
-                          border: Border.all(
-                            width: 1,
-                            color: Colors.grey,
-                          ),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
-                          child: Center(
-                            child: Text(
-                              languageController
-                                  .alllanguageData.value.languageData!["VERIFY"]
-                                  .toString(),
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 15,
+                        },
+                        child: Obx(
+                          () => Container(
+                            height: 60,
+                            width: 120,
+                            decoration: BoxDecoration(
+                              color:
+                                  confirmPinController.isLoading.value == false
+                                      ? Colors.green
+                                      : Colors.grey,
+                              border: Border.all(
+                                width: 1,
+                                color: Colors.grey,
+                              ),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              child: Center(
+                                child: Text(
+                                  languageController.alllanguageData.value
+                                      .languageData!["VERIFY"]
+                                      .toString(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
+                        )),
                   ],
                 ),
               ],

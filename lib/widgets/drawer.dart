@@ -55,6 +55,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     }
   }
 
+  bool isvisible = false;
+
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -70,7 +72,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ? Column(
                     children: [
                       SizedBox(
-                        height: 40,
+                        height: 30,
                       ),
                       Text(
                         languageController
@@ -83,7 +85,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 5,
                       ),
                       dashboardController.alldashboardData.value.data!.userInfo!
                                   .profileImageUrl !=
@@ -135,9 +137,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           fontWeight: FontWeight.w400,
                         ),
                       ),
-                      SizedBox(
-                        height: 5,
-                      ),
                       Text(
                         dashboardController
                             .alldashboardData.value.data!.userInfo!.email
@@ -153,9 +152,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         indent: 10,
                         endIndent: 10,
                         color: Colors.grey,
-                      ),
-                      SizedBox(
-                        height: 15,
                       ),
                       ProfileMenuWidget(
                         itemName: languageController.alllanguageData.value
@@ -335,131 +331,234 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       SizedBox(
                         height: 5,
                       ),
+                      Visibility(
+                        visible: isvisible,
+                        child: Container(
+                          width: screenWidth,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                          ),
+                          child: Column(
+                            children: [
+                              Text(
+                                languageController.alllanguageData.value
+                                    .languageData!["DO_YOU_WANT_TO_LOGOUT"]
+                                    .toString(),
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      historyController.finalList.clear();
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) {
+                                            return SignInScreen();
+                                          },
+                                        ),
+                                      );
+
+                                      signInController.usernameController
+                                          .clear();
+                                      signInController.passwordController
+                                          .clear();
+
+                                      box.remove("userToken");
+                                      signInController.loginsuccess.value =
+                                          true;
+
+                                      //...........................
+                                    },
+                                    child: Container(
+                                      height: 40,
+                                      width: 100,
+                                      decoration: BoxDecoration(
+                                        color: Colors.green,
+                                        borderRadius: BorderRadius.circular(7),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          languageController.alllanguageData
+                                              .value.languageData!["YES"]
+                                              .toString(),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        isvisible = !isvisible;
+                                      });
+                                    },
+                                    child: Container(
+                                      height: 40,
+                                      width: 100,
+                                      decoration: BoxDecoration(
+                                        color: AppColors.borderColor,
+                                        borderRadius: BorderRadius.circular(7),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          languageController.alllanguageData
+                                              .value.languageData!["NO"]
+                                              .toString(),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
                       ProfileMenuWidget(
                         itemName: languageController
                             .alllanguageData.value.languageData!["LOG_OUT"]
                             .toString(),
                         imageLink: "assets/icons/logout.png",
                         onPressed: () {
-                          historyController.finalList.clear();
+                          setState(() {
+                            isvisible = !isvisible;
+                          });
+                          // historyController.finalList.clear();
 
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                content: Container(
-                                  height: 140,
-                                  width: screenWidth,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        languageController
-                                            .alllanguageData
-                                            .value
-                                            .languageData![
-                                                "DO_YOU_WANT_TO_LOGOUT"]
-                                            .toString(),
-                                        style: TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 40,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              historyController.finalList
-                                                  .clear();
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) {
-                                                    return SignInScreen();
-                                                  },
-                                                ),
-                                              );
+                          // showDialog(
+                          //   context: context,
+                          //   builder: (context) {
+                          //     return AlertDialog(
+                          //       content: Container(
+                          //         height: 140,
+                          //         width: screenWidth,
+                          //         decoration: BoxDecoration(
+                          //           color: Colors.white,
+                          //         ),
+                          //         child: Column(
+                          //           children: [
+                          //             Text(
+                          //               languageController
+                          //                   .alllanguageData
+                          //                   .value
+                          //                   .languageData![
+                          //                       "DO_YOU_WANT_TO_LOGOUT"]
+                          //                   .toString(),
+                          //               style: TextStyle(
+                          //                 fontSize: 17,
+                          //                 fontWeight: FontWeight.w600,
+                          //               ),
+                          //             ),
+                          //             SizedBox(
+                          //               height: 40,
+                          //             ),
+                          //             Row(
+                          //               mainAxisAlignment:
+                          //                   MainAxisAlignment.spaceBetween,
+                          //               children: [
+                          //                 GestureDetector(
+                          //                   onTap: () {
+                          //                     historyController.finalList
+                          //                         .clear();
+                          //                     Navigator.push(
+                          //                       context,
+                          //                       MaterialPageRoute(
+                          //                         builder: (context) {
+                          //                           return SignInScreen();
+                          //                         },
+                          //                       ),
+                          //                     );
 
-                                              signInController
-                                                  .usernameController
-                                                  .clear();
-                                              signInController
-                                                  .passwordController
-                                                  .clear();
+                          //                     signInController
+                          //                         .usernameController
+                          //                         .clear();
+                          //                     signInController
+                          //                         .passwordController
+                          //                         .clear();
 
-                                              box.remove("userToken");
-                                              signInController
-                                                  .loginsuccess.value = true;
+                          //                     box.remove("userToken");
+                          //                     signInController
+                          //                         .loginsuccess.value = true;
 
-                                              //...........................
-                                            },
-                                            child: Container(
-                                              height: 40,
-                                              width: 100,
-                                              decoration: BoxDecoration(
-                                                color: AppColors.borderColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(7),
-                                              ),
-                                              child: Center(
-                                                child: Text(
-                                                  languageController
-                                                      .alllanguageData
-                                                      .value
-                                                      .languageData!["YES"]
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: Container(
-                                              height: 40,
-                                              width: 100,
-                                              decoration: BoxDecoration(
-                                                color: AppColors.borderColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(7),
-                                              ),
-                                              child: Center(
-                                                child: Text(
-                                                  languageController
-                                                      .alllanguageData
-                                                      .value
-                                                      .languageData!["NO"]
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          );
+                          //                     //...........................
+                          //                   },
+                          //                   child: Container(
+                          //                     height: 40,
+                          //                     width: 100,
+                          //                     decoration: BoxDecoration(
+                          //                       color: AppColors.borderColor,
+                          //                       borderRadius:
+                          //                           BorderRadius.circular(7),
+                          //                     ),
+                          //                     child: Center(
+                          //                       child: Text(
+                          //                         languageController
+                          //                             .alllanguageData
+                          //                             .value
+                          //                             .languageData!["YES"]
+                          //                             .toString(),
+                          //                         style: TextStyle(
+                          //                           color: Colors.white,
+                          //                           fontWeight: FontWeight.w500,
+                          //                         ),
+                          //                       ),
+                          //                     ),
+                          //                   ),
+                          //                 ),
+                          //                 GestureDetector(
+                          //                   onTap: () {
+                          //                     Navigator.of(context).pop();
+                          //                   },
+                          //                   child: Container(
+                          //                     height: 40,
+                          //                     width: 100,
+                          //                     decoration: BoxDecoration(
+                          //                       color: AppColors.borderColor,
+                          //                       borderRadius:
+                          //                           BorderRadius.circular(7),
+                          //                     ),
+                          //                     child: Center(
+                          //                       child: Text(
+                          //                         languageController
+                          //                             .alllanguageData
+                          //                             .value
+                          //                             .languageData!["NO"]
+                          //                             .toString(),
+                          //                         style: TextStyle(
+                          //                           color: Colors.white,
+                          //                           fontWeight: FontWeight.w500,
+                          //                         ),
+                          //                       ),
+                          //                     ),
+                          //                   ),
+                          //                 ),
+                          //               ],
+                          //             ),
+                          //           ],
+                          //         ),
+                          //       ),
+                          //     );
+                          //   },
+                          // );
 
-                          box.remove("userToken");
+                          // box.remove("userToken");
                         },
                       ),
                     ],

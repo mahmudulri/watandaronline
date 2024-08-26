@@ -26,7 +26,7 @@ class RegisterField extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.only(left: 15),
+        padding: EdgeInsets.only(left: 15, right: 10),
         child: Center(
           child: TextField(
             controller: controller,

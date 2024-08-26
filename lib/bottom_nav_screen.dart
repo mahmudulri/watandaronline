@@ -54,6 +54,7 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
       Get.put(SubresellerController());
 
   final PageStorageBucket bucket = PageStorageBucket();
+
   late Widget currentPage;
 
   PageController controller = PageController();
@@ -61,7 +62,7 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
   @override
   void initState() {
     super.initState();
-    currentPage = myPageController.currentPage;
+    currentPage = Homepage();
   }
 
   void nextpage(index) {
@@ -106,7 +107,10 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
 
     // ignore: deprecated_member_use
     return WillPopScope(
-      onWillPop: showExitPopup,
+      onWillPop: () async {
+        final shouldExit = await showExitPopup();
+        return shouldExit;
+      },
       child: Scaffold(
         body: PageStorage(bucket: bucket, child: currentPage),
         floatingActionButton: FloatingActionButton(
@@ -198,10 +202,8 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
                                 minWidth: 40,
                                 onPressed: () {
                                   setState(() {
-                                    historyController.finalList.clear();
                                     historyController.initialpage = 1;
-                                    orderlistController.finalList.clear();
-                                    orderlistController.initialpage = 1;
+                                    historyController.finalList.clear();
 
                                     currentPage = TransactionsPage();
                                     currentIndex = 1;
@@ -243,14 +245,14 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
                                 minWidth: 40,
                                 onPressed: () {
                                   box.write("orderstatus", "");
-                                  // orderlistController.finalList.clear();
+                                  orderlistController.finalList.clear();
                                   orderlistController.initialpage = 1;
                                   setState(() {
                                     historyController.finalList.clear();
-                                    currentPage = NotificationPage();
+                                    currentPage = OrderPage();
                                     currentIndex = 2;
                                   });
-                                  // orderlistController.fetchOrderlistdata();
+                                  orderlistController.fetchOrderlistdata();
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,

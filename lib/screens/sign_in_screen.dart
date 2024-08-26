@@ -14,6 +14,7 @@ import 'package:watandaronline/controllers/dashboard_controller.dart';
 import 'package:watandaronline/controllers/history_controller.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/controllers/sign_in_controller.dart';
+import 'package:watandaronline/helpers/language_helper.dart';
 
 import 'package:watandaronline/utils/colors.dart';
 import 'package:watandaronline/widgets/default_button.dart';
@@ -55,8 +56,8 @@ class _SignInScreenState extends State<SignInScreen> {
 
   final CountryListController countryListController =
       Get.put(CountryListController());
-  final DashboardController dashboardController =
-      Get.put(DashboardController());
+  // final DashboardController dashboardController =
+  //     Get.put(DashboardController());
 
   @override
   Widget build(BuildContext context) {
@@ -113,17 +114,12 @@ class _SignInScreenState extends State<SignInScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  print(box.read("timezone"));
-                                },
-                                child: Text(
-                                  "Log in",
-                                  style: GoogleFonts.rubik(
-                                    color: AppColors.defaultColor,
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                              Text(
+                                getText("LOGIN", defaultValue: "Log In"),
+                                style: GoogleFonts.rubik(
+                                  color: AppColors.defaultColor,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ],
@@ -135,7 +131,9 @@ class _SignInScreenState extends State<SignInScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Please enter the details bellow to continue",
+                                getText("PLEASE_ENTER_DETAILS_TO_CONTINUE",
+                                    defaultValue:
+                                        "Please enter the details to continue"),
                                 style: GoogleFonts.rubik(
                                   color: Color(0xff3C3C3C),
                                 ),
@@ -146,15 +144,16 @@ class _SignInScreenState extends State<SignInScreen> {
                             height: 20,
                           ),
                           AuthTextField(
-                            controller: signInController.usernameController,
-                            hintText: "Username",
-                          ),
+                              controller: signInController.usernameController,
+                              hintText: getText("USERNAME",
+                                  defaultValue: "Username")),
                           SizedBox(
                             height: 8,
                           ),
                           AuthTextField(
                             controller: signInController.passwordController,
-                            hintText: "Password",
+                            hintText:
+                                getText("PASSWORD", defaultValue: "Password"),
                           ),
                           SizedBox(
                             height: 10,
@@ -163,7 +162,8 @@ class _SignInScreenState extends State<SignInScreen> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text(
-                                "Forgot pasasowrd ?",
+                                getText("FORGOT_PASSWORD",
+                                    defaultValue: "Forgot Password ?"),
                                 style: TextStyle(
                                   color: Color(0xff5F5F5F),
                                 ),
@@ -174,10 +174,11 @@ class _SignInScreenState extends State<SignInScreen> {
                             height: 20,
                           ),
                           Obx(() => DefaultButton(
-                                buttonName:
-                                    signInController.isLoading.value == false
-                                        ? "Log In"
-                                        : "Please wait...",
+                                buttonName: signInController.isLoading.value ==
+                                        false
+                                    ? getText("LOGIN", defaultValue: "Log in")
+                                    : getText("PLEASE_WAIT",
+                                        defaultValue: "Please wait"),
                                 onPressed: () async {
                                   historyController.initialpage = 1;
 
@@ -230,7 +231,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Or",
+                                getText("Or", defaultValue: "Or"),
                                 style: GoogleFonts.rubik(
                                   color: AppColors.defaultColor,
                                   fontSize: 20,
@@ -282,7 +283,9 @@ class _SignInScreenState extends State<SignInScreen> {
                           child: Image.asset("assets/icons/whatsapp.png"),
                         ),
                       ),
-                      Text("  Need Help ?"),
+                      Text(
+                        getText("NEED_HELP", defaultValue: "Need Help"),
+                      ),
                     ],
                   ),
                   Expanded(
@@ -292,7 +295,8 @@ class _SignInScreenState extends State<SignInScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Don't have an account ?",
+                            getText("DONT_HAVE_AN_ACCOUNT",
+                                defaultValue: "Don't have an account ?"),
                             style: TextStyle(
                               color: Color(0xffA3A3A3),
                               fontSize: 18,
@@ -306,7 +310,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               Get.to(() => SignUpScreen());
                             },
                             child: Text(
-                              "Sign Up",
+                              getText("SIGN_UP", defaultValue: "Sign Up"),
                               style: TextStyle(
                                 color: AppColors.defaultColor,
                                 fontSize: 18,
