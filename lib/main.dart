@@ -11,6 +11,7 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await GetStorage.init();
   runApp(
     EasyLocalization(
       supportedLocales: [

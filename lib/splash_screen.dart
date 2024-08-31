@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   final box = GetStorage();
   @override
   void initState() {
-    Future.delayed(Duration(seconds: 1), () => checkData());
+    Future.delayed(Duration(seconds: 2), () => checkData());
 
     super.initState();
   }
@@ -45,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
       box.write("isoCode", "fa");
       box.write("direction", "rtl");
       languageController.fetchlanData("fa");
-      languageController.fetchlanData(box.read("isoCode"));
+
       setState(() {
         EasyLocalization.of(context)!.setLocale(Locale('ar', 'AE'));
       });
@@ -106,6 +106,23 @@ class _SplashScreenState extends State<SplashScreen> {
                 width: 200,
                 fit: BoxFit.fill,
               ),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    box.write("myname", "Mahmudul hasan");
+                  });
+                },
+                child: Text("Add"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    box.remove("myname");
+                  });
+                },
+                child: Text("Delete"),
+              ),
+              Text(box.read("userToken").toString()),
             ],
           ),
         ),

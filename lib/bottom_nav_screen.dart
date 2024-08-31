@@ -161,22 +161,11 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
                                     orderlistController.initialpage = 1;
 
                                     currentIndex = 0;
-                                    // print("from home initial value " +
-                                    //     historyController.initialpage
-                                    //         .toString());
-
-                                    // print("from home list length " +
-                                    //     historyController.finalList.length
-                                    //         .toString());
                                   });
                                 },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    // Icon(
-                                    //   Icons.home,
-                                    //   color: currentIndex == 0 ? Colors.blue : Colors.grey,
-                                    // ),
                                     Image.asset(
                                       "assets/icons/homeicon.png",
                                       height: 25,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:watandaronline/widgets/default_button.dart';
 
@@ -17,6 +18,7 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   int currentPage = 0;
+  final box = GetStorage();
 
   List pagelist = [
     pageOne(),
@@ -115,6 +117,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 }
 
 class pageOne extends StatelessWidget {
+  final box = GetStorage();
   pageOne({
     super.key,
   });
@@ -134,9 +137,16 @@ class pageOne extends StatelessWidget {
           height: 250,
           child: Image.asset('assets/images/slide-1.png'),
         ),
-        SizedBox(
-          height: 80,
+        // SizedBox(
+        //   height: 80,
+        // ),
+        ElevatedButton(
+          onPressed: () {
+            box.read("Restore");
+          },
+          child: Text("Restore"),
         ),
+        Text(box.read("userToken").toString()),
         Container(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 7, vertical: 10),
