@@ -38,15 +38,15 @@ class SignInController extends GetxController {
           ApiEndPoints.baseUrl + ApiEndPoints.otherendpoints.loginIink);
       print("API URL: $url");
 
-      // Map body = {
-      //   'username': usernameController.text,
-      //   'password': passwordController.text,
-      // };
-
       Map body = {
-        'username': "0700930683",
-        'password': "test@2024",
+        'username': usernameController.text,
+        'password': passwordController.text,
       };
+
+      // Map body = {
+      //   'username': "0700930683",
+      //   'password': "test@2024",
+      // };
 
       print("Request Body: $body");
 

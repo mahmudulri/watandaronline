@@ -106,23 +106,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 width: 200,
                 fit: BoxFit.fill,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    box.write("myname", "Mahmudul hasan");
-                  });
-                },
-                child: Text("Add"),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    box.remove("myname");
-                  });
-                },
-                child: Text("Delete"),
-              ),
-              Text(box.read("userToken").toString()),
+             
             ],
           ),
         ),
