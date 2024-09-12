@@ -319,241 +319,259 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 0,
                               ),
-                              child: Column(
-                                children: [
-                                  // Row(
-                                  //   mainAxisAlignment:
-                                  //       MainAxisAlignment.spaceBetween,
-                                  //   children: [
-                                  //     Text(
-                                  //       languageController.alllanguageData.value
-                                  //           .languageData!["ORDER_STATUS"]
-                                  //           .toString(),
-                                  //       style: TextStyle(
-                                  //         color: Colors.green,
-                                  //         fontSize: 17,
-                                  //       ),
-                                  //     ),
-                                  //     Text(
-                                  //       widget.status.toString() == "0"
-                                  //           ? languageController.alllanguageData
-                                  //               .value.languageData!["PENDING"]
-                                  //               .toString()
-                                  //           : widget.status.toString() == "1"
-                                  //               ? languageController
-                                  //                   .alllanguageData
-                                  //                   .value
-                                  //                   .languageData!["CONFIRMED"]
-                                  //                   .toString()
-                                  //               : languageController.alllanguageData
-                                  //                   .value.languageData!["REJECTED"]
-                                  //                   .toString(),
-                                  //       style: TextStyle(
-                                  //         fontSize: 17,
-                                  //         fontWeight: FontWeight.w400,
-                                  //         color: widget.status.toString() == "0"
-                                  //             ? Colors.grey
-                                  //             : widget.status.toString() == "1"
-                                  //                 ? Colors.green
-                                  //                 : Colors.red,
-                                  //       ),
-                                  //     ),
-                                  //   ],
-                                  // ),
-                                  // SizedBox(
-                                  //   height: 5,
-                                  // ),
-                                  Visibility(
-                                    visible: widget.status.toString() == "2",
-                                    child: Text(
-                                      widget.rejectReason.toString(),
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                      ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    opacity: 0.2,
+                                    image: AssetImage(
+                                      "assets/icons/logo.png",
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 3,
-                                  ),
-                                  dotline(),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  // Row(
-                                  //   mainAxisAlignment:
-                                  //       MainAxisAlignment.spaceBetween,
-                                  //   children: [
-                                  //     Text(
-                                  //       languageController.alllanguageData.value
-                                  //           .languageData!["NETWORK_TYPE"]
-                                  //           .toString(),
-                                  //       style: TextStyle(
-                                  //         fontSize: 14,
-                                  //         color: Colors.black,
-                                  //       ),
-                                  //     ),
-                                  //     Text(
-                                  //       widget.companyName.toString(),
-                                  //       style: TextStyle(
-                                  //         fontSize: 14,
-                                  //         color: Colors.black,
-                                  //       ),
-                                  //     ),
-                                  //   ],
-                                  // ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        languageController.alllanguageData.value
-                                            .languageData!["BUNDLE_TYPE"]
-                                            .toString(),
+                                ),
+                                child: Column(
+                                  children: [
+                                    // Row(
+                                    //   mainAxisAlignment:
+                                    //       MainAxisAlignment.spaceBetween,
+                                    //   children: [
+                                    //     Text(
+                                    //       languageController.alllanguageData.value
+                                    //           .languageData!["ORDER_STATUS"]
+                                    //           .toString(),
+                                    //       style: TextStyle(
+                                    //         color: Colors.green,
+                                    //         fontSize: 17,
+                                    //       ),
+                                    //     ),
+                                    //     Text(
+                                    //       widget.status.toString() == "0"
+                                    //           ? languageController.alllanguageData
+                                    //               .value.languageData!["PENDING"]
+                                    //               .toString()
+                                    //           : widget.status.toString() == "1"
+                                    //               ? languageController
+                                    //                   .alllanguageData
+                                    //                   .value
+                                    //                   .languageData!["CONFIRMED"]
+                                    //                   .toString()
+                                    //               : languageController.alllanguageData
+                                    //                   .value.languageData!["REJECTED"]
+                                    //                   .toString(),
+                                    //       style: TextStyle(
+                                    //         fontSize: 17,
+                                    //         fontWeight: FontWeight.w400,
+                                    //         color: widget.status.toString() == "0"
+                                    //             ? Colors.grey
+                                    //             : widget.status.toString() == "1"
+                                    //                 ? Colors.green
+                                    //                 : Colors.red,
+                                    //       ),
+                                    //     ),
+                                    //   ],
+                                    // ),
+                                    // SizedBox(
+                                    //   height: 5,
+                                    // ),
+                                    Visibility(
+                                      visible: widget.status.toString() == "2",
+                                      child: Text(
+                                        widget.rejectReason.toString(),
                                         style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black,
+                                          color: Colors.red,
                                         ),
                                       ),
-                                      Text(
-                                        widget.bundleTitle.toString(),
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        languageController.alllanguageData.value
-                                            .languageData!["PHONE_NUMBER"]
-                                            .toString(),
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      Text(
-                                        widget.rechargebleAccount.toString(),
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        languageController.alllanguageData.value
-                                            .languageData!["VALIDITY_TYPE"]
-                                            .toString(),
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      Text(
-                                        widget.validityType.toString(),
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        getText("SELLING_PRICE",
-                                            defaultValue: "Selling Price"),
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            box.read("currency_code"),
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w600,
-                                            ),
+                                    ),
+                                    SizedBox(
+                                      height: 3,
+                                    ),
+                                    dotline(),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    // Row(
+                                    //   mainAxisAlignment:
+                                    //       MainAxisAlignment.spaceBetween,
+                                    //   children: [
+                                    //     Text(
+                                    //       languageController.alllanguageData.value
+                                    //           .languageData!["NETWORK_TYPE"]
+                                    //           .toString(),
+                                    //       style: TextStyle(
+                                    //         fontSize: 14,
+                                    //         color: Colors.black,
+                                    //       ),
+                                    //     ),
+                                    //     Text(
+                                    //       widget.companyName.toString(),
+                                    //       style: TextStyle(
+                                    //         fontSize: 14,
+                                    //         color: Colors.black,
+                                    //       ),
+                                    //     ),
+                                    //   ],
+                                    // ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          languageController
+                                              .alllanguageData
+                                              .value
+                                              .languageData!["BUNDLE_TYPE"]
+                                              .toString(),
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
                                           ),
-                                          SizedBox(
-                                            width: 8,
+                                        ),
+                                        Text(
+                                          widget.bundleTitle.toString(),
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
                                           ),
-                                          Text(
-                                            NumberFormat.currency(
-                                              locale: 'en_US',
-                                              symbol: '',
-                                              decimalDigits: 2,
-                                            ).format(
-                                              double.parse(
-                                                widget.sellingPrice.toString(),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          languageController
+                                              .alllanguageData
+                                              .value
+                                              .languageData!["PHONE_NUMBER"]
+                                              .toString(),
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        Text(
+                                          widget.rechargebleAccount.toString(),
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          languageController
+                                              .alllanguageData
+                                              .value
+                                              .languageData!["VALIDITY_TYPE"]
+                                              .toString(),
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        Text(
+                                          widget.validityType.toString(),
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          getText("SELLING_PRICE",
+                                              defaultValue: "Selling Price"),
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              box.read("currency_code"),
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w600,
                                               ),
                                             ),
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
+                                            SizedBox(
+                                              width: 8,
                                             ),
+                                            Text(
+                                              NumberFormat.currency(
+                                                locale: 'en_US',
+                                                symbol: '',
+                                                decimalDigits: 2,
+                                              ).format(
+                                                double.parse(
+                                                  widget.sellingPrice
+                                                      .toString(),
+                                                ),
+                                              ),
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          languageController.alllanguageData
+                                              .value.languageData!["ORDER_ID"]
+                                              .toString(),
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
                                           ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        languageController.alllanguageData.value
-                                            .languageData!["ORDER_ID"]
-                                            .toString(),
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black,
                                         ),
-                                      ),
-                                      Text(
-                                        "WT#- " + widget.orderID.toString(),
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black,
+                                        Text(
+                                          "WT#- " + widget.orderID.toString(),
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  // dotline(),
-                                ],
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    // dotline(),
+                                  ],
+                                ),
                               ),
                             ),
 
