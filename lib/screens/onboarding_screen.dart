@@ -84,9 +84,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     print(pagelist.length);
                   } else {
                     print(pagelist.length);
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SignInScreen()),
+                      MaterialPageRoute(
+                        builder: (context) => SignInScreen(),
+                      ),
                     );
                   }
                 },
@@ -95,9 +97,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 alignment: Alignment.center,
                 child: TextButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SignInScreen()),
+                      MaterialPageRoute(
+                        builder: (context) => SignInScreen(),
+                      ),
                     );
                   },
                   child: Text(
