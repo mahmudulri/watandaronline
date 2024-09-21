@@ -280,25 +280,29 @@ class _RechargeScreenState extends State<RechargeScreen> {
                         SizedBox(
                           height: 20,
                         ),
-                        SizedBox(
+                        Container(
                           height: 50,
+                          color: Colors.transparent,
                           width: screenWidth,
                           child: Obx(
                             () {
+                              // Check if the allserviceslist is not null and contains data
                               final services = serviceController
-                                  .allserviceslist.value.data!.services;
+                                      .allserviceslist.value.data?.services ??
+                                  [];
 
                               // Show all services if input is empty, otherwise filter
                               final filteredServices = inputNumber.isEmpty
                                   ? services
                                   : services.where((service) {
-                                      return service.company!.companycodes!
-                                          .any((code) {
-                                        final reservedDigit =
-                                            code.reservedDigit ?? '';
-                                        return inputNumber
-                                            .startsWith(reservedDigit);
-                                      });
+                                      return service.company?.companycodes
+                                              ?.any((code) {
+                                            final reservedDigit =
+                                                code.reservedDigit ?? '';
+                                            return inputNumber
+                                                .startsWith(reservedDigit);
+                                          }) ??
+                                          false;
                                     }).toList();
 
                               return serviceController.isLoading.value == false
@@ -345,9 +349,9 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                   vertical: 5,
                                                 ),
                                                 child: CachedNetworkImage(
-                                                  imageUrl: data
-                                                      .company!.companyLogo
-                                                      .toString(),
+                                                  imageUrl: data.company
+                                                          ?.companyLogo ??
+                                                      '',
                                                   placeholder: (context, url) {
                                                     print(
                                                         'Loading image: $url');

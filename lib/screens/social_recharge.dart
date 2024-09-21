@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -80,6 +81,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
   final ScrollController scrollController = ScrollController();
 
   String search = "";
+  String inputNumber = "";
 
   @override
   void initState() {
@@ -199,75 +201,109 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                         SizedBox(
                           height: 20,
                         ),
-                        SizedBox(
-                            height: 50,
-                            width: screenWidth,
-                            child: Obx(
-                              () => serviceController.isLoading.value == false
-                                  ? ListView.separated(
-                                      separatorBuilder: (context, index) {
-                                        return SizedBox(
-                                          width: 5,
-                                        );
-                                      },
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: serviceController
-                                          .allserviceslist
-                                          .value
-                                          .data!
-                                          .services
-                                          .length,
-                                      itemBuilder: (context, index) {
-                                        final data = serviceController
-                                            .allserviceslist
-                                            .value
-                                            .data!
-                                            .services[index];
+                        Container(
+                          height: 50,
+                          color: Colors.transparent,
+                          width: screenWidth,
+                          child: Obx(
+                            () {
+                              // Check if the allserviceslist is not null and contains data
+                              final services = serviceController
+                                      .allserviceslist.value.data?.services ??
+                                  [];
 
-                                        return GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              bundleController.initialpage = 1;
-                                              bundleController.finalList
-                                                  .clear();
-                                              selectedIndex = index;
-                                              box.write(
-                                                  "company_id", data.companyId);
-                                              bundleController
-                                                  .fetchallbundles();
-                                            });
-                                          },
-                                          child: Container(
-                                            height: 50,
-                                            width: 65,
-                                            decoration: BoxDecoration(
-                                              color: selectedIndex == index
-                                                  ? Color(0xff34495e)
-                                                  : Colors.grey.shade100,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal: 5,
-                                                vertical: 5,
+                              // Show all services if input is empty, otherwise filter
+                              final filteredServices = inputNumber.isEmpty
+                                  ? services
+                                  : services.where((service) {
+                                      return service.company?.companycodes
+                                              ?.any((code) {
+                                            final reservedDigit =
+                                                code.reservedDigit ?? '';
+                                            return inputNumber
+                                                .startsWith(reservedDigit);
+                                          }) ??
+                                          false;
+                                    }).toList();
+
+                              return serviceController.isLoading.value == false
+                                  ? Center(
+                                      child: ListView.separated(
+                                        shrinkWrap: true,
+                                        separatorBuilder: (context, index) {
+                                          return SizedBox(
+                                            width: 5,
+                                          );
+                                        },
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: filteredServices.length,
+                                        itemBuilder: (context, index) {
+                                          final data = filteredServices[index];
+
+                                          return GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                bundleController.initialpage =
+                                                    1;
+                                                bundleController.finalList
+                                                    .clear();
+                                                selectedIndex = index;
+                                                box.write("company_id",
+                                                    data.companyId);
+                                                bundleController
+                                                    .fetchallbundles();
+                                              });
+                                            },
+                                            child: Container(
+                                              height: 50,
+                                              width: 65,
+                                              decoration: BoxDecoration(
+                                                color: selectedIndex == index
+                                                    ? Color(0xff34495e)
+                                                    : Colors.grey.shade100,
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
                                               ),
-                                              child: Image.network(
-                                                data.company!.companyLogo
-                                                    .toString(),
+                                              child: Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: 5,
+                                                  vertical: 5,
+                                                ),
+                                                child: CachedNetworkImage(
+                                                  imageUrl: data.company
+                                                          ?.companyLogo ??
+                                                      '',
+                                                  placeholder: (context, url) {
+                                                    print(
+                                                        'Loading image: $url');
+                                                    return Center(
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                      color: Colors.white,
+                                                    ));
+                                                  },
+                                                  errorWidget:
+                                                      (context, url, error) {
+                                                    print(
+                                                        'Error loading image: $url, error: $error');
+                                                    return Icon(Icons.error);
+                                                  },
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        );
-                                      },
+                                          );
+                                        },
+                                      ),
                                     )
                                   : Center(
                                       child: CircularProgressIndicator(
                                         color: Colors.grey,
                                         strokeWidth: 1.0,
                                       ),
-                                    ),
-                            )),
+                                    );
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ),
