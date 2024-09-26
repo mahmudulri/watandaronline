@@ -15,6 +15,7 @@ import 'package:watandaronline/helpers/price.dart';
 import 'package:watandaronline/screens/confirm_pin.dart';
 import 'package:watandaronline/widgets/auth_textfield.dart';
 import 'package:watandaronline/widgets/default_button.dart';
+import 'package:watandaronline/widgets/number_textfield.dart';
 import 'package:watandaronline/widgets/rechange_number_box.dart';
 
 import '../controllers/confirm_pin_controller.dart';
@@ -22,7 +23,11 @@ import '../controllers/operator_controller.dart';
 import '../utils/colors.dart';
 
 class RechargeScreen extends StatefulWidget {
-  RechargeScreen({super.key});
+  String numberlength;
+  RechargeScreen({
+    super.key,
+    required this.numberlength,
+  });
 
   @override
   State<RechargeScreen> createState() => _RechargeScreenState();
@@ -216,13 +221,18 @@ class _RechargeScreenState extends State<RechargeScreen> {
           backgroundColor: AppColors.defaultColor,
           elevation: 0.0,
           centerTitle: true,
-          title: Text(
-            languageController.alllanguageData.value.languageData!["RECHARGE"]
-                .toString(),
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+          title: GestureDetector(
+            onTap: () {
+              print(widget.numberlength.toString());
+            },
+            child: Text(
+              languageController.alllanguageData.value.languageData!["RECHARGE"]
+                  .toString(),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
           ),
         ),
@@ -241,42 +251,50 @@ class _RechargeScreenState extends State<RechargeScreen> {
                     padding: const EdgeInsets.all(13.0),
                     child: ListView(
                       children: [
-                        Container(
-                          height: 45,
-                          width: screenWidth,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              width: 1,
-                              color: Colors.white,
-                            ),
-                          ),
-                          child: Center(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: TextField(
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                                controller:
-                                    confirmPinController.numberController,
-                                keyboardType: TextInputType.phone,
-                                decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: languageController
-                                        .alllanguageData
-                                        .value
-                                        .languageData!["ENTER_YOUR_NUMBER"]
-                                        .toString(),
-                                    hintStyle: TextStyle(
-                                      fontWeight: FontWeight.w300,
-                                      color: Colors.white,
-                                    )),
-                              ),
-                            ),
-                          ),
+                        CustomTextField(
+                          confirmPinController:
+                              confirmPinController.numberController,
+                          numberLength: widget.numberlength,
+                          languageData: languageController.alllanguageData.value
+                              .languageData!["ENTER_YOUR_NUMBER"]
+                              .toString(),
                         ),
+                        // Container(
+                        //   height: 50,
+                        //   width: screenWidth,
+                        //   decoration: BoxDecoration(
+                        //     borderRadius: BorderRadius.circular(8),
+                        //     border: Border.all(
+                        //       width: 1,
+                        //       color: Colors.white,
+                        //     ),
+                        //   ),
+                        //   child: Padding(
+                        //     padding: EdgeInsets.symmetric(
+                        //       horizontal: 10,
+                        //     ),
+                        //     child: TextField(
+                        //       maxLength: int.parse(widget.numberlength),
+                        //       style: TextStyle(
+                        //         color: Colors.white,
+                        //       ),
+                        //       controller: confirmPinController.numberController,
+                        //       keyboardType: TextInputType.phone,
+                        //       decoration: InputDecoration(
+                        //         counterText: "",
+                        //         border: InputBorder.none,
+                        //         hintText: languageController.alllanguageData
+                        //             .value.languageData!["ENTER_YOUR_NUMBER"]
+                        //             .toString(),
+                        //         hintStyle: TextStyle(
+                        //           fontWeight: FontWeight.w300,
+                        //           color: Colors.white,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+
                         SizedBox(
                           height: 20,
                         ),

@@ -110,6 +110,8 @@ class _ServiceScreenState extends State<ServiceScreen> {
   final box = GetStorage();
   final LanguageController languageController = Get.put(LanguageController());
 
+  String numberlength = '';
+
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -181,9 +183,10 @@ class _ServiceScreenState extends State<ServiceScreen> {
                                   setState(() {
                                     selectedIndex = index;
 
-                                    print(data.id);
-
                                     box.write("country_id", data.id);
+                                    numberlength =
+                                        data.phoneNumberLength.toString();
+                                    print(numberlength.toString());
 
                                     if (index == 0) {
                                       operatorController.currentOperators =
@@ -294,7 +297,9 @@ class _ServiceScreenState extends State<ServiceScreen> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => RechargeScreen(),
+                                        builder: (context) => RechargeScreen(
+                                          numberlength: numberlength,
+                                        ),
                                       ),
                                     );
                                   }

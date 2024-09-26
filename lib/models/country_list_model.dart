@@ -67,6 +67,7 @@ class Country {
   final String? countryFlagImageUrl;
   final String? languageId;
   final String? countryTelecomCode;
+  final String? phoneNumberLength;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final dynamic? deletedAt;
@@ -77,6 +78,7 @@ class Country {
     this.countryFlagImageUrl,
     this.languageId,
     this.countryTelecomCode,
+    this.phoneNumberLength,
     this.createdAt,
     this.updatedAt,
     this.deletedAt,
@@ -92,6 +94,9 @@ class Country {
         countryTelecomCode: json["country_telecom_code"] == null
             ? null
             : json["country_telecom_code"],
+        phoneNumberLength: json["phone_number_length"] == null
+            ? null
+            : json["phone_number_length"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         deletedAt: json["deleted_at"] == null ? null : json["deleted_at"],
@@ -103,6 +108,7 @@ class Country {
         "country_flag_image_url": countryFlagImageUrl,
         "language_id": languageId,
         "country_telecom_code": countryTelecomCode,
+        "phone_number_length": phoneNumberLength,
         "created_at": createdAt!.toIso8601String(),
         "updated_at": updatedAt!.toIso8601String(),
         "deleted_at": deletedAt,

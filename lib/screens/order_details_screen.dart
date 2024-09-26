@@ -270,7 +270,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                         "1"
                                                     ? getText("SUCCESS",
                                                         defaultValue: "Success")
-                                                    : getText("REJECTED",
+                                                    : getText("FAIL",
                                                         defaultValue:
                                                             "Rejected"),
                                             style: GoogleFonts.aBeeZee(
