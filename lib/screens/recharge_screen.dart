@@ -96,6 +96,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
   String search = "";
 
   String inputNumber = "";
+  String cango = "no";
 
   @override
   void initState() {
@@ -175,7 +176,8 @@ class _RechargeScreenState extends State<RechargeScreen> {
 
   Future<void> refresh() async {
     if (bundleController.finalList.length >=
-        (bundleController.allbundleslist.value.payload?.pagination.totalItems ??
+        (bundleController
+                .allbundleslist.value.payload?.pagination!.totalItems ??
             0)) {
       print(
           "End..........................................End.....................");
@@ -223,7 +225,8 @@ class _RechargeScreenState extends State<RechargeScreen> {
           centerTitle: true,
           title: GestureDetector(
             onTap: () {
-              print(widget.numberlength.toString());
+              // print(serviceController.reserveDigit.toList());
+              print(box.read("permission"));
             },
             child: Text(
               languageController.alllanguageData.value.languageData!["RECHARGE"]
@@ -254,7 +257,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                         CustomTextField(
                           confirmPinController:
                               confirmPinController.numberController,
-                          numberLength: widget.numberlength,
+                          // numberLength: widget.numberlength,
                           languageData: languageController.alllanguageData.value
                               .languageData!["ENTER_YOUR_NUMBER"]
                               .toString(),
@@ -296,7 +299,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                         // ),
 
                         SizedBox(
-                          height: 20,
+                          height: 8,
                         ),
                         Container(
                           height: 50,
@@ -402,9 +405,10 @@ class _RechargeScreenState extends State<RechargeScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 8,
+                          height: 2,
                         ),
-                        SizedBox(
+                        Container(
+                          width: screenWidth,
                           height: 30,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
@@ -422,13 +426,12 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                   });
                                 },
                                 child: Container(
-                                  margin: EdgeInsets.only(right: 10),
                                   decoration: BoxDecoration(),
                                   height: 30,
                                   child: Center(
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 2),
+                                          horizontal: 5, vertical: 2),
                                       child: Text(
                                         duration[index]["Name"]!,
                                         style: TextStyle(
@@ -436,6 +439,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                           color: duration_selectedIndex == index
                                               ? Colors.white
                                               : Colors.black,
+                                          fontWeight: FontWeight.w400,
                                         ),
                                       ),
                                     ),
@@ -451,7 +455,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                 ),
               ),
               Expanded(
-                flex: 9,
+                flex: 10,
                 child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
@@ -535,23 +539,47 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                           if (confirmPinController
                                               .numberController.text.isEmpty) {
                                             Fluttertoast.showToast(
-                                                msg: "Enter Number ",
+                                              msg: "Enter Number ",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.BOTTOM,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor: Colors.black,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0,
+                                            );
+                                          } else {
+                                            if (box.read("permission") ==
+                                                    "no" ||
+                                                confirmPinController
+                                                        .numberController
+                                                        .text
+                                                        .length
+                                                        .toString() !=
+                                                    box
+                                                        .read("maxlength")
+                                                        .toString()) {
+                                              Fluttertoast.showToast(
+                                                msg: "Enter Correct Number ",
                                                 toastLength: Toast.LENGTH_SHORT,
                                                 gravity: ToastGravity.BOTTOM,
                                                 timeInSecForIosWeb: 1,
                                                 backgroundColor: Colors.black,
                                                 textColor: Colors.white,
-                                                fontSize: 16.0);
-                                          } else {
-                                            box.write(
-                                                "bundleID", data.id.toString());
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ConfirmPinScreen(),
-                                              ),
-                                            );
+                                                fontSize: 16.0,
+                                              );
+                                              // Stop further execution if permission is "no"
+                                            } else {
+                                              box.write("bundleID",
+                                                  data.id.toString());
+
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ConfirmPinScreen(),
+                                                ),
+                                              );
+                                            }
                                           }
                                         },
                                         child: Container(
@@ -834,7 +862,31 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                     .text
                                                     .isEmpty) {
                                                   Fluttertoast.showToast(
-                                                      msg: "Enter Number ",
+                                                    msg: "Enter Number ",
+                                                    toastLength:
+                                                        Toast.LENGTH_SHORT,
+                                                    gravity:
+                                                        ToastGravity.BOTTOM,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor:
+                                                        Colors.black,
+                                                    textColor: Colors.white,
+                                                    fontSize: 16.0,
+                                                  );
+                                                } else {
+                                                  if (box.read("permission") ==
+                                                          "no" ||
+                                                      confirmPinController
+                                                              .numberController
+                                                              .text
+                                                              .length
+                                                              .toString() !=
+                                                          box
+                                                              .read("maxlength")
+                                                              .toString()) {
+                                                    Fluttertoast.showToast(
+                                                      msg:
+                                                          "Enter Correct Number ",
                                                       toastLength:
                                                           Toast.LENGTH_SHORT,
                                                       gravity:
@@ -843,17 +895,21 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                       backgroundColor:
                                                           Colors.black,
                                                       textColor: Colors.white,
-                                                      fontSize: 16.0);
-                                                } else {
-                                                  box.write("bundleID",
-                                                      data.id.toString());
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ConfirmPinScreen(),
-                                                    ),
-                                                  );
+                                                      fontSize: 16.0,
+                                                    );
+                                                    // Stop further execution if permission is "no"
+                                                  } else {
+                                                    box.write("bundleID",
+                                                        data.id.toString());
+
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ConfirmPinScreen(),
+                                                      ),
+                                                    );
+                                                  }
                                                 }
                                               },
                                               child: Container(
@@ -1130,7 +1186,31 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                     .text
                                                     .isEmpty) {
                                                   Fluttertoast.showToast(
-                                                      msg: "Enter Number ",
+                                                    msg: "Enter Number ",
+                                                    toastLength:
+                                                        Toast.LENGTH_SHORT,
+                                                    gravity:
+                                                        ToastGravity.BOTTOM,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor:
+                                                        Colors.black,
+                                                    textColor: Colors.white,
+                                                    fontSize: 16.0,
+                                                  );
+                                                } else {
+                                                  if (box.read("permission") ==
+                                                          "no" ||
+                                                      confirmPinController
+                                                              .numberController
+                                                              .text
+                                                              .length
+                                                              .toString() !=
+                                                          box
+                                                              .read("maxlength")
+                                                              .toString()) {
+                                                    Fluttertoast.showToast(
+                                                      msg:
+                                                          "Enter Correct Number ",
                                                       toastLength:
                                                           Toast.LENGTH_SHORT,
                                                       gravity:
@@ -1139,17 +1219,21 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                       backgroundColor:
                                                           Colors.black,
                                                       textColor: Colors.white,
-                                                      fontSize: 16.0);
-                                                } else {
-                                                  box.write("bundleID",
-                                                      data.id.toString());
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ConfirmPinScreen(),
-                                                    ),
-                                                  );
+                                                      fontSize: 16.0,
+                                                    );
+                                                    // Stop further execution if permission is "no"
+                                                  } else {
+                                                    box.write("bundleID",
+                                                        data.id.toString());
+
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ConfirmPinScreen(),
+                                                      ),
+                                                    );
+                                                  }
                                                 }
                                               },
                                               child: Container(

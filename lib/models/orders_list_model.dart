@@ -14,14 +14,13 @@ String OrderListModelToJson(OrderListModel data) => json.encode(data.toJson());
 
 class OrderListModel {
   final bool? success;
-  final int? code;
+
   final String? message;
   final Data? data;
   final Payload? payload;
 
   OrderListModel({
     this.success,
-    this.code,
     this.message,
     this.data,
     this.payload,
@@ -29,7 +28,6 @@ class OrderListModel {
 
   factory OrderListModel.fromJson(Map<String, dynamic> json) => OrderListModel(
         success: json["success"],
-        code: json["code"],
         message: json["message"],
         data: Data.fromJson(json["data"]),
         payload: Payload.fromJson(json["payload"]),
@@ -37,7 +35,6 @@ class OrderListModel {
 
   Map<String, dynamic> toJson() => {
         "success": success,
-        "code": code,
         "message": message,
         "data": data!.toJson(),
         "payload": payload!.toJson(),
@@ -62,13 +59,13 @@ class Data {
 
 class Order {
   final int? id;
-  final String? resellerId;
+  final dynamic? resellerId;
   final String? rechargebleAccount;
   final Bundle? bundle;
-  final String? transactionId;
-  final String? isPaid;
-  final String? status;
-  final String? rejectReason;
+  final dynamic? transactionId;
+  final dynamic? isPaid;
+  final dynamic? status;
+  final dynamic? rejectReason;
   final DateTime? createdAt;
 
   Order({
@@ -117,7 +114,7 @@ class Order {
 class Bundle {
   final int? id;
   final String? bundleCode;
-  final String? serviceId;
+  final dynamic? serviceId;
   final String? bundleTitle;
   final String? bundleDescription;
   final String? validityType;
@@ -125,7 +122,7 @@ class Bundle {
   final String? buyingPrice;
   final String? sellingPrice;
 
-  final String? currencyId;
+  final dynamic? currencyId;
 
   final DateTime? createdAt;
 
@@ -229,8 +226,8 @@ class Currency {
 
 class Service {
   final int? id;
-  final String? serviceCategoryId;
-  final String? companyId;
+  final dynamic? serviceCategoryId;
+  final dynamic? companyId;
 
   final ServiceCategory? serviceCategory;
   final Company? company;
@@ -269,7 +266,7 @@ class Company {
   final int? id;
   final String? companyName;
   final String? companyLogo;
-  final String? countryId;
+  final dynamic? countryId;
 
   Company({
     this.id,

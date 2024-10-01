@@ -96,7 +96,8 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
 
   Future<void> refresh() async {
     if (bundleController.finalList.length >=
-        (bundleController.allbundleslist.value.payload?.pagination.totalItems ??
+        (bundleController
+                .allbundleslist.value.payload?.pagination!.totalItems ??
             0)) {
       print(
           "End..........................................End.....................");
@@ -140,13 +141,18 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
           backgroundColor: AppColors.defaultColor,
           elevation: 0.0,
           centerTitle: true,
-          title: Text(
-            languageController.alllanguageData.value.languageData!["RECHARGE"]
-                .toString(),
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+          title: GestureDetector(
+            onTap: () {
+              print(box.read("permission"));
+            },
+            child: Text(
+              languageController.alllanguageData.value.languageData!["RECHARGE"]
+                  .toString(),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
           ),
         ),
@@ -177,23 +183,28 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                           ),
                           child: Center(
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
+                              padding: EdgeInsets.symmetric(horizontal: 10),
                               child: TextField(
+                                maxLength: int.parse(
+                                  box.read("maxlength"),
+                                ),
                                 controller:
                                     confirmPinController.numberController,
                                 keyboardType: TextInputType.phone,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
                                 decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: languageController
-                                        .alllanguageData
-                                        .value
-                                        .languageData!["ENTER_YOUR_NUMBER"]
-                                        .toString(),
-                                    hintStyle: TextStyle(
-                                      fontWeight: FontWeight.w300,
-                                      color: Colors.white,
-                                    )),
+                                  counterText: "",
+                                  border: InputBorder.none,
+                                  hintText: languageController.alllanguageData
+                                      .value.languageData!["ENTER_YOUR_NUMBER"]
+                                      .toString(),
+                                  hintStyle: TextStyle(
+                                    fontWeight: FontWeight.w300,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -401,29 +412,46 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                 .text
                                                 .isEmpty) {
                                               Fluttertoast.showToast(
-                                                  msg: languageController
-                                                      .alllanguageData
-                                                      .value
-                                                      .languageData![
-                                                          "ENTER_YOUR_NUMBER"]
-                                                      .toString(),
+                                                msg: "Enter Number ",
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.BOTTOM,
+                                                timeInSecForIosWeb: 1,
+                                                backgroundColor: Colors.black,
+                                                textColor: Colors.white,
+                                                fontSize: 16.0,
+                                              );
+                                            } else {
+                                              if (confirmPinController
+                                                      .numberController
+                                                      .text
+                                                      .length
+                                                      .toString() !=
+                                                  box
+                                                      .read("maxlength")
+                                                      .toString()) {
+                                                Fluttertoast.showToast(
+                                                  msg: "Enter Correct Number ",
                                                   toastLength:
                                                       Toast.LENGTH_SHORT,
                                                   gravity: ToastGravity.BOTTOM,
                                                   timeInSecForIosWeb: 1,
                                                   backgroundColor: Colors.black,
                                                   textColor: Colors.white,
-                                                  fontSize: 16.0);
-                                            } else {
-                                              box.write("bundleID",
-                                                  data.id.toString());
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ConfirmPinScreen(),
-                                                ),
-                                              );
+                                                  fontSize: 16.0,
+                                                );
+                                                // Stop further execution if permission is "no"
+                                              } else {
+                                                box.write("bundleID",
+                                                    data.id.toString());
+
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ConfirmPinScreen(),
+                                                  ),
+                                                );
+                                              }
                                             }
                                           },
                                           child: Container(
@@ -781,12 +809,29 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                       .text
                                                       .isEmpty) {
                                                     Fluttertoast.showToast(
-                                                        msg: languageController
-                                                            .alllanguageData
-                                                            .value
-                                                            .languageData![
-                                                                "ENTER_YOUR_NUMBER"]
-                                                            .toString(),
+                                                      msg: "Enter Number ",
+                                                      toastLength:
+                                                          Toast.LENGTH_SHORT,
+                                                      gravity:
+                                                          ToastGravity.BOTTOM,
+                                                      timeInSecForIosWeb: 1,
+                                                      backgroundColor:
+                                                          Colors.black,
+                                                      textColor: Colors.white,
+                                                      fontSize: 16.0,
+                                                    );
+                                                  } else {
+                                                    if (confirmPinController
+                                                            .numberController
+                                                            .text
+                                                            .length
+                                                            .toString() !=
+                                                        box
+                                                            .read("maxlength")
+                                                            .toString()) {
+                                                      Fluttertoast.showToast(
+                                                        msg:
+                                                            "Enter Correct Number ",
                                                         toastLength:
                                                             Toast.LENGTH_SHORT,
                                                         gravity:
@@ -795,17 +840,21 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                         backgroundColor:
                                                             Colors.black,
                                                         textColor: Colors.white,
-                                                        fontSize: 16.0);
-                                                  } else {
-                                                    box.write("bundleID",
-                                                        data.id.toString());
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ConfirmPinScreen(),
-                                                      ),
-                                                    );
+                                                        fontSize: 16.0,
+                                                      );
+                                                      // Stop further execution if permission is "no"
+                                                    } else {
+                                                      box.write("bundleID",
+                                                          data.id.toString());
+
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ConfirmPinScreen(),
+                                                        ),
+                                                      );
+                                                    }
                                                   }
                                                 },
                                                 child: Container(
@@ -1140,12 +1189,29 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                       .text
                                                       .isEmpty) {
                                                     Fluttertoast.showToast(
-                                                        msg: languageController
-                                                            .alllanguageData
-                                                            .value
-                                                            .languageData![
-                                                                "ENTER_YOUR_NUMBER"]
-                                                            .toString(),
+                                                      msg: "Enter Number ",
+                                                      toastLength:
+                                                          Toast.LENGTH_SHORT,
+                                                      gravity:
+                                                          ToastGravity.BOTTOM,
+                                                      timeInSecForIosWeb: 1,
+                                                      backgroundColor:
+                                                          Colors.black,
+                                                      textColor: Colors.white,
+                                                      fontSize: 16.0,
+                                                    );
+                                                  } else {
+                                                    if (confirmPinController
+                                                            .numberController
+                                                            .text
+                                                            .length
+                                                            .toString() !=
+                                                        box
+                                                            .read("maxlength")
+                                                            .toString()) {
+                                                      Fluttertoast.showToast(
+                                                        msg:
+                                                            "Enter Correct Number ",
                                                         toastLength:
                                                             Toast.LENGTH_SHORT,
                                                         gravity:
@@ -1154,17 +1220,21 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                         backgroundColor:
                                                             Colors.black,
                                                         textColor: Colors.white,
-                                                        fontSize: 16.0);
-                                                  } else {
-                                                    box.write("bundleID",
-                                                        data.id.toString());
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ConfirmPinScreen(),
-                                                      ),
-                                                    );
+                                                        fontSize: 16.0,
+                                                      );
+                                                      // Stop further execution if permission is "no"
+                                                    } else {
+                                                      box.write("bundleID",
+                                                          data.id.toString());
+
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ConfirmPinScreen(),
+                                                        ),
+                                                      );
+                                                    }
                                                   }
                                                 },
                                                 child: Container(

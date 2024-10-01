@@ -48,11 +48,11 @@ class _OrderPageState extends State<OrderPage> {
     orderlistController.fetchOrderlistdata();
 
     super.initState();
-    Timer(Duration(seconds: 7), () {
-      setState(() {
-        _showEmptyState = true;
-      });
-    });
+    // Timer(Duration(seconds: 7), () {
+    //   setState(() {
+    //     _showEmptyState = true;
+    //   });
+    // });
 
     scrollController.addListener(refresh);
   }

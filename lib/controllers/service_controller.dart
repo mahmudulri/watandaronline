@@ -12,6 +12,7 @@ class ServiceController extends GetxController {
   }
 
   var isLoading = false.obs;
+  List reserveDigit = [];
 
   var allserviceslist = ServiceModel().obs;
 
@@ -20,6 +21,15 @@ class ServiceController extends GetxController {
       isLoading(true);
       await ServiceListApi().fetchservicelist().then((value) {
         allserviceslist.value = value;
+
+        reserveDigit.clear();
+        value.data?.services.forEach((service) {
+          service.company?.companycodes?.forEach((companycode) {
+            if (companycode.reservedDigit != null) {
+              reserveDigit.add(companycode.reservedDigit!);
+            }
+          });
+        });
 
         isLoading(false);
       });

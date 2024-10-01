@@ -59,27 +59,23 @@ class Data {
 
 class Reseller {
   final int? id;
-  final String? userId;
-  final String? parentId;
-  final String? uuid;
+  final int? userId;
+
   final String? resellerName;
   final String? contactName;
   final String? resellerType;
-  final dynamic? emailVerifiedAt;
-  final String? accountPassword;
-  final String? personalPin;
-  final dynamic? rememberToken;
+
   final String? profileImageUrl;
-  final String? email;
+
   final String? phone;
   final String? countryId;
   final String? provinceId;
   final String? districtsId;
-  final String? isResellerVerified;
-  final String? status;
+  final dynamic? isResellerVerified;
+  final dynamic? status;
   final String? balance;
   final String? loanBalance;
-  final dynamic? fcmToken;
+
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final dynamic? deletedAt;
@@ -91,17 +87,10 @@ class Reseller {
   Reseller({
     this.id,
     this.userId,
-    this.parentId,
-    this.uuid,
     this.resellerName,
     this.contactName,
     this.resellerType,
-    this.emailVerifiedAt,
-    this.accountPassword,
-    this.personalPin,
-    this.rememberToken,
     this.profileImageUrl,
-    this.email,
     this.phone,
     this.countryId,
     this.provinceId,
@@ -110,7 +99,6 @@ class Reseller {
     this.status,
     this.balance,
     this.loanBalance,
-    this.fcmToken,
     this.createdAt,
     this.updatedAt,
     this.deletedAt,
@@ -123,23 +111,12 @@ class Reseller {
   factory Reseller.fromJson(Map<String, dynamic> json) => Reseller(
         id: json["id"] == null ? null : json["id"],
         userId: json["user_id"] == null ? null : json["user_id"],
-        parentId: json["parent_id"] == null ? null : json["parent_id"],
-        uuid: json["uuid"] == null ? null : json["uuid"],
         resellerName:
             json["reseller_name"] == null ? null : json["reseller_name"],
         contactName: json["contact_name"] == null ? null : json["contact_name"],
         resellerType:
             json["reseller_type"] == null ? null : json["reseller_type"],
-        emailVerifiedAt: json["email_verified_at"] == null
-            ? null
-            : json["email_verified_at"],
-        accountPassword:
-            json["account_password"] == null ? null : json["account_password"],
-        personalPin: json["personal_pin"] == null ? null : json["personal_pin"],
-        rememberToken:
-            json["remember_token"] == null ? null : json["remember_token"],
         profileImageUrl: json["profile_image_url"],
-        email: json["email"] == null ? null : json["email"],
         phone: json["phone"] == null ? null : json["phone"],
         countryId: json["country_id"] == null ? null : json["country_id"],
         provinceId: json["province_id"] == null ? null : json["province_id"],
@@ -150,7 +127,6 @@ class Reseller {
         status: json["status"] == null ? null : json["status"],
         balance: json["balance"] == null ? null : json["balance"],
         loanBalance: json["loan_balance"] == null ? null : json["loan_balance"],
-        fcmToken: json["fcm_token"] == null ? null : json["fcm_token"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         deletedAt: json["deleted_at"] == null ? null : json["deleted_at"],
@@ -163,17 +139,10 @@ class Reseller {
   Map<String, dynamic> toJson() => {
         "id": id,
         "user_id": userId,
-        "parent_id": parentId,
-        "uuid": uuid,
         "reseller_name": resellerName,
         "contact_name": contactName,
         "reseller_type": resellerType,
-        "email_verified_at": emailVerifiedAt,
-        "account_password": accountPassword,
-        "personal_pin": personalPin,
-        "remember_token": rememberToken,
         "profile_image_url": profileImageUrl,
-        "email": email,
         "phone": phone,
         "country_id": countryId,
         "province_id": provinceId,
@@ -182,7 +151,6 @@ class Reseller {
         "status": status,
         "balance": balance,
         "loan_balance": loanBalance,
-        "fcm_token": fcmToken,
         "created_at": createdAt!.toIso8601String(),
         "updated_at": updatedAt!.toIso8601String(),
         "deleted_at": deletedAt,

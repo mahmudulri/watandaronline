@@ -14,14 +14,13 @@ String HistoryModelToJson(HistoryModel data) => json.encode(data.toJson());
 
 class HistoryModel {
   final bool? success;
-  final int? code;
+
   final String? message;
   final Data? data;
   final Payload? payload;
 
   HistoryModel({
     this.success,
-    this.code,
     this.message,
     this.data,
     this.payload,
@@ -29,7 +28,6 @@ class HistoryModel {
 
   factory HistoryModel.fromJson(Map<String, dynamic> json) => HistoryModel(
         success: json["success"],
-        code: json["code"],
         message: json["message"],
         data: Data.fromJson(json["data"]),
         payload: Payload.fromJson(json["payload"]),
@@ -37,7 +35,6 @@ class HistoryModel {
 
   Map<String, dynamic> toJson() => {
         "success": success,
-        "code": code,
         "message": message,
         "data": data!.toJson(),
         "payload": payload!.toJson(),
@@ -62,13 +59,13 @@ class Data {
 
 class Order {
   final int? id;
-  final String? resellerId;
+  final dynamic? resellerId;
   final String? rechargebleAccount;
   final Bundle? bundle;
-  final String? transactionId;
-  final String? isPaid;
-  final String? status;
-  final String? rejectReason;
+  final dynamic? transactionId;
+  final dynamic? isPaid;
+  final dynamic? status;
+  final dynamic? rejectReason;
   final DateTime? createdAt;
 
   Order({
@@ -117,7 +114,7 @@ class Order {
 class Bundle {
   final int? id;
   final String? bundleCode;
-  final String? serviceId;
+  final dynamic? serviceId;
   final String? bundleTitle;
   final String? bundleDescription;
   final String? validityType;
@@ -125,7 +122,7 @@ class Bundle {
   final String? buyingPrice;
   final String? sellingPrice;
 
-  final String? currencyId;
+  final dynamic? currencyId;
 
   final DateTime? createdAt;
 
@@ -229,8 +226,8 @@ class Currency {
 
 class Service {
   final int? id;
-  final String? serviceCategoryId;
-  final String? companyId;
+  final dynamic? serviceCategoryId;
+  final dynamic? companyId;
 
   final ServiceCategory? serviceCategory;
   final Company? company;
@@ -269,7 +266,7 @@ class Company {
   final int? id;
   final String? companyName;
   final String? companyLogo;
-  final String? countryId;
+  final dynamic? countryId;
 
   Company({
     this.id,
@@ -281,7 +278,11 @@ class Company {
   factory Company.fromJson(Map<String, dynamic> json) => Company(
         id: json["id"] == null ? null : json["id"],
         companyName: json["company_name"] == null ? null : json["company_name"],
-        companyLogo: json["company_logo"] == null ? null : json["company_logo"],
+        companyLogo: json["company_logo"] == null
+            ? null
+            : json["company_logo"].replaceFirst(
+                'https://app.api.wadaron.v1.24.watandaronline.com',
+                'https://app-api-wadaron-v2-hr.watandaronline.com'),
         countryId: json["country_id"] == null ? null : json["country_id"],
       );
 

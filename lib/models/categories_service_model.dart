@@ -89,7 +89,7 @@ class Servicecategory {
 
 class Service {
   final int? id;
-  final String? serviceCategoryId;
+  final int? serviceCategoryId;
 
   Service({
     this.id,

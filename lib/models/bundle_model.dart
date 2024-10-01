@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final bundleModel = bundleModelFromJson(jsonString);
-
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
@@ -12,7 +8,6 @@ String bundleModelToJson(BundleModel data) => json.encode(data.toJson());
 
 class BundleModel {
   final bool? success;
-
   final Data? data;
   final Payload? payload;
 
@@ -24,14 +19,15 @@ class BundleModel {
 
   factory BundleModel.fromJson(Map<String, dynamic> json) => BundleModel(
         success: json["success"],
-        data: Data.fromJson(json["data"]),
-        payload: Payload.fromJson(json["payload"]),
+        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+        payload:
+            json["payload"] == null ? null : Payload.fromJson(json["payload"]),
       );
 
   Map<String, dynamic> toJson() => {
         "success": success,
-        "data": data!.toJson(),
-        "payload": payload!.toJson(),
+        "data": data?.toJson(),
+        "payload": payload?.toJson(),
       };
 }
 
@@ -43,26 +39,27 @@ class Data {
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        bundles:
-            List<Bundle>.from(json["bundles"].map((x) => Bundle.fromJson(x))),
+        bundles: json["bundles"] == null
+            ? null
+            : List<Bundle>.from(json["bundles"].map((x) => Bundle.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "bundles": List<dynamic>.from(bundles!.map((x) => x.toJson())),
+        "bundles": bundles == null
+            ? null
+            : List<dynamic>.from(bundles!.map((x) => x.toJson())),
       };
 }
 
 class Bundle {
   final int? id;
   final String? bundleCode;
-
   final String? bundleTitle;
   final String? bundleDescription;
   final String? validityType;
   final String? adminBuyingPrice;
   final String? buyingPrice;
   final String? sellingPrice;
-
   final Service? service;
   final Currency? currency;
 
@@ -110,8 +107,8 @@ class Bundle {
         "admin_buying_price": adminBuyingPrice,
         "buying_price": buyingPrice,
         "selling_price": sellingPrice,
-        "service": service!.toJson(),
-        "currency": currency!.toJson(),
+        "service": service?.toJson(),
+        "currency": currency?.toJson(),
       };
 }
 
@@ -123,7 +120,7 @@ class Currency {
   });
 
   factory Currency.fromJson(Map<String, dynamic> json) => Currency(
-        code: json["code"],
+        code: json["code"] == null ? null : json["code"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -133,26 +130,28 @@ class Currency {
 
 class Service {
   final int? id;
-
-  final ServiceCategory? serviceCategory;
+  final int? serviceCategoryID;
   final Company? company;
 
   Service({
     this.id,
-    this.serviceCategory,
+    this.serviceCategoryID,
     this.company,
   });
 
   factory Service.fromJson(Map<String, dynamic> json) => Service(
         id: json["id"] == null ? null : json["id"],
-        serviceCategory: ServiceCategory.fromJson(json["service_category"]),
-        company: Company.fromJson(json["company"]),
+        serviceCategoryID: json["service_category_id"] == null
+            ? null
+            : json["service_category_id"],
+        company:
+            json["company"] == null ? null : Company.fromJson(json["company"]),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "service_category": serviceCategory!.toJson(),
-        "company": company!.toJson(),
+        "service_category_id": serviceCategoryID,
+        "company": company?.toJson(),
       };
 }
 
@@ -180,51 +179,26 @@ class Company {
       };
 }
 
-class ServiceCategory {
-  final int? id;
-  final String? categoryName;
-  final String? type;
-
-  ServiceCategory({
-    this.id,
-    this.categoryName,
-    this.type,
-  });
-
-  factory ServiceCategory.fromJson(Map<String, dynamic> json) =>
-      ServiceCategory(
-        id: json["id"] == null ? null : json["id"],
-        categoryName:
-            json["category_name"] == null ? null : json["category_name"],
-        type: json["type"] == null ? null : json["type"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "category_name": categoryName,
-        "type": type,
-      };
-}
-
 class Payload {
-  final Pagination pagination;
+  final Pagination? pagination;
 
   Payload({
-    required this.pagination,
+    this.pagination,
   });
 
   factory Payload.fromJson(Map<String, dynamic> json) => Payload(
-        pagination: Pagination.fromJson(json["pagination"]),
+        pagination: json["pagination"] == null
+            ? null
+            : Pagination.fromJson(json["pagination"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "pagination": pagination.toJson(),
+        "pagination": pagination?.toJson(),
       };
 }
 
 class Pagination {
   final int? currentPage;
-
   final int? totalItems;
   final int? totalPages;
 
@@ -235,9 +209,9 @@ class Pagination {
   });
 
   factory Pagination.fromJson(Map<String, dynamic> json) => Pagination(
-        currentPage: json["current_page"],
-        totalItems: json["total_items"],
-        totalPages: json["total_pages"],
+        currentPage: json["current_page"] == null ? null : json["current_page"],
+        totalItems: json["total_items"] == null ? null : json["total_items"],
+        totalPages: json["total_pages"] == null ? null : json["total_pages"],
       );
 
   Map<String, dynamic> toJson() => {

@@ -22,11 +22,11 @@ class ServiceScreen extends StatefulWidget {
 }
 
 class _ServiceScreenState extends State<ServiceScreen> {
-  List countryName = [
-    "aAfganistan",
-    "aBangladesh",
-    "aTurkey",
-  ];
+  // List countryName = [
+  //   "aAfganistan",
+  //   "aBangladesh",
+  //   "aTurkey",
+  // ];
 
   int selectedIndex = 0;
   List mycolorlist = [
@@ -79,24 +79,24 @@ class _ServiceScreenState extends State<ServiceScreen> {
     Color(0xff3498db),
     Color(0xfff39c12),
   ];
-  List<Map<String, dynamic>> buttonInfo = [
-    {
-      "name": "Internet",
-      "icon": FontAwesomeIcons.wifi,
-    },
-    {
-      "name": "Calls",
-      "icon": FontAwesomeIcons.phoneVolume,
-    },
-    {
-      "name": "Social Apps",
-      "icon": FontAwesomeIcons.database,
-    },
-    {
-      "name": "Mobile Charge",
-      "icon": FontAwesomeIcons.globe,
-    },
-  ];
+  // List<Map<String, dynamic>> buttonInfo = [
+  //   {
+  //     "name": "Internet",
+  //     "icon": FontAwesomeIcons.wifi,
+  //   },
+  //   {
+  //     "name": "Calls",
+  //     "icon": FontAwesomeIcons.phoneVolume,
+  //   },
+  //   {
+  //     "name": "Social Apps",
+  //     "icon": FontAwesomeIcons.database,
+  //   },
+  //   {
+  //     "name": "Mobile Charge",
+  //     "icon": FontAwesomeIcons.globe,
+  //   },
+  // ];
 
   final OperatorController operatorController = Get.put(OperatorController());
   final CountryListController countryListController =
@@ -111,6 +111,22 @@ class _ServiceScreenState extends State<ServiceScreen> {
   final LanguageController languageController = Get.put(LanguageController());
 
   String numberlength = '';
+  @override
+  void initState() {
+    super.initState();
+
+    // Check if country data is available and print the first country name
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (countryListController.allcountryListData.value.data != null &&
+          countryListController
+              .allcountryListData.value.data!.countries.isNotEmpty) {
+        box.write(
+            "maxlength",
+            countryListController
+                .allcountryListData.value.data!.countries[0].phoneNumberLength);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -184,8 +200,10 @@ class _ServiceScreenState extends State<ServiceScreen> {
                                     selectedIndex = index;
 
                                     box.write("country_id", data.id);
-                                    numberlength =
-                                        data.phoneNumberLength.toString();
+                                    box.write("maxlength",
+                                        data.phoneNumberLength.toString());
+                                    // numberlength =
+                                    //     data.phoneNumberLength.toString();
                                     print(numberlength.toString());
 
                                     if (index == 0) {
