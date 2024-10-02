@@ -76,9 +76,6 @@ class _SubResellerScreenState extends State<SubResellerScreen> {
           padding: EdgeInsets.symmetric(horizontal: 18),
           child: Column(
             children: [
-              SizedBox(
-                height: 20,
-              ),
               Container(
                 height: 40,
                 width: screenWidth,
@@ -151,57 +148,61 @@ class _SubResellerScreenState extends State<SubResellerScreen> {
               SizedBox(
                 height: 20,
               ),
+              Obx(
+                () => subresellerController.isLoading.value == false
+                    ? Container(
+                        child: subresellerController.allsubresellerData.value
+                                .data!.resellers.isNotEmpty
+                            ? SizedBox()
+                            : Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      "assets/icons/empty.png",
+                                      height: 80,
+                                    ),
+                                    Text("No Data found"),
+                                  ],
+                                ),
+                              ),
+                      )
+                    : SizedBox(),
+              ),
               Expanded(
                 child: Obx(
-                  () {
-                    if (subresellerController.isLoading.value) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (subresellerController
-                                .allsubresellerData.value.data ==
-                            null ||
-                        subresellerController
-                            .allsubresellerData.value.data!.resellers.isEmpty) {
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              "assets/icons/empty.png",
-                              height: 80,
-                            ),
-                            Text("No Subreseller found"),
-                          ],
+                  () => subresellerController.isLoading.value == false &&
+                          languageController.isLoading.value == false
+                      ? ListView.separated(
+                          separatorBuilder: (context, index) {
+                            return SizedBox(
+                              height: 10,
+                            );
+                          },
+                          itemCount: subresellerController
+                              .allsubresellerData.value.data!.resellers.length,
+                          itemBuilder: (context, index) {
+                            final data = subresellerController
+                                .allsubresellerData
+                                .value
+                                .data!
+                                .resellers[index];
+                            return dataBoxname(
+                              wingetName: "wingetName",
+                              catID: "catID",
+                              resellerName: data.contactName,
+                              phoneNumber: data.phone,
+                              balance: data.balance,
+                              code: data.code,
+                              id: data.id.toString(),
+                              status: data.status.toString(),
+                              imagelink: data.profileImageUrl,
+                            );
+                          },
+                        )
+                      : Center(
+                          child: CircularProgressIndicator(),
                         ),
-                      );
-                    } else {
-                      return ListView.separated(
-                        separatorBuilder: (context, index) {
-                          return SizedBox(
-                            height: 10,
-                          );
-                        },
-                        itemCount: subresellerController
-                            .allsubresellerData.value.data!.resellers.length,
-                        itemBuilder: (context, index) {
-                          final data = subresellerController
-                              .allsubresellerData.value.data!.resellers[index];
-                          return dataBoxname(
-                            wingetName: "wingetName",
-                            catID: "catID",
-                            resellerName: data.contactName,
-                            phoneNumber: data.phone,
-                            balance: data.balance,
-                            code: data.code,
-                            id: data.id.toString(),
-                            status: data.status.toString(),
-                            imagelink: data.profileImageUrl,
-                          );
-                        },
-                      );
-                    }
-                  },
                 ),
               ),
             ],

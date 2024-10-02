@@ -1901,9 +1901,7 @@ class _HomepageState extends State<Homepage> {
                                     ),
                                   )
                                 : historyController.finalList.isEmpty
-                                    ? Center(
-                                        child: CircularProgressIndicator(),
-                                      )
+                                    ? SizedBox()
                                     : RefreshIndicator(
                                         onRefresh: refresh,
                                         child: ListView.separated(
@@ -2751,20 +2749,20 @@ class _HomepageState extends State<Homepage> {
                                       ),
                           ),
                         ),
-                        // Obx(
-                        //   () => historyController.isLoading.value == true
-                        //       ? Row(
-                        //           mainAxisAlignment: MainAxisAlignment.center,
-                        //           children: [
-                        //             Center(
-                        //               child: CircularProgressIndicator(
-                        //                 color: AppColors.defaultColor,
-                        //               ),
-                        //             ),
-                        //           ],
-                        //         )
-                        //       : SizedBox(),
-                        // ),
+                        Obx(
+                          () => historyController.isLoading.value == true
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Center(
+                                      child: CircularProgressIndicator(
+                                        color: AppColors.defaultColor,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : SizedBox(),
+                        ),
                       ],
                     ),
                   ),

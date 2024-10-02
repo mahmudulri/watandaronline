@@ -185,9 +185,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10),
                               child: TextField(
-                                maxLength: int.parse(
-                                  box.read("maxlength"),
-                                ),
+                                maxLength: 20,
                                 controller:
                                     confirmPinController.numberController,
                                 keyboardType: TextInputType.phone,
