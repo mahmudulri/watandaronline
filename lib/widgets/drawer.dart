@@ -68,7 +68,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
       child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Obx(
-            () => dashboardController.isLoading.value == false
+            () => dashboardController.isLoading.value == false &&
+                    languageController.isLoading.value == false
                 ? Column(
                     children: [
                       SizedBox(

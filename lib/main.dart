@@ -8,6 +8,8 @@ import 'package:watandaronline/routes/routes.dart';
 import 'package:watandaronline/splash_screen.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 
+import 'dependency_injection.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -23,6 +25,7 @@ void main() async {
       child: MyApp(),
     ),
   );
+  DependencyInjection.init();
 }
 
 class MyApp extends StatelessWidget {

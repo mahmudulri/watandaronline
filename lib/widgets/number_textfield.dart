@@ -2,7 +2,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:watandaronline/controllers/reserve_digit_controller.dart';
 import 'package:watandaronline/controllers/service_controller.dart';
+import 'package:watandaronline/helpers/language_helper.dart';
 
 class PasteRestrictionFormatter extends TextInputFormatter {
   @override
@@ -13,6 +15,15 @@ class PasteRestrictionFormatter extends TextInputFormatter {
       // Try parsing the new value to an integer
       if (int.tryParse(newValue.text) == null) {
         // If it's not an integer, return the old value (block paste)
+        Get.snackbar(
+          "Error",
+          "Only allow english number format",
+          colorText: Colors.white,
+          duration: Duration(
+            milliseconds: 1000,
+          ),
+          backgroundColor: Colors.black,
+        );
         return oldValue;
       }
     }
@@ -40,6 +51,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   final ServiceController serviceController = Get.put(ServiceController());
 
+  final ReserveDigitController reserveDigitController =
+      Get.put(ReserveDigitController());
+
   String? errorMessage;
 
   void validateInput(String input) {
@@ -47,9 +61,29 @@ class _CustomTextFieldState extends State<CustomTextField> {
     bool isValid =
         serviceController.reserveDigit.any((digit) => input.startsWith(digit));
 
+    // if (!isValid) {
+    //   setState(() {
+    //     errorMessage = 'Please enter a correct number!';
+    //     box.write("permission", "no");
+    //   });
+    // } else {
+    //   setState(() {
+    //     box.write("permission", "yes");
+    //     errorMessage = null; // Clear error when valid
+    //   });
+    // }
+
     if (!isValid) {
       setState(() {
-        errorMessage = 'Please enter a correct number!';
+        errorMessage = getText("PLEASE_ENTER_A_CORRECT_NUMBER",
+                defaultValue: "Please enter a correct") +
+            " ${box.read("maxlength")} " +
+            getText("DIGIT", defaultValue: "digit") +
+            " " +
+            getText("NUMBER", defaultValue: "Number");
+
+        // errorMessage =
+        //     'Please enter a correct ${box.read("maxlength")} digit ${reserveDigitController.companyName} number!';
         box.write("permission", "no");
       });
     } else {

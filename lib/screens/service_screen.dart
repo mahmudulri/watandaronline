@@ -8,6 +8,7 @@ import 'package:watandaronline/controllers/categories_list_controller.dart';
 import 'package:watandaronline/controllers/country_list_controller.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/controllers/operator_controller.dart';
+import 'package:watandaronline/controllers/reserve_digit_controller.dart';
 import 'package:watandaronline/controllers/service_controller.dart';
 
 import 'package:watandaronline/screens/social_recharge.dart';
@@ -106,6 +107,9 @@ class _ServiceScreenState extends State<ServiceScreen> {
 
   final CategorisListController categorisListController =
       Get.put(CategorisListController());
+
+  final ReserveDigitController reserveDigitController =
+      Get.put(ReserveDigitController());
 
   final box = GetStorage();
   final LanguageController languageController = Get.put(LanguageController());
@@ -294,6 +298,8 @@ class _ServiceScreenState extends State<ServiceScreen> {
                                 boxName: data.categoryName,
                                 mycolor: mycolorlist[index],
                                 onPressed: () {
+                                  reserveDigitController.companyName =
+                                      data.categoryName.toString();
                                   bundleController.finalList.clear();
                                   box.write("service_category_id", data.id);
                                   // box.write("service_id", "");

@@ -61,6 +61,7 @@ class _HomepageState extends State<Homepage> {
   @override
   void initState() {
     super.initState();
+    historyController.fetchHistory();
 
     scrollController.addListener(refresh);
 
