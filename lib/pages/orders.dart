@@ -607,6 +607,9 @@ class _OrderPageState extends State<OrderPage> {
                                               sellingPrice: data
                                                   .bundle!.sellingPrice
                                                   .toString(),
+                                              buyingPrice: data
+                                                  .bundle!.buyingPrice
+                                                  .toString(),
                                               orderID: data.id!.toString(),
                                               resellerName: dashboardController
                                                   .alldashboardData
@@ -1731,6 +1734,9 @@ class _OrderPageState extends State<OrderPage> {
                                                       .toString(),
                                                   sellingPrice: data
                                                       .bundle!.sellingPrice
+                                                      .toString(),
+                                                  buyingPrice: data
+                                                      .bundle!.buyingPrice
                                                       .toString(),
                                                   orderID: data.id!.toString(),
                                                   resellerName:

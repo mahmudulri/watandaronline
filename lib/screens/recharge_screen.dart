@@ -166,6 +166,62 @@ class _RechargeScreenState extends State<RechargeScreen> {
   //     }
   //   });
   // }
+  //.............................................2nd method...................................//
+
+  // void _onTextChanged() {
+  //   if (!mounted) return;
+
+  //   setState(() {
+  //     inputNumber = confirmPinController.numberController.text;
+
+  //     // Print debug information
+  //     print("Input Number: $inputNumber");
+
+  //     if (inputNumber.isEmpty) {
+  //       box.write("company_id", "");
+  //       bundleController.initialpage = 1;
+  //       bundleController.finalList.clear();
+  //       bundleController.fetchallbundles();
+  //       // Handle case where text field is cleared
+  //       print("Text field is empty. Showing all services.");
+  //     } else if (inputNumber.length >= 3) {
+  //       // Check for both individual entry and pasted full number
+  //       final services = serviceController.allserviceslist.value.data!.services;
+
+  //       // Print number of services for debugging
+  //       print("Number of services: ${services.length}");
+
+  //       bool matchFound = false;
+
+  //       for (var service in services) {
+  //         for (var code in service.company!.companycodes!) {
+  //           // Print reservedDigit for debugging
+  //           print("Checking reservedDigit: ${code.reservedDigit}");
+
+  //           // Check if the pasted number starts with the reservedDigit
+  //           if (inputNumber.startsWith(code.reservedDigit.toString())) {
+  //             box.write("company_id", service.companyId);
+  //             bundleController.initialpage = 1;
+  //             bundleController.finalList.clear();
+  //             setState(() {
+  //               bundleController.fetchallbundles();
+  //             });
+
+  //             print(
+  //                 "Matched company_id: ${service.companyId} with pasted number: $inputNumber");
+  //             matchFound = true;
+  //             break; // Exit the inner loop
+  //           }
+  //         }
+  //         if (matchFound) break; // Exit the outer loop
+  //       }
+
+  //       if (!matchFound) {
+  //         print("No match found for input number: $inputNumber");
+  //       }
+  //     }
+  //   });
+  // }
 
   void _onTextChanged() {
     if (!mounted) return;
@@ -181,27 +237,26 @@ class _RechargeScreenState extends State<RechargeScreen> {
         bundleController.initialpage = 1;
         bundleController.finalList.clear();
         bundleController.fetchallbundles();
-        // Handle case where text field is cleared
         print("Text field is empty. Showing all services.");
       } else if (inputNumber.length >= 3) {
-        // Check for both individual entry and pasted full number
         final services = serviceController.allserviceslist.value.data!.services;
 
-        // Print number of services for debugging
         print("Number of services: ${services.length}");
 
         bool matchFound = false;
 
         for (var service in services) {
           for (var code in service.company!.companycodes!) {
-            // Print reservedDigit for debugging
             print("Checking reservedDigit: ${code.reservedDigit}");
 
             // Check if the pasted number starts with the reservedDigit
             if (inputNumber.startsWith(code.reservedDigit.toString())) {
               box.write("company_id", service.companyId);
               bundleController.initialpage = 1;
+
+              // Clear the finalList when a full number is pasted
               bundleController.finalList.clear();
+
               setState(() {
                 bundleController.fetchallbundles();
               });
@@ -209,14 +264,19 @@ class _RechargeScreenState extends State<RechargeScreen> {
               print(
                   "Matched company_id: ${service.companyId} with pasted number: $inputNumber");
               matchFound = true;
-              break; // Exit the inner loop
+              break;
             }
           }
-          if (matchFound) break; // Exit the outer loop
+          if (matchFound) break;
         }
 
         if (!matchFound) {
-          print("No match found for input number: $inputNumber");
+          // Clear the list if no match is found for the pasted number
+          bundleController.finalList.clear();
+          bundleController.initialpage = 1;
+          bundleController.fetchallbundles();
+          print(
+              "No match found for input number: $inputNumber. Cleared the finalList and fetched all bundles.");
         }
       }
     });
@@ -517,7 +577,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                         topLeft: Radius.circular(25),
                         topRight: Radius.circular(25),
                       ),
-                      color: Colors.white,
+                      color: AppColors.listbuilderboxColor,
                     ),
                     child: Padding(
                       padding: EdgeInsets.all(13.0),
@@ -672,9 +732,8 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                               width: screenWidth,
                                               decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(10),
-                                                color: AppColors
-                                                    .listbuilderboxColor,
+                                                    BorderRadius.circular(7),
+                                                color: Colors.white,
                                               ),
                                               child: Padding(
                                                 padding: EdgeInsets.all(5.0),
@@ -999,9 +1058,9 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                   decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            10),
-                                                    color: AppColors
-                                                        .listbuilderboxColor,
+                                                      7,
+                                                    ),
+                                                    color: Colors.white,
                                                   ),
                                                   child: Padding(
                                                     padding:

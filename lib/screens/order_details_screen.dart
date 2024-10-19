@@ -31,6 +31,7 @@ class OrderDetailsScreen extends StatefulWidget {
     this.rechargebleAccount,
     this.validityType,
     this.sellingPrice,
+    this.buyingPrice,
     this.orderID,
     this.resellerName,
     this.resellerPhone,
@@ -44,6 +45,7 @@ class OrderDetailsScreen extends StatefulWidget {
   String? rechargebleAccount;
   String? validityType;
   String? sellingPrice;
+  String? buyingPrice;
   String? orderID;
   String? resellerName;
   String? resellerPhone;
@@ -144,6 +146,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     await Share.shareFiles([path]);
   }
 
+  bool showSelling = true;
+  bool showBuying = false;
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -484,66 +488,164 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                           ),
                                         ),
                                         Text(
-                                          widget.validityType.toString(),
+                                          widget.validityType.toString() ==
+                                                  "unlimited"
+                                              ? languageController
+                                                  .alllanguageData
+                                                  .value
+                                                  .languageData!["UNLIMITED"]
+                                                  .toString()
+                                              : widget.validityType.toString() ==
+                                                      "monthly"
+                                                  ? languageController
+                                                      .alllanguageData
+                                                      .value
+                                                      .languageData!["MONTHLY"]
+                                                      .toString()
+                                                  : widget.validityType
+                                                              .toString() ==
+                                                          "weekly"
+                                                      ? languageController
+                                                          .alllanguageData
+                                                          .value
+                                                          .languageData![
+                                                              "WEEKLY"]
+                                                          .toString()
+                                                      : widget.validityType
+                                                                  .toString() ==
+                                                              "daily"
+                                                          ? languageController
+                                                              .alllanguageData
+                                                              .value
+                                                              .languageData!["DAILY"]
+                                                              .toString()
+                                                          : widget.validityType.toString() == "hourly"
+                                                              ? languageController.alllanguageData.value.languageData!["HOURLY"].toString()
+                                                              : widget.validityType.toString() == "nightly"
+                                                                  ? languageController.alllanguageData.value.languageData!["NIGHTLY"].toString()
+                                                                  : "",
                                           style: TextStyle(
+                                            fontWeight: FontWeight.w500,
                                             fontSize: 14,
                                             color: Colors.black,
                                           ),
                                         ),
                                       ],
                                     ),
+
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          getText("SELLING_PRICE",
-                                              defaultValue: "Selling Price"),
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        Row(
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        bottom: 5,
+                                      ),
+                                      child: Visibility(
+                                        visible: showSelling,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              box.read("currency_code"),
+                                              getText("SELLING_PRICE",
+                                                  defaultValue:
+                                                      "Selling Price"),
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 color: Colors.black,
-                                                fontWeight: FontWeight.w600,
                                               ),
                                             ),
-                                            SizedBox(
-                                              width: 8,
-                                            ),
-                                            Text(
-                                              NumberFormat.currency(
-                                                locale: 'en_US',
-                                                symbol: '',
-                                                decimalDigits: 2,
-                                              ).format(
-                                                double.parse(
-                                                  widget.sellingPrice
-                                                      .toString(),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  box.read("currency_code"),
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
                                                 ),
-                                              ),
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                              ),
+                                                SizedBox(
+                                                  width: 8,
+                                                ),
+                                                Text(
+                                                  NumberFormat.currency(
+                                                    locale: 'en_US',
+                                                    symbol: '',
+                                                    decimalDigits: 2,
+                                                  ).format(
+                                                    double.parse(
+                                                      widget.sellingPrice
+                                                          .toString(),
+                                                    ),
+                                                  ),
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                    SizedBox(
-                                      height: 5,
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        bottom: 5,
+                                      ),
+                                      child: Visibility(
+                                        visible: showBuying,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              getText("BUYING_PRICE",
+                                                  defaultValue: "Buying Price"),
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  box.read("currency_code"),
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 8,
+                                                ),
+                                                Text(
+                                                  NumberFormat.currency(
+                                                    locale: 'en_US',
+                                                    symbol: '',
+                                                    decimalDigits: 2,
+                                                  ).format(
+                                                    double.parse(
+                                                      widget.buyingPrice
+                                                          .toString(),
+                                                    ),
+                                                  ),
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
+
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -688,6 +790,39 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             ),
             SizedBox(
               height: 40,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text("Selling Price"),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      showSelling = !showSelling;
+                    });
+                  },
+                  child: Icon(
+                    showSelling ? Icons.visibility : Icons.visibility_off,
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text("Buying Price"),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      showBuying = !showBuying;
+                    });
+                  },
+                  child: Icon(
+                    showBuying ? Icons.visibility : Icons.visibility_off,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
             ),
             Container(
               height: 50,
