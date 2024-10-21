@@ -112,12 +112,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       if (box.read("sign") == "+") {
         DateTime localTime = utcTime.add(offset);
         String formattedTime =
-            DateFormat('yyyy-MM-dd    hh:mm:ss a').format(localTime);
+            DateFormat('yyyy-MM-dd hh:mm:ss a', 'en_US').format(localTime);
         localTimeString = '$formattedTime';
       } else {
         DateTime localTime = utcTime.subtract(offset);
         String formattedTime =
-            DateFormat('yyyy-MM-dd    hh:mm:ss a').format(localTime);
+            DateFormat('yyyy-MM-dd hh:mm:ss a', 'en_US').format(localTime);
+
         localTimeString = '$formattedTime';
       }
     } catch (e) {
@@ -222,32 +223,52 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                       Column(
                                         children: [
                                           Container(
-                                            height: 55,
-                                            width: 55,
                                             decoration: BoxDecoration(
-                                              color: widget.status.toString() ==
-                                                      "0"
-                                                  ? Colors.grey
-                                                  : widget.status.toString() ==
-                                                          "1"
-                                                      ? Colors.green
-                                                      : Colors.red,
+                                              color: Colors.white,
                                               shape: BoxShape.circle,
                                             ),
-                                            child: Center(
-                                              child: Icon(
+                                            child: Padding(
+                                              padding: EdgeInsets.all(6.0),
+                                              child: Image.asset(
                                                 widget.status.toString() == "0"
-                                                    ? Icons.pending
+                                                    ? "assets/icons/pending.png"
                                                     : widget.status
                                                                 .toString() ==
                                                             "1"
-                                                        ? Icons.check
-                                                        : Icons.close,
-                                                color: Colors.white,
-                                                size: 40,
+                                                        ? "assets/icons/success.png"
+                                                        : "assets/icons/reject.png",
+                                                height: 40,
                                               ),
                                             ),
                                           ),
+                                          // Container(
+                                          //   height: 55,
+                                          //   width: 55,
+                                          //   decoration: BoxDecoration(
+                                          //     color: widget.status.toString() ==
+                                          //             "0"
+                                          //         ? Colors.grey
+                                          //         : widget.status.toString() ==
+                                          //                 "1"
+                                          //             ? Colors.green
+                                          //             : Colors.red,
+                                          //     shape: BoxShape.circle,
+                                          //   ),
+                                          //   child: Center(
+                                          //     child: Icon(
+                                          //       widget.status.toString() == "0"
+                                          //           ? Icons.pending
+                                          //           : widget.status
+                                          //                       .toString() ==
+                                          //                   "1"
+                                          //               ? Icons.check
+                                          //               : Icons.close,
+                                          //       color: Colors.white,
+                                          //       size: 40,
+                                          //     ),
+                                          //   ),
+                                          // ),
+
                                           // Container(
                                           //   height: 55,
                                           //   width: 55,
@@ -533,12 +554,67 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                       ],
                                     ),
 
-                                    SizedBox(
-                                      height: 5,
+                                    // SizedBox(
+                                    //   height: 5,
+                                    // ),
+
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        top: 0,
+                                      ),
+                                      child: Visibility(
+                                        visible: showBuying,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              getText("BUYING_PRICE",
+                                                  defaultValue: "Buying Price"),
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  box.read("currency_code"),
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 8,
+                                                ),
+                                                Text(
+                                                  NumberFormat.currency(
+                                                    locale: 'en_US',
+                                                    symbol: '',
+                                                    decimalDigits: 2,
+                                                  ).format(
+                                                    double.parse(
+                                                      widget.buyingPrice
+                                                          .toString(),
+                                                    ),
+                                                  ),
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                     Container(
                                       margin: EdgeInsets.only(
-                                        bottom: 5,
+                                        top: 0,
                                       ),
                                       child: Visibility(
                                         visible: showSelling,
@@ -576,60 +652,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                   ).format(
                                                     double.parse(
                                                       widget.sellingPrice
-                                                          .toString(),
-                                                    ),
-                                                  ),
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                        bottom: 5,
-                                      ),
-                                      child: Visibility(
-                                        visible: showBuying,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              getText("BUYING_PRICE",
-                                                  defaultValue: "Buying Price"),
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  box.read("currency_code"),
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 8,
-                                                ),
-                                                Text(
-                                                  NumberFormat.currency(
-                                                    locale: 'en_US',
-                                                    symbol: '',
-                                                    decimalDigits: 2,
-                                                  ).format(
-                                                    double.parse(
-                                                      widget.buyingPrice
                                                           .toString(),
                                                     ),
                                                   ),
@@ -736,49 +758,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             dotline(),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                // Container(
-                                //   height: 55,
-                                //   width: 140,
-                                //   child: Column(
-                                //     children: [
-                                //       Divider(
-                                //         thickness: 1,
-                                //         color: Colors.black,
-                                //       ),
-                                //       Container(
-                                //         child: Text(
-                                //           dashboardController.alldashboardData.value
-                                //               .data!.userInfo!.contactName
-                                //               .toString(),
-                                //           style: GoogleFonts.josefinSans(
-                                //             color: Colors.black,
-                                //             fontSize: 13,
-                                //             fontWeight: FontWeight.w500,
-                                //           ),
-                                //         ),
-                                //       ),
-                                //       Divider(
-                                //         thickness: 1,
-                                //         color: Colors.black,
-                                //       ),
-                                //     ],
-                                //   ),
-                                // ),
-                                // Container(
-                                //   height: 45,
-                                //   width: 45,
-                                //   decoration: BoxDecoration(
-                                //     image: DecorationImage(
-                                //       fit: BoxFit.fill,
-                                //       image: NetworkImage(
-                                //         widget.companyLogo.toString(),
-                                //       ),
-                                //     ),
-                                //     shape: BoxShape.circle,
-                                //   ),
-                                // ),
-                              ],
+                              children: [],
                             ),
                           ],
                         ),

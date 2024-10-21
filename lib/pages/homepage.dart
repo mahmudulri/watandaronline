@@ -1272,16 +1272,11 @@ class _HomepageState extends State<Homepage> {
                                                   Expanded(
                                                     flex: 2,
                                                     child: Container(
-                                                      child: Column(
+                                                      child: Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          // Icon(
-                                                          //   Icons.check,
-                                                          //   color: Colors.green,
-                                                          //   size: 14,
-                                                          // ),
                                                           Text(
                                                             data.status.toString() ==
                                                                     "0"
@@ -1315,6 +1310,34 @@ class _HomepageState extends State<Homepage> {
                                                                       .w600,
                                                             ),
                                                           ),
+                                                          SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          Container(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color:
+                                                                  Colors.white,
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                            ),
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(6.0),
+                                                              child:
+                                                                  Image.asset(
+                                                                data.status.toString() ==
+                                                                        "0"
+                                                                    ? "assets/icons/pending.png"
+                                                                    : data.status.toString() ==
+                                                                            "1"
+                                                                        ? "assets/icons/success.png"
+                                                                        : "assets/icons/reject.png",
+                                                                height: 20,
+                                                              ),
+                                                            ),
+                                                          )
                                                         ],
                                                       ),
                                                     ),

@@ -44,7 +44,7 @@ class _OrderPageState extends State<OrderPage> {
   void initState() {
     // orderlistController.fetchOrderlistdata();
     orderlistController.initialpage = 1;
-    orderlistController.fetchOrderlistdata();
+    // orderlistController.fetchOrderlistdata();
 
     super.initState();
 
