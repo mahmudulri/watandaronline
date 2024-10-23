@@ -13,7 +13,6 @@ class ConfirmPinController extends GetxController {
   final box = GetStorage();
 
   TextEditingController pinController = TextEditingController();
-  final HistoryController historyController = Get.put(HistoryController());
 
   RxBool isLoading = false.obs;
   RxBool placeingLoading = false.obs;

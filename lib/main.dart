@@ -52,18 +52,22 @@ class MyApp extends StatelessWidget {
 class Startpage extends StatelessWidget {
   Startpage({super.key});
 
-  final box = GetStorage();
+  // final box = GetStorage();
 
   final TimeZoneController timeZoneController = Get.put(TimeZoneController());
 
-  myfunction() async {
-    box.write("timezone", await FlutterTimezone.getLocalTimezone());
-    timeZoneController.fetchTimeData();
+  gettimezone() async {
+    // box.write("timezone", await FlutterTimezone.getLocalTimezone());
+
+    timeZoneController.myzone = await FlutterTimezone.getLocalTimezone();
+    timeZoneController.setTimezoneOffset();
+    timeZoneController.extractTimeDetails();
+    // timeZoneController.fetchTimeData();
   }
 
   @override
   Widget build(BuildContext context) {
-    myfunction();
+    gettimezone();
     return MaterialApp(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,

@@ -16,6 +16,7 @@ import 'dart:ui' as ui;
 
 import 'package:watandaronline/controllers/dashboard_controller.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
+import 'package:watandaronline/controllers/time_zone_controller.dart';
 import 'package:watandaronline/helpers/language_helper.dart';
 import 'package:watandaronline/pages/orders.dart';
 import 'package:watandaronline/utils/colors.dart';
@@ -58,6 +59,8 @@ class OrderDetailsScreen extends StatefulWidget {
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   final DashboardController dashboardController =
       Get.put(DashboardController());
+
+  final TimeZoneController timeZoneController = Get.put(TimeZoneController());
 
   final LanguageController languageController = Get.put(LanguageController());
 
@@ -103,13 +106,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
       // Calculate the offset duration
       Duration offset = Duration(
-        hours: int.parse(box.read("hour")),
-        minutes: int.parse(box.read("minute")),
+        hours: int.parse(timeZoneController.hour),
+        minutes: int.parse(timeZoneController.minute),
       );
 
       // Apply the offset (subtracting for negative)
 
-      if (box.read("sign") == "+") {
+      if (timeZoneController.sign == "+") {
         DateTime localTime = utcTime.add(offset);
         String formattedTime =
             DateFormat('yyyy-MM-dd hh:mm:ss a', 'en_US').format(localTime);
@@ -223,22 +226,14 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                       Column(
                                         children: [
                                           Container(
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsets.all(6.0),
-                                              child: Image.asset(
-                                                widget.status.toString() == "0"
-                                                    ? "assets/icons/pending.png"
-                                                    : widget.status
-                                                                .toString() ==
-                                                            "1"
-                                                        ? "assets/icons/success.png"
-                                                        : "assets/icons/reject.png",
-                                                height: 40,
-                                              ),
+                                            child: Image.asset(
+                                              widget.status.toString() == "0"
+                                                  ? "assets/icons/pending.png"
+                                                  : widget.status.toString() ==
+                                                          "1"
+                                                      ? "assets/icons/success.png"
+                                                      : "assets/icons/reject.png",
+                                              height: 40,
                                             ),
                                           ),
                                           // Container(

@@ -11,6 +11,8 @@ import 'package:watandaronline/controllers/place_order_controller.dart';
 import 'package:watandaronline/controllers/service_controller.dart';
 import 'package:watandaronline/controllers/sub_reseller_controller.dart';
 
+import '../controllers/history_controller.dart';
+
 class ResultScreen extends StatelessWidget {
   ResultScreen({super.key});
 
@@ -26,6 +28,8 @@ class ResultScreen extends StatelessWidget {
   final ServiceController serviceController = Get.put(ServiceController());
 
   final BundleController bundleController = Get.put(BundleController());
+
+  final HistoryController historyController = Get.put(HistoryController());
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +97,7 @@ class ResultScreen extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
+                            historyController.finalList.clear();
                             // dashboardController.fetchDashboardData();
                             // countryListController.fetchCountryData();
                             // subresellerController.fetchSubReseller();

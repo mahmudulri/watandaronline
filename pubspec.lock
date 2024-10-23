@@ -826,6 +826,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  timezone_utc_offset:
+    dependency: "direct main"
+    description:
+      name: timezone_utc_offset
+      sha256: "404b0b22c4cdd540d05fe82a6606b95bcb3ccc18a8f033559e3bf130593f6c41"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   typed_data:
     dependency: transitive
     description:
