@@ -94,26 +94,4 @@ class TimeZoneController extends GetxController {
       minute = timeParts[1]; // Get the minute
     }
   }
-
-  // Future<void> fetchTimeData() async {
-  //   final response = await http.get(
-  //     Uri.parse(
-  //         'https://worldtimeapi.org/api/timezone/${box.read("timezone")}'),
-  //   );
-
-  //   if (response.statusCode == 200) {
-  //     final data = json.decode(response.body);
-  //     final utcOffset = data['utc_offset'];
-
-  //     box.write("sign", utcOffset[0]);
-  //     box.write("hour", utcOffset.substring(1, 3));
-  //     box.write("minute", utcOffset.substring(4, 6));
-
-  //     sign = utcOffset[0];
-  //     hour = utcOffset.substring(1, 3);
-  //     minute = utcOffset.substring(4, 6);
-  //   } else {
-  //     throw Exception('Failed to load data');
-  //   }
-  // }
 }

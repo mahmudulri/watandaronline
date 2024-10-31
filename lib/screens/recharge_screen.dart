@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:watandaronline/controllers/bundles_controller.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/controllers/place_order_controller.dart';
+import 'package:watandaronline/controllers/reserve_digit_controller.dart';
 import 'package:watandaronline/controllers/service_controller.dart';
 import 'package:watandaronline/helpers/price.dart';
 import 'package:watandaronline/screens/confirm_pin.dart';
@@ -101,127 +102,18 @@ class _RechargeScreenState extends State<RechargeScreen> {
   @override
   void initState() {
     super.initState();
+    bundleController.fetchallbundles();
     confirmPinController.numberController.addListener(_onTextChanged);
     initializeDuration();
     scrollController.addListener(refresh);
     // Use addPostFrameCallback to ensure this runs after the initial build
     WidgetsBinding.instance.addPostFrameCallback((_) {
       serviceController.fetchservices();
-      bundleController.fetchallbundles();
     });
   }
 
-  // void _onTextChanged() {
-  //   if (!mounted) return;
-
-  //   setState(() {
-  //     inputNumber = confirmPinController.numberController.text;
-
-  //     // Print debug information
-  //     print("Input Number: $inputNumber");
-
-  //     if (inputNumber.isEmpty) {
-  //       box.write("company_id", "");
-  //       bundleController.initialpage = 1;
-  //       bundleController.finalList.clear();
-  //       bundleController.fetchallbundles();
-  //       // Handle case where text field is cleared
-  //       print("Text field is empty. Showing all services.");
-
-  //       // Clear the company_id from the box
-
-  //       // Reset bundleController and fetch all bundles
-  //     } else if (inputNumber.length == 3 || inputNumber.length == 4) {
-  //       final services = serviceController.allserviceslist.value.data!.services;
-
-  //       // Print number of services for debugging
-  //       print("Number of services: ${services.length}");
-
-  //       bool matchFound = false;
-
-  //       for (var service in services) {
-  //         for (var code in service.company!.companycodes!) {
-  //           // Print reservedDigit for debugging
-  //           print("Checking reservedDigit: ${code.reservedDigit}");
-
-  //           if (code.reservedDigit == inputNumber) {
-  //             box.write("company_id", service.companyId);
-  //             bundleController.initialpage = 1;
-  //             bundleController.finalList.clear();
-  //             setState(() {
-  //               bundleController.fetchallbundles();
-  //             });
-
-  //             print("Matched company_id: ${service.companyId}");
-  //             matchFound = true;
-  //             break; // Exit the inner loop
-  //           }
-  //         }
-  //         if (matchFound) break; // Exit the outer loop
-  //       }
-
-  //       if (!matchFound) {
-  //         print("No match found for input number: $inputNumber");
-  //       }
-  //     }
-  //   });
-  // }
-  //.............................................2nd method...................................//
-
-  // void _onTextChanged() {
-  //   if (!mounted) return;
-
-  //   setState(() {
-  //     inputNumber = confirmPinController.numberController.text;
-
-  //     // Print debug information
-  //     print("Input Number: $inputNumber");
-
-  //     if (inputNumber.isEmpty) {
-  //       box.write("company_id", "");
-  //       bundleController.initialpage = 1;
-  //       bundleController.finalList.clear();
-  //       bundleController.fetchallbundles();
-  //       // Handle case where text field is cleared
-  //       print("Text field is empty. Showing all services.");
-  //     } else if (inputNumber.length >= 3) {
-  //       // Check for both individual entry and pasted full number
-  //       final services = serviceController.allserviceslist.value.data!.services;
-
-  //       // Print number of services for debugging
-  //       print("Number of services: ${services.length}");
-
-  //       bool matchFound = false;
-
-  //       for (var service in services) {
-  //         for (var code in service.company!.companycodes!) {
-  //           // Print reservedDigit for debugging
-  //           print("Checking reservedDigit: ${code.reservedDigit}");
-
-  //           // Check if the pasted number starts with the reservedDigit
-  //           if (inputNumber.startsWith(code.reservedDigit.toString())) {
-  //             box.write("company_id", service.companyId);
-  //             bundleController.initialpage = 1;
-  //             bundleController.finalList.clear();
-  //             setState(() {
-  //               bundleController.fetchallbundles();
-  //             });
-
-  //             print(
-  //                 "Matched company_id: ${service.companyId} with pasted number: $inputNumber");
-  //             matchFound = true;
-  //             break; // Exit the inner loop
-  //           }
-  //         }
-  //         if (matchFound) break; // Exit the outer loop
-  //       }
-
-  //       if (!matchFound) {
-  //         print("No match found for input number: $inputNumber");
-  //       }
-  //     }
-  //   });
-  // }
+  final ReserveDigitController reserveDigitController =
+      Get.put(ReserveDigitController());
 
   void _onTextChanged() {
     if (!mounted) return;
@@ -322,7 +214,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: AppColors.defaultColor,
+        backgroundColor: Color(0xff2980b9),
         appBar: AppBar(
           leading: GestureDetector(
             onTap: () {
@@ -335,11 +227,12 @@ class _RechargeScreenState extends State<RechargeScreen> {
               color: Colors.white,
             ),
           ),
-          backgroundColor: AppColors.defaultColor,
+          backgroundColor: Color(0xff2980b9),
           elevation: 0.0,
           centerTitle: true,
           title: GestureDetector(
             onTap: () {
+              print(reserveDigitController.digits.toList());
               // print(serviceController.reserveDigit.toList());
               print(box.read("permission"));
             },
@@ -363,7 +256,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                 flex: 3,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: Color(0xff2980b9),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(13.0),
@@ -519,6 +412,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                             },
                           ),
                         ),
+
                         SizedBox(
                           height: 2,
                         ),
@@ -580,7 +474,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                         topLeft: Radius.circular(25),
                         topRight: Radius.circular(25),
                       ),
-                      color: AppColors.listbuilderboxColor,
+                      color: Colors.white.withOpacity(0.8),
                     ),
                     child: Padding(
                       padding: EdgeInsets.all(13.0),

@@ -126,7 +126,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: AppColors.defaultColor,
+        backgroundColor: Color(0xff2980b9),
         appBar: AppBar(
           leading: GestureDetector(
             onTap: () {
@@ -138,7 +138,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
               color: Colors.white,
             ),
           ),
-          backgroundColor: AppColors.defaultColor,
+          backgroundColor: Color(0xff2980b9),
           elevation: 0.0,
           centerTitle: true,
           title: GestureDetector(
@@ -165,7 +165,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                 flex: 3,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: Color(0xff2980b9),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(13.0),
@@ -326,7 +326,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                         topLeft: Radius.circular(25),
                         topRight: Radius.circular(25),
                       ),
-                      color: Colors.white,
+                      color: Colors.white.withOpacity(0.8),
                     ),
                     child: Padding(
                       padding: EdgeInsets.all(13.0),

@@ -17,6 +17,7 @@ import 'package:watandaronline/controllers/dashboard_controller.dart';
 import 'package:watandaronline/controllers/history_controller.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/controllers/order_list_controller.dart';
+import 'package:watandaronline/controllers/time_zone_controller.dart';
 import 'package:watandaronline/screens/order_details_screen.dart';
 
 import 'package:watandaronline/utils/colors.dart';
@@ -143,6 +144,12 @@ class _OrderPageState extends State<OrderPage> {
     await Share.shareFiles([path]);
   }
 
+  final TimeZoneController timeZoneController = Get.put(TimeZoneController());
+
+  final LanguageController languageController = Get.put(LanguageController());
+  final DashboardController dashboardController =
+      Get.put(DashboardController());
+
   Text convertToLocalTime(
     String utcTimeString,
   ) {
@@ -153,21 +160,22 @@ class _OrderPageState extends State<OrderPage> {
 
       // Calculate the offset duration
       Duration offset = Duration(
-        hours: int.parse(box.read("hour")),
-        minutes: int.parse(box.read("minute")),
+        hours: int.parse(timeZoneController.hour),
+        minutes: int.parse(timeZoneController.minute),
       );
 
       // Apply the offset (subtracting for negative)
 
-      if (box.read("sign") == "+") {
+      if (timeZoneController.sign == "+") {
         DateTime localTime = utcTime.add(offset);
         String formattedTime =
-            DateFormat('yyyy-MM-dd    hh:mm:ss a').format(localTime);
+            DateFormat('yyyy-MM-dd hh:mm:ss a', 'en_US').format(localTime);
         localTimeString = '$formattedTime';
       } else {
         DateTime localTime = utcTime.subtract(offset);
         String formattedTime =
-            DateFormat('yyyy-MM-dd    hh:mm:ss a').format(localTime);
+            DateFormat('yyyy-MM-dd hh:mm:ss a', 'en_US').format(localTime);
+
         localTimeString = '$formattedTime';
       }
     } catch (e) {
@@ -175,13 +183,12 @@ class _OrderPageState extends State<OrderPage> {
     }
     return Text(
       localTimeString,
-      style: TextStyle(fontSize: 12),
+      style: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w500,
+      ),
     );
   }
-
-  final LanguageController languageController = Get.put(LanguageController());
-  final DashboardController dashboardController =
-      Get.put(DashboardController());
 
   @override
   Widget build(BuildContext context) {

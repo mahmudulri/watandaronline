@@ -137,7 +137,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xff2980b9),
         appBar: AppBar(
           leading: GestureDetector(
             onTap: () {
@@ -148,7 +148,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
               color: Colors.black,
             ),
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.white.withOpacity(0.8),
           elevation: 0.0,
           centerTitle: true,
           title: GestureDetector(
@@ -166,11 +166,12 @@ class _ServiceScreenState extends State<ServiceScreen> {
             ),
           ),
         ),
-        body: SizedBox(
+        body: Container(
+          color: Colors.white.withOpacity(0.8),
           height: screenHeight,
           width: screenWidth,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18),
+            padding: EdgeInsets.symmetric(horizontal: 18),
             child: Column(
               children: [
                 SizedBox(
@@ -296,7 +297,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                                   .servicecategories[index];
                               return ServiceBox(
                                 boxName: data.categoryName,
-                                mycolor: mycolorlist[index],
+                                serviceType: data.type,
                                 onPressed: () {
                                   reserveDigitController.companyName =
                                       data.categoryName.toString();
@@ -350,36 +351,46 @@ class ServiceBox extends StatelessWidget {
   final VoidCallback? onPressed;
   final IconData? myicon;
   final Color? mycolor;
+  final String? serviceType;
   ServiceBox({
     super.key,
     this.boxName,
     this.onPressed,
     this.myicon,
     this.mycolor,
+    this.serviceType,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onPressed,
-      child: Container(
-        decoration: BoxDecoration(
-          color: mycolor,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Center(
-            child: Text(
-              boxName.toString(),
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.visible,
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
+      child: Card(
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                serviceType.toString() == "social"
+                    ? "assets/icons/social-media.png"
+                    : "assets/icons/recharge.png",
+                height: 25,
               ),
-            ),
+              Text(
+                boxName.toString(),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.visible,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.black,
+                ),
+              ),
+            ],
           ),
         ),
       ),

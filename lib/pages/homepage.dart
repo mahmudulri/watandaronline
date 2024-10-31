@@ -53,7 +53,7 @@ class _HomepageState extends State<Homepage> {
   //   'assets/images/img5.png'
   // ];
 
-  final TimeZoneController timeZoneController = Get.put(TimeZoneController());
+  // final TimeZoneController timeZoneController = Get.put(TimeZoneController());
 
   final box = GetStorage();
   int currentindex = 0;
@@ -64,14 +64,15 @@ class _HomepageState extends State<Homepage> {
   @override
   void initState() {
     super.initState();
-    // historyController.fetchHistory();
+    historyController.fetchHistory();
 
     scrollController.addListener(refresh);
+    languageController.fetchlanData(box.read("isoCode"));
 
     // Use addPostFrameCallback to ensure this runs after the initial build
     WidgetsBinding.instance.addPostFrameCallback((_) {
       dashboardController.fetchDashboardData();
-      historyController.fetchHistory();
+      // historyController.fetchHistory();
 
       // Listening to changes in the allorderlist observable.
     });
@@ -226,7 +227,7 @@ class _HomepageState extends State<Homepage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        print(timeZoneController.myzone.toString());
+                        // print(timeZoneController.myzone.toString());
                       },
                       child: Text(
                         dashboardController
@@ -621,7 +622,7 @@ class _HomepageState extends State<Homepage> {
                                                     ],
                                                   ),
                                                   SizedBox(
-                                                    height: 5,
+                                                    height: 2,
                                                   ),
                                                   Row(
                                                     // mainAxisAlignment:
@@ -632,12 +633,13 @@ class _HomepageState extends State<Homepage> {
                                                             defaultValue:
                                                                 "Today Sale : "),
                                                         style: TextStyle(
-                                                          fontSize: 12,
+                                                          fontSize: 11,
                                                           fontWeight:
                                                               FontWeight.w600,
                                                           color: Colors.black,
                                                         ),
                                                       ),
+                                                      Spacer(),
                                                       Text(
                                                         NumberFormat.currency(
                                                           locale: 'en_US',
@@ -681,7 +683,7 @@ class _HomepageState extends State<Homepage> {
                                                       Text(
                                                         getText("TOTAL_SALE",
                                                             defaultValue:
-                                                                "Total Sale : "),
+                                                                "Total Sale "),
                                                         style: TextStyle(
                                                           fontSize: 11,
                                                           fontWeight:
@@ -689,6 +691,7 @@ class _HomepageState extends State<Homepage> {
                                                           color: Colors.black,
                                                         ),
                                                       ),
+                                                      Spacer(),
                                                       Text(
                                                         NumberFormat.currency(
                                                           locale: 'en_US',
@@ -791,7 +794,7 @@ class _HomepageState extends State<Homepage> {
                                                     ],
                                                   ),
                                                   SizedBox(
-                                                    height: 5,
+                                                    height: 2,
                                                   ),
                                                   Row(
                                                     // mainAxisAlignment:
@@ -802,12 +805,13 @@ class _HomepageState extends State<Homepage> {
                                                             defaultValue:
                                                                 "Today Profit : "),
                                                         style: TextStyle(
-                                                          fontSize: 12,
+                                                          fontSize: 11,
                                                           fontWeight:
                                                               FontWeight.w600,
                                                           color: Colors.black,
                                                         ),
                                                       ),
+                                                      Spacer(),
                                                       Text(
                                                         NumberFormat.currency(
                                                           locale: 'en_US',
@@ -851,7 +855,7 @@ class _HomepageState extends State<Homepage> {
                                                       Text(
                                                         getText("TOTAL_PROFIT",
                                                             defaultValue:
-                                                                "Total Profit : "),
+                                                                "Total Profit"),
                                                         style: TextStyle(
                                                           fontSize: 11,
                                                           fontWeight:
@@ -859,6 +863,7 @@ class _HomepageState extends State<Homepage> {
                                                           color: Colors.black,
                                                         ),
                                                       ),
+                                                      Spacer(),
                                                       Text(
                                                         NumberFormat.currency(
                                                           locale: 'en_US',
