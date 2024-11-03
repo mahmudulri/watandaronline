@@ -96,15 +96,16 @@ class _RechargeScreenState extends State<RechargeScreen> {
 
   String search = "";
 
-  String inputNumber = "";
-  String cango = "no";
+  // String inputNumber = "";
+  // String cango = "no";
 
   @override
   void initState() {
     super.initState();
-    bundleController.fetchallbundles();
-    confirmPinController.numberController.addListener(_onTextChanged);
+
+    confirmPinController.numberController.addListener(oncleared);
     initializeDuration();
+    bundleController.fetchallbundles();
     scrollController.addListener(refresh);
     // Use addPostFrameCallback to ensure this runs after the initial build
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -112,73 +113,79 @@ class _RechargeScreenState extends State<RechargeScreen> {
     });
   }
 
-  final ReserveDigitController reserveDigitController =
-      Get.put(ReserveDigitController());
+  // final ReserveDigitController reserveDigitController =
+  //     Get.put(ReserveDigitController());
 
-  void _onTextChanged() {
-    if (!mounted) return;
+  // void _onTextChanged() {
+  //   if (!mounted) return;
 
-    setState(() {
-      inputNumber = confirmPinController.numberController.text;
+  //   setState(() {
+  //     inputNumber = confirmPinController.numberController.text;
 
-      // Print debug information
-      print("Input Number: $inputNumber");
+  //     // Print debug information
+  //     print("Input Number: $inputNumber");
 
-      if (inputNumber.isEmpty) {
-        box.write("company_id", "");
-        bundleController.initialpage = 1;
-        bundleController.finalList.clear();
-        bundleController.fetchallbundles();
-        print("Text field is empty. Showing all services.");
-      } else if (inputNumber.length >= 3) {
-        final services = serviceController.allserviceslist.value.data!.services;
+  //     if (inputNumber.isEmpty) {
+  //       box.write("company_id", "");
+  //       bundleController.initialpage = 1;
+  //       bundleController.finalList.clear();
+  //       bundleController.fetchallbundles();
+  //       print("Text field is empty. Showing all services.");
+  //     } else if (inputNumber.length >= 3) {
+  //       final services = serviceController.allserviceslist.value.data!.services;
 
-        print("Number of services: ${services.length}");
+  //       print("Number of services: ${services.length}");
 
-        bool matchFound = false;
+  //       bool matchFound = false;
 
-        for (var service in services) {
-          for (var code in service.company!.companycodes!) {
-            print("Checking reservedDigit: ${code.reservedDigit}");
+  //       for (var service in services) {
+  //         for (var code in service.company!.companycodes!) {
+  //           print("Checking reservedDigit: ${code.reservedDigit}");
 
-            // Check if the pasted number starts with the reservedDigit
-            if (inputNumber.startsWith(code.reservedDigit.toString())) {
-              box.write("company_id", service.companyId);
-              bundleController.initialpage = 1;
+  //           // Check if the pasted number starts with the reservedDigit
+  //           if (inputNumber.startsWith(code.reservedDigit.toString())) {
+  //             box.write("company_id", service.companyId);
+  //             bundleController.initialpage = 1;
 
-              // Clear the finalList when a full number is pasted
-              bundleController.finalList.clear();
+  //             // Clear the finalList when a full number is pasted
+  //             bundleController.finalList.clear();
 
-              setState(() {
-                bundleController.fetchallbundles();
-              });
+  //             setState(() {
+  //               bundleController.fetchallbundles();
+  //             });
 
-              print(
-                  "Matched company_id: ${service.companyId} with pasted number: $inputNumber");
-              matchFound = true;
-              break;
-            }
-          }
-          if (matchFound) break;
-        }
+  //             print(
+  //                 "Matched company_id: ${service.companyId} with pasted number: $inputNumber");
+  //             matchFound = true;
+  //             break;
+  //           }
+  //         }
+  //         if (matchFound) break;
+  //       }
 
-        if (!matchFound) {
-          // Clear the list if no match is found for the pasted number
-          bundleController.finalList.clear();
-          bundleController.initialpage = 1;
-          bundleController.fetchallbundles();
-          print(
-              "No match found for input number: $inputNumber. Cleared the finalList and fetched all bundles.");
-        }
-      }
-    });
-  }
+  //       if (!matchFound) {
+  //         // Clear the list if no match is found for the pasted number
+  //         bundleController.finalList.clear();
+  //         bundleController.initialpage = 1;
+  //         bundleController.fetchallbundles();
+  //         print(
+  //             "No match found for input number: $inputNumber. Cleared the finalList and fetched all bundles.");
+  //       }
+  //     }
+  //   });
+  // }
 
-  @override
-  void dispose() {
-    confirmPinController.numberController.removeListener(_onTextChanged);
+  // @override
+  // void dispose() {
+  //   confirmPinController.numberController.removeListener(_onTextChanged);
 
-    super.dispose();
+  //   super.dispose();
+  // }
+
+  void oncleared() {
+    if (confirmPinController.numberController.text.isEmpty) {
+      setState(() {});
+    } else {}
   }
 
   Future<void> refresh() async {
@@ -232,9 +239,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
           centerTitle: true,
           title: GestureDetector(
             onTap: () {
-              print(reserveDigitController.digits.toList());
               // print(serviceController.reserveDigit.toList());
-              print(box.read("permission"));
             },
             child: Text(
               languageController.alllanguageData.value.languageData!["RECHARGE"]
@@ -321,14 +326,16 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                   [];
 
                               // Show all services if input is empty, otherwise filter
-                              final filteredServices = inputNumber.isEmpty
+                              final filteredServices = confirmPinController
+                                      .numberController.text.isEmpty
                                   ? services
                                   : services.where((service) {
                                       return service.company?.companycodes
                                               ?.any((code) {
                                             final reservedDigit =
                                                 code.reservedDigit ?? '';
-                                            return inputNumber
+                                            return confirmPinController
+                                                .numberController.text
                                                 .startsWith(reservedDigit);
                                           }) ??
                                           false;

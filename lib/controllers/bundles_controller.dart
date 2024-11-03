@@ -27,6 +27,11 @@ class BundleController extends GetxController {
 
         if (allbundleslist.value.data != null &&
             allbundleslist.value.data!.bundles != null) {
+          if (initialpage == 1) {
+            finalList.clear();
+          } else {
+            print("object");
+          }
           finalList.addAll(allbundleslist.value.data!.bundles!);
         }
 

@@ -23,12 +23,6 @@ class ServiceScreen extends StatefulWidget {
 }
 
 class _ServiceScreenState extends State<ServiceScreen> {
-  // List countryName = [
-  //   "aAfganistan",
-  //   "aBangladesh",
-  //   "aTurkey",
-  // ];
-
   int selectedIndex = 0;
   List mycolorlist = [
     Color(0xff74b9ff),
@@ -80,24 +74,6 @@ class _ServiceScreenState extends State<ServiceScreen> {
     Color(0xff3498db),
     Color(0xfff39c12),
   ];
-  // List<Map<String, dynamic>> buttonInfo = [
-  //   {
-  //     "name": "Internet",
-  //     "icon": FontAwesomeIcons.wifi,
-  //   },
-  //   {
-  //     "name": "Calls",
-  //     "icon": FontAwesomeIcons.phoneVolume,
-  //   },
-  //   {
-  //     "name": "Social Apps",
-  //     "icon": FontAwesomeIcons.database,
-  //   },
-  //   {
-  //     "name": "Mobile Charge",
-  //     "icon": FontAwesomeIcons.globe,
-  //   },
-  // ];
 
   final OperatorController operatorController = Get.put(OperatorController());
   final CountryListController countryListController =
@@ -108,8 +84,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
   final CategorisListController categorisListController =
       Get.put(CategorisListController());
 
-  final ReserveDigitController reserveDigitController =
-      Get.put(ReserveDigitController());
+  final ServiceController serviceController = Get.put(ServiceController());
 
   final box = GetStorage();
   final LanguageController languageController = Get.put(LanguageController());
@@ -299,8 +274,11 @@ class _ServiceScreenState extends State<ServiceScreen> {
                                 boxName: data.categoryName,
                                 serviceType: data.type,
                                 onPressed: () {
-                                  reserveDigitController.companyName =
-                                      data.categoryName.toString();
+                                  // reserveDigitController.companyName =
+                                  //     data.categoryName.toString();
+
+                                  serviceController.reserveDigit.clear();
+
                                   bundleController.finalList.clear();
                                   box.write("service_category_id", data.id);
                                   // box.write("service_id", "");
