@@ -15,6 +15,7 @@ import 'package:watandaronline/pages/orders.dart';
 import 'package:watandaronline/pages/transactions.dart';
 
 import 'package:watandaronline/pages/sub_reseller_screen.dart';
+import 'package:watandaronline/routes/routes.dart';
 import 'package:watandaronline/utils/colors.dart';
 
 import 'controllers/order_list_controller.dart';
@@ -42,16 +43,22 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
   int currentIndex = 0;
   MyPageController myPageController = Get.put(MyPageController());
 
-  final OrderlistController orderlistController =
-      Get.put(OrderlistController());
+  // final OrderlistController orderlistController =
+  //     Get.put(OrderlistController());
 
-  final HistoryController historyController = Get.put(HistoryController());
+  // final HistoryController historyController = Get.put(HistoryController());
 
-  final TransactionController transactionController =
-      Get.put(TransactionController());
+  // final TransactionController transactionController =
+  //     Get.put(TransactionController());
 
-  final SubresellerController subresellerController =
-      Get.put(SubresellerController());
+  // final SubresellerController subresellerController =
+  //     Get.put(SubresellerController());
+
+  final orderlistController = Get.find<OrderlistController>();
+  final transactionController = Get.find<TransactionController>();
+  final historyController = Get.find<HistoryController>();
+  final languageController = Get.find<LanguageController>();
+  final subresellerController = Get.find<SubresellerController>();
 
   final PageStorageBucket bucket = PageStorageBucket();
 
@@ -71,8 +78,6 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
       controller.jumpToPage(index);
     });
   }
-
-  final LanguageController languageController = Get.put(LanguageController());
 
   @override
   Widget build(BuildContext context) {
@@ -121,12 +126,7 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
           onPressed: () {
             box.write("country_id", "2");
 
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ServiceScreen(),
-              ),
-            );
+            Get.toNamed(servicescreen);
             // Get.to(() => ServiceScreen());
           },
           child: Icon(

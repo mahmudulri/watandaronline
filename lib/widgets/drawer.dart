@@ -11,6 +11,7 @@ import 'package:watandaronline/controllers/history_controller.dart';
 import 'package:watandaronline/controllers/iso_code_controller.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/controllers/sign_in_controller.dart';
+import 'package:watandaronline/routes/routes.dart';
 import 'package:watandaronline/screens/add_card_screen.dart';
 import 'package:watandaronline/screens/myprofile_screen.dart';
 import 'package:watandaronline/screens/sign_in_screen.dart';
@@ -31,13 +32,18 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   final DashboardController dashboardController =
       Get.put(DashboardController());
 
-  final SignInController signInController = Get.put(SignInController());
+  // final SignInController signInController = Get.put(SignInController());
 
-  final IscoCodeController iscoCodeController = Get.put(IscoCodeController());
+  // final IscoCodeController iscoCodeController = Get.put(IscoCodeController());
 
-  final LanguageController languageController = Get.put(LanguageController());
+  // final LanguageController languageController = Get.put(LanguageController());
 
-  final HistoryController historyController = Get.put(HistoryController());
+  // final HistoryController historyController = Get.put(HistoryController());
+
+  final signInController = Get.find<SignInController>();
+  final iscoCodeController = Get.find<IscoCodeController>();
+  final languageController = Get.find<LanguageController>();
+  final historyController = Get.find<HistoryController>();
 
   whatsapp() async {
     var contact = "+93773735557";
@@ -160,12 +166,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                             .toString(),
                         imageLink: "assets/icons/homeicon.png",
                         onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MyprofileScreen(),
-                            ),
-                          );
+                          Get.toNamed(myprofilescreen);
                         },
                       ),
                       SizedBox(
@@ -177,12 +178,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                             .toString(),
                         imageLink: "assets/icons/add_card.png",
                         onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AddCardScreen(),
-                            ),
-                          );
+                          Get.toNamed(addcardScreen);
                         },
                       ),
                       SizedBox(

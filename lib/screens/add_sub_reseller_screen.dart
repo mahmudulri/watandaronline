@@ -23,18 +23,11 @@ class AddSubResellerScreen extends StatefulWidget {
 }
 
 class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
-  final CountryListController countryListController =
-      Get.put(CountryListController());
-
-  final CurrencyListController currencyListController =
-      Get.put(CurrencyListController());
-
-  final ProvinceController provinceController = Get.put(ProvinceController());
-
-  final DistrictController districtController = Get.put(DistrictController());
-
-  final AddSubResellerController addSubResellerController =
-      Get.put(AddSubResellerController());
+  final countryListController = Get.find<CountryListController>();
+  final provinceController = Get.find<ProvinceController>();
+  final currencyListController = Get.find<CurrencyListController>();
+  final districtController = Get.find<DistrictController>();
+  final addSubResellerController = Get.find<AddSubResellerController>();
 
   final box = GetStorage();
 

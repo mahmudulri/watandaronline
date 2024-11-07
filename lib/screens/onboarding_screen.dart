@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:watandaronline/routes/routes.dart';
 import 'package:watandaronline/widgets/default_button.dart';
 
 import '../utils/colors.dart';
@@ -84,12 +85,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     print(pagelist.length);
                   } else {
                     print(pagelist.length);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SignInScreen(),
-                      ),
-                    );
+                    Get.toNamed(signinscreen);
                   }
                 },
               ),
@@ -97,12 +93,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 alignment: Alignment.center,
                 child: TextButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SignInScreen(),
-                      ),
-                    );
+                    Get.toNamed(signinscreen);
                   },
                   child: Text(
                     'Skip',

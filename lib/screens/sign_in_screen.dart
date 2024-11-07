@@ -15,6 +15,7 @@ import 'package:watandaronline/controllers/history_controller.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/controllers/sign_in_controller.dart';
 import 'package:watandaronline/helpers/language_helper.dart';
+import 'package:watandaronline/routes/routes.dart';
 
 import 'package:watandaronline/utils/colors.dart';
 import 'package:watandaronline/widgets/default_button.dart';
@@ -34,7 +35,6 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final box = GetStorage();
 
-  final SignInController signInController = Get.put(SignInController());
   whatsapp() async {
     var contact = "+93773735557";
     var androidUrl = "whatsapp://send?phone=$contact&text=Hi, I need some help";
@@ -51,11 +51,11 @@ class _SignInScreenState extends State<SignInScreen> {
     }
   }
 
-  final HistoryController historyController = Get.put(HistoryController());
-  final LanguageController languageController = Get.put(LanguageController());
+  final signInController = Get.find<SignInController>();
+  final languageController = Get.find<LanguageController>();
+  final historyController = Get.find<HistoryController>();
+  final countryListController = Get.find<CountryListController>();
 
-  final CountryListController countryListController =
-      Get.put(CountryListController());
   // final DashboardController dashboardController =
   //     Get.put(DashboardController());
 
@@ -199,13 +199,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                         false) {
                                       // Navigating to the BottomNavigationbar page
                                       countryListController.fetchCountryData();
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              BottomNavigationbar(),
-                                        ),
-                                      );
+                                      Get.toNamed(bottomnavscreen);
 
                                       if (box.read("direction") == "rtl") {
                                         setState(() {

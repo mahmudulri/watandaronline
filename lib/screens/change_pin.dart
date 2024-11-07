@@ -7,9 +7,7 @@ import 'package:watandaronline/widgets/default_button.dart';
 
 class ChangePin extends StatelessWidget {
   ChangePin({super.key});
-
-  final ChangePinController changePinController =
-      Get.put(ChangePinController());
+  final changePinController = Get.find<ChangePinController>();
 
   @override
   Widget build(BuildContext context) {

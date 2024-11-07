@@ -46,13 +46,6 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // List<String> assets = [
-  //   'assets/images/img1.png',
-  //   'assets/images/img2.png',
-  //   'assets/images/img4.png',
-  //   'assets/images/img5.png'
-  // ];
-
   // final TimeZoneController timeZoneController = Get.put(TimeZoneController());
 
   final box = GetStorage();
@@ -66,12 +59,12 @@ class _HomepageState extends State<Homepage> {
     super.initState();
     historyController.fetchHistory();
 
+    // languageController.fetchlanData(box.read("isoCode"));
     scrollController.addListener(refresh);
-    languageController.fetchlanData(box.read("isoCode"));
+    dashboardController.fetchDashboardData();
 
     // Use addPostFrameCallback to ensure this runs after the initial build
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      dashboardController.fetchDashboardData();
       // historyController.fetchHistory();
 
       // Listening to changes in the allorderlist observable.
@@ -96,104 +89,18 @@ class _HomepageState extends State<Homepage> {
     }
   }
 
-  final DashboardController dashboardController =
-      Get.put(DashboardController());
-  final CountryListController countryListController =
-      Get.put(CountryListController());
-  final SubresellerController subresellerController =
-      Get.put(SubresellerController());
-  final SliderController sliderController = Get.put(SliderController());
-
-  // final OrderlistController orderlistController =
-  //     Get.put(OrderlistController());
-
-  final HistoryController historyController = Get.put(HistoryController());
+  final dashboardController = Get.find<DashboardController>();
+  final countryListController = Get.find<CountryListController>();
+  final historyController = Get.find<HistoryController>();
+  final languageController = Get.find<LanguageController>();
+  final sliderController = Get.find<SliderController>();
 
   GlobalKey _globalKey = GlobalKey();
-
-  Future<void> _capturePng() async {
-    try {
-      RenderRepaintBoundary boundary = _globalKey.currentContext
-          ?.findRenderObject() as RenderRepaintBoundary;
-      if (boundary != null) {
-        ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-        ByteData? byteData =
-            await image.toByteData(format: ui.ImageByteFormat.png);
-        if (byteData != null) {
-          Uint8List pngBytes = byteData.buffer.asUint8List();
-
-          // Save to gallery
-          final result = await ImageGallerySaver.saveImage(pngBytes,
-              quality: 100, name: "screenshot");
-          print(result);
-          Get.snackbar(
-            languageController.alllanguageData.value.languageData!["SUCCESS"]
-                .toString(),
-            languageController
-                .alllanguageData.value.languageData!["SAVED_IMAGE_TO_GALLERY"]
-                .toString(),
-          );
-        }
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  final LanguageController languageController = Get.put(LanguageController());
 
   final SignInController signInController = Get.put(SignInController());
   final ScrollController scrollController = ScrollController();
 
-  Text convertToLocalTime(
-    String utcTimeString,
-  ) {
-    String localTimeString;
-    try {
-      // Parse the UTC time
-      DateTime utcTime = DateTime.parse(utcTimeString);
-
-      // Calculate the offset duration
-      Duration offset = Duration(
-        hours: int.parse(box.read("hour")),
-        minutes: int.parse(box.read("minute")),
-      );
-
-      // Apply the offset (subtracting for negative)
-
-      if (box.read("sign") == "+") {
-        DateTime localTime = utcTime.add(offset);
-        String formattedTime =
-            DateFormat('yyyy-MM-dd    hh:mm:ss a').format(localTime);
-        localTimeString = '$formattedTime';
-      } else {
-        DateTime localTime = utcTime.subtract(offset);
-        String formattedTime =
-            DateFormat('yyyy-MM-dd    hh:mm:ss a').format(localTime);
-        localTimeString = '$formattedTime';
-      }
-    } catch (e) {
-      localTimeString = '';
-    }
-    return Text(
-      localTimeString,
-      style: TextStyle(fontSize: 12),
-    );
-  }
-
   final GlobalKey _hglobalKey = GlobalKey();
-  Future<void> captureImageFromWidgetAsFile(GlobalKey _hglobalKey) async {
-    RenderRepaintBoundary boundary =
-        _hglobalKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
-    ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    Uint8List unit8list = byteData!.buffer.asUint8List();
-
-    Directory tempDir = await getTemporaryDirectory();
-    final path = '${tempDir.path}/image.png';
-    File(path).writeAsBytesSync(unit8list);
-    await Share.shareFiles([path]);
-  }
 
   final AdvancedDrawerController advancedDrawerController =
       AdvancedDrawerController();
@@ -207,6 +114,7 @@ class _HomepageState extends State<Homepage> {
       backdropColor: Colors.black,
       controller: advancedDrawerController,
       child: Scaffold(
+        key: _scaffoldKey,
         backgroundColor: Colors.white,
         appBar: AppBar(
           scrolledUnderElevation: 0.0,
@@ -221,26 +129,21 @@ class _HomepageState extends State<Homepage> {
                 Icons.sort,
                 color: Colors.black,
               )),
-          title: Obx(() => dashboardController.isLoading.value == false &&
-                  countryListController.isLoading.value == false
-              ? Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        // print(timeZoneController.myzone.toString());
-                      },
-                      child: Text(
-                        dashboardController
-                            .alldashboardData.value.data!.userInfo!.resellerName
-                            .toString(),
-                        style: GoogleFonts.rubik(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+          title: Obx(() => dashboardController.isLoading.value == false
+              ? GestureDetector(
+                  onTap: () {
+                    // print(timeZoneController.myzone.toString());
+                  },
+                  child: Text(
+                    dashboardController
+                        .alldashboardData.value.data!.userInfo!.resellerName
+                        .toString(),
+                    style: GoogleFonts.rubik(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
                     ),
-                  ],
+                  ),
                 )
               : SizedBox()),
         ),
@@ -303,29 +206,6 @@ class _HomepageState extends State<Homepage> {
                   ),
                 ),
 
-                // SizedBox(
-                //   height: 5,
-                // ),
-                // Padding(
-                //   padding: const EdgeInsets.only(left: 10, right: 10),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.start,
-                //     children: [
-                //       Text(
-                //         getText("FINANCIAL_INQUIRY",
-                //             defaultValue: "Financial Inquiry"),
-                //         style: GoogleFonts.rubik(
-                //           color: Colors.black,
-                //           fontSize: 15,
-                //           fontWeight: FontWeight.w600,
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 5,
-                // ),
                 SizedBox(
                   height: 5,
                 ),

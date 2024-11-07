@@ -10,7 +10,7 @@ import '../utils/colors.dart';
 
 class AddCardScreen extends StatelessWidget {
   AddCardScreen({super.key});
-  final HistoryController historyController = Get.put(HistoryController());
+  final historyController = Get.find<HistoryController>();
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -20,14 +20,9 @@ class AddCardScreen extends StatelessWidget {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            historyController.finalList.clear();
-            historyController.initialpage = 1;
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => BottomNavigationbar(),
-              ),
-            );
+            // historyController.finalList.clear();
+            // historyController.initialpage = 1;
+            Get.back();
           },
           child: Icon(
             Icons.arrow_back,

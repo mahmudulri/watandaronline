@@ -8,6 +8,7 @@ import 'package:watandaronline/controllers/delete_sub_reseller.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/controllers/sub_reseller_controller.dart';
 import 'package:watandaronline/controllers/subreseller_details_controller.dart';
+import 'package:watandaronline/routes/routes.dart';
 import 'package:watandaronline/screens/add_sub_reseller_screen.dart';
 import 'package:watandaronline/services/subreseller_details_service.dart';
 import 'package:watandaronline/utils/colors.dart';
@@ -29,16 +30,14 @@ class SubResellerScreen extends StatefulWidget {
 }
 
 class _SubResellerScreenState extends State<SubResellerScreen> {
-  final SubresellerController subresellerController =
-      Get.put(SubresellerController());
+  final languageController = Get.find<LanguageController>();
+  final subresellerController = Get.find<SubresellerController>();
 
   final box = GetStorage();
 
   TextEditingController searchController = TextEditingController();
 
   String search = "";
-
-  final LanguageController languageController = Get.put(LanguageController());
 
   @override
   Widget build(BuildContext context) {
@@ -117,12 +116,7 @@ class _SubResellerScreenState extends State<SubResellerScreen> {
                       flex: 2,
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AddSubResellerScreen(),
-                            ),
-                          );
+                          Get.toNamed(addsubresellerscreen);
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -250,14 +244,9 @@ class dataBoxname extends StatefulWidget {
 }
 
 class _dataBoxnameState extends State<dataBoxname> {
-  final SubresellerDetailsController detailsController =
-      Get.put(SubresellerDetailsController());
-
-  final DeleteSubResellerController deleteSubResellerController =
-      Get.put(DeleteSubResellerController());
-
-  final ChangeStatusController changeStatusController =
-      Get.put(ChangeStatusController());
+  final detailsController = Get.find<SubresellerDetailsController>();
+  final deleteSubResellerController = Get.find<DeleteSubResellerController>();
+  final changeStatusController = Get.find<ChangeStatusController>();
 
   final box = GetStorage();
   @override
@@ -388,9 +377,11 @@ class _dataBoxnameState extends State<dataBoxname> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Get.to(() => ChangeSubPasswordScreen(
-                                        subID: widget.id.toString(),
-                                      ));
+                                  Get.to(
+                                    () => ChangeSubPasswordScreen(
+                                      subID: widget.id.toString(),
+                                    ),
+                                  );
                                 },
                                 child: Row(
                                   children: [

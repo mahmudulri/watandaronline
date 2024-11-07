@@ -17,7 +17,10 @@ import 'dart:ui' as ui;
 import 'package:watandaronline/controllers/dashboard_controller.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/controllers/time_zone_controller.dart';
+import 'package:watandaronline/helpers/capture_image_helper.dart';
 import 'package:watandaronline/helpers/language_helper.dart';
+import 'package:watandaronline/helpers/localtime_helper.dart';
+import 'package:watandaronline/helpers/share_image_helper.dart';
 import 'package:watandaronline/pages/orders.dart';
 import 'package:watandaronline/utils/colors.dart';
 
@@ -64,91 +67,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
   final LanguageController languageController = Get.put(LanguageController());
 
-  GlobalKey _catpureKey = GlobalKey();
-
-  Future<void> _capturePng() async {
-    try {
-      RenderRepaintBoundary boundary = _catpureKey.currentContext
-          ?.findRenderObject() as RenderRepaintBoundary;
-      if (boundary != null) {
-        ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-        ByteData? byteData =
-            await image.toByteData(format: ui.ImageByteFormat.png);
-        if (byteData != null) {
-          Uint8List pngBytes = byteData.buffer.asUint8List();
-
-          // Save to gallery
-          final result = await ImageGallerySaver.saveImage(pngBytes,
-              quality: 100, name: "screenshot");
-          print(result);
-          Get.snackbar(
-            languageController.alllanguageData.value.languageData!["SUCCESS"]
-                .toString(),
-            languageController
-                .alllanguageData.value.languageData!["SAVED_IMAGE_TO_GALLERY"]
-                .toString(),
-          );
-        }
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
   final box = GetStorage();
-  Text convertToLocalTime(
-    String utcTimeString,
-  ) {
-    String localTimeString;
-    try {
-      // Parse the UTC time
-      DateTime utcTime = DateTime.parse(utcTimeString);
 
-      // Calculate the offset duration
-      Duration offset = Duration(
-        hours: int.parse(timeZoneController.hour),
-        minutes: int.parse(timeZoneController.minute),
-      );
-
-      // Apply the offset (subtracting for negative)
-
-      if (timeZoneController.sign == "+") {
-        DateTime localTime = utcTime.add(offset);
-        String formattedTime =
-            DateFormat('yyyy-MM-dd hh:mm:ss a', 'en_US').format(localTime);
-        localTimeString = '$formattedTime';
-      } else {
-        DateTime localTime = utcTime.subtract(offset);
-        String formattedTime =
-            DateFormat('yyyy-MM-dd hh:mm:ss a', 'en_US').format(localTime);
-
-        localTimeString = '$formattedTime';
-      }
-    } catch (e) {
-      localTimeString = '';
-    }
-    return Text(
-      localTimeString,
-      style: TextStyle(
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-      ),
-    );
-  }
-
-  final GlobalKey _shareKey = GlobalKey();
-  Future<void> captureImageFromWidgetAsFile(GlobalKey _shareKey) async {
-    RenderRepaintBoundary boundary =
-        _shareKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
-    ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    Uint8List unit8list = byteData!.buffer.asUint8List();
-
-    Directory tempDir = await getTemporaryDirectory();
-    final path = '${tempDir.path}/image.png';
-    File(path).writeAsBytesSync(unit8list);
-    await Share.shareFiles([path]);
-  }
+  // final GlobalKey _shareKey = GlobalKey();
 
   bool showSelling = true;
   bool showBuying = false;
@@ -168,9 +89,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               height: 80,
             ),
             RepaintBoundary(
-              key: _catpureKey,
+              key: catpureKey,
               child: RepaintBoundary(
-                key: _shareKey,
+                key: shareKey,
                 child: Container(
                   height: 450,
                   width: screenWidth,
@@ -812,7 +733,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     flex: 2,
                     child: GestureDetector(
                       onTap: () async {
-                        captureImageFromWidgetAsFile(_shareKey);
+                        captureImageFromWidgetAsFile(shareKey);
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -850,7 +771,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     flex: 3,
                     child: GestureDetector(
                       onTap: () async {
-                        _capturePng();
+                        capturePng();
                       },
                       child: Container(
                         decoration: BoxDecoration(

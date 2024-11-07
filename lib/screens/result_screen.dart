@@ -10,6 +10,7 @@ import 'package:watandaronline/controllers/dashboard_controller.dart';
 import 'package:watandaronline/controllers/place_order_controller.dart';
 import 'package:watandaronline/controllers/service_controller.dart';
 import 'package:watandaronline/controllers/sub_reseller_controller.dart';
+import 'package:watandaronline/routes/routes.dart';
 
 import '../controllers/history_controller.dart';
 
@@ -18,18 +19,7 @@ class ResultScreen extends StatelessWidget {
 
   /////////////////////...........fetching Controller ......................//
 
-  final DashboardController dashboardController =
-      Get.put(DashboardController());
-  final CountryListController countryListController =
-      Get.put(CountryListController());
-  final SubresellerController subresellerController =
-      Get.put(SubresellerController());
-
-  final ServiceController serviceController = Get.put(ServiceController());
-
-  final BundleController bundleController = Get.put(BundleController());
-
-  final HistoryController historyController = Get.put(HistoryController());
+  final historyController = Get.find<HistoryController>();
 
   @override
   Widget build(BuildContext context) {
@@ -98,18 +88,8 @@ class ResultScreen extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             historyController.finalList.clear();
-                            // dashboardController.fetchDashboardData();
-                            // countryListController.fetchCountryData();
-                            // subresellerController.fetchSubReseller();
-                            // bundleController.fetchbundles();
-                            // serviceController.fetchservices();
-
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BottomNavigationbar(),
-                              ),
-                            );
+                            historyController.initialpage = 1;
+                            Get.toNamed(bottomnavscreen);
                             // Get.to(() => BottomNavigationbar());
                           },
                           child: Container(

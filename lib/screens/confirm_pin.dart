@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/controllers/place_order_controller.dart';
+import 'package:watandaronline/routes/routes.dart';
 
 import '../controllers/confirm_pin_controller.dart';
 import 'result_screen.dart';
@@ -19,10 +20,8 @@ class ConfirmPinScreen extends StatefulWidget {
 }
 
 class _ConfirmPinScreenState extends State<ConfirmPinScreen> {
-  final ConfirmPinController confirmPinController =
-      Get.put(ConfirmPinController());
-
-  final LanguageController languageController = Get.put(LanguageController());
+  final confirmPinController = Get.find<ConfirmPinController>();
+  final languageController = Get.find<LanguageController>();
 
   final FocusNode _focusNode = FocusNode();
 
@@ -199,12 +198,7 @@ class _ConfirmPinScreenState extends State<ConfirmPinScreen> {
                               await confirmPinController.verify();
                               if (confirmPinController.loadsuccess.value ==
                                   false) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ResultScreen(),
-                                  ),
-                                );
+                                Get.toNamed(resultscreen);
                               } else {
                                 print("errorBD");
                               }

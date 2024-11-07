@@ -36,8 +36,9 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
-  final OrderlistController orderlistController =
-      Get.put(OrderlistController());
+  final languageController = Get.find<LanguageController>();
+  final dashboardController = Get.find<DashboardController>();
+  final orderlistController = Get.find<OrderlistController>();
 
   final ScrollController scrollController = ScrollController();
 
@@ -145,10 +146,6 @@ class _OrderPageState extends State<OrderPage> {
   }
 
   final TimeZoneController timeZoneController = Get.put(TimeZoneController());
-
-  final LanguageController languageController = Get.put(LanguageController());
-  final DashboardController dashboardController =
-      Get.put(DashboardController());
 
   Text convertToLocalTime(
     String utcTimeString,

@@ -20,6 +20,7 @@ class ChangeBalanceScreen extends StatefulWidget {
 
 class _ChangeBalanceScreenState extends State<ChangeBalanceScreen> {
   final BalanceController balanceController = Get.put(BalanceController());
+
   bool isCreditSelected = false;
   bool isDebitSelected = false;
   final box = GetStorage();

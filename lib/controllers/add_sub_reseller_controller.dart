@@ -13,8 +13,7 @@ import 'package:watandaronline/models/transaction_model.dart';
 
 import '../utils/api_endpoints.dart';
 
-final SubresellerController subresellerController =
-    Get.put(SubresellerController());
+final subresellerController = Get.find<SubresellerController>();
 
 class AddSubResellerController extends GetxController {
   var photoLink = ''.obs;

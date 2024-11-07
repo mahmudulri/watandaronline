@@ -12,13 +12,12 @@ import '../controllers/transaction_controller.dart';
 
 class TransactionsPage extends StatelessWidget {
   TransactionsPage({super.key});
-  final TransactionController transactionController =
-      Get.put(TransactionController());
+  final transactionController = Get.find<TransactionController>();
+  final languageController = Get.find<LanguageController>();
 
   final box = GetStorage();
 
   final TextEditingController dateController = TextEditingController();
-  final LanguageController languageController = Get.put(LanguageController());
 
   @override
   Widget build(BuildContext context) {

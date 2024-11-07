@@ -10,6 +10,7 @@ import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/controllers/operator_controller.dart';
 import 'package:watandaronline/controllers/reserve_digit_controller.dart';
 import 'package:watandaronline/controllers/service_controller.dart';
+import 'package:watandaronline/routes/routes.dart';
 
 import 'package:watandaronline/screens/social_recharge.dart';
 
@@ -76,18 +77,13 @@ class _ServiceScreenState extends State<ServiceScreen> {
   ];
 
   final OperatorController operatorController = Get.put(OperatorController());
-  final CountryListController countryListController =
-      Get.put(CountryListController());
 
-  final BundleController bundleController = Get.put(BundleController());
-
-  final CategorisListController categorisListController =
-      Get.put(CategorisListController());
-
-  final ServiceController serviceController = Get.put(ServiceController());
+  final categorisListController = Get.find<CategorisListController>();
+  final languageController = Get.find<LanguageController>();
+  final countryListController = Get.find<CountryListController>();
+  final serviceController = Get.find<ServiceController>();
 
   final box = GetStorage();
-  final LanguageController languageController = Get.put(LanguageController());
 
   String numberlength = '';
   @override
@@ -279,32 +275,16 @@ class _ServiceScreenState extends State<ServiceScreen> {
 
                                   serviceController.reserveDigit.clear();
 
-                                  bundleController.finalList.clear();
                                   box.write("service_category_id", data.id);
                                   // box.write("service_id", "");
                                   box.write("validity_type", "");
                                   box.write("company_id", "");
                                   box.write("search_tag", "");
 
-                                  bundleController.initialpage = 1;
-
                                   if (data.type == "social") {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            SocialRechargeScreen(),
-                                      ),
-                                    );
+                                    Get.toNamed(socialrechargescreen);
                                   } else {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => RechargeScreen(
-                                          numberlength: numberlength,
-                                        ),
-                                      ),
-                                    );
+                                    Get.toNamed(rechargescreen);
                                   }
                                 },
                               );

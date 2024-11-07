@@ -25,59 +25,106 @@ void main() async {
       child: MyApp(),
     ),
   );
-  DependencyInjection.init();
+  DependencyInjection.init(); // used for check real time internet access
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      // localizationsDelegates: context.localizationDelegates,
-      // supportedLocales: context.supportedLocales,
-      // locale: context.locale,
-      debugShowCheckedModeBanner: false,
-
-      theme: ThemeData(
-        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: false,
-      ),
-      home: Startpage(),
-    );
-  }
+  State<MyApp> createState() => _MyAppState();
 }
 
-class Startpage extends StatelessWidget {
-  Startpage({super.key});
-
-  // final box = GetStorage();
-
+class _MyAppState extends State<MyApp> {
+  final box = GetStorage();
   final TimeZoneController timeZoneController = Get.put(TimeZoneController());
+  @override
+  void initState() {
+    super.initState();
+    gettimezone();
+  }
 
-  gettimezone() async {
-    // box.write("timezone", await FlutterTimezone.getLocalTimezone());
-
+  Future<void> gettimezone() async {
     timeZoneController.myzone = await FlutterTimezone.getLocalTimezone();
     timeZoneController.setTimezoneOffset();
     timeZoneController.extractTimeDetails();
-    // timeZoneController.fetchTimeData();
   }
 
   @override
   Widget build(BuildContext context) {
-    gettimezone();
-    return MaterialApp(
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        useMaterial3: false,
+      ),
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       initialRoute: splash,
-      routes: mypagemap,
+      getPages: myroutes,
     );
   }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Schedule locale update after the current frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.updateLocale(context.locale);
+    });
+  }
 }
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+
+//   // This widget is the root of your application.
+//   @override
+//   Widget build(BuildContext context) {
+//     return GetMaterialApp(
+//       // localizationsDelegates: context.localizationDelegates,
+//       // supportedLocales: context.supportedLocales,
+//       // locale: context.locale,
+//       debugShowCheckedModeBanner: false,
+
+//       theme: ThemeData(
+//         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+//         useMaterial3: false,
+//       ),
+     
+//     );
+//   }
+// }
+
+// class Startpage extends StatelessWidget {
+//   Startpage({super.key});
+
+//   // final box = GetStorage();
+
+//   final TimeZoneController timeZoneController = Get.put(TimeZoneController());
+
+//   gettimezone() async {
+//     // box.write("timezone", await FlutterTimezone.getLocalTimezone());
+
+//     timeZoneController.myzone = await FlutterTimezone.getLocalTimezone();
+//     timeZoneController.setTimezoneOffset();
+//     timeZoneController.extractTimeDetails();
+//     // timeZoneController.fetchTimeData();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     gettimezone();
+//     return MaterialApp(
+//       localizationsDelegates: context.localizationDelegates,
+//       supportedLocales: context.supportedLocales,
+//       locale: context.locale,
+//       debugShowCheckedModeBanner: false,
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       initialRoute: splash,
+//       routes: mypagemap,
+//     );
+//   }
+// }

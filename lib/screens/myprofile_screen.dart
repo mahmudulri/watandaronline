@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:watandaronline/bottom_nav_screen.dart';
 import 'package:watandaronline/controllers/dashboard_controller.dart';
 import 'package:watandaronline/controllers/history_controller.dart';
+import 'package:watandaronline/routes/routes.dart';
 import 'package:watandaronline/utils/colors.dart';
 import 'package:watandaronline/widgets/auth_textfield.dart';
 import 'package:watandaronline/widgets/default_button.dart';
@@ -15,10 +16,9 @@ import 'edit_profile_screen.dart';
 class MyprofileScreen extends StatelessWidget {
   MyprofileScreen({super.key});
 
-  final DashboardController dashboardController =
-      Get.put(DashboardController());
+  final dashboardController = Get.find<DashboardController>();
 
-  final HistoryController historyController = Get.put(HistoryController());
+  final historyController = Get.find<HistoryController>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +29,9 @@ class MyprofileScreen extends StatelessWidget {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            historyController.finalList.clear();
-            historyController.initialpage = 1;
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => BottomNavigationbar(),
-              ),
-            );
+            // historyController.finalList.clear();
+            // historyController.initialpage = 1;
+            Get.back();
           },
           child: Icon(
             Icons.arrow_back,
@@ -120,12 +115,7 @@ class MyprofileScreen extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ChangePin(),
-                        ),
-                      );
+                      Get.toNamed(changepinscreen);
                     },
                     child: Container(
                       decoration: BoxDecoration(
