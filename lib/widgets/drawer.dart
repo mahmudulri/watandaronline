@@ -29,9 +29,6 @@ class DrawerWidget extends StatefulWidget {
 class _DrawerWidgetState extends State<DrawerWidget> {
   final box = GetStorage();
 
-  final DashboardController dashboardController =
-      Get.put(DashboardController());
-
   // final SignInController signInController = Get.put(SignInController());
 
   // final IscoCodeController iscoCodeController = Get.put(IscoCodeController());
@@ -44,6 +41,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   final iscoCodeController = Get.find<IscoCodeController>();
   final languageController = Get.find<LanguageController>();
   final historyController = Get.find<HistoryController>();
+  final dashboardController = Get.find<DashboardController>();
 
   whatsapp() async {
     var contact = "+93773735557";

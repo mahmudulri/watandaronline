@@ -95,12 +95,12 @@ class _HomepageState extends State<Homepage> {
   final languageController = Get.find<LanguageController>();
   final sliderController = Get.find<SliderController>();
 
-  GlobalKey _globalKey = GlobalKey();
+  // GlobalKey _globalKey = GlobalKey();
 
-  final SignInController signInController = Get.put(SignInController());
+  // final SignInController signInController = Get.put(SignInController());
   final ScrollController scrollController = ScrollController();
 
-  final GlobalKey _hglobalKey = GlobalKey();
+  // final GlobalKey _hglobalKey = GlobalKey();
 
   final AdvancedDrawerController advancedDrawerController =
       AdvancedDrawerController();

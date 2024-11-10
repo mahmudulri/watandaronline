@@ -69,13 +69,12 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
       "Value": "nightly",
     },
   ];
-  final LanguageController languageController = Get.put(LanguageController());
-  final ServiceController serviceController = Get.put(ServiceController());
+  final serviceController = Get.find<ServiceController>();
+  final languageController = Get.find<LanguageController>();
+  final bundleController = Get.find<BundleController>();
+  final confirmPinController = Get.find<ConfirmPinController>();
 
-  final BundleController bundleController = Get.put(BundleController());
   final box = GetStorage();
-  final ConfirmPinController confirmPinController =
-      Get.put(ConfirmPinController());
 
   TextEditingController searchController = TextEditingController();
   final ScrollController scrollController = ScrollController();
@@ -131,7 +130,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
           leading: GestureDetector(
             onTap: () {
               confirmPinController.numberController.clear();
-              Navigator.pop(context);
+              Get.back();
             },
             child: Icon(
               Icons.arrow_back,

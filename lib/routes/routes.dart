@@ -131,5 +131,6 @@ List<GetPage> myroutes = [
   GetPage(
     name: socialrechargescreen,
     page: () => SocialRechargeScreen(),
+    binding: RechargeBinding(),
   ),
 ];
