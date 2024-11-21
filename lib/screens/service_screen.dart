@@ -10,9 +10,11 @@ import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/controllers/operator_controller.dart';
 import 'package:watandaronline/controllers/reserve_digit_controller.dart';
 import 'package:watandaronline/controllers/service_controller.dart';
+import 'package:watandaronline/helpers/language_helper.dart';
 import 'package:watandaronline/routes/routes.dart';
 
 import 'package:watandaronline/screens/social_recharge.dart';
+import 'package:watandaronline/utils/colors.dart';
 
 import 'recharge_screen.dart';
 
@@ -85,10 +87,19 @@ class _ServiceScreenState extends State<ServiceScreen> {
 
   final box = GetStorage();
 
+  String selected_country = "Select Country";
+
   String numberlength = '';
+  bool isopen = false;
   @override
   void initState() {
     super.initState();
+    // Check if countries list is not empty and set the first country's name
+    final countries =
+        countryListController.allcountryListData.value.data?.countries;
+    if (countries != null && countries.isNotEmpty) {
+      selected_country = countries.first.countryName.toString();
+    }
 
     // Check if country data is available and print the first country name
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -296,7 +307,280 @@ class _ServiceScreenState extends State<ServiceScreen> {
                             color: Colors.grey,
                           ),
                         ),
-                )
+                ),
+                Visibility(
+                  visible: isopen,
+                  child: Container(
+                    height: 220,
+                    width: screenWidth,
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isopen = false;
+                                });
+                              },
+                              child: CircleAvatar(
+                                radius: 15,
+                                backgroundColor: Colors.white,
+                                child: Icon(
+                                  Icons.close,
+                                  size: 25,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 45,
+                                    width: screenWidth,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        width: 1,
+                                        color: Color(0xffECECEC),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: Row(
+                                        children: [
+                                          Image.asset(
+                                            "assets/icons/phone.png",
+                                            height: 25,
+                                          ),
+                                          SizedBox(
+                                            width: 12,
+                                          ),
+                                          Expanded(
+                                            child: TextField(
+                                              keyboardType: TextInputType.phone,
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: "Phone Number",
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 4,
+                                  ),
+                                  Container(
+                                    height: 45,
+                                    width: screenWidth,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        width: 1,
+                                        color: Color(0xffECECEC),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: Row(
+                                        children: [
+                                          Image.asset(
+                                            "assets/icons/money.png",
+                                            height: 25,
+                                          ),
+                                          SizedBox(
+                                            width: 12,
+                                          ),
+                                          Expanded(
+                                            child: TextField(
+                                              keyboardType: TextInputType.phone,
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: "Amount",
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    height: 45,
+                                    width: screenWidth,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        width: 1,
+                                        color: AppColors.borderColor,
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.only(left: 15, right: 10),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              selected_country,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w300,
+                                              ),
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return AlertDialog(
+                                                    content: Container(
+                                                      height: 150,
+                                                      width: screenWidth,
+                                                      color: Colors.white,
+                                                      child: ListView.builder(
+                                                        itemCount:
+                                                            countryListController
+                                                                .allcountryListData
+                                                                .value
+                                                                .data!
+                                                                .countries
+                                                                .length,
+                                                        itemBuilder:
+                                                            (context, index) {
+                                                          final data =
+                                                              countryListController
+                                                                  .allcountryListData
+                                                                  .value
+                                                                  .data!
+                                                                  .countries[index];
+                                                          return GestureDetector(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                selected_country = data
+                                                                    .countryName
+                                                                    .toString();
+                                                              });
+
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                            child: Container(
+                                                              margin: EdgeInsets
+                                                                  .only(
+                                                                      bottom:
+                                                                          8),
+                                                              height: 40,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                border:
+                                                                    Border.all(
+                                                                  width: 1,
+                                                                  color: Colors
+                                                                      .grey,
+                                                                ),
+                                                              ),
+                                                              child: Row(
+                                                                children: [
+                                                                  Image.network(
+                                                                    data.countryFlagImageUrl
+                                                                        .toString(),
+                                                                    height: 40,
+                                                                    width: 60,
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 10,
+                                                                  ),
+                                                                  Text(
+                                                                    data.countryName
+                                                                        .toString(),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            },
+                                            child: Icon(
+                                              FontAwesomeIcons.chevronDown,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isopen = true;
+                    });
+                  },
+                  child: Container(
+                    height: 50,
+                    width: screenWidth,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Direct Recharge",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
               ],
             ),
           ),

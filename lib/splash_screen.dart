@@ -29,11 +29,6 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
 
-  // final LanguageController languageController = Get.put(LanguageController());
-  // final IscoCodeController iscoCodeController = Get.put(IscoCodeController());
-
-  // final SliderController sliderController = Get.put(SliderController());
-
   final languageController = Get.find<LanguageController>();
   final iscoCodeController = Get.find<IscoCodeController>();
   final sliderController = Get.find<SliderController>();
