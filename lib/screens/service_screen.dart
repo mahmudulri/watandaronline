@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:watandaronline/controllers/bundles_controller.dart';
 import 'package:watandaronline/controllers/categories_list_controller.dart';
 import 'package:watandaronline/controllers/country_list_controller.dart';
+import 'package:watandaronline/controllers/custom_recharge_controller.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/controllers/operator_controller.dart';
 import 'package:watandaronline/controllers/reserve_digit_controller.dart';
@@ -15,6 +16,7 @@ import 'package:watandaronline/routes/routes.dart';
 
 import 'package:watandaronline/screens/social_recharge.dart';
 import 'package:watandaronline/utils/colors.dart';
+import 'package:watandaronline/widgets/default_button.dart';
 
 import 'recharge_screen.dart';
 
@@ -84,6 +86,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
   final languageController = Get.find<LanguageController>();
   final countryListController = Get.find<CountryListController>();
   final serviceController = Get.find<ServiceController>();
+  final customrechargeController = Get.find<CustomRechargeController>();
 
   final box = GetStorage();
 
@@ -156,9 +159,6 @@ class _ServiceScreenState extends State<ServiceScreen> {
             padding: EdgeInsets.symmetric(horizontal: 18),
             child: Column(
               children: [
-                SizedBox(
-                  height: 20,
-                ),
                 Obx(
                   () => countryListController.isLoading.value == false
                       ? Container(
@@ -255,12 +255,13 @@ class _ServiceScreenState extends State<ServiceScreen> {
                       : SizedBox(),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 5,
                 ),
                 Obx(
                   () => categorisListController.isLoading.value == false
                       ? Expanded(
                           child: GridView.builder(
+                            physics: BouncingScrollPhysics(),
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount:
@@ -311,7 +312,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                 Visibility(
                   visible: isopen,
                   child: Container(
-                    height: 220,
+                    height: 300,
                     width: screenWidth,
                     decoration: BoxDecoration(
                       color: Colors.transparent,
@@ -375,6 +376,9 @@ class _ServiceScreenState extends State<ServiceScreen> {
                                           ),
                                           Expanded(
                                             child: TextField(
+                                              controller:
+                                                  customrechargeController
+                                                      .numberController,
                                               keyboardType: TextInputType.phone,
                                               decoration: InputDecoration(
                                                 border: InputBorder.none,
@@ -413,6 +417,9 @@ class _ServiceScreenState extends State<ServiceScreen> {
                                           ),
                                           Expanded(
                                             child: TextField(
+                                              controller:
+                                                  customrechargeController
+                                                      .amountController,
                                               keyboardType: TextInputType.phone,
                                               decoration: InputDecoration(
                                                 border: InputBorder.none,
@@ -482,6 +489,13 @@ class _ServiceScreenState extends State<ServiceScreen> {
                                                                 selected_country = data
                                                                     .countryName
                                                                     .toString();
+
+                                                                box.write(
+                                                                    "country_id",
+                                                                    data.id
+                                                                        .toString());
+                                                                print(box.read(
+                                                                    "country_id"));
                                                               });
 
                                                               Navigator.pop(
@@ -542,6 +556,63 @@ class _ServiceScreenState extends State<ServiceScreen> {
                                       ),
                                     ),
                                   ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    height: 45,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      border: Border.all(
+                                        width: 1,
+                                        color:
+                                            Color.fromARGB(255, 209, 195, 195),
+                                      ),
+                                    ),
+                                    child: Center(
+                                      child: TextField(
+                                        maxLength: 4,
+                                        controller: customrechargeController
+                                            .pinController,
+                                        textAlign: TextAlign.center,
+                                        keyboardType: TextInputType.phone,
+                                        decoration: InputDecoration(
+                                          counterText: "",
+                                          border: InputBorder.none,
+                                          hintText: "Pin",
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 4,
+                                  ),
+                                  Obx(
+                                    () => DefaultButton(
+                                      buttonName: customrechargeController
+                                                  .isLoading.value ==
+                                              false
+                                          ? "Recharge now"
+                                          : "Please wait...",
+                                      onPressed: () {
+                                        if (customrechargeController.numberController.text.isNotEmpty &&
+                                            customrechargeController
+                                                .amountController
+                                                .text
+                                                .isNotEmpty &&
+                                            customrechargeController
+                                                .pinController
+                                                .text
+                                                .isNotEmpty) {
+                                          customrechargeController.dorecharge();
+                                        } else {
+                                          Get.snackbar(
+                                              "Error", "Fill box correctly");
+                                        }
+                                      },
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -552,7 +623,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 GestureDetector(
                   onTap: () {

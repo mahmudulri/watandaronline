@@ -22,4 +22,5 @@ class OtherendPoints {
   final String district = "districts";
   final String languages = "languages";
   final String sliders = "advertisements";
+  final String customrecharge = "custom-recharge";
 }
