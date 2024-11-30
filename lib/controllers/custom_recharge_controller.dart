@@ -22,6 +22,7 @@ class CustomRechargeController extends GetxController {
 
   Future<void> dorecharge() async {
     try {
+      isLoading.value = true;
       placeingLoading.value == true;
       var headers = {
         'Content-Type': 'application/json',
@@ -46,8 +47,17 @@ class CustomRechargeController extends GetxController {
       print("statuscode" + response.statusCode.toString());
 
       final orderresults = jsonDecode(response.body);
+      print(orderresults);
+
       if (response.statusCode == 201) {
         if (orderresults["success"] == true) {
+          Get.snackbar(
+            "Done",
+            orderresults["message"],
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+          );
+          isLoading.value = false;
           loadsuccess.value = false;
 
           numberController.clear();
@@ -57,7 +67,7 @@ class CustomRechargeController extends GetxController {
           placeingLoading.value = false;
         } else {
           Get.snackbar(
-            "Done",
+            "",
             orderresults["message"],
             backgroundColor: Colors.grey,
             colorText: Colors.black,
@@ -65,7 +75,7 @@ class CustomRechargeController extends GetxController {
           placeingLoading.value = false;
 
           Get.snackbar(
-            "Done",
+            "",
             orderresults["message"],
             backgroundColor: Colors.grey,
             colorText: Colors.black,
@@ -79,6 +89,7 @@ class CustomRechargeController extends GetxController {
           backgroundColor: Colors.grey,
           colorText: Colors.black,
         );
+        isLoading.value = false;
 
         numberController.clear();
 

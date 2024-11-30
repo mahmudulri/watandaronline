@@ -187,6 +187,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                                     selectedIndex = index;
 
                                     box.write("country_id", data.id);
+                                    print(box.read("country_id"));
                                     box.write("maxlength",
                                         data.phoneNumberLength.toString());
                                     // numberlength =
