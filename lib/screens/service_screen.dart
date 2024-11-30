@@ -312,7 +312,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                 Visibility(
                   visible: isopen,
                   child: Container(
-                    height: 300,
+                    height: 220,
                     width: screenWidth,
                     decoration: BoxDecoration(
                       color: Colors.transparent,
@@ -432,162 +432,163 @@ class _ServiceScreenState extends State<ServiceScreen> {
                                     ),
                                   ),
                                   SizedBox(
-                                    height: 5,
+                                    height: 20,
                                   ),
-                                  Container(
-                                    height: 45,
-                                    width: screenWidth,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(
-                                        width: 1,
-                                        color: AppColors.borderColor,
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 15, right: 10),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              selected_country,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w300,
-                                              ),
-                                            ),
-                                          ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return AlertDialog(
-                                                    content: Container(
-                                                      height: 150,
-                                                      width: screenWidth,
-                                                      color: Colors.white,
-                                                      child: ListView.builder(
-                                                        itemCount:
-                                                            countryListController
-                                                                .allcountryListData
-                                                                .value
-                                                                .data!
-                                                                .countries
-                                                                .length,
-                                                        itemBuilder:
-                                                            (context, index) {
-                                                          final data =
-                                                              countryListController
-                                                                  .allcountryListData
-                                                                  .value
-                                                                  .data!
-                                                                  .countries[index];
-                                                          return GestureDetector(
-                                                            onTap: () {
-                                                              setState(() {
-                                                                selected_country = data
-                                                                    .countryName
-                                                                    .toString();
+                                  // Container(
+                                  //   height: 45,
+                                  //   width: screenWidth,
+                                  //   decoration: BoxDecoration(
+                                  //     borderRadius: BorderRadius.circular(10),
+                                  //     border: Border.all(
+                                  //       width: 1,
+                                  //       color: AppColors.borderColor,
+                                  //     ),
+                                  //   ),
+                                  //   child: Padding(
+                                  //     padding:
+                                  //         EdgeInsets.only(left: 15, right: 10),
+                                  //     child: Row(
+                                  //       children: [
+                                  //         Expanded(
+                                  //           child: Text(
+                                  //             selected_country,
+                                  //             style: TextStyle(
+                                  //               fontWeight: FontWeight.w300,
+                                  //             ),
+                                  //           ),
+                                  //         ),
+                                  //         GestureDetector(
+                                  //           onTap: () {
+                                  //             showDialog(
+                                  //               context: context,
+                                  //               builder: (context) {
+                                  //                 return AlertDialog(
+                                  //                   content: Container(
+                                  //                     height: 150,
+                                  //                     width: screenWidth,
+                                  //                     color: Colors.white,
+                                  //                     child: ListView.builder(
+                                  //                       itemCount:
+                                  //                           countryListController
+                                  //                               .allcountryListData
+                                  //                               .value
+                                  //                               .data!
+                                  //                               .countries
+                                  //                               .length,
+                                  //                       itemBuilder:
+                                  //                           (context, index) {
+                                  //                         final data =
+                                  //                             countryListController
+                                  //                                 .allcountryListData
+                                  //                                 .value
+                                  //                                 .data!
+                                  //                                 .countries[index];
+                                  //                         return GestureDetector(
+                                  //                           onTap: () {
+                                  //                             setState(() {
+                                  //                               selected_country = data
+                                  //                                   .countryName
+                                  //                                   .toString();
 
-                                                                box.write(
-                                                                    "country_id",
-                                                                    data.id
-                                                                        .toString());
-                                                                print(box.read(
-                                                                    "country_id"));
-                                                              });
+                                  //                               box.write(
+                                  //                                   "country_id",
+                                  //                                   data.id
+                                  //                                       .toString());
+                                  //                               print(box.read(
+                                  //                                   "country_id"));
+                                  //                             });
 
-                                                              Navigator.pop(
-                                                                  context);
-                                                            },
-                                                            child: Container(
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                      bottom:
-                                                                          8),
-                                                              height: 40,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                border:
-                                                                    Border.all(
-                                                                  width: 1,
-                                                                  color: Colors
-                                                                      .grey,
-                                                                ),
-                                                              ),
-                                                              child: Row(
-                                                                children: [
-                                                                  Image.network(
-                                                                    data.countryFlagImageUrl
-                                                                        .toString(),
-                                                                    height: 40,
-                                                                    width: 60,
-                                                                    fit: BoxFit
-                                                                        .cover,
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width: 10,
-                                                                  ),
-                                                                  Text(
-                                                                    data.countryName
-                                                                        .toString(),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          );
-                                                        },
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            },
-                                            child: Icon(
-                                              FontAwesomeIcons.chevronDown,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Container(
-                                    height: 45,
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      border: Border.all(
-                                        width: 1,
-                                        color:
-                                            Color.fromARGB(255, 209, 195, 195),
-                                      ),
-                                    ),
-                                    child: Center(
-                                      child: TextField(
-                                        maxLength: 4,
-                                        controller: customrechargeController
-                                            .pinController,
-                                        textAlign: TextAlign.center,
-                                        keyboardType: TextInputType.phone,
-                                        decoration: InputDecoration(
-                                          counterText: "",
-                                          border: InputBorder.none,
-                                          hintText: "Pin",
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 4,
-                                  ),
+                                  //                             Navigator.pop(
+                                  //                                 context);
+                                  //                           },
+                                  //                           child: Container(
+                                  //                             margin: EdgeInsets
+                                  //                                 .only(
+                                  //                                     bottom:
+                                  //                                         8),
+                                  //                             height: 40,
+                                  //                             decoration:
+                                  //                                 BoxDecoration(
+                                  //                               border:
+                                  //                                   Border.all(
+                                  //                                 width: 1,
+                                  //                                 color: Colors
+                                  //                                     .grey,
+                                  //                               ),
+                                  //                             ),
+                                  //                             child: Row(
+                                  //                               children: [
+                                  //                                 Image.network(
+                                  //                                   data.countryFlagImageUrl
+                                  //                                       .toString(),
+                                  //                                   height: 40,
+                                  //                                   width: 60,
+                                  //                                   fit: BoxFit
+                                  //                                       .cover,
+                                  //                                 ),
+                                  //                                 SizedBox(
+                                  //                                   width: 10,
+                                  //                                 ),
+                                  //                                 Text(
+                                  //                                   data.countryName
+                                  //                                       .toString(),
+                                  //                                 ),
+                                  //                               ],
+                                  //                             ),
+                                  //                           ),
+                                  //                         );
+                                  //                       },
+                                  //                     ),
+                                  //                   ),
+                                  //                 );
+                                  //               },
+                                  //             );
+                                  //           },
+                                  //           child: Icon(
+                                  //             FontAwesomeIcons.chevronDown,
+                                  //             color: Colors.grey,
+                                  //           ),
+                                  //         ),
+                                  //         SizedBox(
+                                  //           width: 10,
+                                  //         ),
+                                  //       ],
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // SizedBox(
+                                  //   height: 5,
+                                  // ),
+                                  // Container(
+                                  //   height: 45,
+                                  //   width: 100,
+                                  //   decoration: BoxDecoration(
+                                  //     borderRadius: BorderRadius.circular(5),
+                                  //     border: Border.all(
+                                  //       width: 1,
+                                  //       color:
+                                  //           Color.fromARGB(255, 209, 195, 195),
+                                  //     ),
+                                  //   ),
+                                  //   child: Center(
+                                  //     child: TextField(
+                                  //       maxLength: 4,
+                                  //       controller: customrechargeController
+                                  //           .pinController,
+                                  //       textAlign: TextAlign.center,
+                                  //       keyboardType: TextInputType.phone,
+                                  //       decoration: InputDecoration(
+                                  //         counterText: "",
+                                  //         border: InputBorder.none,
+                                  //         hintText: "Pin",
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // SizedBox(
+                                  //   height: 4,
+                                  // ),
+
                                   Obx(
                                     () => DefaultButton(
                                       buttonName: customrechargeController
@@ -596,13 +597,12 @@ class _ServiceScreenState extends State<ServiceScreen> {
                                           ? "Recharge now"
                                           : "Please wait...",
                                       onPressed: () {
-                                        if (customrechargeController.numberController.text.isNotEmpty &&
-                                            customrechargeController
-                                                .amountController
+                                        if (customrechargeController
+                                                .numberController
                                                 .text
                                                 .isNotEmpty &&
                                             customrechargeController
-                                                .pinController
+                                                .amountController
                                                 .text
                                                 .isNotEmpty) {
                                           customrechargeController.dorecharge();

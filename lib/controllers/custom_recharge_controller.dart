@@ -13,7 +13,7 @@ class CustomRechargeController extends GetxController {
   TextEditingController amountController = TextEditingController();
   final box = GetStorage();
 
-  TextEditingController pinController = TextEditingController();
+  // TextEditingController pinController = TextEditingController();
 
   RxBool isLoading = false.obs;
   RxBool placeingLoading = false.obs;
@@ -22,122 +22,70 @@ class CustomRechargeController extends GetxController {
 
   Future<void> dorecharge() async {
     try {
-      isLoading.value = true;
-      loadsuccess.value = true;
-
+      placeingLoading.value == true;
       var headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       };
       var url = Uri.parse(
-          "${ApiEndPoints.baseUrl}confirm_pin?pin=${pinController.text.toString()}");
-      print(url.toString());
-
-      http.Response response = await http.get(
+          "${ApiEndPoints.baseUrl + ApiEndPoints.otherendpoints.customrecharge}");
+      Map body = {
+        'country_id': box.read("country_id"),
+        'rechargeble_account': numberController.text,
+        'amount': amountController.text,
+      };
+      http.Response response = await http.post(
         url,
+        body: body,
         headers: {
           'Authorization': 'Bearer ${box.read("userToken")}',
         },
       );
 
-      final results = jsonDecode(response.body);
+      // print(response.body.toString());
+      print("statuscode" + response.statusCode.toString());
 
-      if (response.statusCode == 200) {
-        pinController.clear();
-        // numberController.clear();
-        if (results["success"] == true) {
-          isLoading.value = false;
+      final orderresults = jsonDecode(response.body);
+      if (response.statusCode == 201) {
+        if (orderresults["success"] == true) {
+          loadsuccess.value = false;
 
-          try {
-            placeingLoading.value == true;
-            var headers = {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-            };
-            var url = Uri.parse(
-                "${ApiEndPoints.baseUrl + ApiEndPoints.otherendpoints.customrecharge}");
-            Map body = {
-              'country_id': box.read("country_id"),
-              'phone_number': numberController.text,
-              'amount': amountController.text,
-            };
-            http.Response response = await http.post(
-              url,
-              body: body,
-              headers: {
-                'Authorization': 'Bearer ${box.read("userToken")}',
-              },
-            );
+          numberController.clear();
 
-            // print(response.body.toString());
-            print("statuscode" + response.statusCode.toString());
+          amountController.clear();
 
-            final orderresults = jsonDecode(response.body);
-            if (response.statusCode == 201) {
-              if (results["success"] == true) {
-                loadsuccess.value = false;
-
-                numberController.clear();
-                pinController.clear();
-                amountController.clear();
-
-                placeingLoading.value = false;
-              } else {
-                pinController.clear();
-                Get.snackbar(
-                  "Done",
-                  orderresults["message"],
-                  backgroundColor: Colors.grey,
-                  colorText: Colors.black,
-                );
-                placeingLoading.value = false;
-
-                Get.snackbar(
-                  "Done",
-                  orderresults["message"],
-                  backgroundColor: Colors.grey,
-                  colorText: Colors.black,
-                );
-                placeingLoading.value = false;
-              }
-            } else {
-              Get.snackbar(
-                "Error",
-                orderresults["message"],
-                backgroundColor: Colors.grey,
-                colorText: Colors.black,
-              );
-              pinController.clear();
-              numberController.clear();
-
-              amountController.clear();
-
-              pinController.clear();
-              numberController.clear();
-              placeingLoading.value = false;
-            }
-          } catch (e) {
-            print(e.toString());
-          }
+          placeingLoading.value = false;
         } else {
           Get.snackbar(
-            "Error !",
-            results["message"],
-            backgroundColor: Colors.red,
-            colorText: Colors.white,
+            "Done",
+            orderresults["message"],
+            backgroundColor: Colors.grey,
+            colorText: Colors.black,
+          );
+          placeingLoading.value = false;
+
+          Get.snackbar(
+            "Done",
+            orderresults["message"],
+            backgroundColor: Colors.grey,
+            colorText: Colors.black,
           );
           placeingLoading.value = false;
         }
       } else {
-        // pinController.clear();
-        // numberController.clear();
         Get.snackbar(
-          "Error !",
-          results["message"],
+          "Error",
+          orderresults["message"],
           backgroundColor: Colors.grey,
           colorText: Colors.black,
         );
-        isLoading.value = false;
+
+        numberController.clear();
+
+        amountController.clear();
+
+        numberController.clear();
+        placeingLoading.value = false;
       }
     } catch (e) {
       print(e.toString());
