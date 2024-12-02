@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:watandaronline/controllers/history_controller.dart';
 import 'package:watandaronline/utils/api_endpoints.dart';
 
 class CustomRechargeController extends GetxController {
@@ -13,93 +12,99 @@ class CustomRechargeController extends GetxController {
   TextEditingController amountController = TextEditingController();
   final box = GetStorage();
 
-  // TextEditingController pinController = TextEditingController();
+  TextEditingController pinController = TextEditingController();
 
   RxBool isLoading = false.obs;
   RxBool placeingLoading = false.obs;
 
   RxBool loadsuccess = false.obs;
 
-  Future<void> dorecharge() async {
+  Future<void> verify() async {
     try {
       isLoading.value = true;
-      placeingLoading.value == true;
+      loadsuccess.value =
+          false; // Start with false, only set to true if successful.
+
       var headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       };
       var url = Uri.parse(
-          "${ApiEndPoints.baseUrl + ApiEndPoints.otherendpoints.customrecharge}");
-      Map body = {
-        'country_id': box.read("country_id"),
-        'rechargeble_account': numberController.text,
-        'amount': amountController.text,
-      };
-      http.Response response = await http.post(
+          "${ApiEndPoints.baseUrl}confirm_pin?pin=${pinController.text}");
+      print(url.toString());
+
+      http.Response response = await http.get(
         url,
-        body: body,
         headers: {
           'Authorization': 'Bearer ${box.read("userToken")}',
         },
       );
 
-      // print(response.body.toString());
-      print("statuscode" + response.statusCode.toString());
+      final results = jsonDecode(response.body);
 
-      final orderresults = jsonDecode(response.body);
-      print(orderresults);
+      if (response.statusCode == 200 && results["success"] == true) {
+        pinController.clear();
+        loadsuccess.value =
+            true; // Mark as successful only if status and success are correct
 
-      if (response.statusCode == 201) {
-        if (orderresults["success"] == true) {
-          Get.snackbar(
-            "Done",
-            orderresults["message"],
-            backgroundColor: Colors.green,
-            colorText: Colors.white,
-          );
-          isLoading.value = false;
-          loadsuccess.value = false;
-
-          numberController.clear();
-
-          amountController.clear();
-
-          placeingLoading.value = false;
-        } else {
-          Get.snackbar(
-            "",
-            orderresults["message"],
-            backgroundColor: Colors.grey,
-            colorText: Colors.black,
-          );
-          placeingLoading.value = false;
-
-          Get.snackbar(
-            "",
-            orderresults["message"],
-            backgroundColor: Colors.grey,
-            colorText: Colors.black,
-          );
-          placeingLoading.value = false;
-        }
+        // Proceed with placing the order
+        placeOrder();
       } else {
-        Get.snackbar(
-          "Error",
-          orderresults["message"],
-          backgroundColor: Colors.grey,
-          colorText: Colors.black,
-        );
-        isLoading.value = false;
-
-        numberController.clear();
-
-        amountController.clear();
-
-        numberController.clear();
-        placeingLoading.value = false;
+        handleFailure(results["message"]);
       }
     } catch (e) {
-      print(e.toString());
+      handleFailure(e.toString());
+    } finally {
+      isLoading.value = false;
     }
+  }
+
+  void placeOrder() async {
+    try {
+      placeingLoading.value = true;
+      var url = Uri.parse(
+          "${ApiEndPoints.baseUrl + ApiEndPoints.otherendpoints.customrecharge}");
+      print(url);
+      Map body = {
+        'country_id': box.read("country_id"),
+        'rechargeble_account': numberController.text,
+        'amount': amountController.text,
+      };
+
+      http.Response response = await http.post(
+        url,
+        body: jsonEncode(body),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${box.read("userToken")}',
+        },
+      );
+
+      final orderresults = jsonDecode(response.body);
+      if (response.statusCode == 201 && orderresults["success"] == true) {
+        loadsuccess.value = false;
+        clearInputs();
+        box.remove("bundleID");
+        placeingLoading.value = false;
+      } else {
+        handleFailure(orderresults["message"]);
+      }
+    } catch (e) {
+      handleFailure(e.toString());
+    }
+  }
+
+  void handleFailure(String message) {
+    loadsuccess.value = false;
+    placeingLoading.value = false;
+    Get.snackbar("Error", message,
+        backgroundColor: Colors.red, colorText: Colors.white);
+    clearInputs();
+  }
+
+  void clearInputs() {
+    pinController.clear();
+    numberController.clear();
   }
 }

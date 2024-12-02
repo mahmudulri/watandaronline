@@ -28,6 +28,7 @@ import 'package:watandaronline/controllers/sub_reseller_controller.dart';
 import 'package:watandaronline/controllers/time_zone_controller.dart';
 import 'package:watandaronline/helpers/language_helper.dart';
 import 'package:watandaronline/pages/orders.dart';
+import 'package:watandaronline/routes/routes.dart';
 import 'package:watandaronline/screens/order_details_screen.dart';
 import 'package:watandaronline/screens/sign_in_screen.dart';
 import 'package:watandaronline/utils/colors.dart';
@@ -59,16 +60,10 @@ class _HomepageState extends State<Homepage> {
     super.initState();
     historyController.fetchHistory();
 
-    // languageController.fetchlanData(box.read("isoCode"));
     scrollController.addListener(refresh);
     dashboardController.fetchDashboardData();
 
-    // Use addPostFrameCallback to ensure this runs after the initial build
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // historyController.fetchHistory();
-
-      // Listening to changes in the allorderlist observable.
-    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {});
   }
 
   Future<void> refresh() async {
@@ -95,12 +90,7 @@ class _HomepageState extends State<Homepage> {
   final languageController = Get.find<LanguageController>();
   final sliderController = Get.find<SliderController>();
 
-  // GlobalKey _globalKey = GlobalKey();
-
-  // final SignInController signInController = Get.put(SignInController());
   final ScrollController scrollController = ScrollController();
-
-  // final GlobalKey _hglobalKey = GlobalKey();
 
   final AdvancedDrawerController advancedDrawerController =
       AdvancedDrawerController();
@@ -875,29 +865,66 @@ class _HomepageState extends State<Homepage> {
                 //     )),
 
                 SizedBox(
-                  height: 5,
+                  height: 3,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: Container(
-                    child: Obx(
-                      () => languageController.isLoading.value == false
-                          ? Row(
-                              children: [
-                                Text(
-                                  getText("HISTORY", defaultValue: "History"),
-                                  style: GoogleFonts.rubik(
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
+                Obx(
+                  () => languageController.isLoading.value == false
+                      ? Padding(
+                          padding: const EdgeInsets.only(left: 10, right: 10),
+                          child: GestureDetector(
+                            onTap: () {
+                              box.write("country_id", "2");
+                              Get.toNamed(customrechargescreen);
+                            },
+                            child: Container(
+                              width: screenWidth,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: AppColors.defaultColor,
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                child: Center(
+                                  child: Text(
+                                    "Direct Recharge",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16,
+                                    ),
                                   ),
                                 ),
-                              ],
-                            )
-                          : SizedBox(),
-                    ),
-                  ),
+                              ),
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
                 ),
+                // SizedBox(
+                //   height: 2,
+                // ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 10, right: 10),
+                //   child: Container(
+                //     child: Obx(
+                //       () => languageController.isLoading.value == false
+                //           ? Row(
+                //               children: [
+                //                 Text(
+                //                   getText("HISTORY", defaultValue: "History"),
+                //                   style: GoogleFonts.rubik(
+                //                     color: Colors.black,
+                //                     fontSize: 15,
+                //                     fontWeight: FontWeight.w600,
+                //                   ),
+                //                 ),
+                //               ],
+                //             )
+                //           : SizedBox(),
+                //     ),
+                //   ),
+                // ),
                 SizedBox(
                   height: 5,
                 ),

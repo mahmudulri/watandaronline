@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:watandaronline/controllers/categories_list_controller.dart';
 import 'package:watandaronline/controllers/change_status_controller.dart';
 import 'package:watandaronline/controllers/country_list_controller.dart';
+import 'package:watandaronline/controllers/custom_recharge_controller.dart';
 import 'package:watandaronline/controllers/dashboard_controller.dart';
 import 'package:watandaronline/controllers/delete_sub_reseller.dart';
 import 'package:watandaronline/controllers/history_controller.dart';
@@ -30,5 +31,6 @@ class BottomNavBinding implements Bindings {
     Get.lazyPut<ChangeStatusController>(() => ChangeStatusController());
 
     Get.lazyPut<CategorisListController>(() => CategorisListController());
+    Get.lazyPut<CustomRechargeController>(() => CustomRechargeController());
   }
 }

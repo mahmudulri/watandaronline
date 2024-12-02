@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:watandaronline/bindings/add_sub_reseller_binding.dart';
 import 'package:watandaronline/bindings/bottom_nav_binding.dart';
+import 'package:watandaronline/bindings/custom_recharge_binding.dart';
 import 'package:watandaronline/bindings/myprofile_binding.dart';
 import 'package:watandaronline/bindings/recharge_binding.dart';
 import 'package:watandaronline/bindings/service_binding.dart';
@@ -13,6 +14,7 @@ import 'package:watandaronline/screens/change_balance_screen.dart';
 import 'package:watandaronline/screens/change_pin.dart';
 import 'package:watandaronline/screens/change_sub_pass_screen.dart';
 import 'package:watandaronline/screens/confirm_pin.dart';
+import 'package:watandaronline/screens/custom_recharge_screen.dart';
 import 'package:watandaronline/screens/edit_profile_screen.dart';
 import 'package:watandaronline/screens/myprofile_screen.dart';
 import 'package:watandaronline/screens/onboarding_screen.dart';
@@ -43,6 +45,7 @@ const String editprofilescreen = '/editprofile-screen';
 const String myprofilescreen = '/myprofile-screen';
 const String orderdetailsscreen = '/orderdetails-screen';
 const String rechargescreen = '/recharge-screen';
+const String customrechargescreen = '/customrecharge-screen';
 const String resultscreen = '/result-screen';
 const String servicescreen = '/service-screen';
 const String signupscreen = '/signup-screen';
@@ -114,6 +117,11 @@ List<GetPage> myroutes = [
     name: rechargescreen,
     page: () => RechargeScreen(),
     binding: RechargeBinding(),
+  ),
+  GetPage(
+    name: customrechargescreen,
+    page: () => CustomRechargeScreen(),
+    binding: CustomRechargeBinding(),
   ),
   GetPage(
     name: resultscreen,
