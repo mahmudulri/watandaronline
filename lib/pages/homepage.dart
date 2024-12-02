@@ -865,7 +865,7 @@ class _HomepageState extends State<Homepage> {
                 //     )),
 
                 SizedBox(
-                  height: 3,
+                  height: 5,
                 ),
                 Obx(
                   () => languageController.isLoading.value == false
@@ -883,11 +883,11 @@ class _HomepageState extends State<Homepage> {
                                 color: AppColors.defaultColor,
                               ),
                               child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10),
+                                padding: EdgeInsets.symmetric(vertical: 14),
                                 child: Center(
                                   child: Text(
-                                    "Direct Recharge",
+                                    getText("DIRECT_RECHARGE",
+                                        defaultValue: "Direct Recharge"),
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w700,
@@ -926,7 +926,7 @@ class _HomepageState extends State<Homepage> {
                 //   ),
                 // ),
                 SizedBox(
-                  height: 5,
+                  height: 10,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),

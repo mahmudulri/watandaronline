@@ -6,6 +6,7 @@ import 'package:watandaronline/controllers/country_list_controller.dart';
 import 'package:watandaronline/controllers/custom_recharge_controller.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/controllers/operator_controller.dart';
+import 'package:watandaronline/helpers/language_helper.dart';
 import 'package:watandaronline/utils/colors.dart';
 import 'package:watandaronline/widgets/default_button.dart';
 
@@ -51,8 +52,7 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
         title: GestureDetector(
           onTap: () {},
           child: Text(
-            languageController.alllanguageData.value.languageData!["RECHARGE"]
-                .toString(),
+            getText("DIRECT_RECHARGE", defaultValue: "Direct Recharge"),
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -205,7 +205,8 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                   keyboardType: TextInputType.phone,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: "Phone Number",
+                                    hintText: getText("PHONE_NUMBER",
+                                        defaultValue: "Amount "),
                                   ),
                                 ),
                               ),
@@ -244,7 +245,8 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                   keyboardType: TextInputType.phone,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: "Amount",
+                                    hintText: getText("AMOUNT",
+                                        defaultValue: "Amount "),
                                   ),
                                 ),
                               ),
@@ -256,7 +258,8 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                         height: 50,
                       ),
                       DefaultButton(
-                        buttonName: "Recharge now",
+                        buttonName: getText("RECHARGE_NOW",
+                            defaultValue: "Recharge now"),
                         onPressed: () {
                           if (customrechargeController
                                   .numberController.text.isNotEmpty &&
@@ -286,7 +289,9 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  "Enter Your Pin",
+                                                  getText("ENTER_YOUR_PIN",
+                                                      defaultValue:
+                                                          "Enter your pin "),
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.w500,
                                                     fontSize: 17,
@@ -339,7 +344,9 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                                         Navigator.pop(context);
                                                       },
                                                       child: Text(
-                                                        "Cancel",
+                                                        getText("CANCEL",
+                                                            defaultValue:
+                                                                "Cancel "),
                                                         style: TextStyle(
                                                           color: Colors.white,
                                                         ),
@@ -365,7 +372,9 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                                         }
                                                       },
                                                       child: Text(
-                                                        "Confirm",
+                                                        getText("CONFIRM",
+                                                            defaultValue:
+                                                                "Confirm "),
                                                         style: TextStyle(
                                                           color: Colors.white,
                                                         ),

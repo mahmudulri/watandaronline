@@ -355,29 +355,32 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          languageController
-                                              .alllanguageData
-                                              .value
-                                              .languageData!["BUNDLE_TYPE"]
-                                              .toString(),
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,
+                                    Visibility(
+                                      visible: widget.bundleTitle != "",
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            languageController
+                                                .alllanguageData
+                                                .value
+                                                .languageData!["BUNDLE_TITLE"]
+                                                .toString(),
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          widget.bundleTitle.toString(),
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,
+                                          Text(
+                                            widget.bundleTitle.toString(),
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                     SizedBox(
                                       height: 5,
@@ -409,65 +412,68 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          languageController
-                                              .alllanguageData
-                                              .value
-                                              .languageData!["VALIDITY_TYPE"]
-                                              .toString(),
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,
+                                    Visibility(
+                                      visible: widget.validityType != "",
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            languageController
+                                                .alllanguageData
+                                                .value
+                                                .languageData!["VALIDITY_TYPE"]
+                                                .toString(),
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          widget.validityType.toString() ==
-                                                  "unlimited"
-                                              ? languageController
-                                                  .alllanguageData
-                                                  .value
-                                                  .languageData!["UNLIMITED"]
-                                                  .toString()
-                                              : widget.validityType.toString() ==
-                                                      "monthly"
-                                                  ? languageController
-                                                      .alllanguageData
-                                                      .value
-                                                      .languageData!["MONTHLY"]
-                                                      .toString()
-                                                  : widget.validityType
-                                                              .toString() ==
-                                                          "weekly"
-                                                      ? languageController
-                                                          .alllanguageData
-                                                          .value
-                                                          .languageData![
-                                                              "WEEKLY"]
-                                                          .toString()
-                                                      : widget.validityType
-                                                                  .toString() ==
-                                                              "daily"
-                                                          ? languageController
-                                                              .alllanguageData
-                                                              .value
-                                                              .languageData!["DAILY"]
-                                                              .toString()
-                                                          : widget.validityType.toString() == "hourly"
-                                                              ? languageController.alllanguageData.value.languageData!["HOURLY"].toString()
-                                                              : widget.validityType.toString() == "nightly"
-                                                                  ? languageController.alllanguageData.value.languageData!["NIGHTLY"].toString()
-                                                                  : "",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14,
-                                            color: Colors.black,
+                                          Text(
+                                            widget.validityType.toString() ==
+                                                    "unlimited"
+                                                ? languageController
+                                                    .alllanguageData
+                                                    .value
+                                                    .languageData!["UNLIMITED"]
+                                                    .toString()
+                                                : widget.validityType.toString() ==
+                                                        "monthly"
+                                                    ? languageController
+                                                        .alllanguageData
+                                                        .value
+                                                        .languageData![
+                                                            "MONTHLY"]
+                                                        .toString()
+                                                    : widget.validityType.toString() ==
+                                                            "weekly"
+                                                        ? languageController
+                                                            .alllanguageData
+                                                            .value
+                                                            .languageData![
+                                                                "WEEKLY"]
+                                                            .toString()
+                                                        : widget.validityType
+                                                                    .toString() ==
+                                                                "daily"
+                                                            ? languageController
+                                                                .alllanguageData
+                                                                .value
+                                                                .languageData!["DAILY"]
+                                                                .toString()
+                                                            : widget.validityType.toString() == "hourly"
+                                                                ? languageController.alllanguageData.value.languageData!["HOURLY"].toString()
+                                                                : widget.validityType.toString() == "nightly"
+                                                                    ? languageController.alllanguageData.value.languageData!["NIGHTLY"].toString()
+                                                                    : "",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
 
                                     // SizedBox(
