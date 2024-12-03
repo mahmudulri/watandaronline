@@ -874,6 +874,7 @@ class _HomepageState extends State<Homepage> {
                           child: GestureDetector(
                             onTap: () {
                               box.write("country_id", "2");
+                              box.write("maxlength", "10");
                               Get.toNamed(customrechargescreen);
                             },
                             child: Container(

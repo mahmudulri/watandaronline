@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lottie/lottie.dart';
@@ -99,6 +100,7 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                   print(box.read("country_id"));
                                   box.write("maxlength",
                                       data.phoneNumberLength.toString());
+                                  print(box.read("maxlength"));
                                   // numberlength =
                                   //     data.phoneNumberLength.toString();
 
@@ -178,7 +180,7 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                   child: Column(
                     children: [
                       Container(
-                        height: 45,
+                        height: 55,
                         width: screenWidth,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -203,11 +205,34 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                   controller:
                                       customrechargeController.numberController,
                                   keyboardType: TextInputType.phone,
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(int.parse(
+                                        box.read(
+                                            "maxlength"))), // Limit input length
+                                    FilteringTextInputFormatter
+                                        .digitsOnly, // Allow only numeric input
+                                  ],
                                   decoration: InputDecoration(
+                                    contentPadding:
+                                        EdgeInsets.symmetric(vertical: 5),
                                     border: InputBorder.none,
                                     hintText: getText("PHONE_NUMBER",
                                         defaultValue: "Amount "),
                                   ),
+                                  // onChanged: (value) {
+                                  //   // Enforce starting with 0
+                                  //   if (!value.startsWith('0')) {
+                                  //     customrechargeController
+                                  //         .numberController.text = '0' + value;
+                                  //     customrechargeController
+                                  //             .numberController.selection =
+                                  //         TextSelection.fromPosition(
+                                  //             TextPosition(
+                                  //       offset: customrechargeController
+                                  //           .numberController.text.length,
+                                  //     ));
+                                  //   }
+                                  // },
                                 ),
                               ),
                             ],
@@ -218,7 +243,7 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                         height: 10,
                       ),
                       Container(
-                        height: 45,
+                        height: 55,
                         width: screenWidth,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -228,7 +253,9 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                           ),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10,
+                          ),
                           child: Row(
                             children: [
                               Image.asset(
@@ -242,8 +269,15 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                 child: TextField(
                                   controller:
                                       customrechargeController.amountController,
-                                  keyboardType: TextInputType.phone,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter
+                                        .digitsOnly, // Allow only digits
+                                    CustomAmountFormatter() // Enforce value >= 1
+                                  ],
                                   decoration: InputDecoration(
+                                    contentPadding:
+                                        EdgeInsets.symmetric(vertical: 5),
                                     border: InputBorder.none,
                                     hintText: getText("AMOUNT",
                                         defaultValue: "Amount "),
@@ -265,73 +299,85 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                   .numberController.text.isNotEmpty &&
                               customrechargeController
                                   .amountController.text.isNotEmpty) {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  contentPadding: EdgeInsets.all(0.0),
-                                  content: Container(
-                                    height: 250,
-                                    width: screenWidth,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white,
-                                    ),
-                                    child: Obx(
-                                      () => customrechargeController
-                                                      .isLoading.value ==
-                                                  false &&
-                                              customrechargeController
-                                                      .loadsuccess.value ==
-                                                  false
-                                          ? Column(
+                            if (customrechargeController
+                                    .numberController.text.length
+                                    .toString() !=
+                                box.read("maxlength")) {
+                              Get.snackbar(
+                                  "Length error", "Do not match number length");
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    contentPadding: EdgeInsets.all(0.0),
+                                    content: Container(
+                                      height: 250,
+                                      width: screenWidth,
+                                      child: Obx(
+                                        () {
+                                          if (customrechargeController
+                                              .isLoading.value) {
+                                            return Center(
+                                              child: Container(
+                                                height: 220,
+                                                width: 220,
+                                                child: Lottie.asset(
+                                                    'assets/loties/loading-01.json'),
+                                              ),
+                                            );
+                                          } else if (customrechargeController
+                                              .loadsuccess.value) {
+                                            return Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  height: 180,
+                                                  width: 180,
+                                                  child: Lottie.asset(
+                                                      'assets/loties/loadsuccess.json'),
+                                                ),
+                                                SizedBox(height: 20),
+                                                ElevatedButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        AppColors.defaultColor,
+                                                  ),
+                                                  onPressed: () {
+                                                    customrechargeController
+                                                            .loadsuccess.value =
+                                                        false; // Reset success state
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text(
+                                                    "Close",
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          } else {
+                                            return Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  getText("ENTER_YOUR_PIN",
+                                                  getText(
+                                                      "DO_YOU_WANT_TO_CONFIRM",
                                                       defaultValue:
-                                                          "Enter your pin "),
+                                                          "Do you want to confirm "),
                                                   style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
+                                                    fontWeight: FontWeight.w400,
                                                     fontSize: 17,
                                                   ),
                                                 ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Container(
-                                                  height: 45,
-                                                  width: 100,
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                      width: 1,
-                                                      color: Colors.grey,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            7),
-                                                  ),
-                                                  child: TextField(
-                                                    controller:
-                                                        customrechargeController
-                                                            .pinController,
-                                                    keyboardType:
-                                                        TextInputType.phone,
-                                                    textAlign: TextAlign.center,
-                                                    decoration: InputDecoration(
-                                                      border: InputBorder.none,
-                                                      hintText: "****",
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
+                                                SizedBox(height: 40),
                                                 Row(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
+                                                      MainAxisAlignment.center,
                                                   children: [
                                                     ElevatedButton(
                                                       style: ElevatedButton
@@ -341,6 +387,10 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                                                 .defaultColor,
                                                       ),
                                                       onPressed: () {
+                                                        customrechargeController
+                                                                .loadsuccess
+                                                                .value =
+                                                            false; // Reset success state
                                                         Navigator.pop(context);
                                                       },
                                                       child: Text(
@@ -348,55 +398,42 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                                             defaultValue:
                                                                 "Cancel "),
                                                         style: TextStyle(
-                                                          color: Colors.white,
-                                                        ),
+                                                            color:
+                                                                Colors.white),
                                                       ),
                                                     ),
+                                                    SizedBox(width: 10),
                                                     ElevatedButton(
                                                       style: ElevatedButton
                                                           .styleFrom(
                                                         backgroundColor:
-                                                            AppColors
-                                                                .defaultColor,
+                                                            Colors.green,
                                                       ),
                                                       onPressed: () {
-                                                        if (customrechargeController
-                                                            .pinController
-                                                            .text
-                                                            .isNotEmpty) {
-                                                          customrechargeController
-                                                              .verify();
-                                                        } else {
-                                                          Get.snackbar("Error",
-                                                              "Enter pin");
-                                                        }
+                                                        customrechargeController
+                                                            .placeOrder();
                                                       },
                                                       child: Text(
                                                         getText("CONFIRM",
                                                             defaultValue:
                                                                 "Confirm "),
                                                         style: TextStyle(
-                                                          color: Colors.white,
-                                                        ),
+                                                            color:
+                                                                Colors.white),
                                                       ),
                                                     ),
                                                   ],
                                                 ),
                                               ],
-                                            )
-                                          : Center(
-                                              child: Container(
-                                                height: 220,
-                                                width: 220,
-                                                child: Lottie.asset(
-                                                    'assets/loties/loading-01.json'),
-                                              ),
-                                            ),
+                                            );
+                                          }
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
-                            );
+                                  );
+                                },
+                              );
+                            }
                           } else {
                             Get.snackbar("Error", "Fill data correctly");
                           }
@@ -411,5 +448,29 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
         ),
       ),
     );
+  }
+}
+
+class CustomAmountFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    // Check if the input is empty
+    if (newValue.text.isEmpty) {
+      return TextEditingValue.empty;
+    }
+
+    // Parse the input to an integer
+    final intValue = int.tryParse(newValue.text);
+
+    // If parsing fails or the value is less than 1, revert to old value
+    if (intValue == null || intValue < 1) {
+      return oldValue;
+    }
+
+    // Allow the new value if it's valid
+    return newValue;
   }
 }
