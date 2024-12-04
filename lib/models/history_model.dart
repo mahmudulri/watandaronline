@@ -121,6 +121,7 @@ class Bundle {
 
   final String? buyingPrice;
   final String? sellingPrice;
+  final String? amount;
 
   final dynamic? currencyId;
 
@@ -139,6 +140,7 @@ class Bundle {
     this.validityType,
     this.buyingPrice,
     this.sellingPrice,
+    this.amount,
     this.currencyId,
     this.createdAt,
     this.preferedCurrency,
@@ -159,6 +161,7 @@ class Bundle {
         buyingPrice: json["buying_price"] == null ? null : json["buying_price"],
         sellingPrice:
             json["selling_price"] == null ? null : json["selling_price"],
+        amount: json["amount"] == null ? null : json["amount"],
         currencyId: json["currency_id"] == null ? null : json["currency_id"],
         createdAt: json["created_at"] == null
             ? null
@@ -182,6 +185,7 @@ class Bundle {
         "validity_type": validityType,
         "buying_price": buyingPrice,
         "selling_price": sellingPrice,
+        "amount": amount,
         "currency_id": currencyId,
         "created_at": createdAt!.toIso8601String(),
         "prefered_currency": preferedCurrency!.toJson(),

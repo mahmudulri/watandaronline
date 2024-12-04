@@ -26,7 +26,7 @@ void main() async {
     ),
   );
   // used for check real time internet access
-  // DependencyInjection.init();
+  DependencyInjection.init();
 }
 
 class MyApp extends StatefulWidget {

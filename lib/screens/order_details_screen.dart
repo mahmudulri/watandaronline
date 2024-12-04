@@ -40,6 +40,7 @@ class OrderDetailsScreen extends StatefulWidget {
     this.resellerName,
     this.resellerPhone,
     this.companyLogo,
+    this.amount,
   });
   String? createDate;
   String? status;
@@ -54,6 +55,7 @@ class OrderDetailsScreen extends StatefulWidget {
   String? resellerName;
   String? resellerPhone;
   String? companyLogo;
+  String? amount;
 
   @override
   State<OrderDetailsScreen> createState() => _OrderDetailsScreenState();
@@ -589,6 +591,29 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                         ),
                                       ),
                                     ),
+                                    widget.amount.toString() != "null"
+                                        ? Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                getText("AMOUNT",
+                                                    defaultValue: "Amount"),
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              Text(
+                                                widget.amount.toString(),
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        : SizedBox(),
 
                                     Row(
                                       mainAxisAlignment:

@@ -116,22 +116,31 @@ class _RechargeScreenState extends State<RechargeScreen> {
   }
 
   Future<void> refresh() async {
-    if (bundleController.finalList.length >=
-        (bundleController
-                .allbundleslist.value.payload?.pagination!.totalItems ??
-            0)) {
+    final int totalPages =
+        bundleController.allbundleslist.value.payload?.pagination!.totalPages ??
+            0;
+    final int currentPage = bundleController.initialpage;
+
+    // Prevent loading more pages if we've reached the last page
+    if (currentPage >= totalPages) {
       print(
           "End..........................................End.....................");
-    } else {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
-        bundleController.initialpage++;
-        print(bundleController.initialpage);
+      return;
+    }
+
+    // Check if the scroll position is at the bottom
+    if (scrollController.position.pixels ==
+        scrollController.position.maxScrollExtent) {
+      bundleController.initialpage++;
+
+      // Prevent fetching if the next page exceeds total pages
+      if (bundleController.initialpage <= totalPages) {
         print("Load More...................");
         bundleController.fetchallbundles();
-        print(bundleController.initialpage);
       } else {
-        // print("nothing");
+        bundleController.initialpage =
+            totalPages; // Reset to the last valid page
+        print("Already on the last page");
       }
     }
   }

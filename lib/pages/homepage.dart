@@ -62,24 +62,55 @@ class _HomepageState extends State<Homepage> {
 
     scrollController.addListener(refresh);
     dashboardController.fetchDashboardData();
+    // languageController.fetchlanData(box.read("isoCode"));
 
     WidgetsBinding.instance.addPostFrameCallback((_) {});
   }
 
+  // Future<void> refresh() async {
+  //   if (historyController.finalList.length >=
+  //       (historyController.allorderlist.value.payload?.pagination.totalItems ??
+  //           0)) {
+  //     print(
+  //         "End..........................................End.....................");
+  //   } else {
+  //     if (scrollController.position.pixels ==
+  //         scrollController.position.maxScrollExtent) {
+  //       historyController.initialpage++;
+  //       print("Load More...................");
+  //       historyController.fetchHistory();
+  //     } else {
+  //       // print("nothing");
+  //     }
+  //   }
+  // }
+
   Future<void> refresh() async {
-    if (historyController.finalList.length >=
-        (historyController.allorderlist.value.payload?.pagination.totalItems ??
-            0)) {
+    final int totalPages =
+        historyController.allorderlist.value.payload?.pagination.totalPages ??
+            0;
+    final int currentPage = historyController.initialpage;
+
+    // Prevent loading more pages if we've reached the last page
+    if (currentPage >= totalPages) {
       print(
           "End..........................................End.....................");
-    } else {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
-        historyController.initialpage++;
+      return;
+    }
+
+    // Check if the scroll position is at the bottom
+    if (scrollController.position.pixels ==
+        scrollController.position.maxScrollExtent) {
+      historyController.initialpage++;
+
+      // Prevent fetching if the next page exceeds total pages
+      if (historyController.initialpage <= totalPages) {
         print("Load More...................");
         historyController.fetchHistory();
       } else {
-        // print("nothing");
+        historyController.initialpage =
+            totalPages; // Reset to the last valid page
+        print("Already on the last page");
       }
     }
   }
@@ -1009,6 +1040,8 @@ class _HomepageState extends State<Homepage> {
                                                 sellingPrice: data
                                                     .bundle!.sellingPrice
                                                     .toString(),
+                                                amount: data.bundle!.amount
+                                                    .toString(),
                                                 buyingPrice: data
                                                     .bundle!.buyingPrice
                                                     .toString(),
@@ -1056,22 +1089,28 @@ class _HomepageState extends State<Homepage> {
                                             padding: const EdgeInsets.all(5.0),
                                             child: Row(
                                               children: [
-                                                Container(
-                                                  height: 40,
-                                                  width: 40,
-                                                  decoration: BoxDecoration(
-                                                    image: DecorationImage(
-                                                      fit: BoxFit.fill,
-                                                      image: NetworkImage(
-                                                        data
-                                                            .bundle!
-                                                            .service!
-                                                            .company!
-                                                            .companyLogo
-                                                            .toString(),
+                                                Visibility(
+                                                  visible: data
+                                                          .bundle!.bundleTitle
+                                                          .toString() !=
+                                                      "",
+                                                  child: Container(
+                                                    height: 40,
+                                                    width: 40,
+                                                    decoration: BoxDecoration(
+                                                      image: DecorationImage(
+                                                        fit: BoxFit.fill,
+                                                        image: NetworkImage(
+                                                          data
+                                                              .bundle!
+                                                              .service!
+                                                              .company!
+                                                              .companyLogo
+                                                              .toString(),
+                                                        ),
                                                       ),
+                                                      shape: BoxShape.circle,
                                                     ),
-                                                    shape: BoxShape.circle,
                                                   ),
                                                 ),
                                                 SizedBox(
@@ -1091,16 +1130,22 @@ class _HomepageState extends State<Homepage> {
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
-                                                        Flexible(
-                                                          child: Text(
-                                                            data.bundle!
-                                                                .bundleTitle
-                                                                .toString(),
-                                                            style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              fontSize: 14,
+                                                        Visibility(
+                                                          visible: data.bundle!
+                                                                  .bundleTitle
+                                                                  .toString() !=
+                                                              "",
+                                                          child: Flexible(
+                                                            child: Text(
+                                                              data.bundle!
+                                                                  .bundleTitle
+                                                                  .toString(),
+                                                              style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontSize: 14,
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
@@ -1286,6 +1331,8 @@ class _HomepageState extends State<Homepage> {
                                                     sellingPrice: data
                                                         .bundle!.sellingPrice
                                                         .toString(),
+                                                    amount: data.bundle!.amount
+                                                        .toString(),
                                                     buyingPrice: data
                                                         .bundle!.buyingPrice
                                                         .toString(),
@@ -1335,22 +1382,31 @@ class _HomepageState extends State<Homepage> {
                                                     const EdgeInsets.all(5.0),
                                                 child: Row(
                                                   children: [
-                                                    Container(
-                                                      height: 40,
-                                                      width: 40,
-                                                      decoration: BoxDecoration(
-                                                        image: DecorationImage(
-                                                          fit: BoxFit.fill,
-                                                          image: NetworkImage(
-                                                            data
-                                                                .bundle!
-                                                                .service!
-                                                                .company!
-                                                                .companyLogo
-                                                                .toString(),
+                                                    Visibility(
+                                                      visible: data.bundle!
+                                                              .bundleTitle
+                                                              .toString() !=
+                                                          "",
+                                                      child: Container(
+                                                        height: 40,
+                                                        width: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          image:
+                                                              DecorationImage(
+                                                            fit: BoxFit.fill,
+                                                            image: NetworkImage(
+                                                              data
+                                                                  .bundle!
+                                                                  .service!
+                                                                  .company!
+                                                                  .companyLogo
+                                                                  .toString(),
+                                                            ),
                                                           ),
+                                                          shape:
+                                                              BoxShape.circle,
                                                         ),
-                                                        shape: BoxShape.circle,
                                                       ),
                                                     ),
                                                     SizedBox(
@@ -1370,17 +1426,25 @@ class _HomepageState extends State<Homepage> {
                                                               CrossAxisAlignment
                                                                   .start,
                                                           children: [
-                                                            Flexible(
-                                                              child: Text(
-                                                                data.bundle!
-                                                                    .bundleTitle
-                                                                    .toString(),
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  fontSize: 14,
+                                                            Visibility(
+                                                              visible: data
+                                                                      .bundle!
+                                                                      .bundleTitle
+                                                                      .toString() !=
+                                                                  "",
+                                                              child: Flexible(
+                                                                child: Text(
+                                                                  data.bundle!
+                                                                      .bundleTitle
+                                                                      .toString(),
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontSize:
+                                                                        14,
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ),
