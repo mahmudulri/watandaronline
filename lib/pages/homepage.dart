@@ -154,6 +154,7 @@ class _HomepageState extends State<Homepage> {
               ? GestureDetector(
                   onTap: () {
                     // print(timeZoneController.myzone.toString());
+                    print(box.read("customkey"));
                   },
                   child: Text(
                     dashboardController
@@ -906,7 +907,11 @@ class _HomepageState extends State<Homepage> {
                             onTap: () {
                               box.write("country_id", "2");
                               box.write("maxlength", "10");
+                              box.write(
+                                  "customkey", "order_type=custom_recharge");
+
                               Get.toNamed(customrechargescreen);
+                              historyController.fetchHistory();
                             },
                             child: Container(
                               width: screenWidth,
@@ -1089,30 +1094,24 @@ class _HomepageState extends State<Homepage> {
                                             padding: const EdgeInsets.all(5.0),
                                             child: Row(
                                               children: [
-                                                Visibility(
-                                                  visible: data
-                                                          .bundle!.bundleTitle
-                                                          .toString() !=
-                                                      "",
-                                                  child: Container(
-                                                    height: 40,
-                                                    width: 40,
-                                                    decoration: BoxDecoration(
-                                                      image: DecorationImage(
-                                                        fit: BoxFit.fill,
-                                                        image: NetworkImage(
-                                                          data
-                                                              .bundle!
-                                                              .service!
-                                                              .company!
-                                                              .companyLogo
-                                                              .toString(),
-                                                        ),
-                                                      ),
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                  ),
-                                                ),
+                                                // Container(
+                                                //   height: 40,
+                                                //   width: 40,
+                                                //   decoration: BoxDecoration(
+                                                //     image: DecorationImage(
+                                                //       fit: BoxFit.fill,
+                                                //       image: NetworkImage(
+                                                //         data
+                                                //             .bundle!
+                                                //             .service!
+                                                //             .company!
+                                                //             .companyLogo
+                                                //             .toString(),
+                                                //       ),
+                                                //     ),
+                                                //     shape: BoxShape.circle,
+                                                //   ),
+                                                // ),
                                                 SizedBox(
                                                   width: 5,
                                                 ),
@@ -1168,41 +1167,60 @@ class _HomepageState extends State<Homepage> {
                                                 ),
                                                 Expanded(
                                                   flex: 2,
-                                                  child: Row(
-                                                    children: [
-                                                      Text(
-                                                        NumberFormat.currency(
-                                                          locale: 'en_US',
-                                                          symbol: '',
-                                                          decimalDigits: 2,
-                                                        ).format(
-                                                          double.parse(
-                                                            data.bundle!
-                                                                .sellingPrice
-                                                                .toString(),
+                                                  child: Container(
+                                                    child: data.bundle.amount
+                                                                .toString() ==
+                                                            "null"
+                                                        ? Row(
+                                                            children: [
+                                                              Text(
+                                                                NumberFormat
+                                                                    .currency(
+                                                                  locale:
+                                                                      'en_US',
+                                                                  symbol: '',
+                                                                  decimalDigits:
+                                                                      2,
+                                                                ).format(
+                                                                  double.parse(
+                                                                    data.bundle!
+                                                                        .sellingPrice
+                                                                        .toString(),
+                                                                  ),
+                                                                ),
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 11,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 2,
+                                                              ),
+                                                              Text(
+                                                                " " +
+                                                                    box.read(
+                                                                        "currency_code"),
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  fontSize: 11,
+                                                                  color: Colors
+                                                                      .grey,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          )
+                                                        : Center(
+                                                            child: Text(
+                                                              data.bundle.amount
+                                                                  .toString(),
+                                                            ),
                                                           ),
-                                                        ),
-                                                        style: TextStyle(
-                                                          fontSize: 11,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 2,
-                                                      ),
-                                                      Text(
-                                                        " " +
-                                                            box.read(
-                                                                "currency_code"),
-                                                        style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 11,
-                                                          color: Colors.grey,
-                                                        ),
-                                                      ),
-                                                    ],
                                                   ),
                                                 ),
                                                 Expanded(
@@ -1382,33 +1400,24 @@ class _HomepageState extends State<Homepage> {
                                                     const EdgeInsets.all(5.0),
                                                 child: Row(
                                                   children: [
-                                                    Visibility(
-                                                      visible: data.bundle!
-                                                              .bundleTitle
-                                                              .toString() !=
-                                                          "",
-                                                      child: Container(
-                                                        height: 40,
-                                                        width: 40,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          image:
-                                                              DecorationImage(
-                                                            fit: BoxFit.fill,
-                                                            image: NetworkImage(
-                                                              data
-                                                                  .bundle!
-                                                                  .service!
-                                                                  .company!
-                                                                  .companyLogo
-                                                                  .toString(),
-                                                            ),
-                                                          ),
-                                                          shape:
-                                                              BoxShape.circle,
-                                                        ),
-                                                      ),
-                                                    ),
+                                                    // Container(
+                                                    //   height: 40,
+                                                    //   width: 40,
+                                                    //   decoration: BoxDecoration(
+                                                    //     image: DecorationImage(
+                                                    //       fit: BoxFit.fill,
+                                                    //       image: NetworkImage(
+                                                    //         data
+                                                    //             .bundle!
+                                                    //             .service!
+                                                    //             .company!
+                                                    //             .companyLogo
+                                                    //             .toString(),
+                                                    //       ),
+                                                    //     ),
+                                                    //     shape: BoxShape.circle,
+                                                    //   ),
+                                                    // ),
                                                     SizedBox(
                                                       width: 5,
                                                     ),
@@ -1469,45 +1478,66 @@ class _HomepageState extends State<Homepage> {
                                                     ),
                                                     Expanded(
                                                       flex: 2,
-                                                      child: Row(
-                                                        children: [
-                                                          Text(
-                                                            NumberFormat
-                                                                .currency(
-                                                              locale: 'en_US',
-                                                              symbol: '',
-                                                              decimalDigits: 2,
-                                                            ).format(
-                                                              double.parse(
-                                                                data.bundle!
-                                                                    .sellingPrice
-                                                                    .toString(),
+                                                      child: Container(
+                                                        child: data.bundle
+                                                                    .amount
+                                                                    .toString() ==
+                                                                "null"
+                                                            ? Row(
+                                                                children: [
+                                                                  Text(
+                                                                    NumberFormat
+                                                                        .currency(
+                                                                      locale:
+                                                                          'en_US',
+                                                                      symbol:
+                                                                          '',
+                                                                      decimalDigits:
+                                                                          2,
+                                                                    ).format(
+                                                                      double
+                                                                          .parse(
+                                                                        data.bundle!
+                                                                            .sellingPrice
+                                                                            .toString(),
+                                                                      ),
+                                                                    ),
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          11,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 2,
+                                                                  ),
+                                                                  Text(
+                                                                    " " +
+                                                                        box.read(
+                                                                            "currency_code"),
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontSize:
+                                                                          11,
+                                                                      color: Colors
+                                                                          .grey,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              )
+                                                            : Center(
+                                                                child: Text(
+                                                                  data.bundle
+                                                                      .amount
+                                                                      .toString(),
+                                                                ),
                                                               ),
-                                                            ),
-                                                            style: TextStyle(
-                                                              fontSize: 11,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 2,
-                                                          ),
-                                                          Text(
-                                                            " " +
-                                                                box.read(
-                                                                    "currency_code"),
-                                                            style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontSize: 11,
-                                                              color:
-                                                                  Colors.grey,
-                                                            ),
-                                                          ),
-                                                        ],
                                                       ),
                                                     ),
                                                     Expanded(

@@ -154,6 +154,7 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
                               MaterialButton(
                                 minWidth: 40,
                                 onPressed: () {
+                                  box.write("orderstatus", "");
                                   setState(() {
                                     historyController.initialpage = 1;
                                     currentPage = Homepage();
@@ -190,6 +191,7 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
                               MaterialButton(
                                 minWidth: 40,
                                 onPressed: () {
+                                  box.write("orderstatus", "");
                                   setState(() {
                                     historyController.initialpage = 1;
                                     historyController.finalList.clear();
@@ -273,6 +275,7 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
                               MaterialButton(
                                 minWidth: 40,
                                 onPressed: () {
+                                  box.write("orderstatus", "");
                                   setState(() {
                                     currentPage = SubResellerScreen();
                                     currentIndex = 3;

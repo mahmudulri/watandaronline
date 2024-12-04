@@ -16,7 +16,7 @@ class HistoryServiceApi {
   final box = GetStorage();
   Future<HistoryModel> fetchorderList(int pageNo) async {
     final url = Uri.parse(
-        "${ApiEndPoints.baseUrl}orders?page=${pageNo}&${box.read("orderstatus").toString()}&selected_Date=&&");
+        "${ApiEndPoints.baseUrl}orders?page=${pageNo}&${box.read("orderstatus").toString()}&${box.read("customkey").toString()}&selected_Date=&&");
     print("order Url : " + url.toString());
 
     var response = await http.get(
