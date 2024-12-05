@@ -907,11 +907,8 @@ class _HomepageState extends State<Homepage> {
                             onTap: () {
                               box.write("country_id", "2");
                               box.write("maxlength", "10");
-                              box.write(
-                                  "customkey", "order_type=custom_recharge");
 
                               Get.toNamed(customrechargescreen);
-                              historyController.fetchHistory();
                             },
                             child: Container(
                               width: screenWidth,
