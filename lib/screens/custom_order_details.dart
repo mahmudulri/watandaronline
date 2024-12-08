@@ -328,13 +328,7 @@ class _CustomOrderDetailsState extends State<CustomOrderDetails> {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
 
-                                    SizedBox(
-                                      height: 5,
-                                    ),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -358,9 +352,6 @@ class _CustomOrderDetailsState extends State<CustomOrderDetails> {
                                           ),
                                         ),
                                       ],
-                                    ),
-                                    SizedBox(
-                                      height: 5,
                                     ),
 
                                     // SizedBox(
