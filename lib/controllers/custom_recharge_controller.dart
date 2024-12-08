@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:watandaronline/controllers/custom_history_controller.dart';
 import 'package:watandaronline/utils/api_endpoints.dart';
 
 class CustomRechargeController extends GetxController {
@@ -13,6 +14,8 @@ class CustomRechargeController extends GetxController {
   final box = GetStorage();
 
   TextEditingController pinController = TextEditingController();
+
+  final customhistoryController = Get.find<CustomHistoryController>();
 
   // Future<void> verify() async {
   //   try {
@@ -85,6 +88,9 @@ class CustomRechargeController extends GetxController {
       if (response.statusCode == 201 && orderresults["success"] == true) {
         loadsuccess.value = true; // Indicate success
         isLoading.value = false;
+        customhistoryController.finalList.clear();
+        customhistoryController.initialpage = 1;
+        customhistoryController.fetchHistory();
 
         Get.snackbar("Success", orderresults["message"]);
         clearInputs();

@@ -115,7 +115,7 @@ class Bundle {
   final String? amount;
   final String? buyingPrice;
 
-  final double? adminBuyingPrice;
+  // final double? adminBuyingPrice;
   final String? sellingPrice;
   final int? currencyId;
   final Currency? preferedCurrency;
@@ -127,7 +127,7 @@ class Bundle {
     this.bundleType,
     this.amount,
     this.buyingPrice,
-    this.adminBuyingPrice,
+    // this.adminBuyingPrice,
     this.sellingPrice,
     this.currencyId,
     this.preferedCurrency,
@@ -140,9 +140,9 @@ class Bundle {
         bundleType: json["bundle_type"] == null ? null : json["bundle_type"],
         amount: json["amount"] == null ? null : json["amount"],
         buyingPrice: json["buying_price"] == null ? null : json["buying_price"],
-        adminBuyingPrice: json["admin_buying_price"] == null
-            ? null
-            : json["admin_buying_price"]?.toDouble(),
+        // adminBuyingPrice: json["admin_buying_price"] == null
+        //     ? null
+        //     : json["admin_buying_price"]?.toDouble(),
         sellingPrice:
             json["selling_price"] == null ? null : json["selling_price"],
         currencyId: json["currency_id"] == null ? null : json["currency_id"],
@@ -161,7 +161,7 @@ class Bundle {
         "bundle_type": bundleType,
         "amount": amount,
         "buying_price": buyingPrice,
-        "admin_buying_price": adminBuyingPrice,
+        // "admin_buying_price": adminBuyingPrice,
         "selling_price": sellingPrice,
         "currency_id": currencyId,
         "prefered_currency": preferedCurrency!.toJson(),
