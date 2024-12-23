@@ -120,8 +120,8 @@ class _CustomOrderDetailsState extends State<CustomOrderDetails> {
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border.all(
-                          width: 4,
-                          color: Colors.black,
+                          width: 3,
+                          color: AppColors.defaultColor,
                         ),
                       ),
                       child: Padding(

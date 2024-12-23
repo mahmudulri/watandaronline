@@ -12,6 +12,7 @@ class CategoriesListApi {
   Future<CategoriesModel> fetchcategoriesList() async {
     final url = Uri.parse(
         ApiEndPoints.baseUrl + ApiEndPoints.otherendpoints.servicecategories);
+    print("myurl" + url.toString());
 
     var response = await http.get(
       url,

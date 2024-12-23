@@ -3,6 +3,7 @@ import 'package:watandaronline/bindings/add_sub_reseller_binding.dart';
 import 'package:watandaronline/bindings/bottom_nav_binding.dart';
 import 'package:watandaronline/bindings/custom_recharge_binding.dart';
 import 'package:watandaronline/bindings/myprofile_binding.dart';
+import 'package:watandaronline/bindings/new_service_binding.dart';
 import 'package:watandaronline/bindings/recharge_binding.dart';
 import 'package:watandaronline/bindings/service_binding.dart';
 import 'package:watandaronline/bindings/sign_in_binding.dart';
@@ -17,6 +18,7 @@ import 'package:watandaronline/screens/confirm_pin.dart';
 import 'package:watandaronline/screens/custom_recharge_screen.dart';
 import 'package:watandaronline/screens/edit_profile_screen.dart';
 import 'package:watandaronline/screens/myprofile_screen.dart';
+import 'package:watandaronline/screens/new_service_screen.dart';
 import 'package:watandaronline/screens/onboarding_screen.dart';
 import 'package:watandaronline/screens/order_details_screen.dart';
 import 'package:watandaronline/screens/recharge_screen.dart';
@@ -48,6 +50,7 @@ const String rechargescreen = '/recharge-screen';
 const String customrechargescreen = '/customrecharge-screen';
 const String resultscreen = '/result-screen';
 const String servicescreen = '/service-screen';
+const String newservicescreen = '/newservice-screen';
 const String signupscreen = '/signup-screen';
 const String socialrechargescreen = '/socialrecharge-screen';
 
@@ -131,6 +134,11 @@ List<GetPage> myroutes = [
     name: servicescreen,
     page: () => ServiceScreen(),
     binding: ServiceBinding(),
+  ),
+  GetPage(
+    name: newservicescreen,
+    page: () => NewServiceScreen(),
+    binding: NewServiceBinding(),
   ),
   GetPage(
     name: signinscreen,

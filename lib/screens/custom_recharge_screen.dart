@@ -381,6 +381,11 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                             );
                                           } else if (customrechargeController
                                               .loadsuccess.value) {
+                                            Future.delayed(Duration(seconds: 2),
+                                                () {
+                                              Navigator.of(context)
+                                                  .pop(); // Close the dialog
+                                            });
                                             return Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,

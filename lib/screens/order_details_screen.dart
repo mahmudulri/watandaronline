@@ -120,8 +120,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border.all(
-                          width: 4,
-                          color: Colors.black,
+                          width: 3,
+                          color: AppColors.defaultColor,
                         ),
                       ),
                       child: Padding(
@@ -364,11 +364,16 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            languageController
-                                                .alllanguageData
-                                                .value
-                                                .languageData!["BUNDLE_TITLE"]
-                                                .toString(),
+                                            widget.validityType != ""
+                                                ? languageController
+                                                    .alllanguageData
+                                                    .value
+                                                    .languageData![
+                                                        "BUNDLE_TITLE"]
+                                                    .toString()
+                                                : getText("CREDIT_AMOUNT",
+                                                    defaultValue:
+                                                        "Credit Amount"),
                                             style: TextStyle(
                                               fontSize: 14,
                                               color: Colors.black,
@@ -415,7 +420,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                       height: 5,
                                     ),
                                     Visibility(
-                                      visible: widget.validityType != "",
+                                      visible:
+                                          widget.validityType.toString() != "",
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -433,41 +439,43 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                           ),
                                           Text(
                                             widget.validityType.toString() ==
-                                                    "unlimited"
+                                                    "yearly"
                                                 ? languageController
                                                     .alllanguageData
                                                     .value
-                                                    .languageData!["UNLIMITED"]
+                                                    .languageData!["YEARLY"]
                                                     .toString()
                                                 : widget.validityType.toString() ==
-                                                        "monthly"
+                                                        "unlimited"
                                                     ? languageController
                                                         .alllanguageData
                                                         .value
                                                         .languageData![
-                                                            "MONTHLY"]
+                                                            "UNLIMITED"]
                                                         .toString()
                                                     : widget.validityType.toString() ==
-                                                            "weekly"
+                                                            "monthly"
                                                         ? languageController
                                                             .alllanguageData
                                                             .value
                                                             .languageData![
-                                                                "WEEKLY"]
+                                                                "MONTHLY"]
                                                             .toString()
                                                         : widget.validityType
                                                                     .toString() ==
-                                                                "daily"
+                                                                "weekly"
                                                             ? languageController
                                                                 .alllanguageData
                                                                 .value
-                                                                .languageData!["DAILY"]
+                                                                .languageData!["WEEKLY"]
                                                                 .toString()
-                                                            : widget.validityType.toString() == "hourly"
-                                                                ? languageController.alllanguageData.value.languageData!["HOURLY"].toString()
-                                                                : widget.validityType.toString() == "nightly"
-                                                                    ? languageController.alllanguageData.value.languageData!["NIGHTLY"].toString()
-                                                                    : "",
+                                                            : widget.validityType.toString() == "daily"
+                                                                ? languageController.alllanguageData.value.languageData!["DAILY"].toString()
+                                                                : widget.validityType.toString() == "hourly"
+                                                                    ? languageController.alllanguageData.value.languageData!["HOURLY"].toString()
+                                                                    : widget.validityType.toString() == "nightly"
+                                                                        ? languageController.alllanguageData.value.languageData!["NIGHTLY"].toString()
+                                                                        : "",
                                             style: TextStyle(
                                               fontWeight: FontWeight.w500,
                                               fontSize: 14,

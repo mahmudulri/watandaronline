@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:watandaronline/controllers/country_list_controller.dart';
 import 'package:watandaronline/controllers/history_controller.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/controllers/sub_reseller_controller.dart';
@@ -59,6 +60,7 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
   final historyController = Get.find<HistoryController>();
   final languageController = Get.find<LanguageController>();
   final subresellerController = Get.find<SubresellerController>();
+  final countryListController = Get.find<CountryListController>();
 
   final PageStorageBucket bucket = PageStorageBucket();
 
@@ -124,9 +126,26 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
             borderRadius: BorderRadius.circular(50),
           ),
           onPressed: () {
-            box.write("country_id", "2");
+            if (countryListController.finalCountryList.isNotEmpty) {
+              // Find the country where the name is "Afghanistan"
+              var afghanistan =
+                  countryListController.finalCountryList.firstWhere(
+                (country) => country['country_name'] == "Afghanistan",
+                orElse: () => null, // Return null if not found
+              );
 
-            Get.toNamed(servicescreen);
+              if (afghanistan != null) {
+                print("The ID for Afghanistan is: ${afghanistan['id']}");
+                box.write("country_id", "${afghanistan['id']}");
+                box.write("maxlength", "10");
+              } else {
+                print("Afghanistan not found in the list");
+              }
+            } else {
+              print("Country list is empty.");
+            }
+
+            Get.toNamed(newservicescreen);
             // Get.to(() => ServiceScreen());
           },
           child: Icon(

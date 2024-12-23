@@ -86,7 +86,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
   final languageController = Get.find<LanguageController>();
   final countryListController = Get.find<CountryListController>();
   final serviceController = Get.find<ServiceController>();
-  final customrechargeController = Get.find<CustomRechargeController>();
+  // final customrechargeController = Get.find<CustomRechargeController>();
 
   final box = GetStorage();
 
