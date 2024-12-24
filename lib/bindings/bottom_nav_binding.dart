@@ -26,7 +26,7 @@ class BottomNavBinding implements Bindings {
     Get.lazyPut<CustomHistoryController>(() => CustomHistoryController());
     Get.lazyPut<CountryListController>(() => CountryListController());
     Get.lazyPut<SignInController>(() => SignInController());
-    Get.lazyPut<TransactionController>(() => TransactionController());
+
     Get.lazyPut<SubresellerController>(() => SubresellerController());
     Get.lazyPut<SubresellerDetailsController>(
         () => SubresellerDetailsController());
@@ -39,7 +39,7 @@ class BottomNavBinding implements Bindings {
     Get.lazyPut<CustomRechargeController>(() => CustomRechargeController());
 
     Get.lazyPut<BundleController>(() => BundleController());
-    Get.lazyPut<CategorisListController>(() => CategorisListController());
+
     Get.lazyPut<ServiceController>(() => ServiceController());
     // Get.lazyPut<ReserveDigitController>(() => ReserveDigitController());
     Get.lazyPut<ConfirmPinController>(() => ConfirmPinController());

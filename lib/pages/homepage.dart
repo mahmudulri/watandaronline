@@ -16,12 +16,15 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:watandaronline/controllers/bundles_controller.dart';
+import 'package:watandaronline/controllers/categories_list_controller.dart';
 import 'package:watandaronline/controllers/checker.dart';
 import 'package:watandaronline/controllers/country_list_controller.dart';
 import 'package:watandaronline/controllers/dashboard_controller.dart';
 import 'package:watandaronline/controllers/history_controller.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/controllers/order_list_controller.dart';
+import 'package:watandaronline/controllers/service_controller.dart';
 import 'package:watandaronline/controllers/sign_in_controller.dart';
 import 'package:watandaronline/controllers/slider_controller.dart';
 import 'package:watandaronline/controllers/sub_reseller_controller.dart';
@@ -30,7 +33,9 @@ import 'package:watandaronline/helpers/language_helper.dart';
 import 'package:watandaronline/pages/orders.dart';
 import 'package:watandaronline/routes/routes.dart';
 import 'package:watandaronline/screens/order_details_screen.dart';
+import 'package:watandaronline/screens/recharge_screen.dart';
 import 'package:watandaronline/screens/sign_in_screen.dart';
+import 'package:watandaronline/screens/social_recharge.dart';
 import 'package:watandaronline/utils/colors.dart';
 import 'package:watandaronline/widgets/drawer.dart';
 import 'dart:ui' as ui;
@@ -59,6 +64,8 @@ class _HomepageState extends State<Homepage> {
   void initState() {
     super.initState();
     historyController.fetchHistory();
+    categorisListController.nonsocialArray.clear();
+    categorisListController.fetchcategories();
 
     scrollController.addListener(refresh);
     dashboardController.fetchDashboardData();
@@ -66,24 +73,6 @@ class _HomepageState extends State<Homepage> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {});
   }
-
-  // Future<void> refresh() async {
-  //   if (historyController.finalList.length >=
-  //       (historyController.allorderlist.value.payload?.pagination.totalItems ??
-  //           0)) {
-  //     print(
-  //         "End..........................................End.....................");
-  //   } else {
-  //     if (scrollController.position.pixels ==
-  //         scrollController.position.maxScrollExtent) {
-  //       historyController.initialpage++;
-  //       print("Load More...................");
-  //       historyController.fetchHistory();
-  //     } else {
-  //       // print("nothing");
-  //     }
-  //   }
-  // }
 
   Future<void> refresh() async {
     final int totalPages =
@@ -120,6 +109,10 @@ class _HomepageState extends State<Homepage> {
   final historyController = Get.find<HistoryController>();
   final languageController = Get.find<LanguageController>();
   final sliderController = Get.find<SliderController>();
+  final categorisListController = Get.find<CategorisListController>();
+  final bundleController = Get.find<BundleController>();
+
+  final serviceController = Get.find<ServiceController>();
 
   final ScrollController scrollController = ScrollController();
 
@@ -173,6 +166,7 @@ class _HomepageState extends State<Homepage> {
             height: screenHeight,
             width: screenWidth,
             child: ListView(
+              physics: BouncingScrollPhysics(),
               children: [
                 Container(
                   height: 160,
@@ -956,6 +950,150 @@ class _HomepageState extends State<Homepage> {
                           ),
                         )
                       : SizedBox(),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Obx(
+                  () => categorisListController.isLoading.value == false
+                      ? GridView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 3.0,
+                            mainAxisSpacing: 3.0,
+                            childAspectRatio: 0.9,
+                          ),
+                          itemCount:
+                              categorisListController.nonsocialArray.length + 1,
+                          itemBuilder: (context, index) {
+                            if (index == 0) {
+                              // Handle the extra fixed item
+                              return GestureDetector(
+                                onTap: () {
+                                  bundleController.finalList.clear();
+                                  // print(service.companyId.toString());
+                                  box.write("validity_type", "");
+                                  box.write("company_id", "");
+                                  box.write("search_tag", "");
+                                  box.write("country_id", "");
+
+                                  box.write("service_category_id", "3");
+                                  bundleController.initialpage = 1;
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          SocialRechargeScreen(),
+                                    ),
+                                  );
+                                },
+                                child: Card(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.2),
+                                          spreadRadius: 2,
+                                          blurRadius: 2,
+                                          offset: Offset(0, 0),
+                                        ),
+                                      ],
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          "assets/icons/social-media2.png",
+                                          height: 60,
+                                        ),
+                                        SizedBox(
+                                          height: 7,
+                                        ),
+                                        Text(
+                                          "Social Bundles",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+                            final data = categorisListController
+                                .nonsocialArray[index - 1];
+
+                            return GestureDetector(
+                              onTap: () {
+                                serviceController.reserveDigit.clear();
+                                bundleController.finalList.clear();
+
+                                box.write(
+                                    "maxlength", data["phoneNumberLength"]);
+
+                                box.write("validity_type", "");
+                                box.write("company_id", "");
+                                box.write("search_tag", "");
+                                box.write("country_id", data["countryId"]);
+
+                                box.write(
+                                    "service_category_id", data["categoryId"]);
+                                bundleController.initialpage = 1;
+                                // print(data["phoneNumberLength"]);
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => RechargeScreen(),
+                                  ),
+                                );
+                              },
+                              child: Card(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.2),
+                                        spreadRadius: 2,
+                                        blurRadius: 2,
+                                        offset: Offset(0, 0),
+                                      ),
+                                    ],
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 30,
+                                        backgroundColor: Colors.white,
+                                        backgroundImage:
+                                            NetworkImage(data["countryImage"]),
+                                      ),
+                                      Text(
+                                        data["categoryName"],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        )
+                      : Center(
+                          child: CircularProgressIndicator(),
+                        ),
                 ),
 
                 // SizedBox(

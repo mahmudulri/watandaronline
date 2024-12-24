@@ -480,7 +480,7 @@ class _dataBoxnameState extends State<dataBoxname> {
                   Text(
                     widget.resellerName.toString(),
                     style: TextStyle(
-                      fontSize: 10,
+                      fontSize: 9,
                       fontWeight: FontWeight.w600,
                       color: Colors.black,
                     ),
@@ -488,7 +488,7 @@ class _dataBoxnameState extends State<dataBoxname> {
                   Text(
                     widget.phoneNumber.toString(),
                     style: TextStyle(
-                      fontSize: 10,
+                      fontSize: 9,
                       fontWeight: FontWeight.w600,
                       color: Colors.black,
                     ),
@@ -504,7 +504,7 @@ class _dataBoxnameState extends State<dataBoxname> {
                   Text(
                     "Balance",
                     style: TextStyle(
-                      fontSize: 10,
+                      fontSize: 8,
                       fontWeight: FontWeight.w600,
                       color: Colors.grey,
                     ),
@@ -512,7 +512,7 @@ class _dataBoxnameState extends State<dataBoxname> {
                   Text(
                     "${widget.balance} ${widget.code}".substring(0, 8),
                     style: TextStyle(
-                      fontSize: 10,
+                      fontSize: 8,
                       fontWeight: FontWeight.w600,
                       color: Colors.black,
                     ),
@@ -528,7 +528,7 @@ class _dataBoxnameState extends State<dataBoxname> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Icon(
-                    size: 15,
+                    size: 12,
                     Icons.arrow_downward_outlined,
                     color: Colors.black,
                   ),

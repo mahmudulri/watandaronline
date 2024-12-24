@@ -26,7 +26,7 @@ class _NewServiceScreenState extends State<NewServiceScreen> {
 
   final box = GetStorage();
 
-  final countryListController = Get.find<CountryListController>();
+  // final countryListController = Get.find<CountryListController>();
 
   final bundleController = Get.find<BundleController>();
 
@@ -36,7 +36,8 @@ class _NewServiceScreenState extends State<NewServiceScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    categorisListController.fetchcategories();
+    // categorisListController.nonsocialArray.clear();
+    // categorisListController.fetchcategories();
   }
 
   @override
@@ -62,7 +63,9 @@ class _NewServiceScreenState extends State<NewServiceScreen> {
         centerTitle: true,
         title: GestureDetector(
           onTap: () {
-            categorisListController.fetchcategories();
+            // categorisListController.nonsocialArray.clear();
+            // categorisListController.fetchcategories();
+            print(categorisListController.isLoading.value);
           },
           child: Text(
             languageController.alllanguageData.value.languageData!["SERVICES"]
@@ -92,7 +95,8 @@ class _NewServiceScreenState extends State<NewServiceScreen> {
                       mainAxisSpacing: 3.0,
                       childAspectRatio: 0.9,
                     ),
-                    itemCount: categorisListController.combinedList.length + 1,
+                    itemCount:
+                        categorisListController.nonsocialArray.length + 1,
                     itemBuilder: (context, index) {
                       if (index == 0) {
                         // Handle the extra fixed item
@@ -154,22 +158,23 @@ class _NewServiceScreenState extends State<NewServiceScreen> {
                         );
                       }
                       final data =
-                          categorisListController.combinedList[index - 1];
+                          categorisListController.nonsocialArray[index - 1];
 
                       return GestureDetector(
                         onTap: () {
                           serviceController.reserveDigit.clear();
                           bundleController.finalList.clear();
 
-                          box.write("maxlength", data["phone_number_length"]);
+                          box.write("maxlength", data["phoneNumberLength"]);
 
                           box.write("validity_type", "");
                           box.write("company_id", "");
                           box.write("search_tag", "");
-                          box.write("country_id", data["country_id"]);
+                          box.write("country_id", data["countryId"]);
 
-                          box.write("service_category_id", data["category_id"]);
+                          box.write("service_category_id", data["categoryId"]);
                           bundleController.initialpage = 1;
+                          // print(data["phoneNumberLength"]);
 
                           Navigator.push(
                             context,
@@ -198,11 +203,11 @@ class _NewServiceScreenState extends State<NewServiceScreen> {
                                 CircleAvatar(
                                   radius: 30,
                                   backgroundColor: Colors.white,
-                                  backgroundImage: NetworkImage(
-                                      data["country_flag_image_url"]),
+                                  backgroundImage:
+                                      NetworkImage(data["countryImage"]),
                                 ),
                                 Text(
-                                  data["category_name"],
+                                  data["categoryName"],
                                 ),
                               ],
                             ),

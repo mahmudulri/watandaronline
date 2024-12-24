@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:watandaronline/controllers/categories_list_controller.dart';
 import 'package:watandaronline/controllers/country_list_controller.dart';
 import 'package:watandaronline/controllers/history_controller.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
@@ -61,6 +62,7 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
   final languageController = Get.find<LanguageController>();
   final subresellerController = Get.find<SubresellerController>();
   final countryListController = Get.find<CountryListController>();
+  final categorisListController = Get.find<CategorisListController>();
 
   final PageStorageBucket bucket = PageStorageBucket();
 
@@ -126,6 +128,8 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
             borderRadius: BorderRadius.circular(50),
           ),
           onPressed: () {
+            categorisListController.nonsocialArray.clear();
+            categorisListController.fetchcategories();
             if (countryListController.finalCountryList.isNotEmpty) {
               // Find the country where the name is "Afghanistan"
               var afghanistan =
@@ -210,6 +214,8 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
                               MaterialButton(
                                 minWidth: 40,
                                 onPressed: () {
+                                  categorisListController.nonsocialArray
+                                      .clear();
                                   box.write("orderstatus", "");
                                   setState(() {
                                     historyController.initialpage = 1;
@@ -254,6 +260,8 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
                               MaterialButton(
                                 minWidth: 40,
                                 onPressed: () {
+                                  categorisListController.nonsocialArray
+                                      .clear();
                                   box.write("orderstatus", "");
                                   orderlistController.finalList.clear();
                                   orderlistController.initialpage = 1;
@@ -294,6 +302,8 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
                               MaterialButton(
                                 minWidth: 40,
                                 onPressed: () {
+                                  categorisListController.nonsocialArray
+                                      .clear();
                                   box.write("orderstatus", "");
                                   setState(() {
                                     currentPage = SubResellerScreen();
