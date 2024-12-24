@@ -36,11 +36,11 @@ import '../models/country_list_model.dart';
 // }
 
 class CategorisListController extends GetxController {
-  @override
-  void onInit() {
-    fetchcategories();
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   fetchcategories();
+  //   super.onInit();
+  // }
 
   var isLoading = false.obs;
   var allcategorieslist = CategoriesModel().obs;
