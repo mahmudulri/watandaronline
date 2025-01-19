@@ -1015,13 +1015,21 @@ class _HomepageState extends State<Homepage> {
                                         SizedBox(
                                           height: 7,
                                         ),
-                                        Text(
-                                          "Social Bundles",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w500,
+                                        Obx(
+                                          () => Text(
+                                            languageController
+                                                        .isLoading.value ==
+                                                    false
+                                                ? getText("SOCIAL_BUNDLES",
+                                                    defaultValue:
+                                                        "Social Bundles")
+                                                : "",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w500,
+                                            ),
                                           ),
                                         ),
                                       ],

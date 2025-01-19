@@ -35,26 +35,9 @@ class BottomNavigationbar extends StatefulWidget {
 }
 
 class _BottomNavigationbarState extends State<BottomNavigationbar> {
-  // List pages = [
-  //   Myhomepage(),
-  //   TransactionsPage(),
-  //   NotificationPage(),
-  //   MorePage(),
-  // ];
   final box = GetStorage();
   int currentIndex = 0;
   MyPageController myPageController = Get.put(MyPageController());
-
-  // final OrderlistController orderlistController =
-  //     Get.put(OrderlistController());
-
-  // final HistoryController historyController = Get.put(HistoryController());
-
-  // final TransactionController transactionController =
-  //     Get.put(TransactionController());
-
-  // final SubresellerController subresellerController =
-  //     Get.put(SubresellerController());
 
   final orderlistController = Get.find<OrderlistController>();
   final transactionController = Get.find<TransactionController>();
