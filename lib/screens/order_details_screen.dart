@@ -407,11 +407,17 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                             color: Colors.black,
                                           ),
                                         ),
-                                        Text(
-                                          widget.rechargebleAccount.toString(),
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Flexible(
+                                          child: Text(
+                                            widget.rechargebleAccount
+                                                .toString(),
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                            ),
                                           ),
                                         ),
                                       ],

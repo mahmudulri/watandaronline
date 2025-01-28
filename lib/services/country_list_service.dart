@@ -20,7 +20,7 @@ class CountryListApi {
     );
 
     if (response.statusCode == 200) {
-      print(response.body.toString());
+      // print(response.body.toString());
       final countryModel =
           CountryListModel.fromJson(json.decode(response.body));
 

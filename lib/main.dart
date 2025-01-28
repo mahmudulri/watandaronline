@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -13,7 +14,18 @@ import 'dependency_injection.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+
   await GetStorage.init();
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+      apiKey: "AIzaSyAHf2sH4VaGRej1dY0X8HmLGHWM4oXIdzU",
+      authDomain: "watandaronlinewoosat.firebaseapp.com",
+      projectId: "watandaronlinewoosat",
+      storageBucket: "watandaronlinewoosat.firebasestorage.app",
+      messagingSenderId: "849035657162",
+      appId: "1:849035657162:web:f5aaa9e02c6f68b9c01933",
+    ),
+  );
   runApp(
     EasyLocalization(
       supportedLocales: [

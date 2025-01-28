@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:watandaronline/controllers/bundles_controller.dart';
-import 'package:watandaronline/controllers/reserve_digit_controller.dart';
 import 'package:watandaronline/controllers/service_controller.dart';
 import 'package:watandaronline/helpers/language_helper.dart';
 
@@ -54,9 +53,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
   final BundleController bundleController = Get.put(BundleController());
 
   String? errorMessage;
-
   void validateInput(String input) {
-    // If input is empty, clear the company_id, reset permission, and fetch all bundles
+    // If reserveDigit list is empty
+    if (serviceController.reserveDigit.isEmpty) {
+      setState(() {
+        box.write("permission", "yes"); // Automatically grant permission
+        errorMessage = null; // Clear any error message
+      });
+      return; // Exit early since no further validation is needed
+    }
+
+    // If reserveDigit is not empty, apply all validation logic
     if (input.isEmpty) {
       setState(() {
         box.write("company_id", "");
@@ -67,10 +74,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
       bundleController.initialpage = 1;
       bundleController.fetchallbundles();
       print("Input is empty. Cleared company_id and fetched all bundles.");
-      return; // Exit the method early
+      return; // Exit early
     }
 
-    // Continue with validation if input is not empty
+    // Validate input against reserveDigit list
     bool isValid =
         serviceController.reserveDigit.any((digit) => input.startsWith(digit));
 
@@ -91,23 +98,25 @@ class _CustomTextFieldState extends State<CustomTextField> {
       });
     }
 
-    // Only proceed when the input length is 3, 4, or 10
+    // Proceed when the input length is 3, 4, or 10
     if (input.length == 3 || input.length == 4 || input.length == 10) {
-      final services = serviceController.allserviceslist.value.data!.services;
+      final services =
+          serviceController.allserviceslist.value.data?.services ?? [];
       bool matchFound = false;
 
       for (var service in services) {
-        for (var code in service.company!.companycodes!) {
+        for (var code in service.company?.companycodes ?? []) {
           print("Checking reservedDigit: ${code.reservedDigit}");
 
           // Check if the input starts with the reservedDigit
-          if (input.startsWith(code.reservedDigit.toString())) {
+          if (input.startsWith(code.reservedDigit ?? '')) {
             // Set the matched company_id
             box.write("company_id", service.companyId);
             bundleController.initialpage = 1;
 
             // Clear and fetch bundles
             bundleController.finalList.clear();
+
             serviceController.fetchservices();
             bundleController.fetchallbundles();
 

@@ -175,7 +175,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
           centerTitle: true,
           title: GestureDetector(
             onTap: () {
-              print(serviceController.reserveDigit.toList());
+              print(box.read("permission"));
             },
             child: Text(
               languageController.alllanguageData.value.languageData!["RECHARGE"]
@@ -200,8 +200,10 @@ class _RechargeScreenState extends State<RechargeScreen> {
                     color: Color(0xff2980b9),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(13.0),
-                    child: ListView(
+                    padding: const EdgeInsets.symmetric(horizontal: 13),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         CustomTextField(
                           confirmPinController:
@@ -210,57 +212,21 @@ class _RechargeScreenState extends State<RechargeScreen> {
                               .languageData!["ENTER_YOUR_NUMBER"]
                               .toString(),
                         ),
-                        // Container(
-                        //   height: 50,
-                        //   width: screenWidth,
-                        //   decoration: BoxDecoration(
-                        //     borderRadius: BorderRadius.circular(8),
-                        //     border: Border.all(
-                        //       width: 1,
-                        //       color: Colors.white,
-                        //     ),
-                        //   ),
-                        //   child: Padding(
-                        //     padding: EdgeInsets.symmetric(
-                        //       horizontal: 10,
-                        //     ),
-                        //     child: TextField(
-                        //       maxLength: int.parse(widget.numberlength),
-                        //       style: TextStyle(
-                        //         color: Colors.white,
-                        //       ),
-                        //       controller: confirmPinController.numberController,
-                        //       keyboardType: TextInputType.phone,
-                        //       decoration: InputDecoration(
-                        //         counterText: "",
-                        //         border: InputBorder.none,
-                        //         hintText: languageController.alllanguageData
-                        //             .value.languageData!["ENTER_YOUR_NUMBER"]
-                        //             .toString(),
-                        //         hintStyle: TextStyle(
-                        //           fontWeight: FontWeight.w300,
-                        //           color: Colors.white,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-
                         SizedBox(
-                          height: 8,
+                          height: 5,
                         ),
                         Container(
                           height: 50,
                           color: Colors.transparent,
-                          width: screenWidth,
+                          width: MediaQuery.of(context).size.width,
                           child: Obx(
                             () {
-                              // Check if the allserviceslist is not null and contains data
+                              // Get all services
                               final services = serviceController
                                       .allserviceslist.value.data?.services ??
                                   [];
 
-                              // Show all services if input is empty, otherwise filter
+                              // Filter services based on input text
                               final filteredServices = confirmPinController
                                       .numberController.text.isEmpty
                                   ? services
@@ -276,91 +242,84 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                           false;
                                     }).toList();
 
-                              return serviceController.isLoading.value == false
-                                  ? Center(
-                                      child: ListView.separated(
-                                        shrinkWrap: true,
-                                        separatorBuilder: (context, index) {
-                                          return SizedBox(
-                                            width: 5,
-                                          );
-                                        },
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: filteredServices.length,
-                                        itemBuilder: (context, index) {
-                                          final data = filteredServices[index];
+                              // Use filteredServices or fallback to all services
+                              final displayServices = filteredServices.isEmpty
+                                  ? services
+                                  : filteredServices;
 
-                                          return GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                bundleController.initialpage =
-                                                    1;
-                                                bundleController.finalList
-                                                    .clear();
-                                                selectedIndex = index;
-                                                box.write("company_id",
-                                                    data.companyId);
-                                                bundleController
-                                                    .fetchallbundles();
-                                              });
+                              // Check if services are loading
+                              if (serviceController.isLoading.value) {
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    color: Colors.grey,
+                                    strokeWidth: 1.0,
+                                  ),
+                                );
+                              }
+
+                              // Render the services
+                              return Center(
+                                child: ListView.separated(
+                                  shrinkWrap: true,
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(width: 5);
+                                  },
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: displayServices.length,
+                                  itemBuilder: (context, index) {
+                                    final data = displayServices[index];
+
+                                    return GestureDetector(
+                                      onTap: () {
+                                        bundleController.initialpage = 1;
+                                        bundleController.finalList.clear();
+                                        box.write("company_id", data.companyId);
+                                        bundleController.fetchallbundles();
+                                      },
+                                      child: Container(
+                                        height: 50,
+                                        width: 65,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.shade100,
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 5, vertical: 5),
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                data.company?.companyLogo ?? '',
+                                            placeholder: (context, url) {
+                                              print('Loading image: $url');
+                                              return Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  color: Colors.white,
+                                                ),
+                                              );
                                             },
-                                            child: Container(
-                                              height: 50,
-                                              width: 65,
-                                              decoration: BoxDecoration(
-                                                color: selectedIndex == index
-                                                    ? Color(0xff34495e)
-                                                    : Colors.grey.shade100,
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                              ),
-                                              child: Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                  horizontal: 5,
-                                                  vertical: 5,
-                                                ),
-                                                child: CachedNetworkImage(
-                                                  imageUrl: data.company
-                                                          ?.companyLogo ??
-                                                      '',
-                                                  placeholder: (context, url) {
-                                                    print(
-                                                        'Loading image: $url');
-                                                    return Center(
-                                                        child:
-                                                            CircularProgressIndicator(
-                                                      color: Colors.white,
-                                                    ));
-                                                  },
-                                                  errorWidget:
-                                                      (context, url, error) {
-                                                    print(
-                                                        'Error loading image: $url, error: $error');
-                                                    return Icon(Icons.error);
-                                                  },
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    )
-                                  : Center(
-                                      child: CircularProgressIndicator(
-                                        color: Colors.grey,
-                                        strokeWidth: 1.0,
+                                            errorWidget: (context, url, error) {
+                                              print(
+                                                  'Error loading image: $url, error: $error');
+                                              return Icon(Icons.error);
+                                            },
+                                          ),
+                                        ),
                                       ),
                                     );
+                                  },
+                                ),
+                              );
                             },
                           ),
                         ),
-
                         SizedBox(
                           height: 2,
                         ),
                         Container(
                           width: screenWidth,
-                          height: 30,
+                          height: 25,
                           child: ListView.separated(
                             separatorBuilder: (context, index) {
                               return VerticalDivider();

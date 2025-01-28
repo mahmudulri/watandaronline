@@ -11,6 +11,7 @@ import 'package:watandaronline/screens/social_recharge.dart';
 import 'package:watandaronline/utils/colors.dart';
 
 import '../controllers/language_controller.dart';
+import 'social_recharge_screen.dart';
 
 class NewServiceScreen extends StatefulWidget {
   NewServiceScreen({super.key});
@@ -31,6 +32,16 @@ class _NewServiceScreenState extends State<NewServiceScreen> {
   final bundleController = Get.find<BundleController>();
 
   final serviceController = Get.find<ServiceController>();
+
+  final List<String> imageList = [
+    "assets/icons/social-media1.png",
+    "assets/icons/intcall.jpeg",
+    "assets/icons/social-media3.png",
+    "assets/icons/social-media4.png",
+    "assets/icons/social-media5.png",
+    "assets/icons/social-media6.png",
+    "assets/icons/social-media7.png",
+  ];
 
   @override
   void initState() {
@@ -95,70 +106,10 @@ class _NewServiceScreenState extends State<NewServiceScreen> {
                       mainAxisSpacing: 3.0,
                       childAspectRatio: 0.9,
                     ),
-                    itemCount:
-                        categorisListController.nonsocialArray.length + 1,
+                    itemCount: categorisListController.finalArrayCatList.length,
                     itemBuilder: (context, index) {
-                      if (index == 0) {
-                        // Handle the extra fixed item
-                        return GestureDetector(
-                          onTap: () {
-                            bundleController.finalList.clear();
-                            // print(service.companyId.toString());
-                            box.write("validity_type", "");
-                            box.write("company_id", "");
-                            box.write("search_tag", "");
-                            box.write("country_id", "");
-
-                            box.write("service_category_id", "3");
-                            bundleController.initialpage = 1;
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SocialRechargeScreen(),
-                              ),
-                            );
-                          },
-                          child: Card(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.2),
-                                    spreadRadius: 2,
-                                    blurRadius: 2,
-                                    offset: Offset(0, 0),
-                                  ),
-                                ],
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    "assets/icons/social-media2.png",
-                                    height: 60,
-                                  ),
-                                  SizedBox(
-                                    height: 7,
-                                  ),
-                                  Text(
-                                    "Social Bundles",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      }
                       final data =
-                          categorisListController.nonsocialArray[index - 1];
+                          categorisListController.finalArrayCatList[index];
 
                       return GestureDetector(
                         onTap: () {
@@ -174,14 +125,23 @@ class _NewServiceScreenState extends State<NewServiceScreen> {
 
                           box.write("service_category_id", data["categoryId"]);
                           bundleController.initialpage = 1;
-                          // print(data["phoneNumberLength"]);
+                          print(data["type"]);
 
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => RechargeScreen(),
-                            ),
-                          );
+                          if (data["type"] == "social") {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SocialRechargeScreen(),
+                              ),
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RechargeScreen(),
+                              ),
+                            );
+                          }
                         },
                         child: Card(
                           child: Container(
@@ -198,16 +158,35 @@ class _NewServiceScreenState extends State<NewServiceScreen> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                CircleAvatar(
-                                  radius: 30,
-                                  backgroundColor: Colors.white,
-                                  backgroundImage:
-                                      NetworkImage(data["countryImage"]),
+                                Expanded(
+                                  flex: 5,
+                                  child: data["type"] == "nonsocial"
+                                      ? Container(
+                                          child: Center(
+                                            child: CircleAvatar(
+                                              radius: 30,
+                                              backgroundColor: Colors.white,
+                                              backgroundImage: NetworkImage(
+                                                  data["countryImage"]),
+                                            ),
+                                          ),
+                                        )
+                                      : Container(
+                                          child: Center(
+                                            child: Image.asset(
+                                              imageList[index],
+                                              height: 55,
+                                            ),
+                                          ),
+                                        ),
                                 ),
-                                Text(
-                                  data["categoryName"],
+                                Expanded(
+                                  flex: 3,
+                                  child: Text(
+                                    textAlign: TextAlign.center,
+                                    data["categoryName"],
+                                  ),
                                 ),
                               ],
                             ),

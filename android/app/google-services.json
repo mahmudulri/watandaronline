@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "849035657162",
+    "project_id": "watandaronlinewoosat",
+    "storage_bucket": "watandaronlinewoosat.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:849035657162:android:46fbd4fe45148db9c01933",
+        "android_client_info": {
+          "package_name": "com.watandaronline.woosat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXTMOnm_wVpWnXBIDlHn4YoIuAoTv_qTU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

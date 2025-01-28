@@ -130,11 +130,11 @@ List<GetPage> myroutes = [
     name: resultscreen,
     page: () => ResultScreen(),
   ),
-  GetPage(
-    name: servicescreen,
-    page: () => ServiceScreen(),
-    binding: ServiceBinding(),
-  ),
+  // GetPage(
+  //   name: servicescreen,
+  //   page: () => ServiceScreen(),
+  //   binding: ServiceBinding(),
+  // ),
   GetPage(
     name: newservicescreen,
     page: () => NewServiceScreen(),
@@ -144,9 +144,9 @@ List<GetPage> myroutes = [
     name: signinscreen,
     page: () => SignUpScreen(),
   ),
-  GetPage(
-    name: socialrechargescreen,
-    page: () => SocialRechargeScreen(),
-    binding: RechargeBinding(),
-  ),
+  // GetPage(
+  //   name: socialrechargescreen,
+  //   page: () => SocialRechargeScreen(),
+  //   binding: RechargeBinding(),
+  // ),
 ];
