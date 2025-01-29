@@ -652,7 +652,7 @@ class _OrderPageState extends State<OrderPage> {
                                             },
                                             child: Card(
                                               child: Container(
-                                                height: 205,
+                                                height: 218,
                                                 width: screenWidth,
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
@@ -825,24 +825,20 @@ class _OrderPageState extends State<OrderPage> {
                                                               ),
                                                               Row(
                                                                 children: [
-                                                                  Container(
-                                                                    width: 250,
-                                                                    // color: Colors.red,
-                                                                    child:
-                                                                        Flexible(
-                                                                      child:
-                                                                          Text(
-                                                                        data.rechargebleAccount
-                                                                            .toString(),
-                                                                        style:
-                                                                            TextStyle(
-                                                                          fontSize:
-                                                                              13,
-                                                                          color:
-                                                                              Colors.grey,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                        ),
+                                                                  SizedBox(
+                                                                    width:
+                                                                        250, // Define fixed width
+                                                                    child: Text(
+                                                                      data.rechargebleAccount
+                                                                          .toString(),
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            13,
+                                                                        color: Colors
+                                                                            .grey,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
                                                                       ),
                                                                     ),
                                                                   ),
@@ -1106,7 +1102,7 @@ class _OrderPageState extends State<OrderPage> {
                                                 },
                                                 child: Card(
                                                   child: Container(
-                                                    height: 205,
+                                                    height: 218,
                                                     width: screenWidth,
                                                     decoration: BoxDecoration(
                                                       border: Border.all(
@@ -1269,21 +1265,21 @@ class _OrderPageState extends State<OrderPage> {
                                                                   ),
                                                                   Row(
                                                                     children: [
-                                                                      Container(
+                                                                      SizedBox(
                                                                         width:
-                                                                            250,
-                                                                        // color: Colors.red,
+                                                                            250, // Define fixed width
                                                                         child:
-                                                                            Flexible(
-                                                                          child:
-                                                                              Text(
-                                                                            data.rechargebleAccount.toString(),
-                                                                            style:
-                                                                                TextStyle(
-                                                                              fontSize: 13,
-                                                                              color: Colors.grey,
-                                                                              fontWeight: FontWeight.w600,
-                                                                            ),
+                                                                            Text(
+                                                                          data.rechargebleAccount
+                                                                              .toString(),
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                13,
+                                                                            color:
+                                                                                Colors.grey,
+                                                                            fontWeight:
+                                                                                FontWeight.w600,
                                                                           ),
                                                                         ),
                                                                       ),

@@ -112,7 +112,7 @@ class _HomepageState extends State<Homepage> {
   final AdvancedDrawerController advancedDrawerController =
       AdvancedDrawerController();
 
-  String myversion = "1.0.5";
+  String myversion = "1.0.6";
   var maindata;
   var currentversion;
 
