@@ -59,7 +59,7 @@ class Data {
 
 class Reseller {
   final int? id;
-  final int? userId;
+  final String? userId;
 
   final String? resellerName;
   final String? contactName;

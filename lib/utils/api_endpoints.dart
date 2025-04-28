@@ -1,8 +1,12 @@
 class ApiEndPoints {
+  // static String baseUrl =
+  //     "https://app-api-wadaron-v2-hr.watandaronline.com/api/reseller/";
+
   static String baseUrl =
-      "https://app-api-wadaron-v2-hr.watandaronline.com/api/reseller/";
+      "https://api-vpro-hetz-25.watandaronline.com/api/reseller/";
+
   static String languageUrl =
-      "https://app-api-wadaron-v2-hr.watandaronline.com/api/locale/";
+      "https://api-vpro-hetz-25.watandaronline.com/api/locale/";
 
   static OtherendPoints otherendpoints = OtherendPoints();
 }

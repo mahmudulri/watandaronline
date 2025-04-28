@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final categoriesModel = categoriesModelFromJson(jsonString);
-
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
@@ -89,8 +85,8 @@ class Servicecategory {
 
 class Service {
   final int? id;
-  final int? serviceCategoryId;
-  final int? companyId;
+  final String? serviceCategoryId;
+  final String? companyId;
   final Company? company;
 
   Service({
@@ -120,8 +116,8 @@ class Company {
   final int? id;
   final String? companyName;
   final String? companyLogo;
-  final int? countryId;
-  final int? telegramChatId;
+  final String? countryId;
+  final String? telegramChatId;
   final Country? country;
 
   Company({

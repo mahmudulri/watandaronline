@@ -38,6 +38,13 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
   String selected_district = "Select District";
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    countryListController.fetchCountryData();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
@@ -57,12 +64,17 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
         backgroundColor: Colors.white,
         elevation: 0.0,
         centerTitle: true,
-        title: Text(
-          "Add New Sub Reseller",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
+        title: GestureDetector(
+          onTap: () {
+            countryListController.fetchCountryData();
+          },
+          child: Text(
+            "Add New Sub Reseller",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
           ),
         ),
       ),

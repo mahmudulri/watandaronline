@@ -65,7 +65,7 @@ class Country {
   final int? id;
   final String? countryName;
   final String? countryFlagImageUrl;
-  final int? languageId;
+  final String? languageId;
   final String? countryTelecomCode;
   final String? phoneNumberLength;
   final DateTime? createdAt;

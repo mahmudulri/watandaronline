@@ -130,7 +130,7 @@ class Currency {
 
 class Service {
   final int? id;
-  final int? serviceCategoryID;
+  final String? serviceCategoryID;
   final Company? company;
 
   Service({

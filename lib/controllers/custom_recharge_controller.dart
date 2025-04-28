@@ -17,45 +17,6 @@ class CustomRechargeController extends GetxController {
 
   final customhistoryController = Get.find<CustomHistoryController>();
 
-  // Future<void> verify() async {
-  //   try {
-  //     isLoading.value = true;
-  //     loadsuccess.value =
-  //         false; // Start with false, only set to true if successful.
-
-  //     var headers = {
-  //       'Content-Type': 'application/json',
-  //       'Accept': 'application/json',
-  //     };
-  //     var url = Uri.parse(
-  //         "${ApiEndPoints.baseUrl}confirm_pin?pin=${pinController.text}");
-  //     print(url.toString());
-
-  //     http.Response response = await http.get(
-  //       url,
-  //       headers: {
-  //         'Authorization': 'Bearer ${box.read("userToken")}',
-  //       },
-  //     );
-
-  //     final results = jsonDecode(response.body);
-
-  //     if (response.statusCode == 200 && results["success"] == true) {
-  //       pinController.clear();
-  //       loadsuccess.value =
-  //           true; // Mark as successful only if status and success are correct
-
-  //       // Proceed with placing the order
-  //       placeOrder();
-  //     } else {
-  //       handleFailure(results["message"]);
-  //     }
-  //   } catch (e) {
-  //     handleFailure(e.toString());
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
   RxBool isLoading = false.obs;
 
   RxBool loadsuccess = false.obs;
@@ -101,45 +62,6 @@ class CustomRechargeController extends GetxController {
       handleFailure(e.toString());
     }
   }
-
-  // void placeOrder() async {
-  //   try {
-  //     isLoading.value = true;
-  //     loadsuccess.value = true;
-
-  //     var url = Uri.parse(
-  //         "${ApiEndPoints.baseUrl + ApiEndPoints.otherendpoints.customrecharge}");
-  //     print(url);
-  //     Map body = {
-  //       'country_id': box.read("country_id"),
-  //       'rechargeble_account': numberController.text,
-  //       'amount': amountController.text,
-  //     };
-
-  //     http.Response response = await http.post(
-  //       url,
-  //       body: jsonEncode(body),
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Accept': 'application/json',
-  //         'Authorization': 'Bearer ${box.read("userToken")}',
-  //       },
-  //     );
-
-  //     final orderresults = jsonDecode(response.body);
-  //     if (response.statusCode == 201 && orderresults["success"] == true) {
-  //       loadsuccess.value = false;
-  //       isLoading.value = false;
-
-  //       Get.snackbar("Success", orderresults["message"]);
-  //       clearInputs();
-  //     } else {
-  //       handleFailure(orderresults["message"]);
-  //     }
-  //   } catch (e) {
-  //     handleFailure(e.toString());
-  //   }
-  // }
 
   void handleFailure(String message) {
     loadsuccess.value = false;

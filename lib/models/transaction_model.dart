@@ -57,10 +57,10 @@ class Data {
 
 class ResellerBalanceTransaction {
   final int? id;
-  final int? resellerId;
+  final String? resellerId;
   final String? amount;
   final dynamic? currencyCode;
-  final int? currencyId;
+  final String? currencyId;
   final String? status;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -147,12 +147,12 @@ class Currency {
 
 class Reseller {
   final int? id;
-  final int? userId;
+  final String? userId;
   final dynamic? parentId;
   final String? resellerName;
   final String? contactName;
   final String? resellerType;
-  final int? status;
+  final String? status;
   final String? balance;
   final String? loanBalance;
   final dynamic? fcmToken;

@@ -50,8 +50,8 @@ class Data {
 
 class Service {
   final int? id;
-  final int? serviceCategoryId;
-  final int? companyId;
+  final String? serviceCategoryId;
+  final String? companyId;
 
   final Company? company;
 

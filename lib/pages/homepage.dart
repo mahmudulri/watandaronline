@@ -112,9 +112,10 @@ class _HomepageState extends State<Homepage> {
   final AdvancedDrawerController advancedDrawerController =
       AdvancedDrawerController();
 
-  String myversion = "1.0.6";
+  String myversion = "1.0.8";
   var maindata;
   var currentversion;
+  String? checknow;
 
   fetchDate() {
     FirebaseFirestore.instance
@@ -124,11 +125,17 @@ class _HomepageState extends State<Homepage> {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         maindata = documentSnapshot.data();
+        checknow = maindata["permission"];
         currentversion = maindata["version"];
+        print(maindata["permission"]);
         print("Current version from database: $currentversion");
 
-        if (myversion != currentversion) {
-          _showUpdateDialog();
+        if (checknow == "yes") {
+          if (myversion != currentversion) {
+            _showUpdateDialog();
+          } else {
+            print("Not checking permission");
+          }
         }
       } else {
         print('Document does not exist on the database');

@@ -75,8 +75,8 @@ class _NewServiceScreenState extends State<NewServiceScreen> {
         title: GestureDetector(
           onTap: () {
             // categorisListController.nonsocialArray.clear();
-            // categorisListController.fetchcategories();
-            print(categorisListController.isLoading.value);
+            categorisListController.fetchcategories();
+            // print(categorisListController.isLoading.value);
           },
           child: Text(
             languageController.alllanguageData.value.languageData!["SERVICES"]

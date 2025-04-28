@@ -22,7 +22,7 @@ class CountryListController extends GetxController {
         allcountryListData.value = value;
         // print(allcountryListData.toJson()['data']['vehicles']);
         finalCountryList = allcountryListData.toJson()['data']['countries'];
-        // print(finalCountryList);
+        print(finalCountryList);
 
         // print(allcountryListData.toJson());
         isLoading(false);

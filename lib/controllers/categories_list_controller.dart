@@ -6,30 +6,18 @@ class CategorisListController extends GetxController {
   var isLoading = false.obs;
   var allcategorieslist = CategoriesModel().obs;
 
-  // Variables to store country and category data
   var countryList = [].obs;
   var categoryList = [].obs;
 
-  // Variables to store nonsocial and social arrays
   final List<Map<String, dynamic>> nonsocialArray = [];
   final List<Map<String, dynamic>> socialArray = [];
-
-  // Variable to store final combined data
   final List<Map<String, dynamic>> finalArrayCatList = [];
-
-  // final List<String> imageList = [
-  //   "assets/icons/social-media2.png",
-  //   "assets/icons/social-media2.png",
-  //   "assets/icons/social-media2.png",
-  //   "assets/icons/social-media2.png",
-  //   "assets/icons/social-media2.png",
-  // ];
 
   void fetchcategories() async {
     try {
       isLoading(true);
       await CategoriesListApi().fetchcategoriesList().then((value) {
-        // Clear previous data
+        // Clear old data
         nonsocialArray.clear();
         socialArray.clear();
         finalArrayCatList.clear();
@@ -37,18 +25,16 @@ class CategorisListController extends GetxController {
         final Map<String, dynamic> nonsocial = {};
         final Map<String, dynamic> social = {};
 
+        // Build social array directly
         List<Map<String, dynamic>> socialCategoriesWithServices = value
             .data!.servicecategories
             .where((category) =>
                 category.type == 'social' &&
                 (category.services as List).isNotEmpty)
             .map((category) {
-          // Get the first service or handle null explicitly
           final firstService = (category.services as List).isNotEmpty
               ? category.services!.first
               : null;
-
-          // Extract country details if the service and company exist
           final country = firstService?.company?.country;
 
           return {
@@ -56,7 +42,7 @@ class CategorisListController extends GetxController {
             'countryId': country?.id ?? null,
             'countryImage': country?.countryFlagImageUrl ?? "",
             'phoneNumberLength': country?.phoneNumberLength ?? "",
-            'categoryId': category.id,
+            'categoryId': category.id?.toString(),
             'categoryName': category.categoryName.toString(),
             "type": "social",
           };
@@ -64,38 +50,41 @@ class CategorisListController extends GetxController {
 
         socialArray.addAll(socialCategoriesWithServices);
 
-        // print("result" + socialArray.toList().toString());
-
+        // Process nonsocial categories
         for (var category in value.data!.servicecategories ?? []) {
           final String? type = category.type;
-          final int? categoryId = category.id;
+          final String? categoryId = category.id?.toString();
           final String? categoryName = category.categoryName;
 
-          // Ensure necessary values are not null
           if (type != null && categoryId != null && categoryName != null) {
             for (var service in category.services ?? []) {
               final String? country = service.company?.country?.countryName;
-              final int? countryId = service.company?.countryId;
+
+              final int? countryId = service.company?.countryId != null
+                  ? int.tryParse(service.company!.countryId!)
+                  : null;
+
               final String? countryImage =
                   service.company?.country?.countryFlagImageUrl;
               final String? phoneNumberLength =
                   service.company?.country?.phoneNumberLength;
 
               if (country != null && countryId != null) {
-                // Handle nonsocial categories
                 if (type == "nonsocial") {
                   nonsocial.putIfAbsent(country, () {
                     return {
                       'country_id': countryId,
                       'countryImage': countryImage,
                       'phone_number_length': phoneNumberLength,
-                      'categories': <int, dynamic>{},
+                      'categories': <String, dynamic>{},
                     };
                   });
 
-                  // Access and update categories map
-                  final categories =
-                      nonsocial[country]['categories'] as Map<int, dynamic>;
+                  // Safe cast using Map<String, dynamic>.from
+                  final Map<String, dynamic> categories =
+                      Map<String, dynamic>.from(
+                          nonsocial[country]['categories']);
+
                   categories.putIfAbsent(categoryId, () {
                     return {
                       'categoryName': categoryName,
@@ -104,22 +93,26 @@ class CategorisListController extends GetxController {
                       'phone_number_length': phoneNumberLength,
                     };
                   });
+
+                  // Update the categories map back
+                  nonsocial[country]['categories'] = categories;
                 }
               }
             }
           }
         }
 
-        // Convert the nonsocial map to the desired array format
-        nonsocial.entries.forEach((entry) {
-          final String countryName = entry.key;
-          final Map<String, dynamic> countryValue = entry.value;
+        // Convert nonsocial map to array
+        nonsocial.forEach((countryName, countryValue) {
+          final Map<String, dynamic> valueMap =
+              Map<String, dynamic>.from(countryValue);
 
-          final int? countryId = countryValue['country_id'];
-          final String? countryImage = countryValue['countryImage'];
-          final String? phoneNumberLength = countryValue['phone_number_length'];
-          final Map<int, dynamic> categories =
-              countryValue['categories'] as Map<int, dynamic>;
+          final int? countryId = valueMap['country_id'];
+          final String? countryImage = valueMap['countryImage'];
+          final String? phoneNumberLength = valueMap['phone_number_length'];
+
+          final Map<String, dynamic> categories =
+              Map<String, dynamic>.from(valueMap['categories']);
 
           categories.forEach((categoryId, categoryValue) {
             nonsocialArray.add({
@@ -129,43 +122,18 @@ class CategorisListController extends GetxController {
               'phoneNumberLength': phoneNumberLength,
               'categoryId': categoryId,
               'categoryName': categoryValue['categoryName'],
-              "type": "nonsocial",
+              'type': 'nonsocial',
             });
           });
         });
 
-        // Convert the social map to the desired array format
-        social.entries.forEach((entry) {
-          final String countryName = entry.key;
-          final Map<String, dynamic> countryValue = entry.value;
+        // If you ever build social from `Map` (not needed here), fix casting too
 
-          final int? countryId = countryValue['country_id'];
-          final String? countryImage = countryValue['countryImage'];
-          final String? phoneNumberLength = countryValue['phone_number_length'];
-          final Map<int, dynamic> categories =
-              countryValue['categories'] as Map<int, dynamic>;
-
-          categories.forEach((categoryId, categoryValue) {
-            socialArray.add({
-              'countryName': countryName,
-              'countryId': countryId,
-              'countryImage': countryImage,
-              'phoneNumberLength': phoneNumberLength,
-              'categoryId': categoryId,
-              'categoryName': categoryValue['categoryName'],
-            });
-          });
-        });
-
-        // Combine nonsocialArray and socialArray into finalArrayCatList
-
+        // Combine both
         finalArrayCatList.addAll(socialArray);
         finalArrayCatList.addAll(nonsocialArray);
 
-        // Print finalArrayCatList length for verification
-
-        print("Nonsocial Categories: ${nonsocialArray}");
-
+        print("Nonsocial Categories: $nonsocialArray");
         isLoading(false);
       });
     } catch (e) {
