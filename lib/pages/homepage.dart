@@ -925,106 +925,115 @@ class _HomepageState extends State<Homepage> {
               ),
               Obx(
                 () => categorisListController.isLoading.value == false
-                    ? GridView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 3.0,
-                          mainAxisSpacing: 3.0,
-                          childAspectRatio: 0.9,
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
                         ),
-                        itemCount:
-                            categorisListController.finalArrayCatList.length,
-                        itemBuilder: (context, index) {
-                          final data =
-                              categorisListController.finalArrayCatList[index];
+                        child: GridView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 3.0,
+                            mainAxisSpacing: 3.0,
+                            childAspectRatio: 0.9,
+                          ),
+                          itemCount:
+                              categorisListController.finalArrayCatList.length,
+                          itemBuilder: (context, index) {
+                            final data = categorisListController
+                                .finalArrayCatList[index];
 
-                          return GestureDetector(
-                            onTap: () {
-                              serviceController.reserveDigit.clear();
-                              bundleController.finalList.clear();
+                            return GestureDetector(
+                              onTap: () {
+                                serviceController.reserveDigit.clear();
+                                bundleController.finalList.clear();
 
-                              box.write("maxlength", data["phoneNumberLength"]);
+                                box.write(
+                                    "maxlength", data["phoneNumberLength"]);
 
-                              box.write("validity_type", "");
-                              box.write("company_id", "");
-                              box.write("search_tag", "");
-                              box.write("country_id", data["countryId"]);
+                                box.write("validity_type", "");
+                                box.write("company_id", "");
+                                box.write("search_tag", "");
+                                box.write("country_id", data["countryId"]);
 
-                              box.write(
-                                  "service_category_id", data["categoryId"]);
-                              bundleController.initialpage = 1;
-                              // print(data["phoneNumberLength"]);
+                                box.write(
+                                    "service_category_id", data["categoryId"]);
+                                bundleController.initialpage = 1;
+                                // print(data["phoneNumberLength"]);
 
-                              if (data["type"] == "social") {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        SocialRechargeScreen(),
-                                  ),
-                                );
-                              } else {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => RechargeScreen(),
-                                  ),
-                                );
-                              }
-                            },
-                            child: Card(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      spreadRadius: 2,
-                                      blurRadius: 2,
-                                      offset: Offset(0, 0),
+                                if (data["type"] == "social") {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          SocialRechargeScreen(),
                                     ),
-                                  ],
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Expanded(
-                                      flex: 4,
-                                      child: data["type"] == "nonsocial"
-                                          ? Container(
-                                              child: Center(
-                                                child: CircleAvatar(
-                                                  radius: 30,
-                                                  backgroundColor: Colors.white,
-                                                  backgroundImage: NetworkImage(
-                                                      data["countryImage"]),
-                                                ),
-                                              ),
-                                            )
-                                          : Container(
-                                              child: Center(
-                                                child: Image.asset(
-                                                  imageList[index],
-                                                  height: 55,
-                                                ),
-                                              ),
-                                            ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => RechargeScreen(),
                                     ),
-                                    Expanded(
-                                      flex: 2,
-                                      child: Text(
-                                        textAlign: TextAlign.center,
-                                        data["categoryName"],
+                                  );
+                                }
+                              },
+                              child: Card(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.2),
+                                        spreadRadius: 2,
+                                        blurRadius: 2,
+                                        offset: Offset(0, 0),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Expanded(
+                                        flex: 4,
+                                        child: data["type"] == "nonsocial"
+                                            ? Container(
+                                                child: Center(
+                                                  child: CircleAvatar(
+                                                    radius: 30,
+                                                    backgroundColor:
+                                                        Colors.white,
+                                                    backgroundImage:
+                                                        NetworkImage(data[
+                                                            "countryImage"]),
+                                                  ),
+                                                ),
+                                              )
+                                            : Container(
+                                                child: Center(
+                                                  child: Image.asset(
+                                                    imageList[index],
+                                                    height: 55,
+                                                  ),
+                                                ),
+                                              ),
+                                      ),
+                                      Expanded(
+                                        flex: 2,
+                                        child: Text(
+                                          textAlign: TextAlign.center,
+                                          data["categoryName"],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       )
                     : Center(
                         child: CircularProgressIndicator(),
