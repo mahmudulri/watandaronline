@@ -1002,7 +1002,7 @@ class _HomepageState extends State<Homepage> {
                                             ? Container(
                                                 child: Center(
                                                   child: CircleAvatar(
-                                                    radius: 30,
+                                                    radius: 25,
                                                     backgroundColor:
                                                         Colors.white,
                                                     backgroundImage:
@@ -1021,7 +1021,7 @@ class _HomepageState extends State<Homepage> {
                                               ),
                                       ),
                                       Expanded(
-                                        flex: 2,
+                                        flex: 3,
                                         child: Text(
                                           textAlign: TextAlign.center,
                                           data["categoryName"],
