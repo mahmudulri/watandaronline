@@ -39,8 +39,10 @@ Text convertToDate(
   return Text(
     localTimeString,
     style: TextStyle(
-      fontSize: 12,
+      fontSize: 14,
+      color: Color(0xff212B36),
       fontWeight: FontWeight.w500,
+      fontFamily: "Iranyekanregular",
     ),
   );
 }
@@ -79,8 +81,10 @@ Text convertToLocalTime(
   return Text(
     localTimeString,
     style: TextStyle(
-      fontSize: 12,
+      fontSize: 14,
+      color: Color(0xff212B36),
       fontWeight: FontWeight.w500,
+      fontFamily: "Iranyekanregular",
     ),
   );
 }

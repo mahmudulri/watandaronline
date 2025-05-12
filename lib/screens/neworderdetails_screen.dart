@@ -75,14 +75,14 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
         child: Center(
           child: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: 15,
+              horizontal: 18,
             ),
             child: RepaintBoundary(
               key: catpureKey,
               child: RepaintBoundary(
                 key: shareKey,
                 child: Container(
-                  height: 550,
+                  height: 525,
                   width: screenWidth,
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -102,6 +102,9 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
+                              SizedBox(
+                                height: 8,
+                              ),
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 30),
                                 child: Container(
@@ -120,18 +123,18 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                         height: 50,
                                       ),
                                       CircleAvatar(
-                                        radius: 28,
+                                        radius: 26,
                                         backgroundColor: Colors.green,
                                         child: Padding(
                                           padding: const EdgeInsets.all(3.0),
                                           child: CircleAvatar(
-                                            radius: 26,
+                                            radius: 24,
                                             backgroundColor: Colors.white,
                                             child: Padding(
                                               padding: EdgeInsets.all(3.0),
                                               child: Container(
-                                                height: 50,
-                                                width: 50,
+                                                height: 45,
+                                                width: 45,
                                                 decoration: BoxDecoration(
                                                   shape: BoxShape.circle,
                                                   color: Colors.green,
@@ -170,10 +173,11 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                     : widget.status.toString() == "1"
                                         ? getText("SUCCESS",
                                             defaultValue: "Success")
-                                        : getText("FAIL",
+                                        : getText("REJECTED",
                                             defaultValue: "Rejected"),
-                                style: GoogleFonts.aBeeZee(
+                                style: TextStyle(
                                   fontWeight: FontWeight.w600,
+                                  fontFamily: "Iranyekanregular",
                                   color: widget.status.toString() == "0"
                                       ? Colors.black
                                       : widget.status.toString() == "1"
@@ -181,15 +185,15 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                           : Colors.red,
                                 ),
                               ),
-                              Visibility(
-                                visible: widget.status.toString() == "2",
-                                child: Text(
-                                  widget.rejectReason.toString(),
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                  ),
-                                ),
-                              ),
+                              // Visibility(
+                              //   visible: widget.status.toString() == "2",
+                              //   child: Text(
+                              //     widget.rejectReason.toString(),
+                              //     style: TextStyle(
+                              //       color: Colors.red,
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),
@@ -200,15 +204,15 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                           color: Colors.white,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
+                                horizontal: 20, vertical: 10),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Row(
                                   children: [
                                     Container(
-                                      height: 45,
-                                      width: 45,
+                                      height: 40,
+                                      width: 40,
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
                                           fit: BoxFit.fill,
@@ -225,8 +229,9 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                     Text(
                                       widget.bundleTitle.toString(),
                                       style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.black,
+                                        fontSize: 15,
+                                        color: Color(0xff212B36),
+                                        fontWeight: FontWeight.w400,
                                       ),
                                     ),
                                     Spacer(),
@@ -270,7 +275,8 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 14,
-                                        color: Colors.grey,
+                                        color: Color(0xff3E4094),
+                                        fontFamily: "Iranyekanregular",
                                       ),
                                     ),
                                   ],
@@ -288,14 +294,17 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                           .toString(),
                                       style: TextStyle(
                                         fontSize: 14,
-                                        color: Colors.grey,
+                                        color: Color(0xff637381),
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: "Iranyekanregular",
                                       ),
                                     ),
                                     Text(
                                       "WT#- " + widget.orderID.toString(),
                                       style: TextStyle(
                                         fontSize: 14,
-                                        color: Colors.black,
+                                        color: Color(0xff212B36),
+                                        fontFamily: "Iranyekanregular",
                                       ),
                                     ),
                                   ],
@@ -308,7 +317,9 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                       getText("DATE", defaultValue: "Date"),
                                       style: TextStyle(
                                         fontSize: 14,
-                                        color: Colors.grey,
+                                        color: Color(0xff637381),
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: "Iranyekanregular",
                                       ),
                                     ),
                                     SizedBox(
@@ -327,7 +338,9 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                       getText("TIME", defaultValue: "Time"),
                                       style: TextStyle(
                                         fontSize: 14,
-                                        color: Colors.grey,
+                                        color: Color(0xff637381),
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: "Iranyekanregular",
                                       ),
                                     ),
                                     SizedBox(
@@ -349,9 +362,9 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                           color: Color(0xffE8F4FF),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
+                                horizontal: 20, vertical: 10),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Row(
                                   mainAxisAlignment:
@@ -363,7 +376,9 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                           .toString(),
                                       style: TextStyle(
                                         fontSize: 14,
-                                        color: Colors.grey,
+                                        color: Color(0xff637381),
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: "Iranyekanregular",
                                       ),
                                     ),
                                     SizedBox(
@@ -374,7 +389,8 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                         widget.rechargebleAccount.toString(),
                                         style: TextStyle(
                                           fontSize: 14,
-                                          color: Colors.black,
+                                          color: Color(0xff212B36),
+                                          fontFamily: "Iranyekanregular",
                                         ),
                                       ),
                                     ),
@@ -388,7 +404,9 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                       getText("SENDER", defaultValue: "Sender"),
                                       style: TextStyle(
                                         fontSize: 14,
-                                        color: Colors.grey,
+                                        color: Color(0xff637381),
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: "Iranyekanregular",
                                       ),
                                     ),
                                     SizedBox(
@@ -399,7 +417,8 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                         widget.resellerName.toString(),
                                         style: TextStyle(
                                           fontSize: 14,
-                                          color: Colors.black,
+                                          color: Color(0xff212B36),
+                                          fontFamily: "Iranyekanregular",
                                         ),
                                       ),
                                     ),
@@ -410,11 +429,12 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      getText("SELLING_PRICE",
-                                          defaultValue: "Selling Price"),
+                                      getText("PRICE", defaultValue: "Price"),
                                       style: TextStyle(
                                         fontSize: 14,
-                                        color: Colors.grey,
+                                        color: Color(0xff637381),
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: "Iranyekanregular",
                                       ),
                                     ),
                                     Row(
@@ -425,6 +445,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                             fontSize: 14,
                                             color: Colors.grey,
                                             fontWeight: FontWeight.w600,
+                                            fontFamily: "Iranyekanregular",
                                           ),
                                         ),
                                         SizedBox(
@@ -441,9 +462,10 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                             ),
                                           ),
                                           style: TextStyle(
-                                            color: Colors.black,
+                                            color: Color(0xff212B36),
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600,
+                                            fontFamily: "Iranyekanregular",
                                           ),
                                         ),
                                       ],
@@ -465,7 +487,8 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                             ),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -485,7 +508,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                             decoration: BoxDecoration(
                                               border: Border.all(
                                                 width: 1,
-                                                color: Colors.grey.shade300,
+                                                color: Color(0xff2196F3),
                                               ),
                                               borderRadius:
                                                   BorderRadius.circular(10),
@@ -499,6 +522,8 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                                   fontSize: 12,
                                                   color: Color(0xff2196F3),
                                                   fontWeight: FontWeight.bold,
+                                                  fontFamily:
+                                                      "Iranyekanregular",
                                                 ),
                                               ),
                                             ),
@@ -529,6 +554,8 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                                   fontSize: 12,
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,
+                                                  fontFamily:
+                                                      "Iranyekanregular",
                                                 ),
                                               ),
                                             ),
@@ -556,9 +583,10 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                       child: Text(
                                         getText("CLOSE", defaultValue: "Close"),
                                         style: TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 14,
                                           color: Colors.black,
                                           fontWeight: FontWeight.w600,
+                                          fontFamily: "Iranyekanregular",
                                         ),
                                       ),
                                     ),
