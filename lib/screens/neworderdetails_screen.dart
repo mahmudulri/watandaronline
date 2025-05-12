@@ -171,8 +171,9 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                     ? getText("PENDING",
                                         defaultValue: "Pending")
                                     : widget.status.toString() == "1"
-                                        ? getText("SUCCESS",
-                                            defaultValue: "Success")
+                                        ? getText("SUCCESSFULLY_ORDERED",
+                                            defaultValue:
+                                                "Successfully Ordered")
                                         : getText("REJECTED",
                                             defaultValue: "Rejected"),
                                 style: TextStyle(
