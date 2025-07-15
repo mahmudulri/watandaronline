@@ -1,9 +1,8 @@
 class ApiEndPoints {
-  // static String baseUrl =
-  //     "https://app-api-wadaron-v2-hr.watandaronline.com/api/reseller/";
+  static String baseUrl = "https://app-api-vpro-tt.taktelcom.com/api/reseller/";
 
-  static String baseUrl =
-      "https://api-vpro-hetz-25.watandaronline.com/api/reseller/";
+  // static String baseUrl =
+  //     "https://api-vpro-hetz-25.watandaronline.com/api/reseller/";
 
   static String languageUrl =
       "https://api-vpro-hetz-25.watandaronline.com/api/locale/";
@@ -27,4 +26,11 @@ class OtherendPoints {
   final String languages = "languages";
   final String sliders = "advertisements";
   final String customrecharge = "custom-recharge";
+  final String hawalalist = "hawala-orders";
+  final String commsiongrouplist = "sub-reseller-commission-group";
+  final String branch = "hawala-branches";
+  final String sellingprice = "reseller-customer-pricing";
+  final String createselling = "reseller-customer-pricing";
+  final String hawalacurrency = "hawala-currency";
+  final String helparticle = "help-articles";
 }

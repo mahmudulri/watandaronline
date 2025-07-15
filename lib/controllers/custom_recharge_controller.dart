@@ -8,6 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:watandaronline/controllers/custom_history_controller.dart';
 import 'package:watandaronline/utils/api_endpoints.dart';
 
+import '../global controller/languages_controller.dart';
+
 class CustomRechargeController extends GetxController {
   TextEditingController numberController = TextEditingController();
   TextEditingController amountController = TextEditingController();
@@ -16,6 +18,8 @@ class CustomRechargeController extends GetxController {
   TextEditingController pinController = TextEditingController();
 
   final customhistoryController = Get.find<CustomHistoryController>();
+
+  final languagesController = Get.find<LanguagesController>();
 
   RxBool isLoading = false.obs;
 
@@ -53,7 +57,10 @@ class CustomRechargeController extends GetxController {
         customhistoryController.initialpage = 1;
         customhistoryController.fetchHistory();
 
-        Get.snackbar("Success", orderresults["message"]);
+        Get.snackbar(
+          languagesController.tr("SUCCESS"),
+          orderresults["message"],
+        );
         clearInputs();
       } else {
         handleFailure(orderresults["message"]);

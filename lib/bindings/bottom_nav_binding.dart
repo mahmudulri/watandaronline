@@ -16,6 +16,11 @@ import 'package:watandaronline/controllers/sub_reseller_controller.dart';
 import 'package:watandaronline/controllers/subreseller_details_controller.dart';
 import 'package:watandaronline/controllers/transaction_controller.dart';
 
+import '../controllers/add_commsion_group_controller.dart';
+import '../controllers/commission_group_controller.dart';
+import '../controllers/help_controller.dart';
+import '../controllers/selling_price_controller.dart';
+
 class BottomNavBinding implements Bindings {
   @override
   void dependencies() {
@@ -41,7 +46,10 @@ class BottomNavBinding implements Bindings {
     Get.lazyPut<BundleController>(() => BundleController());
 
     Get.lazyPut<ServiceController>(() => ServiceController());
-    // Get.lazyPut<ReserveDigitController>(() => ReserveDigitController());
+
     Get.lazyPut<ConfirmPinController>(() => ConfirmPinController());
+    Get.lazyPut<HelpController>(() => HelpController());
+    Get.lazyPut<CommissionGroupController>(() => CommissionGroupController());
+    Get.lazyPut<AddCommsionGroupController>(() => AddCommsionGroupController());
   }
 }

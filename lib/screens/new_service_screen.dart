@@ -6,11 +6,13 @@ import 'package:watandaronline/controllers/bundles_controller.dart';
 import 'package:watandaronline/controllers/categories_list_controller.dart';
 import 'package:watandaronline/controllers/country_list_controller.dart';
 import 'package:watandaronline/controllers/service_controller.dart';
+import 'package:watandaronline/routes/routes.dart';
 import 'package:watandaronline/screens/recharge_screen.dart';
 import 'package:watandaronline/screens/social_recharge.dart';
 import 'package:watandaronline/utils/colors.dart';
 
 import '../controllers/language_controller.dart';
+import '../global controller/languages_controller.dart';
 import 'social_recharge_screen.dart';
 
 class NewServiceScreen extends StatefulWidget {
@@ -21,7 +23,7 @@ class NewServiceScreen extends StatefulWidget {
 }
 
 class _NewServiceScreenState extends State<NewServiceScreen> {
-  final languageController = Get.find<LanguageController>();
+  final languagesController = Get.find<LanguagesController>();
 
   final categorisListController = Get.find<CategorisListController>();
 
@@ -44,14 +46,6 @@ class _NewServiceScreenState extends State<NewServiceScreen> {
   ];
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    // categorisListController.nonsocialArray.clear();
-    // categorisListController.fetchcategories();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
@@ -72,20 +66,12 @@ class _NewServiceScreenState extends State<NewServiceScreen> {
         backgroundColor: const Color(0xffEFF3F4),
         elevation: 0.0,
         centerTitle: true,
-        title: GestureDetector(
-          onTap: () {
-            // categorisListController.nonsocialArray.clear();
-            categorisListController.fetchcategories();
-            // print(categorisListController.isLoading.value);
-          },
-          child: Text(
-            languageController.alllanguageData.value.languageData!["SERVICES"]
-                .toString(),
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
+        title: Text(
+          languagesController.tr("SERVICES"),
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
         ),
       ),
@@ -128,6 +114,7 @@ class _NewServiceScreenState extends State<NewServiceScreen> {
                           print(data["type"]);
 
                           if (data["type"] == "social") {
+                            // Get.toNamed(socialrechargescreen);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -135,12 +122,13 @@ class _NewServiceScreenState extends State<NewServiceScreen> {
                               ),
                             );
                           } else {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => RechargeScreen(),
-                              ),
-                            );
+                            Get.toNamed(rechargescreen);
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => RechargeScreen(),
+                            //   ),
+                            // );
                           }
                         },
                         child: Card(

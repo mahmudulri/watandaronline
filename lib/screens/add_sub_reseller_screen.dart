@@ -15,6 +15,8 @@ import 'package:watandaronline/widgets/auth_textfield.dart';
 import 'package:watandaronline/widgets/default_button.dart';
 import 'package:watandaronline/widgets/register_textfield.dart';
 
+import '../global controller/languages_controller.dart';
+
 class AddSubResellerScreen extends StatefulWidget {
   AddSubResellerScreen({super.key});
 
@@ -29,18 +31,29 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
   final districtController = Get.find<DistrictController>();
   final addSubResellerController = Get.find<AddSubResellerController>();
 
+  final languagesController = Get.find<LanguagesController>();
+
   final box = GetStorage();
 
-  String selected_country = "Select Country";
+  RxString selected_comissiongroup = "".obs;
+  RxString selected_country = "".obs;
+  RxString selected_province = "".obs;
+  RxString selected_district = "".obs;
 
-  String selected_province = "Select Province";
-
-  String selected_district = "Select District";
+  void updateTranslations() {
+    // selected_comissiongroup.value =
+    //     languagesController.tr("SELECT_COMISSION_GROUP");
+    selected_country.value = languagesController.tr("SELECT_COUNTRY");
+    selected_province.value = languagesController.tr("SELECT_PROVINCE");
+    selected_district.value = languagesController.tr("SELECT_DISTRICT");
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    updateTranslations();
+    ever(languagesController.selectedlan, (_) => updateTranslations());
     countryListController.fetchCountryData();
   }
 
@@ -69,7 +82,7 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
             countryListController.fetchCountryData();
           },
           child: Text(
-            "Add New Sub Reseller",
+            languagesController.tr("ADD_NEW_SUBRESELLER"),
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -151,7 +164,7 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                 height: 20,
               ),
               Text(
-                "Sub Reseller Name",
+                languagesController.tr("FULL_NAME"),
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
@@ -161,13 +174,13 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                 height: 5,
               ),
               RegisterField(
-                  hintText: "Sub reseller name",
+                  hintText: languagesController.tr("FULL_NAME"),
                   controller: addSubResellerController.resellerNameController),
               SizedBox(
                 height: 5,
               ),
               Text(
-                "Contact Name",
+                languagesController.tr("CONTACT_NAME"),
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
@@ -177,14 +190,14 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                 height: 5,
               ),
               RegisterField(
-                hintText: "Contact Name",
+                hintText: languagesController.tr("CONTACT_NAME"),
                 controller: addSubResellerController.contactNameController,
               ),
               SizedBox(
                 height: 5,
               ),
               Text(
-                "Email",
+                languagesController.tr("EMAIL"),
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
@@ -194,14 +207,14 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                 height: 5,
               ),
               RegisterField(
-                hintText: "Email Address",
+                hintText: languagesController.tr("EMAIL_ADDRESS"),
                 controller: addSubResellerController.emailController,
               ),
               SizedBox(
                 height: 5,
               ),
               Text(
-                "Phone",
+                languagesController.tr("PHONE_NUMBER"),
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
@@ -211,14 +224,14 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                 height: 5,
               ),
               RegisterField(
-                hintText: "Phone Number",
+                hintText: languagesController.tr("PHONE_NUMBER"),
                 controller: addSubResellerController.phoneController,
               ),
               SizedBox(
                 height: 5,
               ),
               Text(
-                "Currency Preference",
+                languagesController.tr("CURRENCY_PREFERENCE"),
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
@@ -228,7 +241,7 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                 height: 5,
               ),
               Container(
-                height: 45,
+                height: 50,
                 width: screenWidth,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -321,13 +334,16 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                           //   },
                           // );
                         },
-                        child: Icon(
-                          FontAwesomeIcons.chevronDown,
-                          color: Colors.grey,
+                        child: CircleAvatar(
+                          backgroundColor:
+                              AppColors.defaultColor.withOpacity(0.7),
+                          radius: 18,
+                          child: Icon(
+                            FontAwesomeIcons.chevronDown,
+                            color: Colors.white,
+                            size: 17,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 10,
                       ),
                     ],
                   ),
@@ -337,7 +353,7 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                 height: 5,
               ),
               Text(
-                "Country",
+                languagesController.tr("COUNTRY"),
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
@@ -347,7 +363,7 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                 height: 5,
               ),
               Container(
-                height: 45,
+                height: 50,
                 width: screenWidth,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -358,96 +374,97 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                 ),
                 child: Padding(
                   padding: EdgeInsets.only(left: 15, right: 10),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          selected_country,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                content: Container(
-                                  height: 150,
-                                  width: screenWidth,
-                                  color: Colors.white,
-                                  child: ListView.builder(
-                                    itemCount: countryListController
-                                        .allcountryListData
-                                        .value
-                                        .data!
-                                        .countries
-                                        .length,
-                                    itemBuilder: (context, index) {
-                                      final data = countryListController
-                                          .allcountryListData
-                                          .value
-                                          .data!
-                                          .countries[index];
-                                      return GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            selected_country =
-                                                data.countryName.toString();
-                                          });
-                                          addSubResellerController.countryId
-                                              .value = data.id.toString();
+                  child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            content: Container(
+                              height: 150,
+                              width: screenWidth,
+                              color: Colors.white,
+                              child: ListView.builder(
+                                itemCount: countryListController
+                                    .allcountryListData
+                                    .value
+                                    .data!
+                                    .countries
+                                    .length,
+                                itemBuilder: (context, index) {
+                                  final data = countryListController
+                                      .allcountryListData
+                                      .value
+                                      .data!
+                                      .countries[index];
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        selected_country.value =
+                                            data.countryName.toString();
+                                      });
+                                      addSubResellerController.countryId.value =
+                                          data.id.toString();
 
-                                          print(addSubResellerController
-                                              .countryId);
-                                          Navigator.pop(context);
-                                        },
-                                        child: Container(
-                                          margin: EdgeInsets.only(bottom: 8),
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              width: 1,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Image.network(
-                                                data.countryFlagImageUrl
-                                                    .toString(),
-                                                height: 40,
-                                                width: 60,
-                                                fit: BoxFit.cover,
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Text(
-                                                data.countryName.toString(),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      );
+                                      print(addSubResellerController.countryId);
+                                      Navigator.pop(context);
                                     },
-                                  ),
-                                ),
-                              );
-                            },
+                                    child: Container(
+                                      margin: EdgeInsets.only(bottom: 8),
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          width: 1,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Image.network(
+                                            data.countryFlagImageUrl.toString(),
+                                            height: 40,
+                                            width: 60,
+                                            fit: BoxFit.cover,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            data.countryName.toString(),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
                           );
                         },
-                        child: Icon(
-                          FontAwesomeIcons.chevronDown,
-                          color: Colors.grey,
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            selected_country.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                    ],
+                        CircleAvatar(
+                          backgroundColor:
+                              AppColors.defaultColor.withOpacity(0.7),
+                          radius: 18,
+                          child: Icon(
+                            FontAwesomeIcons.chevronDown,
+                            color: Colors.white,
+                            size: 17,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -455,7 +472,7 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                 height: 5,
               ),
               Text(
-                "Province",
+                languagesController.tr("PROVINCE"),
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
@@ -465,7 +482,7 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                 height: 5,
               ),
               Container(
-                height: 45,
+                height: 50,
                 width: screenWidth,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -476,89 +493,88 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                 ),
                 child: Padding(
                   padding: EdgeInsets.only(left: 15, right: 10),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          selected_province,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                content: Container(
-                                  height: 150,
-                                  width: screenWidth,
-                                  color: Colors.white,
-                                  child: ListView.builder(
-                                    itemCount: provinceController
-                                        .allprovincelist
-                                        .value
-                                        .data!
-                                        .provinces
-                                        .length,
-                                    itemBuilder: (context, index) {
-                                      final data = provinceController
-                                          .allprovincelist
-                                          .value
-                                          .data!
-                                          .provinces[index];
-                                      return GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            selected_province =
-                                                data.provinceName.toString();
-                                          });
-                                          addSubResellerController.provinceId
-                                              .value = data.id.toString();
+                  child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            content: Container(
+                              height: 150,
+                              width: screenWidth,
+                              color: Colors.white,
+                              child: ListView.builder(
+                                itemCount: provinceController.allprovincelist
+                                    .value.data!.provinces.length,
+                                itemBuilder: (context, index) {
+                                  final data = provinceController
+                                      .allprovincelist
+                                      .value
+                                      .data!
+                                      .provinces[index];
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        selected_province.value =
+                                            data.provinceName.toString();
+                                      });
+                                      addSubResellerController.provinceId
+                                          .value = data.id.toString();
 
-                                          print(addSubResellerController
-                                              .provinceId);
-                                          Navigator.pop(context);
-                                        },
-                                        child: Container(
-                                          margin: EdgeInsets.only(bottom: 8),
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              width: 1,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Text(
-                                                data.provinceName.toString(),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      );
+                                      print(
+                                          addSubResellerController.provinceId);
+                                      Navigator.pop(context);
                                     },
-                                  ),
-                                ),
-                              );
-                            },
+                                    child: Container(
+                                      margin: EdgeInsets.only(bottom: 8),
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          width: 1,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            data.provinceName.toString(),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
                           );
                         },
-                        child: Icon(
-                          FontAwesomeIcons.chevronDown,
-                          color: Colors.grey,
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            selected_province.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                    ],
+                        CircleAvatar(
+                          backgroundColor:
+                              AppColors.defaultColor.withOpacity(0.7),
+                          radius: 18,
+                          child: Icon(
+                            FontAwesomeIcons.chevronDown,
+                            color: Colors.white,
+                            size: 17,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -566,7 +582,7 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                 height: 5,
               ),
               Text(
-                "District",
+                languagesController.tr("DISTRICT"),
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
@@ -576,7 +592,7 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                 height: 5,
               ),
               Container(
-                height: 45,
+                height: 50,
                 width: screenWidth,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -587,88 +603,87 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                 ),
                 child: Padding(
                   padding: EdgeInsets.only(left: 15, right: 10),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          selected_district,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                content: Container(
-                                  height: 150,
-                                  width: screenWidth,
-                                  color: Colors.white,
-                                  child: ListView.builder(
-                                    itemCount: districtController
-                                        .alldistrictList
-                                        .value
-                                        .data!
-                                        .districts
-                                        .length,
-                                    itemBuilder: (context, index) {
-                                      final data = districtController
-                                          .alldistrictList
-                                          .value
-                                          .data!
-                                          .districts[index];
-                                      return GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            selected_district =
-                                                data.districtName.toString();
-                                          });
-                                          addSubResellerController.districtID
-                                              .value = data.id.toString();
-                                          print(addSubResellerController
-                                              .districtID);
-                                          Navigator.pop(context);
-                                        },
-                                        child: Container(
-                                          margin: EdgeInsets.only(bottom: 8),
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              width: 1,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Text(
-                                                data.districtName.toString(),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      );
+                  child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            content: Container(
+                              height: 150,
+                              width: screenWidth,
+                              color: Colors.white,
+                              child: ListView.builder(
+                                itemCount: districtController.alldistrictList
+                                    .value.data!.districts.length,
+                                itemBuilder: (context, index) {
+                                  final data = districtController
+                                      .alldistrictList
+                                      .value
+                                      .data!
+                                      .districts[index];
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        selected_district.value =
+                                            data.districtName.toString();
+                                      });
+                                      addSubResellerController.districtID
+                                          .value = data.id.toString();
+                                      print(
+                                          addSubResellerController.districtID);
+                                      Navigator.pop(context);
                                     },
-                                  ),
-                                ),
-                              );
-                            },
+                                    child: Container(
+                                      margin: EdgeInsets.only(bottom: 8),
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          width: 1,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            data.districtName.toString(),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
                           );
                         },
-                        child: Icon(
-                          FontAwesomeIcons.chevronDown,
-                          color: Colors.grey,
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            selected_district.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                    ],
+                        CircleAvatar(
+                          backgroundColor:
+                              AppColors.defaultColor.withOpacity(0.7),
+                          radius: 18,
+                          child: Icon(
+                            FontAwesomeIcons.chevronDown,
+                            color: Colors.white,
+                            size: 17,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -688,7 +703,7 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                         addSubResellerController.provinceId.value == '' ||
                         addSubResellerController.districtID.value == '') {
                       Fluttertoast.showToast(
-                          msg: "Fill all Data correctly",
+                          msg: languagesController.tr("FILL_DATA_CORRECTLY"),
                           toastLength: Toast.LENGTH_SHORT,
                           gravity: ToastGravity.BOTTOM,
                           timeInSecForIosWeb: 1,
@@ -701,8 +716,8 @@ class _AddSubResellerScreenState extends State<AddSubResellerScreen> {
                     }
                   },
                   buttonName: addSubResellerController.isLoading.value == false
-                      ? "Add Now"
-                      : "Please wait...",
+                      ? languagesController.tr("ADD_NOW")
+                      : languagesController.tr("PLEASE_WAIT"),
                 ),
               )
             ],

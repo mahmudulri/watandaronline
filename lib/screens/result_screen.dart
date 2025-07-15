@@ -2,17 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:watandaronline/bottom_nav_screen.dart';
-import 'package:watandaronline/controllers/bundles_controller.dart';
-import 'package:watandaronline/controllers/confirm_pin_controller.dart';
-import 'package:watandaronline/controllers/country_list_controller.dart';
-import 'package:watandaronline/controllers/dashboard_controller.dart';
-import 'package:watandaronline/controllers/place_order_controller.dart';
-import 'package:watandaronline/controllers/service_controller.dart';
-import 'package:watandaronline/controllers/sub_reseller_controller.dart';
+
 import 'package:watandaronline/routes/routes.dart';
 
 import '../controllers/history_controller.dart';
+import '../global controller/languages_controller.dart';
 
 class ResultScreen extends StatelessWidget {
   ResultScreen({super.key});
@@ -20,6 +14,7 @@ class ResultScreen extends StatelessWidget {
   /////////////////////...........fetching Controller ......................//
 
   final historyController = Get.find<HistoryController>();
+  final languagesController = Get.find<LanguagesController>();
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +59,7 @@ class ResultScreen extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      "Success",
+                      languagesController.tr("SUCCESS"),
                       style: TextStyle(
                         color: Colors.green,
                         fontSize: 18,
@@ -72,7 +67,7 @@ class ResultScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Order created successfully",
+                      languagesController.tr("ORDER_CREATED_SUCCESSFULLY"),
                       style: TextStyle(
                         color: Colors.green,
                         fontSize: 15,
@@ -104,7 +99,7 @@ class ResultScreen extends StatelessWidget {
                             width: 100,
                             child: Center(
                               child: Text(
-                                "Close",
+                                languagesController.tr("CLOSE"),
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                 ),

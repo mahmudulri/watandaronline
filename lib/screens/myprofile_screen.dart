@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:watandaronline/bottom_nav_screen.dart';
+
 import 'package:watandaronline/controllers/dashboard_controller.dart';
 import 'package:watandaronline/controllers/history_controller.dart';
 import 'package:watandaronline/routes/routes.dart';
 import 'package:watandaronline/utils/colors.dart';
-import 'package:watandaronline/widgets/auth_textfield.dart';
-import 'package:watandaronline/widgets/default_button.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../global controller/languages_controller.dart';
 import '../widgets/myprofile_box_widget.dart';
-import 'change_pin.dart';
-import 'edit_profile_screen.dart';
 
 class MyprofileScreen extends StatelessWidget {
   MyprofileScreen({super.key});
@@ -19,6 +15,8 @@ class MyprofileScreen extends StatelessWidget {
   final dashboardController = Get.find<DashboardController>();
 
   final historyController = Get.find<HistoryController>();
+
+  final languagesController = Get.find<LanguagesController>();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +40,7 @@ class MyprofileScreen extends StatelessWidget {
         elevation: 1.0,
         centerTitle: true,
         title: Text(
-          "Personal Info",
+          languagesController.tr("PERSONAL_INFO"),
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -127,7 +125,7 @@ class MyprofileScreen extends StatelessWidget {
                           padding:
                               EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                           child: Text(
-                            "Change Pin",
+                            languagesController.tr("CHANGE_PIN"),
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
@@ -139,8 +137,11 @@ class MyprofileScreen extends StatelessWidget {
                   ),
                 ],
               ),
+              SizedBox(
+                height: 10,
+              ),
               MyProfileboxwidget(
-                boxname: "Name",
+                boxname: languagesController.tr("NAME"),
                 title: dashboardController
                     .alldashboardData.value.data!.userInfo!.resellerName
                     .toString(),
@@ -149,7 +150,7 @@ class MyprofileScreen extends StatelessWidget {
                 height: 5,
               ),
               MyProfileboxwidget(
-                boxname: "Email",
+                boxname: languagesController.tr("EMAIL"),
                 title: dashboardController
                     .alldashboardData.value.data!.userInfo!.email
                     .toString(),
@@ -158,7 +159,7 @@ class MyprofileScreen extends StatelessWidget {
                 height: 5,
               ),
               MyProfileboxwidget(
-                boxname: "Name",
+                boxname: languagesController.tr("PHONE_NUMBER"),
                 title: dashboardController
                     .alldashboardData.value.data!.userInfo!.phone
                     .toString(),
@@ -167,7 +168,7 @@ class MyprofileScreen extends StatelessWidget {
                 height: 5,
               ),
               MyProfileboxwidget(
-                boxname: "Balance",
+                boxname: languagesController.tr("BALANCE"),
                 title: dashboardController
                     .alldashboardData.value.data!.userInfo!.balance
                     .toString(),
@@ -176,7 +177,7 @@ class MyprofileScreen extends StatelessWidget {
                 height: 5,
               ),
               MyProfileboxwidget(
-                boxname: "Loan Balance",
+                boxname: languagesController.tr("LOAN_BALANCE"),
                 title: dashboardController
                     .alldashboardData.value.data!.userInfo!.loanBalance
                     .toString(),
@@ -185,7 +186,7 @@ class MyprofileScreen extends StatelessWidget {
                 height: 5,
               ),
               MyProfileboxwidget(
-                boxname: "Total sold amount",
+                boxname: languagesController.tr("TOTAL_SOLD_AMOUNT"),
                 title: dashboardController
                     .alldashboardData.value.data!.totalSoldAmount
                     .toString(),
@@ -194,7 +195,7 @@ class MyprofileScreen extends StatelessWidget {
                 height: 5,
               ),
               MyProfileboxwidget(
-                boxname: "Total revenue",
+                boxname: languagesController.tr("TOTAL_REVENUE"),
                 title: dashboardController
                     .alldashboardData.value.data!.totalRevenue
                     .toString(),

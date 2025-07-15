@@ -16,6 +16,7 @@ import 'package:watandaronline/widgets/auth_textfield.dart';
 import 'package:watandaronline/widgets/default_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../global controller/languages_controller.dart';
 import '../widgets/myprofile_box_widget.dart';
 import '../screens/change_balance_screen.dart';
 import '../screens/change_sub_pass_screen.dart';
@@ -30,7 +31,7 @@ class SubResellerScreen extends StatefulWidget {
 }
 
 class _SubResellerScreenState extends State<SubResellerScreen> {
-  final languageController = Get.find<LanguageController>();
+  final languagesController = Get.find<LanguagesController>();
   final subresellerController = Get.find<SubresellerController>();
 
   final box = GetStorage();
@@ -57,9 +58,7 @@ class _SubResellerScreenState extends State<SubResellerScreen> {
             // print(box.read("subresellerID"));
           },
           child: Text(
-            languageController
-                .alllanguageData.value.languageData!["SUB_RESELLER"]
-                .toString(),
+            languagesController.tr("SUB_RESELLER"),
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -76,7 +75,7 @@ class _SubResellerScreenState extends State<SubResellerScreen> {
           child: Column(
             children: [
               Container(
-                height: 40,
+                height: 50,
                 width: screenWidth,
                 child: Row(
                   children: [
@@ -101,9 +100,7 @@ class _SubResellerScreenState extends State<SubResellerScreen> {
                             controller: searchController,
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: languageController
-                                  .alllanguageData.value.languageData!["SEARCH"]
-                                  .toString(),
+                              hintText: languagesController.tr("SEARCH"),
                             ),
                           ),
                         ),
@@ -126,7 +123,7 @@ class _SubResellerScreenState extends State<SubResellerScreen> {
                           ),
                           child: Center(
                             child: Text(
-                              "Add New",
+                              languagesController.tr("ADD_NEW"),
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
@@ -156,7 +153,9 @@ class _SubResellerScreenState extends State<SubResellerScreen> {
                                       "assets/icons/empty.png",
                                       height: 80,
                                     ),
-                                    Text("No Data found"),
+                                    Text(
+                                      languagesController.tr("NO_DATA_FOUND"),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -165,8 +164,7 @@ class _SubResellerScreenState extends State<SubResellerScreen> {
               ),
               Expanded(
                 child: Obx(
-                  () => subresellerController.isLoading.value == false &&
-                          languageController.isLoading.value == false
+                  () => subresellerController.isLoading.value == false
                       ? ListView.separated(
                           separatorBuilder: (context, index) {
                             return SizedBox(
@@ -247,6 +245,7 @@ class _dataBoxnameState extends State<dataBoxname> {
   final detailsController = Get.find<SubresellerDetailsController>();
   final deleteSubResellerController = Get.find<DeleteSubResellerController>();
   final changeStatusController = Get.find<ChangeStatusController>();
+  final languagesController = Get.find<LanguagesController>();
 
   final box = GetStorage();
   @override
@@ -306,25 +305,8 @@ class _dataBoxnameState extends State<dataBoxname> {
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              // GestureDetector(
-                              //   onTap: () {
-                              //     Get.to(() => UpdateSubResellerScreen());
-                              //   },
-                              //   child: Row(
-                              //     children: [
-                              //       Icon(Icons.edit),
-                              //       SizedBox(
-                              //         width: 10,
-                              //       ),
-                              //       Text("Edit"),
-                              //     ],
-                              //   ),
-                              // ),
-                              // Divider(
-                              //   thickness: 1,
-                              //   color: Colors.grey,
-                              // ),
                               GestureDetector(
                                 onTap: () {
                                   changeStatusController
@@ -337,9 +319,11 @@ class _dataBoxnameState extends State<dataBoxname> {
                                     SizedBox(
                                       width: 10,
                                     ),
-                                    Text(widget.status.toString() == "0"
-                                        ? "Active"
-                                        : "Deactive"),
+                                    Text(
+                                      widget.status.toString() == "0"
+                                          ? languagesController.tr("ACTIVE")
+                                          : languagesController.tr("DEACTIVE"),
+                                    ),
                                     Spacer(),
                                     CircleAvatar(
                                       radius: 8,
@@ -367,7 +351,9 @@ class _dataBoxnameState extends State<dataBoxname> {
                                     SizedBox(
                                       width: 10,
                                     ),
-                                    Text("Delete"),
+                                    Text(
+                                      languagesController.tr("DELETE"),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -377,11 +363,14 @@ class _dataBoxnameState extends State<dataBoxname> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Get.to(
-                                    () => ChangeSubPasswordScreen(
-                                      subID: widget.id.toString(),
-                                    ),
-                                  );
+                                  Get.toNamed(changesubpassscreen, arguments: {
+                                    "subID": widget.id.toString(),
+                                  });
+                                  // Get.to(
+                                  //   () => ChangeSubPasswordScreen(
+                                  //     subID: widget.id.toString(),
+                                  //   ),
+                                  // );
                                 },
                                 child: Row(
                                   children: [
@@ -389,7 +378,9 @@ class _dataBoxnameState extends State<dataBoxname> {
                                     SizedBox(
                                       width: 10,
                                     ),
-                                    Text("Set Password"),
+                                    Text(
+                                      languagesController.tr("SET_PASSWORD"),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -399,9 +390,9 @@ class _dataBoxnameState extends State<dataBoxname> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Get.to(() => ChangeBalanceScreen(
-                                        subID: widget.id.toString(),
-                                      ));
+                                  Get.toNamed(changebalancescreen, arguments: {
+                                    "subID": widget.id.toString(),
+                                  });
                                 },
                                 child: Row(
                                   children: [
@@ -409,7 +400,9 @@ class _dataBoxnameState extends State<dataBoxname> {
                                     SizedBox(
                                       width: 10,
                                     ),
-                                    Text("Change Balance"),
+                                    Text(
+                                      languagesController.tr("CHANGE_BALANCE"),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -431,7 +424,7 @@ class _dataBoxnameState extends State<dataBoxname> {
                   padding: EdgeInsets.symmetric(horizontal: 5),
                   child: Center(
                     child: Text(
-                      "Action",
+                      languagesController.tr("ACTION"),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 10,
@@ -480,7 +473,7 @@ class _dataBoxnameState extends State<dataBoxname> {
                   Text(
                     widget.resellerName.toString(),
                     style: TextStyle(
-                      fontSize: 9,
+                      fontSize: 12,
                       fontWeight: FontWeight.w600,
                       color: Colors.black,
                     ),
@@ -495,14 +488,12 @@ class _dataBoxnameState extends State<dataBoxname> {
                   ),
                 ],
               ),
-              SizedBox(
-                width: 5,
-              ),
+              Spacer(),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Balance",
+                    languagesController.tr("BALANCE"),
                     style: TextStyle(
                       fontSize: 8,
                       fontWeight: FontWeight.w600,
@@ -562,7 +553,9 @@ class _dataBoxnameState extends State<dataBoxname> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     children: [
-                                      Text("Today order"),
+                                      Text(
+                                        languagesController.tr("TODAY_ORDER"),
+                                      ),
                                       Container(
                                         decoration: BoxDecoration(
                                           borderRadius:
@@ -592,7 +585,9 @@ class _dataBoxnameState extends State<dataBoxname> {
                                       SizedBox(
                                         height: 5,
                                       ),
-                                      Text("Total order"),
+                                      Text(
+                                        languagesController.tr("TOTAL_ORDER"),
+                                      ),
                                       Container(
                                         decoration: BoxDecoration(
                                           borderRadius:
@@ -630,7 +625,9 @@ class _dataBoxnameState extends State<dataBoxname> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     children: [
-                                      Text("Total Sales"),
+                                      Text(
+                                        languagesController.tr("TOTAL_SALE"),
+                                      ),
                                       Container(
                                         decoration: BoxDecoration(
                                           borderRadius:
@@ -661,7 +658,9 @@ class _dataBoxnameState extends State<dataBoxname> {
                                       SizedBox(
                                         height: 5,
                                       ),
-                                      Text("Total Profit"),
+                                      Text(
+                                        languagesController.tr("TOTAL_PROFIT"),
+                                      ),
                                       Container(
                                         decoration: BoxDecoration(
                                           borderRadius:
@@ -699,7 +698,9 @@ class _dataBoxnameState extends State<dataBoxname> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     children: [
-                                      Text("Today Sale"),
+                                      Text(
+                                        languagesController.tr("TODAY_SALE"),
+                                      ),
                                       Container(
                                         decoration: BoxDecoration(
                                           borderRadius:
@@ -730,7 +731,9 @@ class _dataBoxnameState extends State<dataBoxname> {
                                       SizedBox(
                                         height: 5,
                                       ),
-                                      Text("Today Profit"),
+                                      Text(
+                                        languagesController.tr("TODAY_PROFIT"),
+                                      ),
                                       Container(
                                         decoration: BoxDecoration(
                                           borderRadius:

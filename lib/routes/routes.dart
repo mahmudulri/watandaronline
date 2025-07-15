@@ -29,13 +29,19 @@ import 'package:watandaronline/screens/sign_up_screen.dart';
 import 'package:watandaronline/screens/social_recharge.dart';
 import 'package:watandaronline/splash_screen.dart';
 
+import '../bindings/selling_price_binding.dart';
+import '../screens/commission_group_screen.dart';
+import '../screens/create_selling_price_screen.dart';
+import '../screens/helpscreen.dart';
+import '../screens/selling_price_screen.dart';
+import '../screens/social_recharge_screen.dart';
+
 // control all pages from here
 
 const String splash = '/splash-screen';
 const String signinscreen = '/sign-in-screen';
 const String onboardingscreen = '/onboardin-screen';
 const String bottomnavscreen = '/bottomnav-screen';
-
 const String addcardScreen = '/addcard-screen';
 const String addsubresellerscreen = '/addsubreseller-screen';
 const String changebalancescreen = '/changebalance-screen';
@@ -43,7 +49,7 @@ const String changepinscreen = '/changepin-screen';
 const String changesubpassscreen = '/changesubpass-screen';
 const String confirmpinscreen = '/confirmpin-screen';
 const String editprofilescreen = '/editprofile-screen';
-
+const String helpscreen = '/help-screen';
 const String myprofilescreen = '/myprofile-screen';
 const String orderdetailsscreen = '/orderdetails-screen';
 const String rechargescreen = '/recharge-screen';
@@ -53,6 +59,9 @@ const String servicescreen = '/service-screen';
 const String newservicescreen = '/newservice-screen';
 const String signupscreen = '/signup-screen';
 const String socialrechargescreen = '/socialrecharge-screen';
+const String sellingpricescreen = '/sellingprice-screen';
+const String createsellingpricescreen = '/createselling-screen';
+const String commissiongroupscreen = '/comissiongroup-screen';
 
 List<GetPage> myroutes = [
   GetPage(
@@ -130,11 +139,6 @@ List<GetPage> myroutes = [
     name: resultscreen,
     page: () => ResultScreen(),
   ),
-  // GetPage(
-  //   name: servicescreen,
-  //   page: () => ServiceScreen(),
-  //   binding: ServiceBinding(),
-  // ),
   GetPage(
     name: newservicescreen,
     page: () => NewServiceScreen(),
@@ -144,9 +148,29 @@ List<GetPage> myroutes = [
     name: signinscreen,
     page: () => SignUpScreen(),
   ),
-  // GetPage(
-  //   name: socialrechargescreen,
-  //   page: () => SocialRechargeScreen(),
-  //   binding: RechargeBinding(),
-  // ),
+  GetPage(
+    name: socialrechargescreen,
+    page: () => SocialRechargeScreen(),
+    binding: RechargeBinding(),
+  ),
+  GetPage(
+    name: helpscreen,
+    page: () => Helpscreen(),
+    binding: BottomNavBinding(),
+  ),
+  GetPage(
+    name: sellingpricescreen,
+    page: () => SellingPriceScreen(),
+    binding: SellingPriceBinding(),
+  ),
+  GetPage(
+    name: commissiongroupscreen,
+    page: () => CommissionGroupScreen(),
+    binding: BottomNavBinding(),
+  ),
+  GetPage(
+    name: createsellingpricescreen,
+    page: () => CreateSellingPriceScreen(),
+    binding: SellingPriceBinding(),
+  ),
 ];

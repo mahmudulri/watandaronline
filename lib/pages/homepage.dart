@@ -26,6 +26,8 @@ import 'package:watandaronline/utils/colors.dart';
 import 'package:watandaronline/widgets/drawer.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 
+import '../global controller/languages_controller.dart';
+
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
@@ -100,7 +102,7 @@ class _HomepageState extends State<Homepage> {
   final dashboardController = Get.find<DashboardController>();
   final countryListController = Get.find<CountryListController>();
   final historyController = Get.find<HistoryController>();
-  final languageController = Get.find<LanguageController>();
+  final languagesController = Get.find<LanguagesController>();
   final sliderController = Get.find<SliderController>();
   final categorisListController = Get.find<CategorisListController>();
   final bundleController = Get.find<BundleController>();
@@ -337,9 +339,8 @@ class _HomepageState extends State<Homepage> {
                                                       width: 7,
                                                     ),
                                                     Text(
-                                                      getText("BALANCE",
-                                                          defaultValue:
-                                                              "Balance"),
+                                                      languagesController
+                                                          .tr("BALANCE"),
                                                       style: TextStyle(
                                                         fontSize: 12,
                                                         fontWeight:
@@ -441,9 +442,8 @@ class _HomepageState extends State<Homepage> {
                                                       width: 7,
                                                     ),
                                                     Text(
-                                                      getText("LOAN_BALANCE",
-                                                          defaultValue:
-                                                              "Loan Balance"),
+                                                      languagesController
+                                                          .tr("LOAN_BALANCE"),
                                                       style: TextStyle(
                                                         fontSize: 12,
                                                         fontWeight:
@@ -557,8 +557,8 @@ class _HomepageState extends State<Homepage> {
                                                       width: 7,
                                                     ),
                                                     Text(
-                                                      getText("SALE",
-                                                          defaultValue: "Sale"),
+                                                      languagesController
+                                                          .tr("SALE"),
                                                       style: TextStyle(
                                                         fontSize: 12,
                                                         fontWeight:
@@ -576,9 +576,8 @@ class _HomepageState extends State<Homepage> {
                                                   //     MainAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      getText("TODAY_SALE",
-                                                          defaultValue:
-                                                              "Today Sale : "),
+                                                      languagesController
+                                                          .tr("TODAY_SALE"),
                                                       style: TextStyle(
                                                         fontSize: 11,
                                                         fontWeight:
@@ -628,9 +627,8 @@ class _HomepageState extends State<Homepage> {
                                                   //     MainAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      getText("TOTAL_SALE",
-                                                          defaultValue:
-                                                              "Total Sale "),
+                                                      languagesController
+                                                          .tr("TOTAL_SALE"),
                                                       style: TextStyle(
                                                         fontSize: 11,
                                                         fontWeight:
@@ -727,9 +725,8 @@ class _HomepageState extends State<Homepage> {
                                                       width: 7,
                                                     ),
                                                     Text(
-                                                      getText("PROFIT",
-                                                          defaultValue:
-                                                              "Profit"),
+                                                      languagesController
+                                                          .tr("PROFIT"),
                                                       style: TextStyle(
                                                         fontSize: 12,
                                                         fontWeight:
@@ -747,9 +744,8 @@ class _HomepageState extends State<Homepage> {
                                                   //     MainAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      getText("TODAY_PROFIT",
-                                                          defaultValue:
-                                                              "Today Profit : "),
+                                                      languagesController
+                                                          .tr("TODAY_PROFIT"),
                                                       style: TextStyle(
                                                         fontSize: 11,
                                                         fontWeight:
@@ -799,9 +795,8 @@ class _HomepageState extends State<Homepage> {
                                                   //     MainAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      getText("TOTAL_PROFIT",
-                                                          defaultValue:
-                                                              "Total Profit"),
+                                                      languagesController
+                                                          .tr("TOTAL_PROFIT"),
                                                       style: TextStyle(
                                                         fontSize: 11,
                                                         fontWeight:
@@ -905,8 +900,7 @@ class _HomepageState extends State<Homepage> {
                               padding: EdgeInsets.symmetric(vertical: 14),
                               child: Center(
                                 child: Text(
-                                  getText("DIRECT_RECHARGE",
-                                      defaultValue: "Direct Recharge"),
+                                  languagesController.tr("DIRECT_RECHARGE"),
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w700,
@@ -961,23 +955,25 @@ class _HomepageState extends State<Homepage> {
                                 box.write(
                                     "service_category_id", data["categoryId"]);
                                 bundleController.initialpage = 1;
-                                // print(data["phoneNumberLength"]);
+                                print(data["type"]);
 
                                 if (data["type"] == "social") {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          SocialRechargeScreen(),
-                                    ),
-                                  );
+                                  Get.toNamed(socialrechargescreen);
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) =>
+                                  //         SocialRechargeScreen(),
+                                  //   ),
+                                  // );
                                 } else {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => RechargeScreen(),
-                                    ),
-                                  );
+                                  Get.toNamed(rechargescreen);
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) => RechargeScreen(),
+                                  //   ),
+                                  // );
                                 }
                               },
                               child: Card(

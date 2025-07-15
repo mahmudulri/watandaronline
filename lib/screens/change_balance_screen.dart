@@ -7,6 +7,8 @@ import 'package:watandaronline/utils/colors.dart';
 import 'package:watandaronline/widgets/auth_textfield.dart';
 import 'package:watandaronline/widgets/default_button.dart';
 
+import '../global controller/languages_controller.dart';
+
 class ChangeBalanceScreen extends StatefulWidget {
   String? subID;
   ChangeBalanceScreen({
@@ -20,6 +22,8 @@ class ChangeBalanceScreen extends StatefulWidget {
 
 class _ChangeBalanceScreenState extends State<ChangeBalanceScreen> {
   final BalanceController balanceController = Get.put(BalanceController());
+
+  final languagesController = Get.find<LanguagesController>();
 
   bool isCreditSelected = false;
   bool isDebitSelected = false;
@@ -44,7 +48,7 @@ class _ChangeBalanceScreenState extends State<ChangeBalanceScreen> {
         elevation: 0.0,
         centerTitle: true,
         title: Text(
-          "Change Balance",
+          languagesController.tr("CHANGE_BALANCE"),
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -61,7 +65,7 @@ class _ChangeBalanceScreenState extends State<ChangeBalanceScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Amount : ",
+                languagesController.tr("AMOUNT"),
                 style: TextStyle(
                   fontSize: 18,
                   color: Colors.black,
@@ -94,7 +98,8 @@ class _ChangeBalanceScreenState extends State<ChangeBalanceScreen> {
                               controller: balanceController.amountController,
                               decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: "Enter amount",
+                                  hintText:
+                                      languagesController.tr("ENTER_AMOUNT"),
                                   hintStyle: TextStyle(
                                     fontWeight: FontWeight.w300,
                                   )),
@@ -127,7 +132,6 @@ class _ChangeBalanceScreenState extends State<ChangeBalanceScreen> {
                               child: TextField(
                                 readOnly: true,
                                 keyboardType: TextInputType.phone,
-                                controller: balanceController.amountController,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: box.read("currency_code"),
@@ -152,7 +156,7 @@ class _ChangeBalanceScreenState extends State<ChangeBalanceScreen> {
                 height: 10,
               ),
               Text(
-                "Select Type :",
+                languagesController.tr("SELECT_TYPE"),
                 style: TextStyle(
                   fontSize: 18,
                   color: Colors.black,
@@ -181,7 +185,7 @@ class _ChangeBalanceScreenState extends State<ChangeBalanceScreen> {
                       ),
                       child: Center(
                         child: Text(
-                          'Credit',
+                          languagesController.tr("CREDIT"),
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
@@ -208,7 +212,7 @@ class _ChangeBalanceScreenState extends State<ChangeBalanceScreen> {
                       ),
                       child: Center(
                         child: Text(
-                          'Debit',
+                          languagesController.tr("DEBIT"),
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
@@ -226,13 +230,14 @@ class _ChangeBalanceScreenState extends State<ChangeBalanceScreen> {
               Obx(
                 () => DefaultButton(
                   buttonName: balanceController.isLoading.value == false
-                      ? "Confirm Now"
-                      : "Please wait..",
+                      ? languagesController.tr("CONFIRM_NOW")
+                      : languagesController.tr("PLEASE_WAIT"),
                   onPressed: () {
                     if (balanceController.amountController.text.isEmpty ||
                         balanceController.status.value == '') {
                       Fluttertoast.showToast(
-                          msg: "Enter Amount or Select Type",
+                          msg: languagesController
+                              .tr("ENTER_AMOUNT_OR_SELECT_TYPE"),
                           toastLength: Toast.LENGTH_SHORT,
                           gravity: ToastGravity.BOTTOM,
                           timeInSecForIosWeb: 1,

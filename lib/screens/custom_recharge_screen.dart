@@ -17,6 +17,7 @@ import 'package:watandaronline/screens/order_details_screen.dart';
 import 'package:watandaronline/utils/colors.dart';
 import 'package:watandaronline/widgets/default_button.dart';
 
+import '../global controller/languages_controller.dart';
 import 'neworderdetails_screen.dart';
 
 class CustomRechargeScreen extends StatefulWidget {
@@ -27,7 +28,7 @@ class CustomRechargeScreen extends StatefulWidget {
 }
 
 class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
-  final languageController = Get.find<LanguageController>();
+  final languagesController = Get.find<LanguagesController>();
 
   final countryListController = Get.find<CountryListController>();
   final customrechargeController = Get.find<CustomRechargeController>();
@@ -109,7 +110,7 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
         elevation: 0.0,
         centerTitle: true,
         title: Text(
-          getText("DIRECT_RECHARGE", defaultValue: "Direct Recharge"),
+          languagesController.tr("DIRECT_RECHARGE"),
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -271,23 +272,9 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                     contentPadding:
                                         EdgeInsets.symmetric(vertical: 5),
                                     border: InputBorder.none,
-                                    hintText: getText("PHONE_NUMBER",
-                                        defaultValue: "Amount "),
+                                    hintText:
+                                        languagesController.tr("PHONE_NUMBER"),
                                   ),
-                                  // onChanged: (value) {
-                                  //   // Enforce starting with 0
-                                  //   if (!value.startsWith('0')) {
-                                  //     customrechargeController
-                                  //         .numberController.text = '0' + value;
-                                  //     customrechargeController
-                                  //             .numberController.selection =
-                                  //         TextSelection.fromPosition(
-                                  //             TextPosition(
-                                  //       offset: customrechargeController
-                                  //           .numberController.text.length,
-                                  //     ));
-                                  //   }
-                                  // },
                                 ),
                               ),
                             ],
@@ -334,8 +321,7 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                     contentPadding:
                                         EdgeInsets.symmetric(vertical: 5),
                                     border: InputBorder.none,
-                                    hintText: getText("AMOUNT",
-                                        defaultValue: "Amount "),
+                                    hintText: languagesController.tr("AMOUNT"),
                                   ),
                                 ),
                               ),
@@ -347,8 +333,7 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                         height: 30,
                       ),
                       DefaultButton(
-                        buttonName: getText("RECHARGE_NOW",
-                            defaultValue: "Recharge now"),
+                        buttonName: languagesController.tr("RECHARGE_NOW"),
                         onPressed: () {
                           if (customrechargeController
                                   .numberController.text.isNotEmpty &&
@@ -359,7 +344,9 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                     .toString() !=
                                 box.read("maxlength")) {
                               Get.snackbar(
-                                  "Length error", "Do not match number length");
+                                  languagesController.tr("LENGTH_ERROR"),
+                                  languagesController
+                                      .tr("DO_NOT_MATCH_THE_NUMBER_LENGTH"));
                             } else {
                               showDialog(
                                 context: context,
@@ -412,7 +399,8 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                                     Navigator.pop(context);
                                                   },
                                                   child: Text(
-                                                    "Close",
+                                                    languagesController
+                                                        .tr("CLOSE"),
                                                     style: TextStyle(
                                                         color: Colors.white),
                                                   ),
@@ -425,10 +413,8 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  getText(
-                                                      "DO_YOU_WANT_TO_CONFIRM",
-                                                      defaultValue:
-                                                          "Do you want to confirm "),
+                                                  languagesController.tr(
+                                                      "DO_YOU_WANT_TO_CONFIRM"),
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.w400,
                                                     fontSize: 17,
@@ -454,9 +440,8 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                                         Navigator.pop(context);
                                                       },
                                                       child: Text(
-                                                        getText("CANCEL",
-                                                            defaultValue:
-                                                                "Cancel "),
+                                                        languagesController
+                                                            .tr("CANCEL"),
                                                         style: TextStyle(
                                                             color:
                                                                 Colors.white),
@@ -474,9 +459,8 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                                             .placeOrder();
                                                       },
                                                       child: Text(
-                                                        getText("CONFIRM",
-                                                            defaultValue:
-                                                                "Confirm "),
+                                                        languagesController
+                                                            .tr("CONFIRM"),
                                                         style: TextStyle(
                                                             color:
                                                                 Colors.white),
@@ -495,7 +479,8 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                               );
                             }
                           } else {
-                            Get.snackbar("Error", "Fill data correctly");
+                            Get.snackbar(languagesController.tr("ERROR"),
+                                languagesController.tr("FILL_DATA_CORRECTLY"));
                           }
                         },
                       ),
@@ -520,7 +505,9 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                       "assets/icons/empty.png",
                                       height: 80,
                                     ),
-                                    Text("No Data found"),
+                                    Text(
+                                      languagesController.tr("NO_DATA_FOUND"),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -598,10 +585,6 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                   height: 50,
                                   width: screenWidth,
                                   decoration: BoxDecoration(
-                                    // border: Border.all(
-                                    //   width: 1,
-                                    //   color: Colors.grey,
-                                    // ),
                                     borderRadius: BorderRadius.circular(10),
                                     color: AppColors.listbuilderboxColor,
                                   ),
@@ -708,27 +691,15 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                               children: [
                                                 Text(
                                                   data.status.toString() == "0"
-                                                      ? languageController
-                                                          .alllanguageData
-                                                          .value
-                                                          .languageData![
-                                                              "PENDING"]
-                                                          .toString()
+                                                      ? languagesController
+                                                          .tr("PENDING")
                                                       : data.status
                                                                   .toString() ==
                                                               "1"
-                                                          ? languageController
-                                                              .alllanguageData
-                                                              .value
-                                                              .languageData![
-                                                                  "CONFIRMED"]
-                                                              .toString()
-                                                          : languageController
-                                                              .alllanguageData
-                                                              .value
-                                                              .languageData![
-                                                                  "REJECTED"]
-                                                              .toString(),
+                                                          ? languagesController
+                                                              .tr("CONFIRMED")
+                                                          : languagesController
+                                                              .tr("REJECTED"),
                                                   style: TextStyle(
                                                     fontSize: 12,
                                                     color: Colors.black,
@@ -844,10 +815,6 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                       height: 50,
                                       width: screenWidth,
                                       decoration: BoxDecoration(
-                                        // border: Border.all(
-                                        //   width: 1,
-                                        //   color: Colors.grey,
-                                        // ),
                                         borderRadius: BorderRadius.circular(10),
                                         color: AppColors.listbuilderboxColor,
                                       ),
@@ -958,27 +925,16 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                                     Text(
                                                       data.status.toString() ==
                                                               "0"
-                                                          ? languageController
-                                                              .alllanguageData
-                                                              .value
-                                                              .languageData![
-                                                                  "PENDING"]
-                                                              .toString()
+                                                          ? languagesController
+                                                              .tr("PENDING")
                                                           : data.status
                                                                       .toString() ==
                                                                   "1"
-                                                              ? languageController
-                                                                  .alllanguageData
-                                                                  .value
-                                                                  .languageData![
-                                                                      "CONFIRMED"]
-                                                                  .toString()
-                                                              : languageController
-                                                                  .alllanguageData
-                                                                  .value
-                                                                  .languageData![
-                                                                      "REJECTED"]
-                                                                  .toString(),
+                                                              ? languagesController
+                                                                  .tr(
+                                                                      "CONFIRMED")
+                                                              : languagesController
+                                                                  .tr("REJECTED"),
                                                       style: TextStyle(
                                                         fontSize: 12,
                                                         color: Colors.black,

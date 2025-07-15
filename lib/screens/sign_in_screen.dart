@@ -22,6 +22,7 @@ import 'package:watandaronline/widgets/default_button.dart';
 import 'package:watandaronline/widgets/social_button.dart';
 
 import '../bottom_nav_screen.dart';
+import '../global controller/languages_controller.dart';
 import '../widgets/auth_textfield.dart';
 import 'sign_up_screen.dart';
 
@@ -52,7 +53,7 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   final signInController = Get.find<SignInController>();
-  final languageController = Get.find<LanguageController>();
+  final languagesController = Get.find<LanguagesController>();
   final historyController = Get.find<HistoryController>();
   final countryListController = Get.find<CountryListController>();
 
@@ -69,20 +70,24 @@ class _SignInScreenState extends State<SignInScreen> {
             //the return value will be from "Yes" or "No" options
             context: context,
             builder: (context) => AlertDialog(
-              title: Text('Exit App'),
-              content: Text('Do you want to exit an App?'),
+              title: Text(
+                languagesController.tr("EXIT_APP"),
+              ),
+              content: Text(
+                languagesController.tr("DO_YOU_WANT_TO_EXIT_APP"),
+              ),
               actions: [
                 ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(false),
                   //return false when click on "NO"
-                  child: Text('No'),
+                  child: Text(languagesController.tr("NO")),
                 ),
                 ElevatedButton(
                   onPressed: () {
                     exit(0);
                   },
                   //return true when click on "Yes"
-                  child: Text('Yes'),
+                  child: Text(languagesController.tr("YES")),
                 ),
               ],
             ),
@@ -109,13 +114,13 @@ class _SignInScreenState extends State<SignInScreen> {
                       child: ListView(
                         children: [
                           SizedBox(
-                            height: 20,
+                            height: 50,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                getText("LOGIN", defaultValue: "Log In"),
+                                languagesController.tr("LOGIN"),
                                 style: GoogleFonts.rubik(
                                   color: AppColors.defaultColor,
                                   fontSize: 25,
@@ -131,9 +136,8 @@ class _SignInScreenState extends State<SignInScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                getText("PLEASE_ENTER_DETAILS_TO_CONTINUE",
-                                    defaultValue:
-                                        "Please enter the details to continue"),
+                                languagesController
+                                    .tr("PLEASE_ENTER_DETAILS_TO_CONTINUE"),
                                 style: GoogleFonts.rubik(
                                   color: Color(0xff3C3C3C),
                                 ),
@@ -144,16 +148,15 @@ class _SignInScreenState extends State<SignInScreen> {
                             height: 20,
                           ),
                           AuthTextField(
-                              controller: signInController.usernameController,
-                              hintText: getText("USERNAME",
-                                  defaultValue: "Username")),
+                            controller: signInController.usernameController,
+                            hintText: languagesController.tr("USERNAME"),
+                          ),
                           SizedBox(
                             height: 8,
                           ),
                           AuthTextField(
                             controller: signInController.passwordController,
-                            hintText:
-                                getText("PASSWORD", defaultValue: "Password"),
+                            hintText: languagesController.tr("PASSWORD"),
                           ),
                           SizedBox(
                             height: 10,
@@ -162,8 +165,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text(
-                                getText("FORGOT_PASSWORD",
-                                    defaultValue: "Forgot Password ?"),
+                                languagesController.tr("FORGOT_PASSWORD"),
                                 style: TextStyle(
                                   color: Color(0xff5F5F5F),
                                 ),
@@ -174,23 +176,21 @@ class _SignInScreenState extends State<SignInScreen> {
                             height: 20,
                           ),
                           Obx(() => DefaultButton(
-                                buttonName: signInController.isLoading.value ==
-                                        false
-                                    ? getText("LOGIN", defaultValue: "Log in")
-                                    : getText("PLEASE_WAIT",
-                                        defaultValue: "Please wait"),
+                                buttonName:
+                                    signInController.isLoading.value == false
+                                        ? languagesController.tr("LOGIN")
+                                        : languagesController.tr("PLEASE_WAIT"),
                                 onPressed: () async {
                                   historyController.initialpage = 1;
-
-                                  languageController
-                                      .fetchlanData(box.read("isoCode"));
 
                                   if (signInController
                                           .usernameController.text.isEmpty ||
                                       signInController
                                           .passwordController.text.isEmpty) {
                                     Get.snackbar(
-                                        "Oops!", "Fill the text fields");
+                                        languagesController.tr("ERROR"),
+                                        languagesController
+                                            .tr("FILL_THE_TEXT_FIELD"));
                                   } else {
                                     print("Attempting login...");
                                     await signInController.signIn();
@@ -225,7 +225,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                getText("Or", defaultValue: "Or"),
+                                languagesController.tr("OR"),
                                 style: GoogleFonts.rubik(
                                   color: AppColors.defaultColor,
                                   fontSize: 20,
@@ -277,44 +277,50 @@ class _SignInScreenState extends State<SignInScreen> {
                           child: Image.asset("assets/icons/whatsapp.png"),
                         ),
                       ),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Text(
-                        getText("NEED_HELP", defaultValue: "Need Help"),
+                        languagesController.tr("NEED_HELP"),
                       ),
                     ],
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            getText("DONT_HAVE_AN_ACCOUNT",
-                                defaultValue: "Don't have an account ?"),
-                            style: TextStyle(
-                              color: Color(0xffA3A3A3),
-                              fontSize: 18,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Get.to(() => SignUpScreen());
-                            },
-                            child: Text(
-                              getText("SIGN_UP", defaultValue: "Sign Up"),
-                              style: TextStyle(
-                                color: AppColors.defaultColor,
-                                fontSize: 18,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                  SizedBox(
+                    height: 30,
                   ),
+
+                  // Expanded(
+                  //   flex: 1,
+                  //   child: Container(
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.center,
+                  //       children: [
+                  //         Text(
+                  //           languagesController.tr("DONT_HAVE_AN_ACCOUNT"),
+                  //           style: TextStyle(
+                  //             color: Color(0xffA3A3A3),
+                  //             fontSize: 18,
+                  //           ),
+                  //         ),
+                  //         SizedBox(
+                  //           width: 5,
+                  //         ),
+                  //         GestureDetector(
+                  //           onTap: () {
+                  //             Get.to(() => SignUpScreen());
+                  //           },
+                  //           child: Text(
+                  //             languagesController.tr("SIGN_UP"),
+                  //             style: TextStyle(
+                  //               color: AppColors.defaultColor,
+                  //               fontSize: 18,
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

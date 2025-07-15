@@ -13,6 +13,8 @@ import 'package:watandaronline/routes/routes.dart';
 import 'package:watandaronline/screens/onboarding_screen.dart';
 import 'package:watandaronline/utils/colors.dart';
 
+import 'global controller/languages_controller.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -29,23 +31,41 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
 
-  final languageController = Get.find<LanguageController>();
+  final languagesController = Get.find<LanguagesController>();
   final iscoCodeController = Get.find<IscoCodeController>();
   final sliderController = Get.find<SliderController>();
+
   checkData() async {
     if (box.read('userToken') == null) {
-      box.write("isoCode", "fa");
+      languagesController.changeLanguage("Fa");
       box.write("direction", "rtl");
-      languageController.fetchlanData("fa");
 
       setState(() {
         EasyLocalization.of(context)!.setLocale(Locale('ar', 'AE'));
       });
-
-      Get.toNamed(onboardingscreen);
+      Get.toNamed(signinscreen);
     } else {
-      languageController.fetchlanData(box.read("isoCode"));
+      if (box.read("language") == null) {
+        languagesController.changeLanguage("Fa");
+        box.write("direction", "rtl");
+        setState(() {
+          EasyLocalization.of(context)!.setLocale(Locale('ar', 'AE'));
+        });
+      } else {
+        languagesController.changeLanguage(box.read("language"));
+        if (box.read("direction") == "ltr") {
+          setState(() {
+            EasyLocalization.of(context)!.setLocale(Locale('en', 'US'));
+          });
+        } else {
+          setState(() {
+            EasyLocalization.of(context)!.setLocale(Locale('ar', 'AE'));
+          });
+        }
+      }
+
       sliderController.fetchSliderData();
+
       Get.toNamed(bottomnavscreen);
     }
   }

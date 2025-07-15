@@ -9,11 +9,12 @@ import 'package:watandaronline/controllers/language_controller.dart';
 import 'package:watandaronline/utils/colors.dart';
 
 import '../controllers/transaction_controller.dart';
+import '../global controller/languages_controller.dart';
 
 class TransactionsPage extends StatelessWidget {
   TransactionsPage({super.key});
   final transactionController = Get.find<TransactionController>();
-  final languageController = Get.find<LanguageController>();
+  final languagesController = Get.find<LanguagesController>();
 
   final box = GetStorage();
 
@@ -34,9 +35,7 @@ class TransactionsPage extends StatelessWidget {
           automaticallyImplyLeading: false,
           centerTitle: true,
           title: Text(
-            languageController
-                .alllanguageData.value.languageData!["TRANSACTIONS"]
-                .toString(),
+            languagesController.tr("TRANSACTIONS"),
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -108,9 +107,7 @@ class TransactionsPage extends StatelessWidget {
                           child: Row(
                             children: [
                               Text(
-                                languageController.alllanguageData.value
-                                    .languageData!["SEARCH"]
-                                    .toString(),
+                                languagesController.tr("SEARCH"),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500,
@@ -129,13 +126,7 @@ class TransactionsPage extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      languageController
-                              .alllanguageData.value.languageData!["ALL"]
-                              .toString() +
-                          " " +
-                          languageController.alllanguageData.value
-                              .languageData!["TRANSACTIONS"]
-                              .toString(),
+                      "${languagesController.tr("ALL") + " " + languagesController.tr("TRANSACTIONS")}",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -165,7 +156,9 @@ class TransactionsPage extends StatelessWidget {
                             "assets/icons/empty.png",
                             height: 80,
                           ),
-                          Text("No Transactions found"),
+                          Text(
+                            languagesController.tr("NO_DATA_FOUND"),
+                          ),
                         ],
                       ),
                     );

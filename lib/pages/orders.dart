@@ -28,6 +28,7 @@ import 'dart:ui' as ui;
 import 'package:share_plus/share_plus.dart';
 import 'package:http/http.dart' as http;
 
+import '../global controller/languages_controller.dart';
 import '../screens/neworderdetails_screen.dart';
 
 class OrderPage extends StatefulWidget {
@@ -38,7 +39,7 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
-  final languageController = Get.find<LanguageController>();
+  final languagesController = Get.find<LanguagesController>();
   final dashboardController = Get.find<DashboardController>();
   final orderlistController = Get.find<OrderlistController>();
 
@@ -46,11 +47,22 @@ class _OrderPageState extends State<OrderPage> {
 
   @override
   void initState() {
-    // orderlistController.fetchOrderlistdata();
-    orderlistController.initialpage = 1;
-    // orderlistController.fetchOrderlistdata();
-
     super.initState();
+    orderlistController.initialpage = 1;
+    orderStatus = [
+      {
+        "title": languagesController.tr("PENDING"),
+        "value": "order_status=0",
+      },
+      {
+        "title": languagesController.tr("CONFIRMED"),
+        "value": "order_status=1",
+      },
+      {
+        "title": languagesController.tr("REJECTED"),
+        "value": "order_status=2",
+      },
+    ];
 
     scrollController.addListener(refresh);
   }
@@ -58,21 +70,8 @@ class _OrderPageState extends State<OrderPage> {
   final box = GetStorage();
 
   bool isvisible = false;
+  List orderStatus = [];
 
-  List orderStatus = [
-    {
-      "title": "Pending",
-      "value": "order_status=0",
-    },
-    {
-      "title": "Confirmed",
-      "value": "order_status=1",
-    },
-    {
-      "title": "Rejected",
-      "value": "order_status=2",
-    },
-  ];
   String defaultValue = "";
   String secondDropDown = "";
 
@@ -100,11 +99,8 @@ class _OrderPageState extends State<OrderPage> {
               quality: 100, name: "screenshot");
           print(result);
           Get.snackbar(
-            languageController.alllanguageData.value.languageData!["SUCCESS"]
-                .toString(),
-            languageController
-                .alllanguageData.value.languageData!["SAVED_IMAGE_TO_GALLERY"]
-                .toString(),
+            languagesController.tr("SUCCESS"),
+            languagesController.tr("SAVED_IMAGE_TO_GALLERY"),
           );
         }
       }
@@ -202,20 +198,12 @@ class _OrderPageState extends State<OrderPage> {
           elevation: 0.0,
           automaticallyImplyLeading: false,
           centerTitle: true,
-          title: GestureDetector(
-            onTap: () {
-              // print(orderlistController.initialpage);
-              // print(orderlistController.finalList.length);
-              // Get.to(() => OrderSuccessScreen());
-            },
-            child: Text(
-              languageController.alllanguageData.value.languageData!["ORDERS"]
-                  .toString(),
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+          title: Text(
+            languagesController.tr("ORDERS"),
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
           ),
         ),
@@ -254,11 +242,8 @@ class _OrderPageState extends State<OrderPage> {
                                   keyboardType: TextInputType.phone,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: languageController
-                                        .alllanguageData
-                                        .value
-                                        .languageData!["ENTER_YOUR_NUMBER"]
-                                        .toString(),
+                                    hintText: languagesController
+                                        .tr("ENTER_YOUR_NUMBER"),
                                     hintStyle: TextStyle(
                                       fontSize: 14,
                                     ),
@@ -297,9 +282,7 @@ class _OrderPageState extends State<OrderPage> {
                           child: Row(
                             children: [
                               Text(
-                                languageController.alllanguageData.value
-                                    .languageData!["FILTER"]
-                                    .toString(),
+                                languagesController.tr("FILTER"),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500,
@@ -344,9 +327,7 @@ class _OrderPageState extends State<OrderPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    languageController.alllanguageData.value
-                                        .languageData!["ORDER_STATUS"]
-                                        .toString(),
+                                    languagesController.tr("ORDER_STATUS"),
                                   ),
                                   Container(
                                     height: 40,
@@ -370,12 +351,8 @@ class _OrderPageState extends State<OrderPage> {
                                               DropdownMenuItem(
                                                 value: "",
                                                 child: Text(
-                                                  languageController
-                                                      .alllanguageData
-                                                      .value
-                                                      .languageData![
-                                                          "SELECT_STATUS"]
-                                                      .toString(),
+                                                  languagesController
+                                                      .tr("SELECT_STATUS"),
                                                   style: TextStyle(
                                                     fontSize: 15,
                                                   ),
@@ -409,12 +386,10 @@ class _OrderPageState extends State<OrderPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    languageController.alllanguageData.value
-                                        .languageData!["SELECTED_DATE"]
-                                        .toString(),
+                                    languagesController.tr("SELECTED_DATE"),
                                   ),
                                   Container(
-                                    height: 30,
+                                    height: 40,
                                     width: 160,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
@@ -430,12 +405,8 @@ class _OrderPageState extends State<OrderPage> {
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              languageController
-                                                  .alllanguageData
-                                                  .value
-                                                  .languageData![
-                                                      "SELECTED_DATE"]
-                                                  .toString(),
+                                              languagesController
+                                                  .tr("SELECTED_DATE"),
                                             ),
                                           ),
                                           Icon(Icons.arrow_downward),
@@ -476,11 +447,8 @@ class _OrderPageState extends State<OrderPage> {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          languageController
-                                              .alllanguageData
-                                              .value
-                                              .languageData!["APPLY_FILTER"]
-                                              .toString(),
+                                          languagesController
+                                              .tr("APPLY_FILTER"),
                                           style: TextStyle(
                                             color: Color(0xffFFFFFF),
                                             fontSize: 13,
@@ -521,11 +489,8 @@ class _OrderPageState extends State<OrderPage> {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          languageController
-                                              .alllanguageData
-                                              .value
-                                              .languageData!["CLEAR_FILTER"]
-                                              .toString(),
+                                          languagesController
+                                              .tr("CLEAR_FILTER"),
                                           style: TextStyle(
                                             color: Color(0xffFFFFFF),
                                             fontSize: 13,
@@ -561,7 +526,9 @@ class _OrderPageState extends State<OrderPage> {
                                         "assets/icons/empty.png",
                                         height: 80,
                                       ),
-                                      Text("No Data found"),
+                                      Text(
+                                        languagesController.tr("NO_DATA_FOUND"),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -572,7 +539,6 @@ class _OrderPageState extends State<OrderPage> {
                   child: Obx(
                     () =>
                         orderlistController.isLoading.value == false &&
-                                languageController.isLoading.value == false &&
                                 orderlistController.finalList.isNotEmpty
                             ? RefreshIndicator(
                                 onRefresh: refresh,
@@ -701,12 +667,8 @@ class _OrderPageState extends State<OrderPage> {
                                                         ),
                                                         Spacer(),
                                                         Text(
-                                                          languageController
-                                                                  .alllanguageData
-                                                                  .value
-                                                                  .languageData![
-                                                                      "ORDER_ID"]
-                                                                  .toString() +
+                                                          languagesController.tr(
+                                                                  "ORDER_ID") +
                                                               " ",
                                                           style: TextStyle(
                                                             fontSize: 15,
@@ -747,12 +709,8 @@ class _OrderPageState extends State<OrderPage> {
                                                         Row(
                                                           children: [
                                                             Text(
-                                                              languageController
-                                                                  .alllanguageData
-                                                                  .value
-                                                                  .languageData![
-                                                                      "RECHARGEABLE_ACCOUNT"]
-                                                                  .toString(),
+                                                              languagesController
+                                                                  .tr("RECHARGEABLE_ACCOUNT"),
                                                               style: TextStyle(
                                                                 fontSize: 12,
                                                                 color: Colors
@@ -770,27 +728,15 @@ class _OrderPageState extends State<OrderPage> {
                                                             Text(
                                                               data.status.toString() ==
                                                                       "0"
-                                                                  ? languageController
-                                                                      .alllanguageData
-                                                                      .value
-                                                                      .languageData![
-                                                                          "PENDING"]
-                                                                      .toString()
+                                                                  ? languagesController.tr(
+                                                                      "PENDING")
                                                                   : data.status
                                                                               .toString() ==
                                                                           "1"
-                                                                      ? languageController
-                                                                          .alllanguageData
-                                                                          .value
-                                                                          .languageData![
-                                                                              "CONFIRMED"]
-                                                                          .toString()
-                                                                      : languageController
-                                                                          .alllanguageData
-                                                                          .value
-                                                                          .languageData![
-                                                                              "REJECTED"]
-                                                                          .toString(),
+                                                                      ? languagesController.tr(
+                                                                          "CONFIRMED")
+                                                                      : languagesController
+                                                                          .tr("REJECTED"),
                                                               style: TextStyle(
                                                                 fontSize: 12,
                                                                 color: Colors
@@ -844,11 +790,8 @@ class _OrderPageState extends State<OrderPage> {
                                                                             .start,
                                                                     children: [
                                                                       Text(
-                                                                        languageController
-                                                                            .alllanguageData
-                                                                            .value
-                                                                            .languageData!["TITLE"]
-                                                                            .toString(),
+                                                                        languagesController
+                                                                            .tr("TITLE"),
                                                                         style:
                                                                             TextStyle(
                                                                           fontSize:
@@ -887,11 +830,8 @@ class _OrderPageState extends State<OrderPage> {
                                                                             .center,
                                                                     children: [
                                                                       Text(
-                                                                        languageController
-                                                                            .alllanguageData
-                                                                            .value
-                                                                            .languageData!["SALE"]
-                                                                            .toString(),
+                                                                        languagesController
+                                                                            .tr("SELL"),
                                                                         style:
                                                                             TextStyle(
                                                                           fontSize:
@@ -946,11 +886,8 @@ class _OrderPageState extends State<OrderPage> {
                                                                             .center,
                                                                     children: [
                                                                       Text(
-                                                                        languageController
-                                                                            .alllanguageData
-                                                                            .value
-                                                                            .languageData!["BUY"]
-                                                                            .toString(),
+                                                                        languagesController
+                                                                            .tr("BUY"),
                                                                         style:
                                                                             TextStyle(
                                                                           fontSize:
@@ -1171,12 +1108,8 @@ class _OrderPageState extends State<OrderPage> {
                                                             ),
                                                             Spacer(),
                                                             Text(
-                                                              languageController
-                                                                      .alllanguageData
-                                                                      .value
-                                                                      .languageData![
-                                                                          "ORDER_ID"]
-                                                                      .toString() +
+                                                              languagesController
+                                                                      .tr("ORDER_ID") +
                                                                   " ",
                                                               style: TextStyle(
                                                                 fontSize: 15,
@@ -1222,12 +1155,8 @@ class _OrderPageState extends State<OrderPage> {
                                                             Row(
                                                               children: [
                                                                 Text(
-                                                                  languageController
-                                                                      .alllanguageData
-                                                                      .value
-                                                                      .languageData![
-                                                                          "RECHARGEABLE_ACCOUNT"]
-                                                                      .toString(),
+                                                                  languagesController
+                                                                      .tr("RECHARGEABLE_ACCOUNT"),
                                                                   style:
                                                                       TextStyle(
                                                                     fontSize:
@@ -1247,25 +1176,14 @@ class _OrderPageState extends State<OrderPage> {
                                                                 Text(
                                                                   data.status.toString() ==
                                                                           "0"
-                                                                      ? languageController
-                                                                          .alllanguageData
-                                                                          .value
-                                                                          .languageData![
-                                                                              "PENDING"]
-                                                                          .toString()
+                                                                      ? languagesController.tr(
+                                                                          "PENDING")
                                                                       : data.status.toString() ==
                                                                               "1"
-                                                                          ? languageController
-                                                                              .alllanguageData
-                                                                              .value
-                                                                              .languageData![
-                                                                                  "CONFIRMED"]
-                                                                              .toString()
-                                                                          : languageController
-                                                                              .alllanguageData
-                                                                              .value
-                                                                              .languageData!["REJECTED"]
-                                                                              .toString(),
+                                                                          ? languagesController.tr(
+                                                                              "CONFIRMED")
+                                                                          : languagesController
+                                                                              .tr("REJECTED"),
                                                                   style:
                                                                       TextStyle(
                                                                     fontSize:
@@ -1323,7 +1241,7 @@ class _OrderPageState extends State<OrderPage> {
                                                                             CrossAxisAlignment.start,
                                                                         children: [
                                                                           Text(
-                                                                            languageController.alllanguageData.value.languageData!["TITLE"].toString(),
+                                                                            languagesController.tr("TITLE"),
                                                                             style:
                                                                                 TextStyle(
                                                                               fontSize: 11,
@@ -1354,7 +1272,7 @@ class _OrderPageState extends State<OrderPage> {
                                                                             MainAxisAlignment.center,
                                                                         children: [
                                                                           Text(
-                                                                            languageController.alllanguageData.value.languageData!["SALE"].toString(),
+                                                                            languagesController.tr("SELL"),
                                                                             style:
                                                                                 TextStyle(
                                                                               fontSize: 10,
@@ -1404,7 +1322,7 @@ class _OrderPageState extends State<OrderPage> {
                                                                             MainAxisAlignment.center,
                                                                         children: [
                                                                           Text(
-                                                                            languageController.alllanguageData.value.languageData!["BUY"].toString(),
+                                                                            languagesController.tr("BUY"),
                                                                             style:
                                                                                 TextStyle(
                                                                               fontSize: 10,

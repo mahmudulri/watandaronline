@@ -19,6 +19,8 @@ import 'package:watandaronline/pages/sub_reseller_screen.dart';
 import 'package:watandaronline/utils/colors.dart';
 import 'package:watandaronline/widgets/profile_menu_widget.dart';
 
+import '../global controller/languages_controller.dart';
+
 class DrawerWidget extends StatefulWidget {
   DrawerWidget({super.key});
 
@@ -39,7 +41,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
   final signInController = Get.find<SignInController>();
   final iscoCodeController = Get.find<IscoCodeController>();
-  final languageController = Get.find<LanguageController>();
+  final languagesController = Get.find<LanguagesController>();
   final historyController = Get.find<HistoryController>();
   final dashboardController = Get.find<DashboardController>();
 
@@ -72,17 +74,14 @@ class _DrawerWidgetState extends State<DrawerWidget> {
       child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Obx(
-            () => dashboardController.isLoading.value == false &&
-                    languageController.isLoading.value == false
+            () => dashboardController.isLoading.value == false
                 ? Column(
                     children: [
                       SizedBox(
                         height: 30,
                       ),
                       Text(
-                        languageController
-                            .alllanguageData.value.languageData!["PROFILE"]
-                            .toString(),
+                        languagesController.tr("PROFILE"),
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -159,9 +158,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         color: Colors.grey,
                       ),
                       ProfileMenuWidget(
-                        itemName: languageController.alllanguageData.value
-                            .languageData!["PERSONAL_INFO"]
-                            .toString(),
+                        itemName: languagesController.tr("PERSONAL_INFO"),
                         imageLink: "assets/icons/homeicon.png",
                         onPressed: () {
                           Get.toNamed(myprofilescreen);
@@ -171,21 +168,38 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         height: 5,
                       ),
                       ProfileMenuWidget(
-                        itemName: languageController
-                            .alllanguageData.value.languageData!["ADD_CARD"]
-                            .toString(),
-                        imageLink: "assets/icons/add_card.png",
+                        itemName: languagesController.tr("SET_SALE_PRICE"),
+                        imageLink: "assets/icons/set_sell_price.png",
                         onPressed: () {
-                          Get.toNamed(addcardScreen);
+                          Get.toNamed(sellingpricescreen);
                         },
                       ),
                       SizedBox(
                         height: 5,
                       ),
                       ProfileMenuWidget(
-                        itemName: languageController.alllanguageData.value
-                            .languageData!["TERMS_AND_CONDITIONS"]
-                            .toString(),
+                        itemName: languagesController.tr("COMMISSION_GROUP"),
+                        imageLink: "assets/icons/set_vendor_sell_price.png",
+                        onPressed: () {
+                          Get.toNamed(commissiongroupscreen);
+                        },
+                      ),
+                      // SizedBox(
+                      //   height: 5,
+                      // ),
+                      // ProfileMenuWidget(
+                      //   itemName: languagesController.tr("ADD_CARD"),
+                      //   imageLink: "assets/icons/add_card.png",
+                      //   onPressed: () {
+                      //     Get.toNamed(addcardScreen);
+                      //   },
+                      // ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      ProfileMenuWidget(
+                        itemName:
+                            languagesController.tr("TERMS_AND_CONDITIONS"),
                         imageLink: "assets/icons/terms.png",
                         onPressed: () {},
                       ),
@@ -193,19 +207,17 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         height: 5,
                       ),
                       ProfileMenuWidget(
-                        itemName: languageController
-                            .alllanguageData.value.languageData!["HELP"]
-                            .toString(),
+                        itemName: languagesController.tr("HELP"),
                         imageLink: "assets/icons/help.png",
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(helpscreen);
+                        },
                       ),
                       SizedBox(
                         height: 5,
                       ),
                       ProfileMenuWidget(
-                        itemName: languageController
-                            .alllanguageData.value.languageData!["CONTACTUS"]
-                            .toString(),
+                        itemName: languagesController.tr("CONTACTUS"),
                         imageLink: "assets/icons/support.png",
                         onPressed: () {
                           whatsapp();
@@ -215,107 +227,80 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         height: 5,
                       ),
                       ProfileMenuWidget(
-                        itemName: languageController.alllanguageData.value
-                            .languageData!["CHANGE_LANGUAGE"]
-                            .toString(),
+                        itemName: languagesController.tr("CHANGE_LANGUAGE"),
                         imageLink: "assets/icons/globe.png",
                         onPressed: () {
-                          // historyController.finalList.clear();
-                          iscoCodeController.fetchisoCode();
                           showDialog(
                             context: context,
                             builder: (context) {
                               return AlertDialog(
-                                backgroundColor: Colors.white,
-                                // contentPadding: EdgeInsets.all(0.0),
+                                title: Text("Change Language"),
                                 content: Container(
-                                  height: 300,
+                                  height: 350,
                                   width: screenWidth,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                          child: Obx(
-                                        () => iscoCodeController
-                                                    .isLoading.value ==
-                                                false
-                                            ? ListView.builder(
-                                                itemCount: iscoCodeController
-                                                    .allisoCodeData
-                                                    .value
-                                                    .data!
-                                                    .languages
-                                                    .length,
-                                                itemBuilder: (context, index) {
-                                                  final data =
-                                                      iscoCodeController
-                                                          .allisoCodeData
-                                                          .value
-                                                          .data!
-                                                          .languages[index];
-                                                  return languageBox(
-                                                    lanName: data.languageName,
-                                                    onpressed: () {
-                                                      historyController
-                                                          .finalList
-                                                          .clear();
-                                                      languageController
-                                                          .fetchlanData(data
-                                                              .language_code
-                                                              .toString());
-                                                      box.write(
-                                                          "isoCode",
-                                                          data.language_code
-                                                              .toString());
-                                                      box.write(
-                                                          "direction",
-                                                          data.direction
-                                                              .toString());
-
-                                                      if (data.direction ==
-                                                          "rtl") {
-                                                        setState(() {
-                                                          EasyLocalization.of(
-                                                                  context)!
-                                                              .setLocale(Locale(
-                                                                  'ar', 'AE'));
-                                                        });
-
-                                                        // setState(() {});
-                                                      } else {
-                                                        setState(() {
-                                                          EasyLocalization.of(
-                                                                  context)!
-                                                              .setLocale(Locale(
-                                                                  'en', 'US'));
-                                                        });
-                                                        // setState(() {});
-                                                      }
-
-                                                      historyController
-                                                          .finalList
-                                                          .clear();
-                                                      historyController
-                                                          .initialpage = 1;
-                                                      historyController
-                                                          .fetchHistory();
-
-                                                      Navigator.pop(context);
-
-                                                      // historyController.finalList.clear();
-                                                      // historyController.initialpage = 1;
-                                                    },
-                                                  );
-                                                },
-                                              )
-                                            : Center(
-                                                child:
-                                                    CircularProgressIndicator(),
-                                              ),
-                                      )),
-                                    ],
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: languagesController
+                                        .alllanguagedata.length,
+                                    itemBuilder: (context, index) {
+                                      final data = languagesController
+                                          .alllanguagedata[index];
+                                      return GestureDetector(
+                                        onTap: () {
+                                          languagesController.changeLanguage(
+                                              data["name"].toString());
+                                          box.write("language", data["name"]);
+                                          if (data["direction"].toString() ==
+                                              "ltr") {
+                                            box.write("direction", "ltr");
+                                            setState(() {
+                                              EasyLocalization.of(context)!
+                                                  .setLocale(
+                                                      Locale('en', 'US'));
+                                            });
+                                            print(
+                                                "LRT Mode.....................");
+                                          } else {
+                                            box.write("direction", "rtl");
+                                            setState(() {
+                                              EasyLocalization.of(context)!
+                                                  .setLocale(
+                                                      Locale('ar', 'AE'));
+                                            });
+                                          }
+                                          setState(() {
+                                            Navigator.pop(context);
+                                          });
+                                        },
+                                        child: Container(
+                                          margin: EdgeInsets.only(bottom: 5),
+                                          height: 45,
+                                          width: screenWidth,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              width: 1,
+                                              color: Colors.grey.shade100,
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10),
+                                            child: Row(
+                                              children: [
+                                                Center(
+                                                  child: Text(
+                                                    languagesController
+                                                        .alllanguagedata[index]
+                                                            ["fullname"]
+                                                        .toString(),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
                               );
@@ -336,9 +321,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           child: Column(
                             children: [
                               Text(
-                                languageController.alllanguageData.value
-                                    .languageData!["DO_YOU_WANT_TO_LOGOUT"]
-                                    .toString(),
+                                languagesController.tr("DO_YOU_WANT_TO_LOGOUT"),
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
@@ -380,9 +363,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          languageController.alllanguageData
-                                              .value.languageData!["YES"]
-                                              .toString(),
+                                          languagesController.tr("YES"),
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w500,
@@ -406,9 +387,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          languageController.alllanguageData
-                                              .value.languageData!["NO"]
-                                              .toString(),
+                                          languagesController.tr("NO"),
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w500,
@@ -427,9 +406,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         height: 5,
                       ),
                       ProfileMenuWidget(
-                        itemName: languageController
-                            .alllanguageData.value.languageData!["LOG_OUT"]
-                            .toString(),
+                        itemName: languagesController.tr("LOG_OUT"),
                         imageLink: "assets/icons/logout.png",
                         onPressed: () {
                           setState(() {

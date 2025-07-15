@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:watandaronline/controllers/change_pin_controller.dart';
+import 'package:watandaronline/global%20controller/languages_controller.dart';
 import 'package:watandaronline/widgets/auth_textfield.dart';
 import 'package:watandaronline/widgets/default_button.dart';
 
@@ -13,6 +14,7 @@ class ChangeSubPasswordScreen extends StatelessWidget {
 
   final SubresellerPassController passwordConttroller =
       Get.put(SubresellerPassController());
+  final languagesController = Get.find<LanguagesController>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class ChangeSubPasswordScreen extends StatelessWidget {
         elevation: 0.0,
         centerTitle: true,
         title: Text(
-          "Change Password",
+          languagesController.tr("CHANGE_PASSWORD"),
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -51,7 +53,7 @@ class ChangeSubPasswordScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "New Password: ",
+                languagesController.tr("NEW_PASSWORD"),
                 style: TextStyle(
                   fontSize: 18,
                   color: Colors.black,
@@ -61,14 +63,14 @@ class ChangeSubPasswordScreen extends StatelessWidget {
                 height: 15,
               ),
               AuthTextField(
-                hintText: "Enter your new pin...",
+                hintText: languagesController.tr("ENTER_YOUR_NEW_PASSWORD"),
                 controller: passwordConttroller.newpassController,
               ),
               SizedBox(
                 height: 15,
               ),
               Text(
-                "Confirm Password: ",
+                languagesController.tr("CONFIRM_PASSWORD"),
                 style: TextStyle(
                   fontSize: 18,
                   color: Colors.black,
@@ -78,7 +80,7 @@ class ChangeSubPasswordScreen extends StatelessWidget {
                 height: 15,
               ),
               AuthTextField(
-                hintText: "Confirm password...",
+                hintText: languagesController.tr("CONFIRM_PASSWORD"),
                 controller: passwordConttroller.confirmpassController,
               ),
               SizedBox(
@@ -87,14 +89,14 @@ class ChangeSubPasswordScreen extends StatelessWidget {
               Obx(
                 () => DefaultButton(
                   buttonName: passwordConttroller.isLoading.value == false
-                      ? "Change Now"
-                      : "Please wait...",
+                      ? languagesController.tr("CHANGE_NOW")
+                      : languagesController.tr("PLEASE_WAIT"),
                   onPressed: () {
                     if (passwordConttroller.newpassController.text.isEmpty ||
                         passwordConttroller
                             .confirmpassController.text.isEmpty) {
                       Fluttertoast.showToast(
-                          msg: "Fill the data",
+                          msg: languagesController.tr("FILL_DATA_CORRECTLY"),
                           toastLength: Toast.LENGTH_SHORT,
                           gravity: ToastGravity.BOTTOM,
                           timeInSecForIosWeb: 1,

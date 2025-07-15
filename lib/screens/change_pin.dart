@@ -5,9 +5,13 @@ import 'package:watandaronline/controllers/change_pin_controller.dart';
 import 'package:watandaronline/widgets/auth_textfield.dart';
 import 'package:watandaronline/widgets/default_button.dart';
 
+import '../global controller/languages_controller.dart';
+
 class ChangePin extends StatelessWidget {
   ChangePin({super.key});
   final changePinController = Get.find<ChangePinController>();
+
+  final languagesController = Get.find<LanguagesController>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +33,7 @@ class ChangePin extends StatelessWidget {
         elevation: 0.0,
         centerTitle: true,
         title: Text(
-          "Change Pin",
+          languagesController.tr("CHANGE_PIN"),
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -46,7 +50,7 @@ class ChangePin extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Old Pin: ",
+                languagesController.tr("OLD_PIN"),
                 style: TextStyle(
                   fontSize: 18,
                   color: Colors.black,
@@ -56,14 +60,14 @@ class ChangePin extends StatelessWidget {
                 height: 15,
               ),
               AuthTextField(
-                hintText: "Enter your old pin...",
+                hintText: languagesController.tr("ENTER_YOUR_OLD_PIN"),
                 controller: changePinController.oldPinController,
               ),
               SizedBox(
                 height: 15,
               ),
               Text(
-                "New Pin: ",
+                languagesController.tr("NEW_PIN"),
                 style: TextStyle(
                   fontSize: 18,
                   color: Colors.black,
@@ -73,7 +77,7 @@ class ChangePin extends StatelessWidget {
                 height: 15,
               ),
               AuthTextField(
-                hintText: "Enter your new pin...",
+                hintText: languagesController.tr("ENTER_YOUR_NEW_PIN"),
                 controller: changePinController.newPinController,
               ),
               // SizedBox(
@@ -98,13 +102,13 @@ class ChangePin extends StatelessWidget {
               Obx(
                 () => DefaultButton(
                   buttonName: changePinController.isLoading.value == false
-                      ? "Change"
-                      : "Please wait...",
+                      ? languagesController.tr("CHANGE")
+                      : languagesController.tr("PLEASE_WAIT"),
                   onPressed: () {
                     if (changePinController.oldPinController.text.isEmpty ||
                         changePinController.newPinController.text.isEmpty) {
                       Fluttertoast.showToast(
-                          msg: "Fill the data",
+                          msg: languagesController.tr("FILL_DATA_CORRECTLY"),
                           toastLength: Toast.LENGTH_SHORT,
                           gravity: ToastGravity.BOTTOM,
                           timeInSecForIosWeb: 1,

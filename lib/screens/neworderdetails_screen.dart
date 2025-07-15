@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 
 import '../controllers/language_controller.dart';
 import '../controllers/time_zone_controller.dart';
+import '../global controller/languages_controller.dart';
 import '../helpers/capture_image_helper.dart';
 import '../helpers/language_helper.dart';
 import '../helpers/localtime_helper.dart';
@@ -50,7 +51,7 @@ class OrderSuccessScreen extends StatefulWidget {
 class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
   final TimeZoneController timeZoneController = Get.put(TimeZoneController());
 
-  final LanguageController languageController = Get.put(LanguageController());
+  final languagesController = Get.find<LanguagesController>();
 
   final box = GetStorage();
   @override
@@ -168,14 +169,10 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                               ),
                               Text(
                                 widget.status.toString() == "0"
-                                    ? getText("PENDING",
-                                        defaultValue: "Pending")
+                                    ? languagesController.tr("PENDING")
                                     : widget.status.toString() == "1"
-                                        ? getText("SUCCESSFULLY_ORDERED",
-                                            defaultValue:
-                                                "Successfully Ordered")
-                                        : getText("REJECTED",
-                                            defaultValue: "Rejected"),
+                                        ? languagesController.tr("CONFIRMED")
+                                        : languagesController.tr("REJECTED"),
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontFamily: "Iranyekanregular",
@@ -237,42 +234,27 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                     ),
                                     Spacer(),
                                     Text(
-                                      widget.validityType.toString() == "yearly"
-                                          ? languageController.alllanguageData
-                                              .value.languageData!["YEARLY"]
-                                              .toString()
-                                          : widget.validityType.toString() ==
-                                                  "unlimited"
-                                              ? languageController
-                                                  .alllanguageData
-                                                  .value
-                                                  .languageData!["UNLIMITED"]
-                                                  .toString()
-                                              : widget.validityType.toString() ==
-                                                      "monthly"
-                                                  ? languageController
-                                                      .alllanguageData
-                                                      .value
-                                                      .languageData!["MONTHLY"]
+                                      widget.toString() == "unlimited"
+                                          ? languagesController.tr("UNLIMITED")
+                                          : widget.toString() == "monthly"
+                                              ? languagesController
+                                                  .tr("MONTHLY")
+                                              : widget.toString() == "weekly"
+                                                  ? languagesController
+                                                      .tr("WEEKLY")
                                                       .toString()
-                                                  : widget.validityType.toString() ==
-                                                          "weekly"
-                                                      ? languageController.alllanguageData.value.languageData!["WEEKLY"]
-                                                          .toString()
-                                                      : widget.validityType.toString() ==
-                                                              "daily"
-                                                          ? languageController.alllanguageData.value.languageData!["DAILY"]
-                                                              .toString()
-                                                          : widget.validityType.toString() ==
-                                                                  "hourly"
-                                                              ? languageController
-                                                                  .alllanguageData
-                                                                  .value
-                                                                  .languageData!["HOURLY"]
-                                                                  .toString()
-                                                              : widget.validityType.toString() == "nightly"
-                                                                  ? languageController.alllanguageData.value.languageData!["NIGHTLY"].toString()
-                                                                  : "",
+                                                  : widget.toString() == "daily"
+                                                      ? languagesController
+                                                          .tr("DAILY")
+                                                      : widget.toString() ==
+                                                              "hourly"
+                                                          ? languagesController
+                                                              .tr("HOURLY")
+                                                          : widget.toString() ==
+                                                                  "nightly"
+                                                              ? languagesController
+                                                                  .tr("NIGHTLY")
+                                                              : "",
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 14,
@@ -290,9 +272,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      languageController.alllanguageData.value
-                                          .languageData!["ORDER_ID"]
-                                          .toString(),
+                                      languagesController.tr("ORDER_ID"),
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: Color(0xff637381),
@@ -315,7 +295,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      getText("DATE", defaultValue: "Date"),
+                                      languagesController.tr("DATE"),
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: Color(0xff637381),
@@ -336,7 +316,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      getText("TIME", defaultValue: "Time"),
+                                      languagesController.tr("TIME"),
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: Color(0xff637381),
@@ -372,9 +352,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      languageController.alllanguageData.value
-                                          .languageData!["PHONE_NUMBER"]
-                                          .toString(),
+                                      languagesController.tr("PHONE_NUMBER"),
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: Color(0xff637381),
@@ -402,7 +380,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      getText("SENDER", defaultValue: "Sender"),
+                                      languagesController.tr("SENDER"),
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: Color(0xff637381),
@@ -430,7 +408,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      getText("PRICE", defaultValue: "Price"),
+                                      languagesController.tr("PRICE"),
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: Color(0xff637381),
@@ -516,9 +494,8 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                             ),
                                             child: Center(
                                               child: Text(
-                                                getText("SAVE_AS_IMAGE",
-                                                    defaultValue:
-                                                        "Save as image"),
+                                                languagesController
+                                                    .tr("SAVE_AS_IMAGE"),
                                                 style: TextStyle(
                                                   fontSize: 12,
                                                   color: Color(0xff2196F3),
@@ -549,8 +526,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                             ),
                                             child: Center(
                                               child: Text(
-                                                getText("SHARE",
-                                                    defaultValue: "Share"),
+                                                languagesController.tr("SHARE"),
                                                 style: TextStyle(
                                                   fontSize: 12,
                                                   color: Colors.white,
@@ -582,7 +558,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                     ),
                                     child: Center(
                                       child: Text(
-                                        getText("CLOSE", defaultValue: "Close"),
+                                        languagesController.tr("CLOSE"),
                                         style: TextStyle(
                                           fontSize: 14,
                                           color: Colors.black,

@@ -16,7 +16,7 @@ class RegisterField extends StatelessWidget {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      height: 45,
+      height: 50,
       width: screenWidth,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),

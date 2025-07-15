@@ -28,6 +28,7 @@ class ProfileMenuWidget extends StatelessWidget {
               Image.asset(
                 imageLink.toString(),
                 height: 24,
+                color: Colors.black,
               ),
               SizedBox(
                 width: 20,

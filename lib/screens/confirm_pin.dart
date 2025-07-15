@@ -10,6 +10,7 @@ import 'package:watandaronline/controllers/place_order_controller.dart';
 import 'package:watandaronline/routes/routes.dart';
 
 import '../controllers/confirm_pin_controller.dart';
+import '../global controller/languages_controller.dart';
 import 'result_screen.dart';
 
 class ConfirmPinScreen extends StatefulWidget {
@@ -21,7 +22,7 @@ class ConfirmPinScreen extends StatefulWidget {
 
 class _ConfirmPinScreenState extends State<ConfirmPinScreen> {
   final confirmPinController = Get.find<ConfirmPinController>();
-  final languageController = Get.find<LanguageController>();
+  final languagesController = Get.find<LanguagesController>();
 
   final FocusNode _focusNode = FocusNode();
 
@@ -68,12 +69,8 @@ class _ConfirmPinScreenState extends State<ConfirmPinScreen> {
                       children: [
                         Text(
                           confirmPinController.isLoading.value == false
-                              ? languageController.alllanguageData.value
-                                  .languageData!["CONFIRM_YOUR_PIN"]
-                                  .toString()
-                              : languageController.alllanguageData.value
-                                  .languageData!["PLEASE_WAIT"]
-                                  .toString(),
+                              ? languagesController.tr("CONFIRM_YOUR_PIN")
+                              : languagesController.tr("PLEASE_WAIT"),
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 15,
@@ -159,9 +156,7 @@ class _ConfirmPinScreenState extends State<ConfirmPinScreen> {
                               horizontal: 10, vertical: 5),
                           child: Center(
                             child: Text(
-                              languageController
-                                  .alllanguageData.value.languageData!["CANCEL"]
-                                  .toString(),
+                              languagesController.tr("CANCEL"),
                               style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w500,
@@ -187,7 +182,7 @@ class _ConfirmPinScreenState extends State<ConfirmPinScreen> {
                                         .pinController.text.length !=
                                     4) {
                               Fluttertoast.showToast(
-                                  msg: "Enter your pin",
+                                  msg: languagesController.tr("ENTER_YOUR_PIN"),
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.BOTTOM,
                                   timeInSecForIosWeb: 1,
@@ -227,9 +222,7 @@ class _ConfirmPinScreenState extends State<ConfirmPinScreen> {
                                   horizontal: 10, vertical: 5),
                               child: Center(
                                 child: Text(
-                                  languageController.alllanguageData.value
-                                      .languageData!["VERIFY"]
-                                      .toString(),
+                                  languagesController.tr("VERIFY"),
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w500,

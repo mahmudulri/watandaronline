@@ -13,6 +13,7 @@ import 'package:watandaronline/helpers/price.dart';
 import 'package:watandaronline/routes/routes.dart';
 import 'package:watandaronline/widgets/number_textfield.dart';
 import '../controllers/confirm_pin_controller.dart';
+import '../global controller/languages_controller.dart';
 import '../utils/colors.dart';
 
 class SocialRechargeScreen extends StatefulWidget {
@@ -32,41 +33,31 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
   void initializeDuration() {
     duration = [
       {
-        "Name": languageController.alllanguageData.value.languageData!["ALL"]
-            .toString(),
+        "Name": languagesController.tr("All"),
         "Value": "",
       },
       {
-        "Name": languageController
-            .alllanguageData.value.languageData!["UNLIMITED"]
-            .toString(),
+        "Name": languagesController.tr("UNLIMITED"),
         "Value": "unlimited",
       },
       {
-        "Name": languageController
-            .alllanguageData.value.languageData!["MONTHLY"]
-            .toString(),
+        "Name": languagesController.tr("MONTHLY"),
         "Value": "monthly",
       },
       {
-        "Name": languageController.alllanguageData.value.languageData!["WEEKLY"]
-            .toString(),
+        "Name": languagesController.tr("WEEKLY"),
         "Value": "weekly",
       },
       {
-        "Name": languageController.alllanguageData.value.languageData!["DAILY"]
-            .toString(),
+        "Name": languagesController.tr("DAILY"),
         "Value": "daily",
       },
       {
-        "Name": languageController.alllanguageData.value.languageData!["HOURLY"]
-            .toString(),
+        "Name": languagesController.tr("HOURLY"),
         "Value": "hourly",
       },
       {
-        "Name": languageController
-            .alllanguageData.value.languageData!["NIGHTLY"]
-            .toString(),
+        "Name": languagesController.tr("NIGHTLY"),
         "Value": "nightly",
       },
     ];
@@ -76,7 +67,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
   final serviceController = Get.find<ServiceController>();
   final bundleController = Get.find<BundleController>();
   final confirmPinController = Get.find<ConfirmPinController>();
-  final languageController = Get.find<LanguageController>();
+  final languagesController = Get.find<LanguagesController>();
 
   TextEditingController searchController = TextEditingController();
 
@@ -162,8 +153,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
               print(box.read("permission"));
             },
             child: Text(
-              languageController.alllanguageData.value.languageData!["RECHARGE"]
-                  .toString(),
+              languagesController.tr("SOCIAL_RECHARGE"),
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -211,9 +201,8 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                               //   FilteringTextInputFormatter.digitsOnly,
                               // ],
                               decoration: InputDecoration(
-                                hintText: languageController.alllanguageData
-                                    .value.languageData!["ENTER_YOUR_NUMBER"]
-                                    .toString(),
+                                hintText:
+                                    languagesController.tr("ENTER_YOUR_NUMBER"),
                                 counterText: "",
                                 border: InputBorder.none,
                                 hintStyle: TextStyle(
@@ -434,9 +423,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                     ),
                                   ),
                                   border: InputBorder.none,
-                                  hintText: languageController.alllanguageData
-                                      .value.languageData!["SEARCH"]
-                                      .toString(),
+                                  hintText: languagesController.tr("SEARCH"),
                                   hintStyle: TextStyle(
                                     fontSize: 14,
                                   ),
@@ -462,7 +449,10 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                   "assets/icons/empty.png",
                                                   height: 80,
                                                 ),
-                                                Text("No Data found"),
+                                                Text(
+                                                  languagesController
+                                                      .tr("NO_DATA_FOUND"),
+                                                ),
                                               ],
                                             ),
                                           ),
@@ -500,12 +490,8 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                     .text
                                                     .isEmpty) {
                                                   Fluttertoast.showToast(
-                                                      msg: languageController
-                                                          .alllanguageData
-                                                          .value
-                                                          .languageData![
-                                                              "ENTER_YOUR_NUMBER"]
-                                                          .toString(),
+                                                      msg: languagesController.tr(
+                                                          "ENTER_YOUR_NUMBER"),
                                                       toastLength:
                                                           Toast.LENGTH_SHORT,
                                                       gravity:
@@ -715,6 +701,9 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                                   ),
                                                                 ],
                                                               ),
+                                                              SizedBox(
+                                                                height: 10,
+                                                              ),
                                                               Row(
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
@@ -726,23 +715,19 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                                   Text(
                                                                     data.validityType.toString() ==
                                                                             "unlimited"
-                                                                        ? languageController
-                                                                            .alllanguageData
-                                                                            .value
-                                                                            .languageData![
-                                                                                "UNLIMITED"]
-                                                                            .toString()
+                                                                        ? languagesController.tr(
+                                                                            "UNLIMITED")
                                                                         : data.validityType.toString() ==
                                                                                 "monthly"
-                                                                            ? languageController.alllanguageData.value.languageData!["MONTHLY"].toString()
+                                                                            ? languagesController.tr("MONTHLY")
                                                                             : data.validityType.toString() == "weekly"
-                                                                                ? languageController.alllanguageData.value.languageData!["WEEKLY"].toString()
+                                                                                ? languagesController.tr("WEEKLY").toString()
                                                                                 : data.validityType.toString() == "daily"
-                                                                                    ? languageController.alllanguageData.value.languageData!["DAILY"].toString()
+                                                                                    ? languagesController.tr("DAILY")
                                                                                     : data.validityType.toString() == "hourly"
-                                                                                        ? languageController.alllanguageData.value.languageData!["HOURLY"].toString()
+                                                                                        ? languagesController.tr("HOURLY")
                                                                                         : data.validityType.toString() == "nightly"
-                                                                                            ? languageController.alllanguageData.value.languageData!["NIGHTLY"].toString()
+                                                                                            ? languagesController.tr("NIGHTLY")
                                                                                             : "",
                                                                     style:
                                                                         TextStyle(
@@ -771,11 +756,8 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                                             .center,
                                                                     children: [
                                                                       Text(
-                                                                        languageController
-                                                                            .alllanguageData
-                                                                            .value
-                                                                            .languageData!["BUY"]
-                                                                            .toString(),
+                                                                        languagesController
+                                                                            .tr("BUY"),
                                                                         style:
                                                                             TextStyle(
                                                                           fontSize:
@@ -962,12 +944,8 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                     .text
                                                     .isEmpty) {
                                                   Fluttertoast.showToast(
-                                                      msg: languageController
-                                                          .alllanguageData
-                                                          .value
-                                                          .languageData![
-                                                              "ENTER_YOUR_NUMBER"]
-                                                          .toString(),
+                                                      msg: languagesController.tr(
+                                                          "ENTER_YOUR_NUMBER"),
                                                       toastLength:
                                                           Toast.LENGTH_SHORT,
                                                       gravity:
@@ -1177,6 +1155,9 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                                   ),
                                                                 ],
                                                               ),
+                                                              SizedBox(
+                                                                height: 10,
+                                                              ),
                                                               Row(
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
@@ -1188,23 +1169,19 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                                   Text(
                                                                     data.validityType.toString() ==
                                                                             "unlimited"
-                                                                        ? languageController
-                                                                            .alllanguageData
-                                                                            .value
-                                                                            .languageData![
-                                                                                "UNLIMITED"]
-                                                                            .toString()
+                                                                        ? languagesController.tr(
+                                                                            "UNLIMITED")
                                                                         : data.validityType.toString() ==
                                                                                 "monthly"
-                                                                            ? languageController.alllanguageData.value.languageData!["MONTHLY"].toString()
+                                                                            ? languagesController.tr("MONTHLY")
                                                                             : data.validityType.toString() == "weekly"
-                                                                                ? languageController.alllanguageData.value.languageData!["WEEKLY"].toString()
+                                                                                ? languagesController.tr("WEEKLY").toString()
                                                                                 : data.validityType.toString() == "daily"
-                                                                                    ? languageController.alllanguageData.value.languageData!["DAILY"].toString()
+                                                                                    ? languagesController.tr("DAILY")
                                                                                     : data.validityType.toString() == "hourly"
-                                                                                        ? languageController.alllanguageData.value.languageData!["HOURLY"].toString()
+                                                                                        ? languagesController.tr("HOURLY")
                                                                                         : data.validityType.toString() == "nightly"
-                                                                                            ? languageController.alllanguageData.value.languageData!["NIGHTLY"].toString()
+                                                                                            ? languagesController.tr("NIGHTLY")
                                                                                             : "",
                                                                     style:
                                                                         TextStyle(
@@ -1233,11 +1210,8 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                                             .center,
                                                                     children: [
                                                                       Text(
-                                                                        languageController
-                                                                            .alllanguageData
-                                                                            .value
-                                                                            .languageData!["BUY"]
-                                                                            .toString(),
+                                                                        languagesController
+                                                                            .tr("BUY"),
                                                                         style:
                                                                             TextStyle(
                                                                           fontSize:

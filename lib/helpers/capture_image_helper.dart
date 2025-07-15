@@ -5,9 +5,10 @@ import 'package:get/get.dart';
 import 'dart:ui' as ui;
 
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:watandaronline/controllers/language_controller.dart';
 
-final LanguageController languageController = Get.put(LanguageController());
+import '../global controller/languages_controller.dart';
+
+final languagesController = Get.find<LanguagesController>();
 
 GlobalKey catpureKey = GlobalKey();
 
@@ -27,11 +28,8 @@ Future<void> capturePng() async {
             quality: 100, name: "screenshot");
         print(result);
         Get.snackbar(
-          languageController.alllanguageData.value.languageData!["SUCCESS"]
-              .toString(),
-          languageController
-              .alllanguageData.value.languageData!["SAVED_IMAGE_TO_GALLERY"]
-              .toString(),
+          languagesController.tr("SUCCESS"),
+          languagesController.tr("IMAGE_SAVED_TO_GALLERY"),
         );
       }
     }

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:watandaronline/models/categories_service_model.dart';
 import 'package:watandaronline/services/categoris_service_list.dart';
@@ -138,7 +139,9 @@ class CategorisListController extends GetxController {
       });
     } catch (e) {
       print("Error fetching categories: ${e.toString()}");
-      isLoading(false);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        isLoading(false); // ✅ এটি এখন নিরাপদ
+      });
     }
   }
 }
