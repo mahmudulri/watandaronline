@@ -184,24 +184,15 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           Get.toNamed(commissiongroupscreen);
                         },
                       ),
-                      // SizedBox(
-                      //   height: 5,
-                      // ),
-                      // ProfileMenuWidget(
-                      //   itemName: languagesController.tr("ADD_CARD"),
-                      //   imageLink: "assets/icons/add_card.png",
-                      //   onPressed: () {
-                      //     Get.toNamed(addcardScreen);
-                      //   },
-                      // ),
                       SizedBox(
                         height: 5,
                       ),
                       ProfileMenuWidget(
-                        itemName:
-                            languagesController.tr("TERMS_AND_CONDITIONS"),
-                        imageLink: "assets/icons/terms.png",
-                        onPressed: () {},
+                        itemName: languagesController.tr("CHANGE_PASSWORD"),
+                        imageLink: "assets/icons/help.png",
+                        onPressed: () {
+                          Get.toNamed(changepasswordScreen);
+                        },
                       ),
                       SizedBox(
                         height: 5,
@@ -213,6 +204,26 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           Get.toNamed(helpscreen);
                         },
                       ),
+                      // SizedBox(
+                      //   height: 5,
+                      // ),
+                      // ProfileMenuWidget(
+                      //   itemName: languagesController.tr("ADD_CARD"),
+                      //   imageLink: "assets/icons/add_card.png",
+                      //   onPressed: () {
+                      //     Get.toNamed(addcardScreen);
+                      //   },
+                      // ),
+                      // SizedBox(
+                      //   height: 5,
+                      // ),
+                      // ProfileMenuWidget(
+                      //   itemName:
+                      //       languagesController.tr("TERMS_AND_CONDITIONS"),
+                      //   imageLink: "assets/icons/terms.png",
+                      //   onPressed: () {},
+                      // ),
+
                       SizedBox(
                         height: 5,
                       ),

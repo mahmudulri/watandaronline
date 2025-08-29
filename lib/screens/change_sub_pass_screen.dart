@@ -36,7 +36,7 @@ class ChangeSubPasswordScreen extends StatelessWidget {
         elevation: 0.0,
         centerTitle: true,
         title: Text(
-          languagesController.tr("CHANGE_PASSWORD"),
+          languagesController.tr("SET_PASSWORD"),
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,

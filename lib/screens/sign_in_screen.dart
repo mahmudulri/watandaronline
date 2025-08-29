@@ -109,7 +109,7 @@ class _SignInScreenState extends State<SignInScreen> {
               child: Column(
                 children: [
                   Expanded(
-                    flex: 10,
+                    flex: 8,
                     child: Container(
                       child: ListView(
                         children: [
@@ -288,39 +288,38 @@ class _SignInScreenState extends State<SignInScreen> {
                   SizedBox(
                     height: 30,
                   ),
-
-                  // Expanded(
-                  //   flex: 1,
-                  //   child: Container(
-                  //     child: Row(
-                  //       mainAxisAlignment: MainAxisAlignment.center,
-                  //       children: [
-                  //         Text(
-                  //           languagesController.tr("DONT_HAVE_AN_ACCOUNT"),
-                  //           style: TextStyle(
-                  //             color: Color(0xffA3A3A3),
-                  //             fontSize: 18,
-                  //           ),
-                  //         ),
-                  //         SizedBox(
-                  //           width: 5,
-                  //         ),
-                  //         GestureDetector(
-                  //           onTap: () {
-                  //             Get.to(() => SignUpScreen());
-                  //           },
-                  //           child: Text(
-                  //             languagesController.tr("SIGN_UP"),
-                  //             style: TextStyle(
-                  //               color: AppColors.defaultColor,
-                  //               fontSize: 18,
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            languagesController.tr("DONT_HAVE_AN_ACCOUNT"),
+                            style: TextStyle(
+                              color: Color(0xffA3A3A3),
+                              fontSize: 18,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(() => SignUpScreen());
+                            },
+                            child: Text(
+                              languagesController.tr("SIGN_UP"),
+                              style: TextStyle(
+                                color: AppColors.defaultColor,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

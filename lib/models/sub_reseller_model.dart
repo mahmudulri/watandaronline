@@ -75,7 +75,7 @@ class Reseller {
   final dynamic? status;
   final String? balance;
   final String? loanBalance;
-
+  final String? subResellerCommissionGroupId;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final dynamic? deletedAt;
@@ -99,6 +99,7 @@ class Reseller {
     this.status,
     this.balance,
     this.loanBalance,
+    this.subResellerCommissionGroupId,
     this.createdAt,
     this.updatedAt,
     this.deletedAt,
@@ -127,6 +128,10 @@ class Reseller {
         status: json["status"] == null ? null : json["status"],
         balance: json["balance"] == null ? null : json["balance"],
         loanBalance: json["loan_balance"] == null ? null : json["loan_balance"],
+        subResellerCommissionGroupId:
+            json["sub_reseller_commission_group_id"] == null
+                ? null
+                : json["sub_reseller_commission_group_id"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         deletedAt: json["deleted_at"] == null ? null : json["deleted_at"],
@@ -151,6 +156,7 @@ class Reseller {
         "status": status,
         "balance": balance,
         "loan_balance": loanBalance,
+        "sub_reseller_commission_group_id": subResellerCommissionGroupId,
         "created_at": createdAt!.toIso8601String(),
         "updated_at": updatedAt!.toIso8601String(),
         "deleted_at": deletedAt,

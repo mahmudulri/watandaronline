@@ -26,6 +26,8 @@ import 'package:watandaronline/utils/colors.dart';
 import 'package:watandaronline/widgets/drawer.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 
+import '../controllers/company_controller.dart';
+import '../controllers/currency_controller_new.dart';
 import '../global controller/languages_controller.dart';
 
 class Homepage extends StatefulWidget {
@@ -55,9 +57,14 @@ class _HomepageState extends State<Homepage> {
   bool _showEmptyState = false;
   String checkData = '';
 
+  CompanyController companyController = Get.put(CompanyController());
+  CurrencyController currencyController = Get.put(CurrencyController());
+
   @override
   void initState() {
     super.initState();
+    currencyController.fetchCurrency();
+    companyController.fetchCompany();
     historyController.fetchHistory();
     categorisListController.nonsocialArray.clear();
     categorisListController.fetchcategories();

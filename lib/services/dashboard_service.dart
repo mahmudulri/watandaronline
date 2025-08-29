@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
@@ -27,6 +29,15 @@ class DashboardApi {
 
       return dashboardModel;
     } else {
+      var results = jsonDecode(response.body);
+      Fluttertoast.showToast(
+        msg: "${results["errors"]}\n${results["message"]}",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
       throw Exception('Failed to fetch gateway');
     }
   }

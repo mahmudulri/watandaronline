@@ -183,15 +183,15 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                           : Colors.red,
                                 ),
                               ),
-                              // Visibility(
-                              //   visible: widget.status.toString() == "2",
-                              //   child: Text(
-                              //     widget.rejectReason.toString(),
-                              //     style: TextStyle(
-                              //       color: Colors.red,
-                              //     ),
-                              //   ),
-                              // ),
+                              Visibility(
+                                visible: widget.status.toString() == "2",
+                                child: Text(
+                                  widget.rejectReason.toString(),
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),

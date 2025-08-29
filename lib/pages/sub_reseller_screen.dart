@@ -16,7 +16,10 @@ import 'package:watandaronline/widgets/auth_textfield.dart';
 import 'package:watandaronline/widgets/default_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../controllers/commission_group_controller.dart';
+import '../controllers/set_commission_group_controller.dart';
 import '../global controller/languages_controller.dart';
+import '../screens/set_subreseller_pin.dart';
 import '../widgets/myprofile_box_widget.dart';
 import '../screens/change_balance_screen.dart';
 import '../screens/change_sub_pass_screen.dart';
@@ -189,6 +192,8 @@ class _SubResellerScreenState extends State<SubResellerScreen> {
                               id: data.id.toString(),
                               status: data.status.toString(),
                               imagelink: data.profileImageUrl,
+                              subResellerCommissionGroupId:
+                                  data.subResellerCommissionGroupId,
                             );
                           },
                         )
@@ -219,6 +224,7 @@ class dataBoxname extends StatefulWidget {
   String id;
   String? status;
   String? imagelink;
+  String? subResellerCommissionGroupId;
 
   dataBoxname({
     super.key,
@@ -235,6 +241,7 @@ class dataBoxname extends StatefulWidget {
     required this.id,
     this.status,
     this.imagelink,
+    this.subResellerCommissionGroupId,
   });
 
   @override
@@ -246,6 +253,10 @@ class _dataBoxnameState extends State<dataBoxname> {
   final deleteSubResellerController = Get.find<DeleteSubResellerController>();
   final changeStatusController = Get.find<ChangeStatusController>();
   final languagesController = Get.find<LanguagesController>();
+
+  final commissionlistController = Get.find<CommissionGroupController>();
+  SetCommissionGroupController controller =
+      Get.put(SetCommissionGroupController());
 
   final box = GetStorage();
   @override
@@ -297,8 +308,8 @@ class _dataBoxnameState extends State<dataBoxname> {
                     return AlertDialog(
                       contentPadding: EdgeInsets.all(0.0),
                       content: Container(
-                        height: 180,
-                        width: screenWidth - 100,
+                        height: 260,
+                        width: screenWidth - 50,
                         decoration: BoxDecoration(
                           color: Colors.white,
                         ),
@@ -362,15 +373,103 @@ class _dataBoxnameState extends State<dataBoxname> {
                                 color: Colors.grey,
                               ),
                               GestureDetector(
+                                onTap: () async {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(20)),
+                                    ),
+                                    builder: (context) {
+                                      return Obx(() {
+                                        if (commissionlistController
+                                            .isLoading.value) {
+                                          return Center(
+                                              child:
+                                                  CircularProgressIndicator());
+                                        }
+
+                                        final groups = commissionlistController
+                                                .allgrouplist
+                                                .value
+                                                .data
+                                                ?.groups ??
+                                            [];
+
+                                        return ListView.builder(
+                                          itemCount: groups.length,
+                                          itemBuilder: (context, index) {
+                                            final group = groups[index];
+                                            return ListTile(
+                                              title:
+                                                  Text(group.groupName ?? ''),
+                                              subtitle: Text(
+                                                  "${group.amount} ${group.commissionType == 'percentage' ? '%' : ''}"),
+                                              trailing:
+                                                  widget.subResellerCommissionGroupId
+                                                              .toString() ==
+                                                          group.id.toString()
+                                                      ? Icon(Icons.check,
+                                                          color: Colors.green)
+                                                      : null,
+                                              onTap: () async {
+                                                Navigator.pop(context);
+                                                await controller.setgroup(
+                                                    widget.id.toString(),
+                                                    group.id.toString());
+                                              },
+                                            );
+                                          },
+                                        );
+                                      });
+                                    },
+                                  );
+                                },
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.group),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      languagesController
+                                          .tr("SET_COMMISSION_GROUP"),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Divider(
+                                thickness: 1,
+                                color: Colors.grey,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.to(() => SetSubresellerPin(
+                                        subID: widget.id.toString(),
+                                      ));
+                                },
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.key),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      languagesController.tr("SET_PIN"),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Divider(
+                                thickness: 1,
+                                color: Colors.grey,
+                              ),
+                              GestureDetector(
                                 onTap: () {
                                   Get.toNamed(changesubpassscreen, arguments: {
                                     "subID": widget.id.toString(),
                                   });
-                                  // Get.to(
-                                  //   () => ChangeSubPasswordScreen(
-                                  //     subID: widget.id.toString(),
-                                  //   ),
-                                  // );
                                 },
                                 child: Row(
                                   children: [
@@ -438,98 +537,111 @@ class _dataBoxnameState extends State<dataBoxname> {
           tilePadding: EdgeInsets.all(5),
           title: Row(
             children: [
-              widget.imagelink != null
+              // avatar
+              widget.imagelink != null && widget.imagelink!.isNotEmpty
                   ? Container(
                       height: 35,
                       width: 35,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: NetworkImage(
-                            widget.imagelink.toString(),
-                          ),
-                          fit: BoxFit.fill,
+                          image: NetworkImage(widget.imagelink!),
+                          fit: BoxFit.cover,
                         ),
                         shape: BoxShape.circle,
                       ),
                     )
-                  : Container(
-                      height: 35,
-                      width: 35,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                          child: Icon(
+                  : const CircleAvatar(
+                      radius: 18,
+                      backgroundColor: Colors.grey,
+                      child: Icon(
                         Icons.person,
-                      )),
+                        color: Colors.black,
+                      ),
                     ),
-              SizedBox(
-                width: 5,
+
+              const SizedBox(width: 8),
+
+              // NAME + PHONE — let this flex
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.resellerName ?? "-",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Text(
+                      widget.phoneNumber ?? "-",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 9,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.resellerName.toString(),
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
+
+              const SizedBox(width: 8),
+
+              // BALANCE — cap width and ellipsize
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 100),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      languagesController.tr("BALANCE"),
+                      style: const TextStyle(
+                        fontSize: 8,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.grey,
+                      ),
                     ),
-                  ),
-                  Text(
-                    widget.phoneNumber.toString(),
-                    style: TextStyle(
-                      fontSize: 9,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
+                    Text(
+                      "${widget.balance ?? ''} ${widget.code ?? ''}".trim(),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 8,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-              Spacer(),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    languagesController.tr("BALANCE"),
-                    style: TextStyle(
-                      fontSize: 8,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  Text(
-                    "${widget.balance} ${widget.code}".substring(0, 8),
-                    style: TextStyle(
-                      fontSize: 8,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-              Spacer(),
+
+              const SizedBox(width: 8),
+
+              // arrow
               Container(
                 decoration: BoxDecoration(
                   color: Colors.grey.shade400,
                   shape: BoxShape.circle,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Icon(
-                    size: 12,
                     Icons.arrow_downward_outlined,
+                    size: 12,
                     color: Colors.black,
                   ),
                 ),
               ),
-              SizedBox(
-                width: 10,
-              ),
+
+              const SizedBox(width: 10),
             ],
           ),
+
           children: [
             Container(
               decoration: BoxDecoration(

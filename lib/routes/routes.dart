@@ -29,10 +29,14 @@ import 'package:watandaronline/screens/sign_up_screen.dart';
 import 'package:watandaronline/screens/social_recharge.dart';
 import 'package:watandaronline/splash_screen.dart';
 
+import '../bindings/receipt_binding.dart';
 import '../bindings/selling_price_binding.dart';
+import '../screens/change_password_screen.dart';
 import '../screens/commission_group_screen.dart';
+import '../screens/create_payments_screen.dart';
 import '../screens/create_selling_price_screen.dart';
 import '../screens/helpscreen.dart';
+import '../screens/receipts_screen.dart';
 import '../screens/selling_price_screen.dart';
 import '../screens/social_recharge_screen.dart';
 
@@ -62,6 +66,9 @@ const String socialrechargescreen = '/socialrecharge-screen';
 const String sellingpricescreen = '/sellingprice-screen';
 const String createsellingpricescreen = '/createselling-screen';
 const String commissiongroupscreen = '/comissiongroup-screen';
+const String receiptScreen = '/receipt-screen';
+const String createpaymentScreen = '/createpayment-screen';
+const String changepasswordScreen = '/changepassword-screen';
 
 List<GetPage> myroutes = [
   GetPage(
@@ -172,5 +179,18 @@ List<GetPage> myroutes = [
     name: createsellingpricescreen,
     page: () => CreateSellingPriceScreen(),
     binding: SellingPriceBinding(),
+  ),
+  GetPage(
+    name: receiptScreen,
+    page: () => ReceiptsScreen(),
+    binding: ReceiptBinding(),
+  ),
+  GetPage(
+    name: createpaymentScreen,
+    page: () => CreatePaymentsScreen(),
+  ),
+  GetPage(
+    name: changepasswordScreen,
+    page: () => ChangePasswordScreen(),
   ),
 ];

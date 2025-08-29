@@ -19,7 +19,7 @@ class AuthTextField extends StatelessWidget {
       height: 55,
       width: screenWidth,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(10),
         border: Border.all(
           width: 1,
           color: AppColors.borderColor,

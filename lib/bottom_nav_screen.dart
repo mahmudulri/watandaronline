@@ -25,6 +25,7 @@ import 'controllers/page_controller.dart';
 import 'global controller/languages_controller.dart';
 import 'pages/homepage.dart';
 
+import 'pages/transaction_type.dart';
 import 'screens/change_pin.dart';
 import 'screens/service_screen.dart';
 
@@ -147,183 +148,185 @@ class _BottomNavigationbarState extends State<BottomNavigationbar> {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: SizedBox(
-          height: 67,
-          child: BottomAppBar(
-            elevation: 7.0,
-            shape: CircularNotchedRectangle(),
-            notchMargin: 10,
-            color: Colors.white,
-            child: Obx(
-              () => Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      MaterialButton(
-                        minWidth: 40,
-                        onPressed: () {
-                          box.write("orderstatus", "");
-                          setState(() {
-                            historyController.initialpage = 1;
-                            currentPage = Homepage();
-                            orderlistController.finalList.clear();
-                            orderlistController.initialpage = 1;
+        bottomNavigationBar: SafeArea(
+          child: SizedBox(
+            height: 67,
+            child: BottomAppBar(
+              elevation: 7.0,
+              shape: CircularNotchedRectangle(),
+              notchMargin: 10,
+              color: Colors.white,
+              child: Obx(
+                () => Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        MaterialButton(
+                          minWidth: 40,
+                          onPressed: () {
+                            box.write("orderstatus", "");
+                            setState(() {
+                              historyController.initialpage = 1;
+                              currentPage = Homepage();
+                              orderlistController.finalList.clear();
+                              orderlistController.initialpage = 1;
 
-                            currentIndex = 0;
-                          });
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              "assets/icons/homeicon.png",
-                              height: 25,
-                              color: currentIndex == 0
-                                  ? AppColors.defaultColor
-                                  : Colors.black,
-                            ),
-                            Text(
-                              languagesController.tr("HOME"),
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: currentIndex == 0
-                                    ? FontWeight.w700
-                                    : FontWeight.w400,
+                              currentIndex = 0;
+                            });
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                "assets/icons/homeicon.png",
+                                height: 25,
+                                color: currentIndex == 0
+                                    ? AppColors.defaultColor
+                                    : Colors.black,
                               ),
-                            ),
-                          ],
+                              Text(
+                                languagesController.tr("HOME"),
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: currentIndex == 0
+                                      ? FontWeight.w700
+                                      : FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      MaterialButton(
-                        minWidth: 40,
-                        onPressed: () {
-                          categorisListController.nonsocialArray.clear();
-                          box.write("orderstatus", "");
-                          setState(() {
-                            historyController.initialpage = 1;
-                            historyController.finalList.clear();
+                        MaterialButton(
+                          minWidth: 40,
+                          onPressed: () {
+                            categorisListController.nonsocialArray.clear();
+                            box.write("orderstatus", "");
+                            setState(() {
+                              historyController.initialpage = 1;
+                              historyController.finalList.clear();
 
-                            currentPage = TransactionsPage();
-                            currentIndex = 1;
-                          });
-                          transactionController.fetchTransactionData();
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              "assets/icons/transactionsicon.png",
-                              height: 25,
-                              color: currentIndex == 1
-                                  ? AppColors.defaultColor
-                                  : Colors.black,
-                            ),
-                            Text(
-                              languagesController.tr("TRANSACTIONS"),
-                              style: TextStyle(
-                                fontSize: 10,
+                              currentPage = TransactionsType();
+                              currentIndex = 1;
+                            });
+                            transactionController.fetchTransactionData();
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                "assets/icons/transactionsicon.png",
+                                height: 25,
                                 color: currentIndex == 1
                                     ? AppColors.defaultColor
                                     : Colors.black,
-                                fontWeight: currentIndex == 1
-                                    ? FontWeight.w700
-                                    : FontWeight.w400,
                               ),
-                            ),
-                          ],
+                              Text(
+                                languagesController.tr("TRANSACTIONS"),
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: currentIndex == 1
+                                      ? AppColors.defaultColor
+                                      : Colors.black,
+                                  fontWeight: currentIndex == 1
+                                      ? FontWeight.w700
+                                      : FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      MaterialButton(
-                        minWidth: 40,
-                        onPressed: () {
-                          categorisListController.nonsocialArray.clear();
-                          box.write("orderstatus", "");
-                          orderlistController.finalList.clear();
-                          orderlistController.initialpage = 1;
-                          setState(() {
-                            historyController.finalList.clear();
-                            currentPage = OrderPage();
-                            currentIndex = 2;
-                          });
-                          orderlistController.fetchOrderlistdata();
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              "assets/icons/notificationicon.png",
-                              height: 25,
-                              color: currentIndex == 2
-                                  ? AppColors.defaultColor
-                                  : Colors.black,
-                            ),
-                            Text(
-                              languagesController.tr("ORDERS"),
-                              style: TextStyle(
-                                fontSize: 10,
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        MaterialButton(
+                          minWidth: 40,
+                          onPressed: () {
+                            categorisListController.nonsocialArray.clear();
+                            box.write("orderstatus", "");
+                            orderlistController.finalList.clear();
+                            orderlistController.initialpage = 1;
+                            setState(() {
+                              historyController.finalList.clear();
+                              currentPage = OrderPage();
+                              currentIndex = 2;
+                            });
+                            orderlistController.fetchOrderlistdata();
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                "assets/icons/notificationicon.png",
+                                height: 25,
                                 color: currentIndex == 2
                                     ? AppColors.defaultColor
                                     : Colors.black,
-                                fontWeight: currentIndex == 2
-                                    ? FontWeight.w700
-                                    : FontWeight.w400,
                               ),
-                            ),
-                          ],
+                              Text(
+                                languagesController.tr("ORDERS"),
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: currentIndex == 2
+                                      ? AppColors.defaultColor
+                                      : Colors.black,
+                                  fontWeight: currentIndex == 2
+                                      ? FontWeight.w700
+                                      : FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      MaterialButton(
-                        minWidth: 40,
-                        onPressed: () {
-                          categorisListController.nonsocialArray.clear();
-                          box.write("orderstatus", "");
-                          setState(() {
-                            currentPage = SubResellerScreen();
-                            currentIndex = 3;
-                            orderlistController.finalList.clear();
-                            orderlistController.initialpage = 1;
-                            historyController.finalList.clear();
-                            historyController.initialpage = 1;
+                        MaterialButton(
+                          minWidth: 40,
+                          onPressed: () {
+                            categorisListController.nonsocialArray.clear();
+                            box.write("orderstatus", "");
+                            setState(() {
+                              currentPage = SubResellerScreen();
+                              currentIndex = 3;
+                              orderlistController.finalList.clear();
+                              orderlistController.initialpage = 1;
+                              historyController.finalList.clear();
+                              historyController.initialpage = 1;
 
-                            // print(orderlistController.initialpage);
-                            // print(orderlistController.finalList.length);
-                          });
-                          subresellerController.fetchSubReseller();
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              "assets/icons/sub_reseller.png",
-                              height: 25,
-                              color: currentIndex == 3
-                                  ? AppColors.defaultColor
-                                  : Colors.black,
-                            ),
-                            Text(
-                              languagesController.tr("SUB_RESELLER"),
-                              style: TextStyle(
-                                fontSize: 10,
+                              // print(orderlistController.initialpage);
+                              // print(orderlistController.finalList.length);
+                            });
+                            subresellerController.fetchSubReseller();
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                "assets/icons/sub_reseller.png",
+                                height: 25,
                                 color: currentIndex == 3
                                     ? AppColors.defaultColor
                                     : Colors.black,
-                                fontWeight: currentIndex == 3
-                                    ? FontWeight.w700
-                                    : FontWeight.w400,
                               ),
-                            ),
-                          ],
+                              Text(
+                                languagesController.tr("SUB_RESELLER"),
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: currentIndex == 3
+                                      ? AppColors.defaultColor
+                                      : Colors.black,
+                                  fontWeight: currentIndex == 3
+                                      ? FontWeight.w700
+                                      : FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

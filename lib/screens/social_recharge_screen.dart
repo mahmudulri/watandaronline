@@ -201,8 +201,8 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                               //   FilteringTextInputFormatter.digitsOnly,
                               // ],
                               decoration: InputDecoration(
-                                hintText:
-                                    languagesController.tr("ENTER_YOUR_NUMBER"),
+                                hintText: languagesController
+                                    .tr("ENTER_NUMBER_OR_ID"),
                                 counterText: "",
                                 border: InputBorder.none,
                                 hintStyle: TextStyle(
@@ -221,7 +221,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                         //       .toString(),
                         // ),
                         SizedBox(
-                          height: 5,
+                          height: 10,
                         ),
                         Container(
                           height: 50,
@@ -491,7 +491,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                                                     .isEmpty) {
                                                   Fluttertoast.showToast(
                                                       msg: languagesController.tr(
-                                                          "ENTER_YOUR_NUMBER"),
+                                                          "ENTER_NUMBER_OR_ID"),
                                                       toastLength:
                                                           Toast.LENGTH_SHORT,
                                                       gravity:

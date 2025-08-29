@@ -27,7 +27,7 @@ class TransactionsPage extends StatelessWidget {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-        backgroundColor: Colors.white10,
+        // backgroundColor: Colors.white10,
         appBar: AppBar(
           elevation: 0.0,
           scrolledUnderElevation: 0.0,
@@ -51,9 +51,6 @@ class TransactionsPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Column(
               children: [
-                SizedBox(
-                  height: 10,
-                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [

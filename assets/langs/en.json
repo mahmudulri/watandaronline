@@ -268,5 +268,57 @@
 "SELECT_COUNTRY": "Select Country",
 "SELECT_PROVINCE": "Select Province",
 "SELECT_DISTRICT": "Select District",
-"SELLING_PRICE_2": "Selling Price"
+"SELLING_PRICE_2": "Selling Price",
+"TRANSACTIONS_TYPES": "Transaction Types",
+"PAYMENT_RECEIPT_REQUEST": "Payment Receipt Request",
+"REQUES_LOAN_BALANCE": "Request Loan Balance",
+"HAWALA": "Money Exchange",
+"HAWALA_RATES": "Money Exchange Rates",
+"BALANCE_TRANSACTIONS": "Balance Transactions",
+"TRANSFER_COMISSION_TO_BALANCE": "Transfer Commission to Balance",
+"ADD_NEW_RECEIPT": "Add New Receipt",
+"PAYMENT_METHOD": "Payment Method",
+"PERFORMED_BY": "Performed By",
+"NOTES": "Notes",
+"STATUS": "Status",
+"PAYMENT_DATE": "Payment Date",
+"TRACKING_CODE": "Tracking Code",
+"PAYMENT_TYPE": "Payment Type",
+"UPLOAD_IMAGES": "Upload Images",
+"IMAGE_ONE": "Image One",
+"IMAGE_TWO": "Image Two",
+"IMAGE_THREE": "Image Three",
+"ENTER_LOAN_AMOUNT": "Enter Loan Amount",
+"SUBMIT": "Submit",
+"ADD_NEW_REQUEST": "Add New Request",
+"TRANSACTION_TYPE": "Transaction Type",
+"REMAINING_BALANCE": "Remaining Balance",
+"COMPLETED": "Completed",
+"ROLLBACKED": "Rolled Back",
+"TRANSFER_COMISSION": "Transfer Commission",
+"CREATE_TRANSFER_REQUEST": "Create Transfer Request",
+"ENTER_NUMBER_OR_ID": "Enter Number or ID",
+"SET_PIN": "Set PIN",
+"SET_COMMISSION_GROUP": "Set Commission Group",
+"CONFIRM_PIN": "Confirm PIN",
+"CURRENT_PASSWORD": "Current Password",
+"CONFIRM_NEW_PASSWORD": "Confirm New Password",
+"OPTIONAL": "Optional",
+"UPLOAD_PHOTO": "Upload Photo",
+"ADD_FIRST_AND_LAST_NAME": "Add First and Last Name",
+"ENTER_PHONE_NUMBER": "Enter Phone Number",
+"ENTER_EMAIL_ADDRESS": "Enter Email Address",
+"COUNTRY_OF_RESIDENCE": "Country of Residence",
+"DESIRED_CURRENCY": "Desired Currency",
+"IDENTITY_ATTACHMENT": "Identity Attachment",
+"TAP_TO_UPLOAD_IDENTITY_IMAGE": "Tap to Upload Identity Image",
+"EXTRA_PROOF": "Extra Proof",
+"TAP_TO_UPLOAD_EXTRA_PROOF": "Tap to Upload Extra Proof"
+
+
+
+
+
+
+
 }

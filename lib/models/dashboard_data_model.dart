@@ -134,6 +134,7 @@ class UserInfo {
   final dynamic? status;
   final dynamic? balance;
   final dynamic? loanBalance;
+  final String? totalearning;
 
   UserInfo({
     this.id,
@@ -151,6 +152,7 @@ class UserInfo {
     this.status,
     this.balance,
     this.loanBalance,
+    this.totalearning,
   });
 
   factory UserInfo.fromJson(Map<String, dynamic> json) => UserInfo(
@@ -175,6 +177,9 @@ class UserInfo {
         status: json["status"] == null ? null : json["status"],
         balance: json["balance"] == null ? null : json["balance"],
         loanBalance: json["loan_balance"] == null ? null : json["loan_balance"],
+        totalearning: json["total_earning_balance"] == null
+            ? null
+            : json["total_earning_balance"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -193,5 +198,6 @@ class UserInfo {
         "status": status,
         "balance": balance,
         "loan_balance": loanBalance,
+        "total_earning_balance": totalearning,
       };
 }

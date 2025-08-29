@@ -33,4 +33,9 @@ class OtherendPoints {
   final String createselling = "reseller-customer-pricing";
   final String hawalacurrency = "hawala-currency";
   final String helparticle = "help-articles";
+  final String paymentmethod = "payment-methods";
+  final String paymenttypes = "payment-types";
+  final String loanbalance = "reseller-balances";
+  final String earningtransfer = "earning-transfer";
+  final String companies = "companies";
 }

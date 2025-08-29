@@ -60,12 +60,14 @@ class Currency {
   final String? name;
   final String? code;
   final String? symbol;
+  final String? exchangeRatePerUsd;
 
   Currency({
     this.id,
     this.name,
     this.code,
     this.symbol,
+    this.exchangeRatePerUsd,
   });
 
   factory Currency.fromJson(Map<String, dynamic> json) => Currency(
@@ -73,6 +75,7 @@ class Currency {
         name: json["name"] == null ? null : json["name"],
         code: json["code"] == null ? null : json["code"],
         symbol: json["symbol"] == null ? null : json["symbol"],
+        exchangeRatePerUsd: json["exchange_rate_per_usd"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -80,5 +83,6 @@ class Currency {
         "name": name,
         "code": code,
         "symbol": symbol,
+        "exchange_rate_per_usd": exchangeRatePerUsd,
       };
 }

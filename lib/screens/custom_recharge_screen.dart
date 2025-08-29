@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
+import 'package:watandaronline/controllers/company_controller.dart';
 import 'package:watandaronline/controllers/country_list_controller.dart';
 import 'package:watandaronline/controllers/custom_history_controller.dart';
 import 'package:watandaronline/controllers/custom_recharge_controller.dart';
@@ -17,6 +18,8 @@ import 'package:watandaronline/screens/order_details_screen.dart';
 import 'package:watandaronline/utils/colors.dart';
 import 'package:watandaronline/widgets/default_button.dart';
 
+import '../controllers/conversation_controller.dart';
+import '../controllers/currency_controller_new.dart';
 import '../global controller/languages_controller.dart';
 import 'neworderdetails_screen.dart';
 
@@ -38,6 +41,9 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
   // final historyController = Get.find<HistoryController>();
   final customhistoryController = Get.find<CustomHistoryController>();
   final ScrollController scrollController = ScrollController();
+
+  ConversationController conversationController =
+      Get.put(ConversationController());
 
   int selectedIndex = 0;
   final box = GetStorage();
@@ -72,9 +78,12 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
     }
   }
 
+  CompanyController companyController = Get.put(CompanyController());
+
   @override
   void initState() {
     super.initState();
+
     customhistoryController.finalList.clear();
     customhistoryController.initialpage = 1;
     // historyController.fetchHistory();
@@ -82,6 +91,10 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
     customhistoryController.fetchHistory();
 
     scrollController.addListener(refresh);
+    customrechargeController.numberController.addListener(() {
+      final text = customrechargeController.numberController.text;
+      companyController.matchCompanyByPhoneNumber(text);
+    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {});
   }
@@ -125,107 +138,8 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
           child: Column(
             children: [
-              Obx(
-                () => countryListController.isLoading.value == false
-                    ? Container(
-                        height: 40,
-                        width: screenWidth,
-                        // color: Colors.grey,
-                        child: ListView.separated(
-                          separatorBuilder: (context, index) {
-                            return SizedBox(
-                              width: 10,
-                            );
-                          },
-                          scrollDirection: Axis.horizontal,
-                          itemCount: countryListController
-                              .allcountryListData.value.data!.countries.length,
-                          itemBuilder: (context, index) {
-                            final data = countryListController
-                                .allcountryListData
-                                .value
-                                .data!
-                                .countries[index];
-                            bool isSelected = index == selectedIndex;
-                            return GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  selectedIndex = index;
-
-                                  box.write("country_id", data.id);
-                                  print(box.read("country_id"));
-                                  box.write("maxlength",
-                                      data.phoneNumberLength.toString());
-                                  print(box.read("maxlength"));
-                                  // numberlength =
-                                  //     data.phoneNumberLength.toString();
-
-                                  if (index == 0) {
-                                    operatorController.currentOperators =
-                                        operatorController.afganoperator;
-                                  } else if (index == 1) {
-                                    operatorController.currentOperators =
-                                        operatorController.banglaoperator;
-                                  } else {
-                                    operatorController.currentOperators =
-                                        operatorController.turkeyoperator;
-                                  }
-                                });
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: isSelected
-                                      ? AppColors.defaultColor
-                                      : Colors.grey.shade100,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 5),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        height: 30,
-                                        width: 30,
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: NetworkImage(
-                                              data.countryFlagImageUrl
-                                                  .toString(),
-                                            ),
-                                          ),
-                                          shape: BoxShape.circle,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
-                                      Text(
-                                        data.countryName.toString(),
-                                        style: TextStyle(
-                                          color: isSelected
-                                              ? Colors.white
-                                              : Colors.black,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      )
-                    : SizedBox(),
-              ),
-              SizedBox(
-                height: 25,
-              ),
               Container(
-                height: 220,
+                height: 260,
                 width: screenWidth,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -277,6 +191,33 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                                   ),
                                 ),
                               ),
+                              Obx(() {
+                                final company =
+                                    companyController.matchedCompany.value;
+                                return Container(
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: company == null
+                                        ? Colors.transparent
+                                        : null,
+                                    image: company != null
+                                        ? DecorationImage(
+                                            image: NetworkImage(
+                                                company.companyLogo ?? ''),
+                                            fit: BoxFit.contain,
+                                          )
+                                        : null,
+                                  ),
+                                  child: company == null
+                                      ? Center(
+                                          child: Icon(
+                                          Icons.image_not_supported,
+                                          color: Colors.transparent,
+                                        ))
+                                      : null,
+                                );
+                              }),
                             ],
                           ),
                         ),
@@ -309,6 +250,10 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                               ),
                               Expanded(
                                 child: TextField(
+                                  onChanged: (value) {
+                                    conversationController.inputAmount.value =
+                                        double.tryParse(value) ?? 0.0;
+                                  },
                                   controller:
                                       customrechargeController.amountController,
                                   keyboardType: TextInputType.number,
@@ -330,7 +275,52 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 30,
+                        height: 8,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        height: 50,
+                        child: Obx(() {
+                          final convertedList =
+                              conversationController.getConvertedValues();
+
+                          if (convertedList.isEmpty) {
+                            return Center(child: Text("dd"));
+                          }
+
+                          final item =
+                              convertedList.first; // only show the first item
+
+                          return Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Container(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    "${item['symbol']} :",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  Text(
+                                    item['value'].toStringAsFixed(2),
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }),
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       DefaultButton(
                         buttonName: languagesController.tr("RECHARGE_NOW"),
