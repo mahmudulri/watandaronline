@@ -29,9 +29,13 @@ void main() async {
     EasyLocalization(
       supportedLocales: [
         Locale('en', 'US'),
+        Locale('fa', 'IR'),
         Locale('ar', 'AE'),
+        Locale('ps', 'AF'),
+        Locale('tr', 'TR'),
+        Locale('bn', 'BD'),
       ],
-      path: 'assets/translations',
+      path: 'assets/langs',
       fallbackLocale: Locale('en', 'US'),
       child: MyApp(),
     ),

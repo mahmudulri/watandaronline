@@ -106,38 +106,6 @@ class MyprofileScreen extends StatelessWidget {
                       ),
                     ),
               SizedBox(
-                height: 5,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Get.toNamed(changepinscreen);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.defaultColor,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Center(
-                        child: Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                          child: Text(
-                            languagesController.tr("CHANGE_PIN"),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
                 height: 10,
               ),
               MyProfileboxwidget(

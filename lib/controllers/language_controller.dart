@@ -3,7 +3,7 @@ import 'package:watandaronline/models/bundle_model.dart';
 import 'package:watandaronline/models/language_model.dart';
 import 'package:watandaronline/services/language_service.dart';
 
-class LanguageController extends GetxController {
+class DLanguageController extends GetxController {
   @override
   void onInit() {
     // fetchlanData();

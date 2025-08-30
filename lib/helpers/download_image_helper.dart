@@ -7,7 +7,9 @@ import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:watandaronline/controllers/language_controller.dart';
 
-final LanguageController languageController = Get.put(LanguageController());
+import '../global controller/languages_controller.dart';
+
+final LanguagesController languageController = Get.put(LanguagesController());
 
 Future<void> downloadImage(String imageUrl) async {
   try {
@@ -26,11 +28,8 @@ Future<void> downloadImage(String imageUrl) async {
 
         // Show success message
         Get.snackbar(
-          languageController.alllanguageData.value.languageData!["SUCCESS"]
-              .toString(),
-          languageController
-              .alllanguageData.value.languageData!["SAVED_IMAGE_TO_GALLERY"]
-              .toString(),
+          languageController.tr("SUCCESS"),
+          languageController.tr("SAVED_IMAGE_TO_GALLERY"),
         );
       } else {
         Get.snackbar("Error", "Failed to download image: Server error");

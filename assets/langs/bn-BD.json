@@ -312,7 +312,30 @@
 "IDENTITY_ATTACHMENT": "পরিচয় সংযুক্তি",
 "TAP_TO_UPLOAD_IDENTITY_IMAGE": "পরিচয়পত্রের ছবি আপলোড করতে ট্যাপ করুন",
 "EXTRA_PROOF": "অতিরিক্ত প্রমাণ",
-"TAP_TO_UPLOAD_EXTRA_PROOF": "অতিরিক্ত প্রমাণ আপলোড করতে ট্যাপ করুন"
+"TAP_TO_UPLOAD_EXTRA_PROOF": "অতিরিক্ত প্রমাণ আপলোড করতে ট্যাপ করুন",
+"ENTER_YOUR_FULL_NAME": "আপনার পুরো নাম লিখুন",
+"ENTER_CONTACT_NAME": "কন্টাক্ট নাম লিখুন",
+"INVALID_INPUT": "অবৈধ ইনপুট",
+"SIGN_IN": "সাইন ইন",
+"ALREADY_REGISTERED": "ইতিমধ্যেই নিবন্ধিত",
+"PLEASE_ENTER_FULL_NAME": "অনুগ্রহ করে পুরো নাম লিখুন",
+"PLEASE_ENTER_CONTACT_NAME": "অনুগ্রহ করে কন্টাক্ট নাম লিখুন",
+"PLEASE_ENTER_PHONE_NUMBER": "অনুগ্রহ করে ফোন নম্বর লিখুন",
+"PLEASE_SELECT_COUNTRY": "অনুগ্রহ করে দেশ নির্বাচন করুন",
+"PLEASE_SELECT_PROFILE_PHOTO": "অনুগ্রহ করে প্রোফাইল ছবি নির্বাচন করুন",
+"PLEASE_SELECT_CURRENCY": "অনুগ্রহ করে মুদ্রা নির্বাচন করুন",
+"PLEASE_SELECT_PASSWORD": "অনুগ্রহ করে পাসওয়ার্ড লিখুন",
+"PLEASE_CONFIRM_THE_PASSWORD": "অনুগ্রহ করে পাসওয়ার্ড নিশ্চিত করুন",
+"PASSWORD_DO_NOT_MATCH": "পাসওয়ার্ড মিলছে না",
+"PLEASE_FILL_BOTH_PIN_AND_CONFIRM_PIN": "দয়া করে পিন এবং নিশ্চিত পিন উভয় পূরণ করুন",
+"PLEASE_ENTER_A_VALID_EMAIL": "দয়া করে একটি বৈধ ইমেইল লিখুন",
+"PIN_AND_CONFIRM_PIN_DO_NOT_MATCH": "পিন এবং নিশ্চিত পিন মিলছে না",
+"REGISTRATION_SUCCESSFULL": "নিবন্ধন সফল হয়েছে",
+"WRONG": "ভুল",
+"SOMETHING_ERROR": "কিছু একটা ভুল হয়েছে",
+"FAIL": "ব্যর্থতা",
+"ENTER_ID_OR_NUMBER": "আইডি অথবা নাম্বার লিখুন",
+"SIGN_UP_TITLE": "চালিয়ে যেতে নিচের বিবরণগুলি লিখুন"
 
 
 

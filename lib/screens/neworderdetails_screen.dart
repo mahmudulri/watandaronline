@@ -171,7 +171,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                                 widget.status.toString() == "0"
                                     ? languagesController.tr("PENDING")
                                     : widget.status.toString() == "1"
-                                        ? languagesController.tr("CONFIRMED")
+                                        ? languagesController.tr("SUCCESS")
                                         : languagesController.tr("REJECTED"),
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,

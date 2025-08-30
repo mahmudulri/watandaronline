@@ -55,7 +55,7 @@ class _OrderPageState extends State<OrderPage> {
         "value": "order_status=0",
       },
       {
-        "title": languagesController.tr("CONFIRMED"),
+        "title": languagesController.tr("SUCCESS"),
         "value": "order_status=1",
       },
       {
@@ -231,12 +231,16 @@ class _OrderPageState extends State<OrderPage> {
                           children: [
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.only(left: 15),
+                                padding:
+                                    const EdgeInsets.only(left: 15, right: 15),
                                 child: TextField(
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      search = value.toString();
-                                    });
+                                  onChanged: (value) {
+                                    orderlistController.finalList.clear();
+                                    orderlistController.initialpage = 1;
+                                    box.write(
+                                        "search_target", value.toString());
+                                    orderlistController.fetchOrderlistdata();
+                                    print(value.toString());
                                   },
                                   controller: searchController,
                                   keyboardType: TextInputType.phone,
@@ -734,7 +738,7 @@ class _OrderPageState extends State<OrderPage> {
                                                                               .toString() ==
                                                                           "1"
                                                                       ? languagesController.tr(
-                                                                          "CONFIRMED")
+                                                                          "SUCCESS")
                                                                       : languagesController
                                                                           .tr("REJECTED"),
                                                               style: TextStyle(
@@ -1181,7 +1185,7 @@ class _OrderPageState extends State<OrderPage> {
                                                                       : data.status.toString() ==
                                                                               "1"
                                                                           ? languagesController.tr(
-                                                                              "CONFIRMED")
+                                                                              "SUCCESS")
                                                                           : languagesController
                                                                               .tr("REJECTED"),
                                                                   style:

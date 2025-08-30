@@ -101,12 +101,12 @@ flutter:
     - assets/icons/
     - assets/translations/
     - assets/loties/
-    - assets/langs/en.json
-    - assets/langs/bn.json
-    - assets/langs/fa.json
-    - assets/langs/ar.json
-    - assets/langs/ps.json
-    - assets/langs/tr.json
+    - assets/langs/en-US.json
+    - assets/langs/bn-BD.json
+    - assets/langs/fa-IR.json
+    - assets/langs/ar-AE.json
+    - assets/langs/ps-AF.json
+    - assets/langs/tr-TR.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

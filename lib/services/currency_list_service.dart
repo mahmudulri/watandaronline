@@ -10,8 +10,8 @@ import '../utils/api_endpoints.dart';
 class CurrencyApi {
   final box = GetStorage();
   Future<CurrencyModel> fetchCurrency() async {
-    final url =
-        Uri.parse(ApiEndPoints.baseUrl + ApiEndPoints.otherendpoints.currency);
+    final url = Uri.parse(
+        "https://api-vpro-hetz-25.watandaronline.com/api/public/currencies");
 
     var response = await http.get(
       url,

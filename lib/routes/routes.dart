@@ -128,10 +128,10 @@ List<GetPage> myroutes = [
     page: () => MyprofileScreen(),
     binding: MyProfileBinding(),
   ),
-  GetPage(
-    name: orderdetailsscreen,
-    page: () => OrderDetailsScreen(),
-  ),
+  // GetPage(
+  //   name: orderdetailsscreen,
+  //   page: () => OrderDetailsScreen(),
+  // ),
   GetPage(
     name: rechargescreen,
     page: () => RechargeScreen(),

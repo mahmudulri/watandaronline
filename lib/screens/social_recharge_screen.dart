@@ -202,7 +202,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                               // ],
                               decoration: InputDecoration(
                                 hintText: languagesController
-                                    .tr("ENTER_NUMBER_OR_ID"),
+                                    .tr("ENTER_ID_OR_NUMBER"),
                                 counterText: "",
                                 border: InputBorder.none,
                                 hintStyle: TextStyle(

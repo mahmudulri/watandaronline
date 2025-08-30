@@ -8,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:watandaronline/controllers/currency_controller_new.dart';
 import 'package:watandaronline/utils/colors.dart';
 import 'package:watandaronline/widgets/default_button.dart';
 import 'package:watandaronline/widgets/social_button.dart';
@@ -17,6 +18,7 @@ import '../controllers/district_controller.dart';
 import '../controllers/province_controller.dart';
 import '../controllers/sign_up_controller.dart';
 import '../global controller/languages_controller.dart';
+import '../models/currency_model.dart';
 import '../widgets/auth_textfield.dart';
 import '../widgets/custom_text.dart';
 
@@ -34,15 +36,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final ProvinceController provinceController = Get.put(ProvinceController());
 
   final DistrictController districtController = Get.put(DistrictController());
+  final CurrencyController currencyController = Get.put(CurrencyController());
 
   SignUpController signUpController = Get.put(SignUpController());
-  String selected_comissiongroup = "Select Comission Group";
 
-  String selected_country = "Select Country";
+  String selected_country = "";
 
-  String selected_province = "Select Province";
+  String selected_province = "";
 
-  String selected_district = "Select District";
+  String selected_district = "";
+
+  String selected_currency = "";
   final box = GetStorage();
 
   File? _selectedImage;
@@ -55,6 +59,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
         _selectedImage = signUpController.imageFile;
       });
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    countryListController.fetchCountryData();
+    districtController.fetchDistrict();
+    provinceController.fetchProvince();
+    currencyController.fetchCurrency();
   }
 
   @override
@@ -75,6 +88,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   flex: 10,
                   child: Container(
                     child: ListView(
+                      physics: BouncingScrollPhysics(),
                       children: [
                         SizedBox(
                           height: 10,
@@ -83,7 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Sign Up",
+                              languagesController.tr("SIGN_UP"),
                               style: GoogleFonts.rubik(
                                 color: AppColors.defaultColor,
                                 fontSize: 25,
@@ -99,7 +113,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Please enter the details bellow to continue",
+                              languagesController.tr("SIGN_UP_TITLE"),
                               style: GoogleFonts.rubik(
                                 color: Color(0xff3C3C3C),
                               ),
@@ -112,16 +126,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Text(
                           languagesController.tr("FULL_NAME"),
                           style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                         SizedBox(
                           height: 5,
                         ),
-                        AuthTextField(),
+                        AuthTextField(
+                          hintText:
+                              languagesController.tr("ENTER_YOUR_FULL_NAME"),
+                          controller: signUpController.resellerNameController,
+                        ),
                         SizedBox(
-                          height: 8,
+                          height: 10,
                         ),
                         Text(
                           languagesController.tr("CONTACT_NAME"),
@@ -133,9 +151,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         SizedBox(
                           height: 5,
                         ),
-                        AuthTextField(),
+                        AuthTextField(
+                          hintText:
+                              languagesController.tr("ENTER_CONTACT_NAME"),
+                          controller: signUpController.contactNameController,
+                        ),
                         SizedBox(
-                          height: 5,
+                          height: 10,
                         ),
                         Text(
                           languagesController.tr("PHONE_NUMBER"),
@@ -147,9 +169,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         SizedBox(
                           height: 5,
                         ),
-                        AuthTextField(),
+                        AuthTextField(
+                          hintText:
+                              languagesController.tr("ENTER_PHONE_NUMBER"),
+                          controller: signUpController.phoneController,
+                        ),
                         SizedBox(
-                          height: 5,
+                          height: 10,
                         ),
                         Row(
                           children: [
@@ -167,7 +193,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               "(${languagesController.tr("OPTIONAL")})",
                               style: TextStyle(
                                 fontSize: 15,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
                           ],
@@ -176,20 +202,169 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           height: 5,
                         ),
                         AuthTextField(
-                          hintText: "Email address",
+                          hintText: languagesController.tr("EMAIL_ADDRESS"),
+                          controller: signUpController.emailController,
                         ),
                         SizedBox(
-                          height: 5,
+                          height: 10,
                         ),
                         Text(
-                          languagesController.tr("COUNTRY_OF_RESIDENCE"),
+                          languagesController.tr("CURRENCY"),
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                         SizedBox(
-                          height: 7,
+                          height: 5,
+                        ),
+                        // --- Currency Select (stores ID; shows symbol; fully null-safe & strongly typed) ---
+                        Container(
+                          height: 50,
+                          width: screenWidth,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                width: 1, color: Colors.grey.shade300),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            child: Obx(() {
+                              // 1) Strongly type as List<Currency>
+                              final List<Currency> currencies =
+                                  currencyController
+                                          .allcurrency.value.data?.currencies ??
+                                      <Currency>[];
+
+                              // (Optional) filter out items without an ID to avoid invalid dropdown values
+                              final List<Currency> usable = currencies
+                                  .where((c) => c.id != null)
+                                  .toList();
+
+                              return DropdownButtonFormField<String>(
+                                isExpanded: true,
+                                alignment:
+                                    box.read("language").toString() != "Fa"
+                                        ? Alignment.centerLeft
+                                        : Alignment.centerRight,
+
+                                // 2) value comes from controller (ID as string)
+                                value: signUpController.currencyId.value.isEmpty
+                                    ? null
+                                    : signUpController.currencyId.value,
+
+                                // 3) Force the lambda parameter type to Currency so it's never Object
+                                items: usable.map<DropdownMenuItem<String>>(
+                                    (Currency c) {
+                                  final String idStr = (c.id ?? 0).toString();
+                                  final String symbol =
+                                      (c.symbol ?? '').trim(); // null-safe
+                                  final String code =
+                                      (c.code ?? '').trim(); // null-safe
+                                  final String label =
+                                      symbol.isNotEmpty ? symbol : code;
+
+                                  return DropdownMenuItem<String>(
+                                    value: idStr,
+                                    child: Text(
+                                      label,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: (screenHeight * 0.020),
+                                        color: Colors.grey.shade600,
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+
+                                // 4) Also force Currency here to avoid Object
+                                selectedItemBuilder: (context) {
+                                  return usable.map<Widget>((Currency c) {
+                                    final String symbol =
+                                        (c.symbol ?? '').trim();
+                                    final String code = (c.code ?? '').trim();
+                                    final String label =
+                                        symbol.isNotEmpty ? symbol : code;
+
+                                    return Align(
+                                      alignment:
+                                          box.read("language").toString() !=
+                                                  "Fa"
+                                              ? Alignment.centerLeft
+                                              : Alignment.centerRight,
+                                      child: Text(
+                                        label,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: (screenHeight * 0.020),
+                                          color: Colors.grey.shade600,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList();
+                                },
+
+                                onChanged: (String? value) {
+                                  if (value == null) return;
+                                  // store currency ID (string), like province/district
+                                  signUpController.currencyId.value = value;
+                                },
+
+                                hint: Text(
+                                  "",
+                                  style: TextStyle(
+                                    fontSize: (screenHeight * 0.020),
+                                    color: Colors.grey.shade600,
+                                  ),
+                                ),
+
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.zero,
+                                ),
+
+                                icon: CircleAvatar(
+                                  backgroundColor:
+                                      AppColors.defaultColor.withOpacity(0.7),
+                                  radius: 18,
+                                  child: const Icon(
+                                    FontAwesomeIcons.chevronDown,
+                                    color: Colors.white,
+                                    size: 17,
+                                  ),
+                                ),
+                              );
+                            }),
+                          ),
+                        ),
+
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              languagesController.tr("COUNTRY_OF_RESIDENCE"),
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "(${languagesController.tr("OPTIONAL")})",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
                         ),
                         Container(
                           height: 50,
@@ -336,17 +511,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 8,
+                          height: 10,
                         ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          languagesController.tr("PROVINCE"),
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                          ),
+
+                        Row(
+                          children: [
+                            Text(
+                              languagesController.tr("PROVINCE"),
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "(${languagesController.tr("OPTIONAL")})",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 5,
@@ -460,14 +647,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 5,
+                          height: 10,
                         ),
-                        Text(
-                          languagesController.tr("DISTRICT"),
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              languagesController.tr("DISTRICT"),
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "(${languagesController.tr("OPTIONAL")})",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 5,
@@ -583,7 +784,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 12,
+                          height: 10,
                         ),
                         Obx(
                           () => Center(
@@ -640,6 +841,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                         // -------------------- Identity Attachment (Optional) --------------------
+                        SizedBox(
+                          height: 20,
+                        ),
                         Row(
                           children: [
                             KText(
@@ -652,13 +856,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             Text(
                               "(${languagesController.tr("OPTIONAL")})",
                               style: TextStyle(
-                                color: Colors.grey.shade600,
-                                fontSize: screenHeight * 0.015,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 6),
+                        SizedBox(height: 10),
                         Obx(
                           () {
                             final hasImage = signUpController
@@ -755,13 +959,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             Text(
                               "(${languagesController.tr("OPTIONAL")})",
                               style: TextStyle(
-                                color: Colors.grey.shade600,
-                                fontSize: screenHeight * 0.015,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 6),
+                        SizedBox(height: 10),
                         Obx(
                           () {
                             final hasImage = signUpController
@@ -844,17 +1048,158 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             );
                           },
                         ),
+
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              languagesController.tr("ENTER_YOUR_PIN"),
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "(${languagesController.tr("OPTIONAL")})",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        AuthTextField(
+                          hintText: languagesController.tr("NEW_PIN"),
+                          controller: signUpController.pinController,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              languagesController.tr("CONFIRM_PIN"),
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "(${languagesController.tr("OPTIONAL")})",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        AuthTextField(
+                          hintText: languagesController.tr("CONFIRM_PIN"),
+                          controller: signUpController.confirmPinController,
+                        ),
+
+                        SizedBox(height: 10),
+                        Text(
+                          languagesController.tr("PASSWORD"),
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                         SizedBox(height: 10),
 
                         AuthTextField(
-                          hintText: "Password",
+                          hintText: languagesController.tr("PASSWORD"),
+                          controller: signUpController.passwordController,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          languagesController.tr("CONFIRM_PASSWORD"),
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+
+                        AuthTextField(
+                          hintText: languagesController.tr("CONFIRM_PASSWORD"),
+                          controller: signUpController.confirmPassController,
                         ),
                         SizedBox(
                           height: 20,
                         ),
-                        DefaultButton(
-                          buttonName: "Sign Up",
-                        ),
+                        Obx(() => DefaultButton(
+                              buttonName: signUpController.isLoading.value
+                                  ? languagesController.tr("PLEASE_WAIT")
+                                  : languagesController.tr("SIGN_UP"),
+                              onPressed: () async {
+                                if (signUpController.isLoading.value) return;
+
+                                final err = signUpController.validateInputs();
+                                if (err != null) {
+                                  Get.snackbar(
+                                    languagesController.tr("INVALID_INPUT"),
+                                    err,
+                                    backgroundColor: Colors.red,
+                                    colorText: Colors.white,
+                                  );
+                                  return;
+                                }
+
+                                await signUpController.registernow();
+
+                                // If you keep local UI vars in the widget (e.g., selected_country/province/district),
+                                // also clear them here after success:
+                                // setState(() {
+                                //   selected_country = '';
+                                //   selected_province = '';
+                                //   selected_district = '';
+                                //   selected_currency = '';
+                                // });
+                              },
+                            )),
+
+                        // DefaultButton(
+                        //   buttonName: "Sign Up",
+                        //   onPressed: () {
+                        //     print(signUpController.provinceId.toString());
+                        //     print(signUpController.districtID.toString());
+                        //     print(signUpController.currencyId.toString());
+                        //     print(
+                        //         signUpController.selectedImagePath.toString());
+                        //     print(signUpController.selectedIdentityPath
+                        //         .toString());
+                        //     print(signUpController.selectedExtraProofPath
+                        //         .toString());
+                        //     print(signUpController.resellerNameController.text
+                        //         .toString());
+                        //     print(signUpController.contactNameController.text
+                        //         .toString());
+                        //     print(signUpController.emailController.text
+                        //         .toString());
+                        //     print(signUpController.phoneController.text
+                        //         .toString());
+                        //     print(
+                        //         signUpController.pinController.text.toString());
+                        //     print(signUpController.confirmPinController.text
+                        //         .toString());
+                        //     print(signUpController.passwordController.text
+                        //         .toString());
+                        //     print(signUpController.confirmPassController.text
+                        //         .toString());
+                        //   },
+                        // ),
                         SizedBox(
                           height: 10,
                         ),
@@ -869,7 +1214,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Already have an account ?",
+                          languagesController.tr("ALREADY_REGISTERED"),
                           style: TextStyle(
                             color: Color(0xffA3A3A3),
                             fontSize: 18,
@@ -883,7 +1228,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             Get.back();
                           },
                           child: Text(
-                            "Sign In",
+                            languagesController.tr("SIGN_IN"),
                             style: TextStyle(
                               color: AppColors.defaultColor,
                               fontSize: 18,

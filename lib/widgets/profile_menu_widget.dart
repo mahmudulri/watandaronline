@@ -18,7 +18,7 @@ class ProfileMenuWidget extends StatelessWidget {
         height: 42,
         width: screenWidth,
         decoration: BoxDecoration(
-          color: AppColors.socialButtonColor,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
@@ -27,25 +27,20 @@ class ProfileMenuWidget extends StatelessWidget {
             children: [
               Image.asset(
                 imageLink.toString(),
-                height: 24,
-                color: Colors.black,
+                height: 26,
+                color: AppColors.defaultColor,
               ),
               SizedBox(
-                width: 20,
+                width: 10,
               ),
               Text(
                 itemName.toString(),
                 style: TextStyle(
-                  fontSize: 15,
+                  fontSize: 16,
                   fontWeight: FontWeight.w400,
-                  color: AppColors.borderColor,
+                  color: Colors.black,
                 ),
               ),
-              // Spacer(),
-              // Icon(
-              //   Icons.arrow_forward_ios,
-              //   color: AppColors.borderColor,
-              // ),
             ],
           ),
         ),

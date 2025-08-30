@@ -24,6 +24,8 @@ import 'package:watandaronline/helpers/share_image_helper.dart';
 import 'package:watandaronline/pages/orders.dart';
 import 'package:watandaronline/utils/colors.dart';
 
+import '../global controller/languages_controller.dart';
+
 class CustomOrderDetails extends StatefulWidget {
   CustomOrderDetails({
     super.key,
@@ -67,7 +69,7 @@ class _CustomOrderDetailsState extends State<CustomOrderDetails> {
 
   final TimeZoneController timeZoneController = Get.put(TimeZoneController());
 
-  final LanguageController languageController = Get.put(LanguageController());
+  final LanguagesController languageController = Get.put(LanguagesController());
 
   final box = GetStorage();
 
@@ -179,15 +181,14 @@ class _CustomOrderDetailsState extends State<CustomOrderDetails> {
                                           // ),
                                           Text(
                                             widget.status.toString() == "0"
-                                                ? getText("PENDING",
-                                                    defaultValue: "Pending")
+                                                ? languageController
+                                                    .tr("PENDING")
                                                 : widget.status.toString() ==
                                                         "1"
-                                                    ? getText("SUCCESS",
-                                                        defaultValue: "Success")
-                                                    : getText("FAIL",
-                                                        defaultValue:
-                                                            "Rejected"),
+                                                    ? languageController
+                                                        .tr("SUCCESS")
+                                                    : languageController
+                                                        .tr("FAIL"),
                                             style: GoogleFonts.aBeeZee(
                                               fontWeight: FontWeight.w600,
                                               color: Colors.black,
@@ -309,11 +310,7 @@ class _CustomOrderDetailsState extends State<CustomOrderDetails> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          languageController
-                                              .alllanguageData
-                                              .value
-                                              .languageData!["NETWORK_TYPE"]
-                                              .toString(),
+                                          languageController.tr("NETWORK_TYPE"),
                                           style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black,
@@ -334,11 +331,7 @@ class _CustomOrderDetailsState extends State<CustomOrderDetails> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          languageController
-                                              .alllanguageData
-                                              .value
-                                              .languageData!["PHONE_NUMBER"]
-                                              .toString(),
+                                          languageController.tr("PHONE_NUMBER"),
                                           style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black,
@@ -369,8 +362,8 @@ class _CustomOrderDetailsState extends State<CustomOrderDetails> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              getText("BUYING_PRICE",
-                                                  defaultValue: "Buying Price"),
+                                              languageController
+                                                  .tr("BUYING_PRICE"),
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 color: Colors.black,
@@ -413,9 +406,8 @@ class _CustomOrderDetailsState extends State<CustomOrderDetails> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              getText("SELLING_PRICE",
-                                                  defaultValue:
-                                                      "Selling Price"),
+                                              languageController
+                                                  .tr("SELLING_PRICE"),
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 color: Colors.black,
@@ -470,8 +462,7 @@ class _CustomOrderDetailsState extends State<CustomOrderDetails> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          getText("AMOUNT",
-                                              defaultValue: "Amount"),
+                                          languageController.tr("AMOUNT"),
                                           style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black,
@@ -492,9 +483,7 @@ class _CustomOrderDetailsState extends State<CustomOrderDetails> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          languageController.alllanguageData
-                                              .value.languageData!["ORDER_ID"]
-                                              .toString(),
+                                          languageController.tr("ORDER_ID"),
                                           style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black,
@@ -542,7 +531,7 @@ class _CustomOrderDetailsState extends State<CustomOrderDetails> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  getText("DATE", defaultValue: "Date"),
+                                  languageController.tr("DATE"),
                                   style: TextStyle(
                                     fontWeight: FontWeight.w800,
                                     fontSize: 12,
@@ -593,7 +582,9 @@ class _CustomOrderDetailsState extends State<CustomOrderDetails> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text("Selling Price"),
+                Text(
+                  languageController.tr("SELLING_PRICE"),
+                ),
                 GestureDetector(
                   onTap: () {
                     setState(() {
@@ -607,7 +598,9 @@ class _CustomOrderDetailsState extends State<CustomOrderDetails> {
                 SizedBox(
                   width: 10,
                 ),
-                Text("Buying Price"),
+                Text(
+                  languageController.tr("BUYING_PRICE"),
+                ),
                 GestureDetector(
                   onTap: () {
                     setState(() {
@@ -653,7 +646,7 @@ class _CustomOrderDetailsState extends State<CustomOrderDetails> {
                               ),
                               child: Center(
                                 child: Text(
-                                  getText("SHARE", defaultValue: "Share"),
+                                  languageController.tr("SHARE"),
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.white,
@@ -691,8 +684,7 @@ class _CustomOrderDetailsState extends State<CustomOrderDetails> {
                               ),
                               child: Center(
                                 child: Text(
-                                  getText("SAVE_AS_IMAGE",
-                                      defaultValue: "Save as image"),
+                                  languageController.tr("SAVE_AS_IMAGE"),
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.white,
@@ -730,7 +722,7 @@ class _CustomOrderDetailsState extends State<CustomOrderDetails> {
                               ),
                               child: Center(
                                 child: Text(
-                                  getText("CLOSE", defaultValue: "Close"),
+                                  languageController.tr("CLOSE"),
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.white,

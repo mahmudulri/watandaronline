@@ -11,8 +11,8 @@ import '../utils/api_endpoints.dart';
 class DistrictApi {
   final box = GetStorage();
   Future<DistrictModel> fetchDistrict() async {
-    final url =
-        Uri.parse(ApiEndPoints.baseUrl + ApiEndPoints.otherendpoints.district);
+    final url = Uri.parse(
+        "https://api-vpro-hetz-25.watandaronline.com/api/public/districts");
 
     var response = await http.get(
       url,

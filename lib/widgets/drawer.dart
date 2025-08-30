@@ -164,18 +164,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           Get.toNamed(myprofilescreen);
                         },
                       ),
-                      SizedBox(
-                        height: 5,
-                      ),
                       ProfileMenuWidget(
                         itemName: languagesController.tr("SET_SALE_PRICE"),
                         imageLink: "assets/icons/set_sell_price.png",
                         onPressed: () {
                           Get.toNamed(sellingpricescreen);
                         },
-                      ),
-                      SizedBox(
-                        height: 5,
                       ),
                       ProfileMenuWidget(
                         itemName: languagesController.tr("COMMISSION_GROUP"),
@@ -184,8 +178,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           Get.toNamed(commissiongroupscreen);
                         },
                       ),
-                      SizedBox(
-                        height: 5,
+                      ProfileMenuWidget(
+                        itemName: languagesController.tr("CHANGE_PIN"),
+                        imageLink: "assets/icons/key.png",
+                        onPressed: () {
+                          Get.toNamed(changepinscreen);
+                        },
                       ),
                       ProfileMenuWidget(
                         itemName: languagesController.tr("CHANGE_PASSWORD"),
@@ -194,38 +192,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           Get.toNamed(changepasswordScreen);
                         },
                       ),
-                      SizedBox(
-                        height: 5,
-                      ),
                       ProfileMenuWidget(
                         itemName: languagesController.tr("HELP"),
                         imageLink: "assets/icons/help.png",
                         onPressed: () {
                           Get.toNamed(helpscreen);
                         },
-                      ),
-                      // SizedBox(
-                      //   height: 5,
-                      // ),
-                      // ProfileMenuWidget(
-                      //   itemName: languagesController.tr("ADD_CARD"),
-                      //   imageLink: "assets/icons/add_card.png",
-                      //   onPressed: () {
-                      //     Get.toNamed(addcardScreen);
-                      //   },
-                      // ),
-                      // SizedBox(
-                      //   height: 5,
-                      // ),
-                      // ProfileMenuWidget(
-                      //   itemName:
-                      //       languagesController.tr("TERMS_AND_CONDITIONS"),
-                      //   imageLink: "assets/icons/terms.png",
-                      //   onPressed: () {},
-                      // ),
-
-                      SizedBox(
-                        height: 5,
                       ),
                       ProfileMenuWidget(
                         itemName: languagesController.tr("CONTACTUS"),
@@ -234,18 +206,17 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           whatsapp();
                         },
                       ),
-                      SizedBox(
-                        height: 5,
-                      ),
                       ProfileMenuWidget(
                         itemName: languagesController.tr("CHANGE_LANGUAGE"),
                         imageLink: "assets/icons/globe.png",
                         onPressed: () {
+                          // historyController.finalList.clear();
                           showDialog(
                             context: context,
                             builder: (context) {
                               return AlertDialog(
-                                title: Text("Change Language"),
+                                title: Text(
+                                    languagesController.tr("CHANGE_LANGUAGE")),
                                 content: Container(
                                   height: 350,
                                   width: screenWidth,
@@ -279,9 +250,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                                       Locale('ar', 'AE'));
                                             });
                                           }
-                                          setState(() {
-                                            Navigator.pop(context);
-                                          });
+                                          Navigator.pop(context);
                                         },
                                         child: Container(
                                           margin: EdgeInsets.only(bottom: 5),
@@ -318,9 +287,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                             },
                           );
                         },
-                      ),
-                      SizedBox(
-                        height: 5,
                       ),
                       Visibility(
                         visible: isvisible,
@@ -412,9 +378,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                             ],
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 5,
                       ),
                       ProfileMenuWidget(
                         itemName: languagesController.tr("LOG_OUT"),

@@ -10,7 +10,8 @@ class CountryListApi {
   final box = GetStorage();
   Future<CountryListModel> fetchCountryList() async {
     final url = Uri.parse(
-        ApiEndPoints.baseUrl + ApiEndPoints.otherendpoints.countrylist);
+        "https://api-vpro-hetz-25.watandaronline.com/api/public/countries");
+    print(url);
 
     var response = await http.get(
       url,
@@ -20,7 +21,7 @@ class CountryListApi {
     );
 
     if (response.statusCode == 200) {
-      // print(response.body.toString());
+      print(response.statusCode.toString());
       final countryModel =
           CountryListModel.fromJson(json.decode(response.body));
 

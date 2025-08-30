@@ -149,7 +149,7 @@
   "SUCCESS": "نجاح",
   "SAVED_IMAGE_TO_GALLERY": "تم حفظ الصورة في المعرض",
   "UNLIMITED": "غير محدود",
-  "CONFIRMED": "تم التأكيد ✅",
+  "CONFIRMED": "تم التأكيد",
   "APPLY_FILTER": "تطبيق التصفية",
   "CLEAR_FILTER": "مسح التصفية",
   "BUNDLE_TITLE": "عنوان الباقة",
@@ -312,7 +312,31 @@
 "IDENTITY_ATTACHMENT": "مرفق الهوية",
 "TAP_TO_UPLOAD_IDENTITY_IMAGE": "اضغط لرفع صورة الهوية",
 "EXTRA_PROOF": "إثبات إضافي",
-"TAP_TO_UPLOAD_EXTRA_PROOF": "اضغط لرفع الإثبات الإضافي"
+"TAP_TO_UPLOAD_EXTRA_PROOF": "اضغط لرفع الإثبات الإضافي",
+"ENTER_YOUR_FULL_NAME": "أدخل اسمك الكامل",
+"ENTER_CONTACT_NAME": "أدخل اسم جهة الاتصال",
+"INVALID_INPUT": "إدخال غير صالح",
+"SIGN_IN": "تسجيل الدخول",
+"ALREADY_REGISTERED": "مسجل بالفعل",
+"PLEASE_ENTER_FULL_NAME": "يرجى إدخال الاسم الكامل",
+"PLEASE_ENTER_CONTACT_NAME": "يرجى إدخال اسم جهة الاتصال",
+"PLEASE_ENTER_PHONE_NUMBER": "يرجى إدخال رقم الهاتف",
+"PLEASE_SELECT_COUNTRY": "يرجى اختيار الدولة",
+"PLEASE_SELECT_PROFILE_PHOTO": "يرجى اختيار صورة الملف الشخصي",
+"PLEASE_SELECT_CURRENCY": "يرجى اختيار العملة",
+"PLEASE_SELECT_PASSWORD": "يرجى إدخال كلمة المرور",
+"PLEASE_CONFIRM_THE_PASSWORD": "يرجى تأكيد كلمة المرور",
+"PASSWORD_DO_NOT_MATCH": "كلمة المرور غير متطابقة",
+"PLEASE_FILL_BOTH_PIN_AND_CONFIRM_PIN": "يرجى إدخال رقم التعريف الشخصي وتأكيده",
+"PLEASE_ENTER_A_VALID_EMAIL": "يرجى إدخال بريد إلكتروني صالح",
+"PIN_AND_CONFIRM_PIN_DO_NOT_MATCH": "رقم التعريف الشخصي والتأكيد غير متطابقين",
+"REGISTRATION_SUCCESSFULL": "تم التسجيل بنجاح",
+"WRONG": "خطأ",
+"SOMETHING_ERROR": "حدث خطأ ما",
+"FAIL": "فشل",
+"ENTER_ID_OR_NUMBER": "أدخل رقم الهوية أو الرقم",
+"SIGN_UP_TITLE": "من فضلك أدخل التفاصيل أدناه للمتابعة"
+
 
 
 

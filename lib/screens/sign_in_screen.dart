@@ -114,21 +114,25 @@ class _SignInScreenState extends State<SignInScreen> {
                       child: ListView(
                         children: [
                           SizedBox(
-                            height: 50,
+                            height: 30,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                languagesController.tr("LOGIN"),
-                                style: GoogleFonts.rubik(
-                                  color: AppColors.defaultColor,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
+                          Image.asset(
+                            "assets/icons/logo.png",
+                            height: 80,
                           ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: [
+                          //     Text(
+                          //       languagesController.tr("LOGIN"),
+                          //       style: GoogleFonts.rubik(
+                          //         color: AppColors.defaultColor,
+                          //         fontSize: 25,
+                          //         fontWeight: FontWeight.w500,
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                           SizedBox(
                             height: 10,
                           ),
@@ -178,7 +182,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           Obx(() => DefaultButton(
                                 buttonName:
                                     signInController.isLoading.value == false
-                                        ? languagesController.tr("LOGIN")
+                                        ? languagesController.tr("SIGN_IN")
                                         : languagesController.tr("PLEASE_WAIT"),
                                 onPressed: () async {
                                   historyController.initialpage = 1;

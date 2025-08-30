@@ -507,7 +507,6 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
               Expanded(
                 child: Obx(
                   () => customhistoryController.isLoading.value == false &&
-                          languageController.isLoading.value == false &&
                           customhistoryController.finalList.isNotEmpty
                       ? RefreshIndicator(
                           onRefresh: refresh,

@@ -1,8 +1,8 @@
 class ApiEndPoints {
-  static String baseUrl = "https://app-api-vpro-tt.taktelcom.com/api/reseller/";
+  // static String baseUrl = "https://app-api-vpro-tt.taktelcom.com/api/reseller/";
 
-  // static String baseUrl =
-  //     "https://api-vpro-hetz-25.watandaronline.com/api/reseller/";
+  static String baseUrl =
+      "https://api-vpro-hetz-25.watandaronline.com/api/reseller/";
 
   static String languageUrl =
       "https://api-vpro-hetz-25.watandaronline.com/api/locale/";

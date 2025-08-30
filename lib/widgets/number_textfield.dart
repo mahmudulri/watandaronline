@@ -6,6 +6,8 @@ import 'package:watandaronline/controllers/bundles_controller.dart';
 import 'package:watandaronline/controllers/service_controller.dart';
 import 'package:watandaronline/helpers/language_helper.dart';
 
+import '../global controller/languages_controller.dart';
+
 class PasteRestrictionFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
@@ -52,6 +54,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
   final ServiceController serviceController = Get.put(ServiceController());
   final BundleController bundleController = Get.put(BundleController());
 
+  final languagesController = Get.find<LanguagesController>();
+
   String? errorMessage;
   void validateInput(String input) {
     // If reserveDigit list is empty
@@ -83,12 +87,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
     if (!isValid) {
       setState(() {
-        errorMessage = getText("PLEASE_ENTER_A_CORRECT_NUMBER",
-                defaultValue: "Please enter a correct") +
+        errorMessage = languagesController.tr("PLEASE_ENTER_A_CORRECT_NUMBER") +
             " ${box.read("maxlength")} " +
-            getText("DIGIT", defaultValue: "digit") +
+            languagesController.tr("DIGIT") +
             " " +
-            getText("NUMBER", defaultValue: "Number");
+            languagesController.tr("NUMBER");
+
         box.write("permission", "no");
       });
     } else {

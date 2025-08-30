@@ -10,8 +10,8 @@ import '../utils/api_endpoints.dart';
 class ProvinceApi {
   final box = GetStorage();
   Future<ProvincesModel> fetchProvince() async {
-    final url =
-        Uri.parse(ApiEndPoints.baseUrl + ApiEndPoints.otherendpoints.province);
+    final url = Uri.parse(
+        "https://api-vpro-hetz-25.watandaronline.com/api/public/provinces");
 
     var response = await http.get(
       url,
