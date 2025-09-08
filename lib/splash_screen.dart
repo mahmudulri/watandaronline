@@ -94,41 +94,6 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  // dcheckData() async {
-  //   if (box.read('userToken') == null) {
-  //     languagesController.changeLanguage("Fa");
-  //     box.write("direction", "rtl");
-
-  //     setState(() {
-  //       EasyLocalization.of(context)!.setLocale(Locale('ar', 'AE'));
-  //     });
-  //     Get.toNamed(signinscreen);
-  //   } else {
-  //     if (box.read("language") == null) {
-  //       languagesController.changeLanguage("Fa");
-  //       box.write("direction", "rtl");
-  //       setState(() {
-  //         EasyLocalization.of(context)!.setLocale(Locale('ar', 'AE'));
-  //       });
-  //     } else {
-  //       languagesController.changeLanguage(box.read("language"));
-  //       if (box.read("direction") == "ltr") {
-  //         setState(() {
-  //           EasyLocalization.of(context)!.setLocale(Locale('en', 'US'));
-  //         });
-  //       } else {
-  //         setState(() {
-  //           EasyLocalization.of(context)!.setLocale(Locale('ar', 'AE'));
-  //         });
-  //       }
-  //     }
-
-  //     sliderController.fetchSliderData();
-
-  //     Get.toNamed(bottomnavscreen);
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
