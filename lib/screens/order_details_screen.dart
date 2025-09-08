@@ -591,6 +591,7 @@ class _OrderDetailsScreenState extends State<DOrderDetailsScreen> {
                                         ),
                                       ),
                                     ),
+
                                     widget.amount.toString() != "null"
                                         ? Row(
                                             mainAxisAlignment:

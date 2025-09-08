@@ -18,7 +18,7 @@ import 'package:watandaronline/screens/confirm_pin.dart';
 import 'package:watandaronline/screens/custom_recharge_screen.dart';
 import 'package:watandaronline/screens/edit_profile_screen.dart';
 import 'package:watandaronline/screens/myprofile_screen.dart';
-import 'package:watandaronline/screens/new_service_screen.dart';
+import 'package:watandaronline/screens/service_screen.dart';
 import 'package:watandaronline/screens/onboarding_screen.dart';
 import 'package:watandaronline/screens/order_details_screen.dart';
 import 'package:watandaronline/screens/recharge_screen.dart';

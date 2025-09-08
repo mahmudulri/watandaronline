@@ -26,9 +26,9 @@ import '../global controller/languages_controller.dart';
 import '../utils/colors.dart';
 
 class RechargeScreen extends StatefulWidget {
-  RechargeScreen({
-    super.key,
-  });
+  RechargeScreen({super.key, this.flagimageurl});
+
+  String? flagimageurl;
 
   @override
   State<RechargeScreen> createState() => _RechargeScreenState();
@@ -166,13 +166,47 @@ class _RechargeScreenState extends State<RechargeScreen> {
           backgroundColor: Color(0xff2980b9),
           elevation: 0.0,
           centerTitle: true,
-          title: Text(
-            languagesController.tr("RECHARGE"),
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Visibility(
+                visible: true,
+                child: Container(
+                  height: 25,
+                  width: 45,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        box.read("flagimageurl").toString(),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                box.read("catName").toString(),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+
+              // Container(
+              //   child: Center(
+              //     child: CircleAvatar(
+              //       radius: 25,
+              //       backgroundColor: Colors.white,
+              //       backgroundImage:
+              //           NetworkImage(box.read("flagimageurl").toString()),
+              //     ),
+              //   ),
+              // )
+            ],
           ),
         ),
         body: Container(
@@ -189,9 +223,17 @@ class _RechargeScreenState extends State<RechargeScreen> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 13),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        // Text(
+                        //   box.read("catName").toString(),
+                        //   style: TextStyle(
+                        //     color: Colors.white,
+                        //     fontSize: 17,
+                        //     fontWeight: FontWeight.w700,
+                        //   ),
+                        // ),
                         CustomTextField(
                           confirmPinController:
                               confirmPinController.numberController,
@@ -199,7 +241,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                               languagesController.tr("ENTER_YOUR_NUMBER"),
                         ),
                         SizedBox(
-                          height: 5,
+                          height: 10,
                         ),
                         Container(
                           height: 50,
@@ -301,7 +343,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 2,
+                          height: 10,
                         ),
                         Container(
                           width: screenWidth,

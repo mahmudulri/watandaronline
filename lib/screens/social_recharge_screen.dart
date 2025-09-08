@@ -152,14 +152,23 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
             onTap: () {
               print(box.read("permission"));
             },
+
             child: Text(
-              languagesController.tr("SOCIAL_RECHARGE"),
+              box.read("catName").toString(),
               style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
                 color: Colors.white,
+                fontSize: 17,
+                fontWeight: FontWeight.w700,
               ),
             ),
+            // child: Text(
+            //   languagesController.tr("SOCIAL_RECHARGE"),
+            //   style: TextStyle(
+            //     fontSize: 20,
+            //     fontWeight: FontWeight.bold,
+            //     color: Colors.white,
+            //   ),
+            // ),
           ),
         ),
         body: Container(
@@ -174,11 +183,22 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                     color: Color(0xff2980b9),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 13),
+                    padding: EdgeInsets.symmetric(horizontal: 13),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        // Text(
+                        //   box.read("catName").toString(),
+                        //   style: TextStyle(
+                        //     color: Colors.white,
+                        //     fontSize: 17,
+                        //     fontWeight: FontWeight.w700,
+                        //   ),
+                        // ),
+                        // SizedBox(
+                        //   height: 6,
+                        // ),
                         Container(
                           height: 50,
                           width: screenWidth,
@@ -221,7 +241,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                         //       .toString(),
                         // ),
                         SizedBox(
-                          height: 10,
+                          height: 7,
                         ),
                         Container(
                           height: 50,
@@ -323,7 +343,7 @@ class _SocialRechargeScreenState extends State<SocialRechargeScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 2,
+                          height: 10,
                         ),
                         Container(
                           width: screenWidth,

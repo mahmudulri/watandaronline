@@ -134,7 +134,7 @@ class CategorisListController extends GetxController {
         finalArrayCatList.addAll(socialArray);
         finalArrayCatList.addAll(nonsocialArray);
 
-        print("Nonsocial Categories: $nonsocialArray");
+        // print("Nonsocial Categories: $nonsocialArray");
         isLoading(false);
       });
     } catch (e) {

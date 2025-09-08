@@ -69,42 +69,42 @@ class _HomepageState extends State<Homepage> {
     categorisListController.nonsocialArray.clear();
     categorisListController.fetchcategories();
 
-    scrollController.addListener(refresh);
+    // scrollController.addListener(refresh);
     dashboardController.fetchDashboardData();
     // languageController.fetchlanData(box.read("isoCode"));
 
     WidgetsBinding.instance.addPostFrameCallback((_) {});
   }
 
-  Future<void> refresh() async {
-    final int totalPages =
-        historyController.allorderlist.value.payload?.pagination.totalPages ??
-            0;
-    final int currentPage = historyController.initialpage;
+  // Future<void> refresh() async {
+  //   final int totalPages =
+  //       historyController.allorderlist.value.payload?.pagination.totalPages ??
+  //           0;
+  //   final int currentPage = historyController.initialpage;
 
-    // Prevent loading more pages if we've reached the last page
-    if (currentPage >= totalPages) {
-      print(
-          "End..........................................End.....................");
-      return;
-    }
+  //   // Prevent loading more pages if we've reached the last page
+  //   if (currentPage >= totalPages) {
+  //     print(
+  //         "End..........................................End.....................");
+  //     return;
+  //   }
 
-    // Check if the scroll position is at the bottom
-    if (scrollController.position.pixels ==
-        scrollController.position.maxScrollExtent) {
-      historyController.initialpage++;
+  //   // Check if the scroll position is at the bottom
+  //   if (scrollController.position.pixels ==
+  //       scrollController.position.maxScrollExtent) {
+  //     historyController.initialpage++;
 
-      // Prevent fetching if the next page exceeds total pages
-      if (historyController.initialpage <= totalPages) {
-        print("Load More...................");
-        historyController.fetchHistory();
-      } else {
-        historyController.initialpage =
-            totalPages; // Reset to the last valid page
-        print("Already on the last page");
-      }
-    }
-  }
+  //     // Prevent fetching if the next page exceeds total pages
+  //     if (historyController.initialpage <= totalPages) {
+  //       print("Load More...................");
+  //       historyController.fetchHistory();
+  //     } else {
+  //       historyController.initialpage =
+  //           totalPages; // Reset to the last valid page
+  //       print("Already on the last page");
+  //     }
+  //   }
+  // }
 
   final dashboardController = Get.find<DashboardController>();
   final countryListController = Get.find<CountryListController>();
@@ -121,7 +121,7 @@ class _HomepageState extends State<Homepage> {
   final AdvancedDrawerController advancedDrawerController =
       AdvancedDrawerController();
 
-  String myversion = "1.0.8";
+  String myversion = "1.0.12";
   var maindata;
   var currentversion;
   String? checknow;
@@ -954,26 +954,20 @@ class _HomepageState extends State<Homepage> {
 
                                 box.write(
                                     "service_category_id", data["categoryId"]);
+                                box.write("catName", data["categoryName"]);
                                 bundleController.initialpage = 1;
                                 print(data["type"]);
 
                                 if (data["type"] == "social") {
                                   Get.toNamed(socialrechargescreen);
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) =>
-                                  //         SocialRechargeScreen(),
-                                  //   ),
-                                  // );
                                 } else {
-                                  Get.toNamed(rechargescreen);
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) => RechargeScreen(),
-                                  //   ),
-                                  // );
+                                  box.write("catName", data["categoryName"]);
+                                  box.write(
+                                      "flagimageurl", data["countryImage"]);
+
+                                  Get.toNamed(
+                                    rechargescreen,
+                                  );
                                 }
                               },
                               child: Card(
