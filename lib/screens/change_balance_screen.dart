@@ -30,6 +30,7 @@ class _ChangeBalanceScreenState extends State<ChangeBalanceScreen> {
   final box = GetStorage();
   @override
   Widget build(BuildContext context) {
+    print(widget.subID.toString());
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -247,8 +248,10 @@ class _ChangeBalanceScreenState extends State<ChangeBalanceScreen> {
                     } else {
                       if (balanceController.status.value == "credit") {
                         balanceController.credit(widget.subID.toString());
+                        print(widget.subID.toString());
                       } else {
                         balanceController.debit(widget.subID.toString());
+                        print(widget.subID.toString());
                       }
                     }
                   },

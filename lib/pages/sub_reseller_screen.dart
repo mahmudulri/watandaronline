@@ -489,9 +489,13 @@ class _dataBoxnameState extends State<dataBoxname> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Get.toNamed(changebalancescreen, arguments: {
-                                    "subID": widget.id.toString(),
-                                  });
+                                  // Get.toNamed(changebalancescreen, arguments: {
+                                  //   "subID": widget.id.toString(),
+                                  // });
+                                  Get.to(() => ChangeBalanceScreen(
+                                        subID: widget.id.toString(),
+                                      ));
+                                  print(widget.id.toString());
                                 },
                                 child: Row(
                                   children: [

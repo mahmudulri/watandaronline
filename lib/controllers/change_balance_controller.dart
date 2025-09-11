@@ -44,7 +44,7 @@ class BalanceController extends GetxController {
         body: jsonEncode(body),
         headers: headers,
       );
-
+      print("mainbody" + body.toString());
       print("body" + response.body.toString());
       print("statuscode" + response.statusCode.toString());
       final results = jsonDecode(response.body);
@@ -97,12 +97,14 @@ class BalanceController extends GetxController {
       };
       var url = Uri.parse(
           "${ApiEndPoints.baseUrl}sub-reseller/transactions/debit-balance");
+      print(url);
 
       Map body = {
         'sub_reseller_id': subID.toString(),
         'amount': amountController.text,
         'status': status.toString(),
       };
+      print("mainbody" + body.toString());
       http.Response response = await http.post(
         url,
         body: jsonEncode(body),
@@ -110,7 +112,7 @@ class BalanceController extends GetxController {
       );
 
       print("body" + response.body.toString());
-      print("statuscode" + response.statusCode.toString());
+      // print("statuscode" + response.statusCode.toString());
       final results = jsonDecode(response.body);
       if (response.statusCode == 201) {
         amountController.clear();

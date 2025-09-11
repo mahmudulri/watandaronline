@@ -790,8 +790,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           () => Center(
                             child: GestureDetector(
                               onTap: () async {
+                                print("start............");
                                 await signUpController.uploadImage();
                                 _selectedImage = signUpController.imageFile;
+                                print("End............");
                               },
                               child: DottedBorder(
                                 color:

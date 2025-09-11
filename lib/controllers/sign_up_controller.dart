@@ -5,11 +5,45 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import '../global controller/languages_controller.dart';
 
 final languagesController = Get.find<LanguagesController>();
 
 class SignUpController extends GetxController {
+  Future<void> uploadImage() async {
+    final pickedImageFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+    );
+    if (pickedImageFile != null) {
+      selectedImagePath.value = pickedImageFile.path;
+      imageFile = File(pickedImageFile.path);
+      print("before image tag   $imageFile");
+    } else {
+      print("No image selected");
+    }
+  }
+
+  Future<void> uploadIdentityAttachment() async {
+    final picked = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (picked != null) {
+      selectedIdentityPath.value = picked.path;
+      print("identity selected: ${selectedIdentityPath.value}");
+    } else {
+      print("No identity image selected");
+    }
+  }
+
+  Future<void> uploadExtraOptionalProof() async {
+    final picked = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (picked != null) {
+      selectedExtraProofPath.value = picked.path;
+      print("extra proof selected: ${selectedExtraProofPath.value}");
+    } else {
+      print("No extra proof image selected");
+    }
+  }
+
   void resetForm() {
     // Text controllers
     resellerNameController.clear();
@@ -230,8 +264,4 @@ class SignUpController extends GetxController {
   TextEditingController confirmPassController = TextEditingController();
 
   RxBool isLoading = false.obs;
-
-  Future<void> uploadImage() async {/* unchanged */}
-  Future<void> uploadIdentityAttachment() async {/* unchanged */}
-  Future<void> uploadExtraOptionalProof() async {/* unchanged */}
 }
