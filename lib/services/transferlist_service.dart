@@ -18,7 +18,7 @@ class TransferlistApi {
     );
 
     if (response.statusCode == 200) {
-      print(response.body.toString());
+      // print(response.body.toString());
       final transferlistmode =
           TransferListModel.fromJson(json.decode(response.body));
       return transferlistmode;

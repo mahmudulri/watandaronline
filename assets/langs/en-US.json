@@ -336,11 +336,13 @@
 "SOMETHING_ERROR": "Something went wrong",
 "FAIL": "Fail",
 "ENTER_ID_OR_NUMBER": "Enter ID or Number",
-"SIGN_UP_TITLE": "Please enter the details below to continue"
-
-
-
-
+"SIGN_UP_TITLE": "Please enter the details below to continue",
+"CONFIRMATION": "Confirmation",
+"PIN_LENGTH_SHOULD_BE_4_CHARACTER": "PIN length should be 4 characters",
+"PASSWORD_LENGTH_SHOULD_BE_MINIMUM_8_CHARACTER": "Password length should be minimum 8 characters",
+"PASSWORD_IS_REQUIRED": "Password is required",
+"MINIMUM_8_CHARACTERS_REQUIRED": "Minimum 8 characters required",
+"PASSWORD_NOT_MATCH": "Password does not match"
 
 
 

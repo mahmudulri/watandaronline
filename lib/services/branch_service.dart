@@ -21,7 +21,7 @@ class BranchApi {
     );
 
     if (response.statusCode == 200) {
-      print(response.body.toString());
+      // print(response.body.toString());
       final branchModel = BranchModel.fromJson(json.decode(response.body));
 
       return branchModel;

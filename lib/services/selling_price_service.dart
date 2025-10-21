@@ -21,8 +21,8 @@ class SellingPriceApi {
     );
 
     if (response.statusCode == 200) {
-      print(response.statusCode.toString());
-      print(response.body.toString());
+      // print(response.statusCode.toString());
+      // print(response.body.toString());
 
       final sellingpriceModel =
           SellingpriceModel.fromJson(json.decode(response.body));

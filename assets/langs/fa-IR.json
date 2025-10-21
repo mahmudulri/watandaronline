@@ -297,9 +297,9 @@
   "TRANSFER_COMISSION": "کمیسیون انتقال",
   "CREATE_TRANSFER_REQUEST": "ایجاد درخواست انتقال",
   "ENTER_NUMBER_OR_ID": "شماره یا شناسه را وارد کنید",
-  "SET_PIN": "تنظیم رمز",
+  "SET_PIN": "تنظیم پین",
   "SET_COMMISSION_GROUP": "تنظیم گروه کمیسیون",
-  "CONFIRM_PIN": "تأیید رمز",
+  "CONFIRM_PIN": "تأیید پین",
   "CURRENT_PASSWORD": "رمز عبور فعلی",
   "CONFIRM_NEW_PASSWORD": "تأیید رمز عبور جدید",
   "OPTIONAL": "اختیاری",
@@ -335,11 +335,13 @@
 "SOMETHING_ERROR": "خطایی رخ داده است",
 "FAIL": "شکست",
 "ENTER_ID_OR_NUMBER": "شناسه یا شماره را وارد کنید",
-"SIGN_UP_TITLE": "لطفاً جزئیات زیر را برای ادامه وارد کنید"
-
-
-
-
+"SIGN_UP_TITLE": "لطفاً جزئیات زیر را برای ادامه وارد کنید",
+"CONFIRMATION": "تأیید",
+"PIN_LENGTH_SHOULD_BE_4_CHARACTER": "طول پین باید ۴ رقم باشد",
+"PASSWORD_LENGTH_SHOULD_BE_MINIMUM_8_CHARACTER": "طول گذرواژه باید حداقل ۸ کاراکتر باشد",
+"PASSWORD_IS_REQUIRED": "رمز عبور الزامی است",
+"MINIMUM_8_CHARACTERS_REQUIRED": "حداقل ۸ کاراکتر مورد نیاز است",
+"PASSWORD_NOT_MATCH": "رمز عبور مطابقت ندارد"
 
 
 }

@@ -21,7 +21,7 @@ class LoanBalanceApi {
     );
 
     if (response.statusCode == 200) {
-      print(response.body.toString());
+      // print(response.body.toString());
       final loanbalanceModel =
           LoanBalanceModel.fromJson(json.decode(response.body));
 

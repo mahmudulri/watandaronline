@@ -21,7 +21,7 @@ class HawalalistApi {
     );
 
     if (response.statusCode == 200) {
-      print(response.statusCode.toString());
+      // print(response.statusCode.toString());
 
       final hawalamodel = HawalaModel.fromJson(json.decode(response.body));
 

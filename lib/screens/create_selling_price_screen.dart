@@ -27,6 +27,9 @@ class _CreateSellingPriceScreenState extends State<CreateSellingPriceScreen> {
   final languagesController = Get.find<LanguagesController>();
 
   final onlycatController = Get.find<OnlyCatController>();
+
+  final serviceController = Get.find<OnlyServiceController>();
+
   List commissiontype = [];
 
   @override
@@ -74,7 +77,9 @@ class _CreateSellingPriceScreenState extends State<CreateSellingPriceScreen> {
           ),
         ),
         title: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            serviceController.fetchservices();
+          },
           child: Text(
             languagesController.tr("CREATE_SELLING_PRICE"),
             style: TextStyle(
@@ -364,6 +369,13 @@ class ServiceBox extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final data = serviceController
                           .allservices.value.data!.services[index];
+
+                      final hasValidData = data.company != null &&
+                          data.company!.companyLogo != null &&
+                          data.company!.companyName != null &&
+                          onlycatController.onlycategorieslist.value.data !=
+                              null;
+
                       return Padding(
                         padding: EdgeInsets.all(3.0),
                         child: GestureDetector(
@@ -410,16 +422,16 @@ class ServiceBox extends StatelessWidget {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Container(
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: NetworkImage(
-                                          data.company!.companyLogo.toString(),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  // Container(
+                                  //   height: 50,
+                                  //   decoration: BoxDecoration(
+                                  //     image: DecorationImage(
+                                  //       image: NetworkImage(
+                                  //         data.company!.companyLogo.toString(),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                   SizedBox(
                                     height: 8,
                                   ),

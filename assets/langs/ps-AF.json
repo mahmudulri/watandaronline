@@ -335,11 +335,13 @@
 "SOMETHING_ERROR": "څه تېروتنه وشوه",
 "FAIL": "ناکامي",
 "ENTER_ID_OR_NUMBER": "د پیژند نمبر یا شمېره دننه کړئ",
-"SIGN_UP_TITLE": "مهرباني وکړئ د دوام لپاره لاندې معلومات داخل کړئ"
-
-
-
-
+"SIGN_UP_TITLE": "مهرباني وکړئ د دوام لپاره لاندې معلومات داخل کړئ",
+"CONFIRMATION": "تایید",
+"PIN_LENGTH_SHOULD_BE_4_CHARACTER": "د پین اوږدوالی باید ۴ عدد وي",
+"PASSWORD_LENGTH_SHOULD_BE_MINIMUM_8_CHARACTER": "د پټنوم اوږدوالی باید لږ تر لږه ۸ توري وي",
+"PASSWORD_IS_REQUIRED": "پټنوم اړین دی",
+"MINIMUM_8_CHARACTERS_REQUIRED": "لږ تر لږه ۸ توري اړین دي",
+"PASSWORD_NOT_MATCH": "پټنومونه سره نه دي برابر"
 
 
 

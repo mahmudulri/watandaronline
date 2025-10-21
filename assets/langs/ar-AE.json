@@ -335,13 +335,14 @@
 "SOMETHING_ERROR": "حدث خطأ ما",
 "FAIL": "فشل",
 "ENTER_ID_OR_NUMBER": "أدخل رقم الهوية أو الرقم",
-"SIGN_UP_TITLE": "من فضلك أدخل التفاصيل أدناه للمتابعة"
+"SIGN_UP_TITLE": "من فضلك أدخل التفاصيل أدناه للمتابعة",
+"CONFIRMATION": "تأكيد",
+"PIN_LENGTH_SHOULD_BE_4_CHARACTER": "يجب أن يتكون رقم التعريف الشخصي من 4 أرقام",
+"PASSWORD_LENGTH_SHOULD_BE_MINIMUM_8_CHARACTER": "يجب أن تكون كلمة المرور مكونة من 8 أحرف على الأقل",
+"PASSWORD_IS_REQUIRED": "كلمة المرور مطلوبة",
+"MINIMUM_8_CHARACTERS_REQUIRED": "مطلوب 8 أحرف على الأقل",
+"PASSWORD_NOT_MATCH": "كلمة المرور غير متطابقة"
 
-
-
-
-
-  
 
 
 }

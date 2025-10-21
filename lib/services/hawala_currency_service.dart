@@ -23,7 +23,7 @@ class HawalaCurrencyApi {
     );
 
     if (response.statusCode == 200) {
-      print(response.body.toString());
+      // print(response.body.toString());
       final branchModel =
           HawalaCurrencyModel.fromJson(json.decode(response.body));
 

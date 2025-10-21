@@ -64,7 +64,7 @@ class _SellingPriceScreenState extends State<SellingPriceScreen> {
         ),
         title: GestureDetector(
           onTap: () {
-            onlycatController.fetchcategories();
+            serviceController.fetchservices();
           },
           child: Text(
             languagesController.tr("SELLING_PRICE_2"),

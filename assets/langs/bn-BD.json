@@ -335,10 +335,13 @@
 "SOMETHING_ERROR": "কিছু একটা ভুল হয়েছে",
 "FAIL": "ব্যর্থতা",
 "ENTER_ID_OR_NUMBER": "আইডি অথবা নাম্বার লিখুন",
-"SIGN_UP_TITLE": "চালিয়ে যেতে নিচের বিবরণগুলি লিখুন"
-
-
-
+"SIGN_UP_TITLE": "চালিয়ে যেতে নিচের বিবরণগুলি লিখুন",
+"CONFIRMATION": "নিশ্চিতকরণ",
+"PIN_LENGTH_SHOULD_BE_4_CHARACTER": "পিনের দৈর্ঘ্য ৪ অক্ষরের হতে হবে",
+"PASSWORD_LENGTH_SHOULD_BE_MINIMUM_8_CHARACTER": "পাসওয়ার্ডের দৈর্ঘ্য কমপক্ষে ৮ অক্ষরের হতে হবে",
+"PASSWORD_IS_REQUIRED": "পাসওয়ার্ড প্রয়োজন",
+"MINIMUM_8_CHARACTERS_REQUIRED": "কমপক্ষে ৮ অক্ষর প্রয়োজন",
+"PASSWORD_NOT_MATCH": "পাসওয়ার্ড মেলে না"
 
 
 

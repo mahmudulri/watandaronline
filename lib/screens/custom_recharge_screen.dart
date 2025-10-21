@@ -36,9 +36,8 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
   final countryListController = Get.find<CountryListController>();
   final customrechargeController = Get.find<CustomRechargeController>();
 
-  final OperatorController operatorController = Get.put(OperatorController());
+  // final OperatorController operatorController = Get.put(OperatorController());
 
-  // final historyController = Get.find<HistoryController>();
   final customhistoryController = Get.find<CustomHistoryController>();
   final ScrollController scrollController = ScrollController();
 
@@ -79,6 +78,7 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
   }
 
   CompanyController companyController = Get.put(CompanyController());
+  CurrencyController currencyController = Get.put(CurrencyController());
 
   @override
   void initState() {
@@ -87,6 +87,7 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
     customhistoryController.finalList.clear();
     customhistoryController.initialpage = 1;
     // historyController.fetchHistory();
+    currencyController.fetchCurrency();
 
     customhistoryController.fetchHistory();
 
@@ -122,12 +123,17 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
         backgroundColor: Colors.white,
         elevation: 0.0,
         centerTitle: true,
-        title: Text(
-          languagesController.tr("DIRECT_RECHARGE"),
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
+        title: GestureDetector(
+          onTap: () {
+            currencyController.fetchCurrency();
+          },
+          child: Text(
+            languagesController.tr("DIRECT_RECHARGE"),
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
           ),
         ),
       ),
@@ -288,7 +294,7 @@ class _CustomRechargeScreenState extends State<CustomRechargeScreen> {
                               conversationController.getConvertedValues();
 
                           if (convertedList.isEmpty) {
-                            return Center(child: Text("dd"));
+                            return Center(child: Text(""));
                           }
 
                           final item =

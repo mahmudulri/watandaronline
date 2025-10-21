@@ -4,12 +4,16 @@ import '../utils/colors.dart';
 
 class AuthTextField extends StatelessWidget {
   String? hintText;
+  int? length;
   final TextEditingController? controller;
   AuthTextField({
     super.key,
     this.hintText,
     this.controller,
+    this.length,
   });
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +33,7 @@ class AuthTextField extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 15),
         child: Center(
           child: TextField(
+            maxLength: length,
             keyboardType: hintText == "Enter your amount"
                 ? TextInputType.phone
                 : TextInputType.name,

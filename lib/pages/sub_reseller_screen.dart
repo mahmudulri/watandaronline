@@ -308,7 +308,7 @@ class _dataBoxnameState extends State<dataBoxname> {
                     return AlertDialog(
                       contentPadding: EdgeInsets.all(0.0),
                       content: Container(
-                        height: 260,
+                        height: 300,
                         width: screenWidth - 50,
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -467,9 +467,9 @@ class _dataBoxnameState extends State<dataBoxname> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Get.toNamed(changesubpassscreen, arguments: {
-                                    "subID": widget.id.toString(),
-                                  });
+                                  Get.to(() => ChangeSubPasswordScreen(
+                                        subID: widget.id.toString(),
+                                      ));
                                 },
                                 child: Row(
                                   children: [

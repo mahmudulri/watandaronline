@@ -335,11 +335,13 @@
 "SOMETHING_ERROR": "Bir hata oluştu",
 "FAIL": "Başarısızlık",
 "ENTER_ID_OR_NUMBER": "Kimlik veya Numara Girin",
-"SIGN_UP_TITLE": "Devam etmek için lütfen aşağıdaki bilgileri girin"
-
-
-
-
+"SIGN_UP_TITLE": "Devam etmek için lütfen aşağıdaki bilgileri girin",
+"CONFIRMATION": "Onay",
+"PIN_LENGTH_SHOULD_BE_4_CHARACTER": "PIN uzunluğu 4 karakter olmalıdır",
+"PASSWORD_LENGTH_SHOULD_BE_MINIMUM_8_CHARACTER": "Şifre uzunluğu en az 8 karakter olmalıdır",
+"PASSWORD_IS_REQUIRED": "Şifre gerekli",
+"MINIMUM_8_CHARACTERS_REQUIRED": "En az 8 karakter gerekli",
+"PASSWORD_NOT_MATCH": "Şifreler eşleşmiyor"
 
 
 }

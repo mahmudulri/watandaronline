@@ -1,8 +1,3 @@
-// To parse this JSON data, do
-//
-//     final serviceModel = serviceModelFromJson(jsonString);
-
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 ServiceModel serviceModelFromJson(String str) =>
@@ -12,22 +7,33 @@ String serviceModelToJson(ServiceModel data) => json.encode(data.toJson());
 
 class ServiceModel {
   final bool? success;
-
+  final int? code;
+  final String? message;
   final Data? data;
+  final List<dynamic>? payload;
 
   ServiceModel({
     this.success,
+    this.code,
+    this.message,
     this.data,
+    this.payload,
   });
 
   factory ServiceModel.fromJson(Map<String, dynamic> json) => ServiceModel(
         success: json["success"],
+        code: json["code"],
+        message: json["message"],
         data: Data.fromJson(json["data"]),
+        payload: List<dynamic>.from(json["payload"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
         "success": success,
+        "code": code,
+        "message": message,
         "data": data!.toJson(),
+        "payload": List<dynamic>.from(payload!.map((x) => x)),
       };
 }
 
@@ -44,7 +50,7 @@ class Data {
       );
 
   Map<String, dynamic> toJson() => {
-        "services": List<dynamic>.from(services.map((x) => x.toJson())),
+        "services": List<dynamic>.from(services!.map((x) => x.toJson())),
       };
 }
 
@@ -68,14 +74,15 @@ class Service {
             ? null
             : json["service_category_id"],
         companyId: json["company_id"] == null ? null : json["company_id"],
-        company: Company.fromJson(json["company"]),
+        company:
+            json["company"] == null ? null : Company.fromJson(json["company"]),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "service_category_id": serviceCategoryId,
         "company_id": companyId,
-        "company": company!.toJson(),
+        "company": company?.toJson(),
       };
 }
 
@@ -97,7 +104,7 @@ class Company {
         companyName: json["company_name"] == null ? null : json["company_name"],
         companyLogo: json["company_logo"] == null ? null : json["company_logo"],
         companycodes: json["companycodes"] == null
-            ? null
+            ? []
             : List<Companycode>.from(
                 json["companycodes"].map((x) => Companycode.fromJson(x))),
       );
@@ -112,10 +119,10 @@ class Company {
 }
 
 class Companycode {
-  final String? reservedDigit;
+  final String reservedDigit;
 
   Companycode({
-    this.reservedDigit,
+    required this.reservedDigit,
   });
 
   factory Companycode.fromJson(Map<String, dynamic> json) => Companycode(

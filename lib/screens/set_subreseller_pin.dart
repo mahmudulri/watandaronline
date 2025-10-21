@@ -86,9 +86,10 @@ class _SetSubresellerPinState extends State<SetSubresellerPin> {
                     SizedBox(
                       height: 8,
                     ),
-                    PasswordBox(
+                    Pinbox(
                       // hintText: languagesController.tr("ENTER_NEW_PIN"),
                       controller: setpinController.newPinController,
+                      length: 4,
                     ),
                     SizedBox(
                       height: 12,
@@ -105,9 +106,10 @@ class _SetSubresellerPinState extends State<SetSubresellerPin> {
                     SizedBox(
                       height: 8,
                     ),
-                    PasswordBox(
+                    Pinbox(
                       // hintText: languagesController.tr("ENTER_CONFIRM_PIN"),
                       controller: setpinController.confirmPinController,
+                      length: 4,
                     ),
                     SizedBox(
                       height: 25,
@@ -151,6 +153,20 @@ class _SetSubresellerPinState extends State<SetSubresellerPin> {
                         },
                       ),
                     ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          languagesController
+                              .tr("PIN_LENGTH_SHOULD_BE_4_CHARACTER"),
+                          style: TextStyle(
+                            color: Colors.black38,
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -162,14 +178,16 @@ class _SetSubresellerPinState extends State<SetSubresellerPin> {
   }
 }
 
-class PasswordBox extends StatelessWidget {
-  PasswordBox({
+class Pinbox extends StatelessWidget {
+  Pinbox({
     super.key,
     this.hintText,
     this.controller,
+    this.length,
   });
 
   String? hintText;
+  int? length;
   TextEditingController? controller;
   final box = GetStorage();
   @override
@@ -191,8 +209,10 @@ class PasswordBox extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 10),
         child: Center(
           child: TextField(
+            maxLength: length,
             controller: controller,
             decoration: InputDecoration(
+                counterText: "",
                 hintText: hintText,
                 border: InputBorder.none,
                 suffixIcon: Icon(

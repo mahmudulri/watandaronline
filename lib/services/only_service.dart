@@ -18,9 +18,9 @@ class OnlyServiceListApi {
     );
 
     if (response.statusCode == 200) {
-      // print(response.body.toString());
       final servicelistModel =
           ServiceModel.fromJson(json.decode(response.body));
+      // print(servicelistModel.toJson());
 
       return servicelistModel;
     } else {
