@@ -4,8 +4,8 @@ class ApiEndPoints {
   static String baseUrl =
       "https://api-vpro-hetz-25.watandaronline.com/api/reseller/";
 
-  static String languageUrl =
-      "https://api-vpro-hetz-25.watandaronline.com/api/locale/";
+  // static String languageUrl =
+  //     "https://api-vpro-hetz-25.watandaronline.com/api/locale/";
 
   static OtherendPoints otherendpoints = OtherendPoints();
 }

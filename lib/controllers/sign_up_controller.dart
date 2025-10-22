@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+
 import '../global controller/languages_controller.dart';
 
 final languagesController = Get.find<LanguagesController>();
@@ -72,7 +73,6 @@ class SignUpController extends GetxController {
     isLoading.value = false;
   }
 
-  // Good hygiene: dispose text controllers
   @override
   void onClose() {
     resellerNameController.dispose();
@@ -101,9 +101,10 @@ class SignUpController extends GetxController {
     if (currencyId.value.isEmpty) {
       return languagesController.tr("PLEASE_SELECT_CURRENCY");
     }
-    if (selectedImagePath.value.isEmpty) {
-      return languagesController.tr("PLEASE_SELECT_PROFILE_PHOTO");
-    }
+    // Profile photo is now optional — removed this validation
+    // if (selectedImagePath.value.isEmpty) {
+    //   return languagesController.tr("PLEASE_SELECT_PROFILE_PHOTO");
+    // }
     if (passwordController.text.trim().isEmpty) {
       return languagesController.tr("PLEASE_SELECT_PASSWORD");
     }
@@ -118,20 +119,21 @@ class SignUpController extends GetxController {
     final email = emailController.text.trim();
     if (email.isNotEmpty) {
       final emailRe = RegExp(r"^[^\s@]+@[^\s@]+\.[^\s@]+$");
-      if (!emailRe.hasMatch(email))
+      if (!emailRe.hasMatch(email)) {
         return languagesController.tr("PLEASE_ENTER_A_VALID_EMAIL");
+      }
     }
 
     // Optional PIN pair
     final pin = pinController.text.trim();
     final cpin = confirmPinController.text.trim();
     if (pin.isNotEmpty || cpin.isNotEmpty) {
-      if (pin.isEmpty || cpin.isEmpty)
+      if (pin.isEmpty || cpin.isEmpty) {
         return languagesController.tr("PLEASE_FILL_BOTH_PIN_AND_CONFIRM_PIN");
-      if (pin != cpin)
+      }
+      if (pin != cpin) {
         return languagesController.tr("PIN_AND_CONFIRM_PIN_DO_NOT_MATCH");
-      // Optional format rule:
-      // if (!RegExp(r'^\d{4,6}$').hasMatch(pin)) return "PIN must be 4–6 digits";
+      }
     }
 
     return null;
@@ -160,6 +162,7 @@ class SignUpController extends GetxController {
         'account_password': passwordController.text.trim(),
         'personal_pin': pinController.text.trim(),
       };
+      print(fields.toString());
 
       final url = Uri.parse(
         "https://api-vpro-hetz-25.watandaronline.com/api/public/reseller-self-register",
@@ -194,8 +197,8 @@ class SignUpController extends GetxController {
       final streamed = await request.send();
       final httpResponse = await http.Response.fromStream(streamed);
 
-      print(streamed.statusCode);
-      print(httpResponse.body);
+      print("------------------code---${streamed.statusCode}");
+      print("------------------body---${httpResponse.body}");
 
       dynamic res;
       try {
@@ -214,7 +217,7 @@ class SignUpController extends GetxController {
           fontSize: 16.0,
         );
 
-        // 🔹 Full reset after success
+        // Full reset after success
         resetForm();
       } else {
         final msg = (res is Map && res['message'] != null)

@@ -351,16 +351,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              "(${languagesController.tr("OPTIONAL")})",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
                           ],
                         ),
                         SizedBox(
